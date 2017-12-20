@@ -1,16 +1,33 @@
+<!--===========================
+Admin Nav Header
+============================-->
+<style>
+    .crop-word{
+        max-width:300px;
+        overflow: hidden;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+    }
+</style>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand" href="index.html"><img src = "<?= base_url()?>images/logo/logo.png"/></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="<?= base_url()?>AdminDashboard">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="User Logs">
+                    <a class="nav-link" href="<?= base_url()?>UserLogs">
+                        <i class="fa fa-fw fa-key"></i>
+                        <span class="nav-link-text">User Logs</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
@@ -183,20 +200,15 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0 mr-lg-2">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Search for...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                    <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="<?= $user_name?>">
+                        <div class="crop-word">
+                            <i class="fa fa-fw fa-user"></i>&nbsp;<?= $user_name?>
                         </div>
-                    </form>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                        <i class="fa fa-fw fa-sign-out"></i> Logout</a>
                 </li>
             </ul>
         </div>

@@ -1,10 +1,10 @@
 <?php
 
-class AdminDashboard extends CI_Controller {
+class UserLogs extends CI_Controller {
     function __construct() {
         parent::__construct();
         //---> MODELS HERE!
-        $this->load->model('AdminDashboard_model');
+        $this->load->model('UserLogs_model');
         
         //---> LIBRARIES HERE!
 
@@ -15,12 +15,12 @@ class AdminDashboard extends CI_Controller {
     
     public function index(){
         $data = array(
-            'title' => "Dashboard",
+            'title' => "User Logs",
             'user_name' => "Juan Carlo D.R. Valencia"
         );
         $this->load->view("dashboard/includes/header", $data);
         $this->load->view("adminNav/navheader");
-        $this->load->view("dashboard/main");
+        $this->load->view("userlogs/main");
         $this->load->view("dashboard/includes/footer");
     }
 }

@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>SB Admin - Start Bootstrap Template</title>
+  <title><?= $title ?></title>
+  <link rel="shortcut icon" href="<?= $this->config->base_url() ?>images/logo/icon.png">
   <!-- Bootstrap core CSS-->
   <link href="<?= base_url()?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
