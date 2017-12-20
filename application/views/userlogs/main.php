@@ -10,6 +10,14 @@ User Logs
             </li>
             <li class="breadcrumb-item active">User Logs</li>
         </ol>
+        <?php if(empty($logs)):?>
+        <div class = "col-xs-12" style = "margin-top:30px;">
+            <center>
+                <h4>No user logs yet</h4>
+                <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+            </center>
+        </div>
+        <?php else:?>
         <!-- Example DataTables Card-->
         <div class="card mb-3">
             <div class="card-header">
@@ -20,69 +28,26 @@ User Logs
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Activity</th>
+                                <th>Access</th>
+                                <th>Timestamp</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
+                            <?php foreach($logs as $log):?>
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                                <td><?= $log->user_firstname." ".$log->user_lastname?></td>
+                                <td><?= $log->event_description?></td>
+                                <td><?= $log->user_access?></td>
+                                <td><?= $log->event_added_at?></td>
                             </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                                <td>22</td>
-                                <td>2012/03/29</td>
-                                <td>$433,060</td>
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>33</td>
-                                <td>2008/11/28</td>
-                                <td>$162,700</td>
-                            </tr>
+                            <?php endforeach;?>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
+        <?php endif;?>
 
 
