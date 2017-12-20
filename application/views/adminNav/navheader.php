@@ -8,23 +8,26 @@ Admin Nav Header
         white-space:nowrap;
         text-overflow: ellipsis;
     }
+    .li.active{
+        background:black !important;
+    }
 </style>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html"><img src = "<?= base_url()?>images/logo/logo.png"/></a>
+        <a class="navbar-brand" href="index.html"><img src = "<?= base_url()?>images/logo/logo.png" height="25"/></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."AdminDashboard") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="<?= base_url()?>AdminDashboard">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="User Logs">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."UserLogs") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="User Logs">
                     <a class="nav-link" href="<?= base_url()?>UserLogs">
                         <i class="fa fa-fw fa-key"></i>
                         <span class="nav-link-text">User Logs</span>
@@ -157,7 +160,7 @@ Admin Nav Header
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                         <i class="fa fa-fw fa-bell"></i>
                         <span class="d-lg-none">Alerts
                             <span class="badge badge-pill badge-warning">6 New</span>

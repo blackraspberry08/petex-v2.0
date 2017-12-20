@@ -16,7 +16,8 @@ class UserLogs extends CI_Controller {
     public function index(){
         $data = array(
             'title' => "User Logs",
-            'user_name' => "Juan Carlo D.R. Valencia"
+            'user_name' => "Juan Carlo D.R. Valencia",
+            'logs' => $this->UserLogs_model->get_userlogs("event", "user", "event.user_id = user.user_id", "admin", "event.admin_id = admin.admin_id")
         );
         $this->load->view("dashboard/includes/header", $data);
         $this->load->view("adminNav/navheader");
