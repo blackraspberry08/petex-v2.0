@@ -1,5 +1,5 @@
 <!--===========================
-User Logs
+Audit Trail
 ============================-->
 <div class="content-wrapper">
     <div class="container-fluid">
@@ -8,6 +8,6 @@ User Logs
             <li class="breadcrumb-item">
                 <a href="<?= base_url()?>AdminDashboard">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">User Logs</li>
+            <li class="breadcrumb-item active">Audit Trail</li>
         </ol>
-        <?php include_once "userlogs.php";?>
+        <?php include_once "audit_trail.php";?>

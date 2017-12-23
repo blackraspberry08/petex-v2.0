@@ -1,6 +1,6 @@
 <?php
-class UserLogs_model extends CI_Model {
-    public function get_userlogs($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL){
+class AuditTrail_model extends CI_Model {
+    public function get_audit_trail($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL){
         if (!empty($where)) {
             $this->db->where($where);
         }
@@ -22,5 +22,5 @@ class UserLogs_model extends CI_Model {
         }
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
-    }
+    }   
 }

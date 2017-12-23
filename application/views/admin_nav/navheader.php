@@ -3,13 +3,47 @@ Admin Nav Header
 ============================-->
 <style>
     .crop-word{
-        max-width:300px;
+        max-width:200px;
         overflow: hidden;
         white-space:nowrap;
         text-overflow: ellipsis;
     }
     .li.active{
         background:black !important;
+    }
+    .dropdown-toggle::after {
+        display:none
+    }
+
+    .profile-header-img {
+        padding: 0px;
+    }
+
+    .profile-header-img > img.img-circle {
+        height:65px;
+        padding:-8px !important;
+        border: 2px solid #aaa;
+        border-radius: 50%;
+    }
+    #user-name{
+        color:#141414;
+        font-size:16px;
+    }
+    .scrollbar-custom::-webkit-scrollbar-track{
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #eee;
+    }
+
+    .scrollbar-custom::-webkit-scrollbar{
+        width: 5px;
+        background-color: #24282C;
+    }
+
+    .scrollbar-custom::-webkit-scrollbar-thumb{
+        background-color: #24282C;
+    }
+    .dropdown-menu {
+        width: 300px !important;
     }
 </style>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -20,7 +54,7 @@ Admin Nav Header
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <ul class="navbar-nav navbar-sidenav scrollbar-custom" id="exampleAccordion">
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."AdminDashboard") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="<?= base_url()?>AdminDashboard">
                         <i class="fa fa-fw fa-dashboard"></i>
@@ -31,6 +65,12 @@ Admin Nav Header
                     <a class="nav-link" href="<?= base_url()?>UserLogs">
                         <i class="fa fa-fw fa-key"></i>
                         <span class="nav-link-text">User Logs</span>
+                    </a>
+                </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."AuditTrail") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Audit Trails">
+                    <a class="nav-link" href="<?= base_url()?>AuditTrail">
+                        <i class="fa fa-fw fa-list-ul"></i>
+                        <span class="nav-link-text">Audit Trail</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
@@ -124,7 +164,7 @@ Admin Nav Header
                     </a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto" >
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-envelope"></i>
@@ -135,7 +175,7 @@ Admin Nav Header
                             <i class="fa fa-fw fa-circle"></i>
                         </span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
                         <h6 class="dropdown-header">New Messages:</h6>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">
@@ -169,7 +209,7 @@ Admin Nav Header
                             <i class="fa fa-fw fa-circle"></i>
                         </span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">New Alerts:</h6>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">
@@ -202,16 +242,36 @@ Admin Nav Header
                         <a class="dropdown-item small" href="#">View all alerts</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="<?= $user_name?>">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <div class="crop-word">
-                            <i class="fa fa-fw fa-user"></i>&nbsp;<?= $user_name?>
-                        </div>
+                            <?= $user_name?>&emsp;   
+                        </div>       
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-fw fa-sign-out"></i> Logout</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class = "dropdown-header">
+                            <div class ="row no-gutters">
+                                <div class = "col-lg-4 ">
+                                    <div class="profile-header-img ">
+                                        <img class="img-circle" src="<?= base_url().$user_picture?>" />
+                                    </div>
+                                </div>
+                                <div class = "col-lg-8" style = "overflow:hidden;">
+                                    <span id = "user-name" data-toggle="tooltip" data-placement="bottom" title="<?= $user_name?>"><?= $user_name?></span>
+                                    <br>
+                                    <span id = "user-access"><?= $user_access?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" style = "cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
+                            Logout
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>

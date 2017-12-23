@@ -132,4 +132,8 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = array(
+    "AdminDashboard_model", 
+    "UserLogs_model",
+    "AuditTrail_model"
+    );
