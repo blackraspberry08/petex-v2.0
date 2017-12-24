@@ -61,6 +61,18 @@ Admin Nav Header
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."ManageUser") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Manage Users">
+                    <a class="nav-link" href="<?= base_url()?>ManageUser">
+                        <i class="fa fa-fw fa-users"></i>
+                        <span class="nav-link-text">Manage Users</span>
+                    </a>
+                </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."ManageAdmin") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Manage Admin">
+                    <a class="nav-link" href="<?= base_url()?>ManageAdmin">
+                        <i class="fa fa-fw fa-lock"></i>
+                        <span class="nav-link-text">Manage Admin</span>
+                    </a>
+                </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."UserLogs") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="User Logs">
                     <a class="nav-link" href="<?= base_url()?>UserLogs">
                         <i class="fa fa-fw fa-key"></i>
@@ -72,52 +84,6 @@ Admin Nav Header
                         <i class="fa fa-fw fa-list-ul"></i>
                         <span class="nav-link-text">Audit Trail</span>
                     </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fa fa-fw fa-area-chart"></i>
-                        <span class="nav-link-text">Charts</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Tables</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-                        <i class="fa fa-fw fa-wrench"></i>
-                        <span class="nav-link-text">Components</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseComponents">
-                        <li>
-                            <a href="navbar.html">Navbar</a>
-                        </li>
-                        <li>
-                            <a href="cards.html">Cards</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-                        <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">Example Pages</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-                        <li>
-                            <a href="login.html">Login Page</a>
-                        </li>
-                        <li>
-                            <a href="register.html">Registration Page</a>
-                        </li>
-                        <li>
-                            <a href="forgot-password.html">Forgot Password Page</a>
-                        </li>
-                        <li>
-                            <a href="blank.html">Blank Page</a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
                     <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
@@ -150,12 +116,7 @@ Admin Nav Header
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-fw fa-link"></i>
-                        <span class="nav-link-text">Link</span>
-                    </a>
-                </li>
+                
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">

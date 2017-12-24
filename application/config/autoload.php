@@ -135,5 +135,7 @@ $autoload['language'] = array();
 $autoload['model'] = array(
     "AdminDashboard_model", 
     "UserLogs_model",
-    "AuditTrail_model"
+    "AuditTrail_model",
+    "ManageUsers_model",
+    "ManageAdmin_model"
     );
