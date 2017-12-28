@@ -6,12 +6,13 @@
 <section id="hero">
     <div class="hero-container">
         <div class="row container-fluid">
-            <div class="col-md-7" style="margin-top: 50px;">
+            <div class="col-md-7 wow fadeInLeft" style="margin-top: 200px;">
                 <h1>Welcome to PetEx</h1>
                 <h2>Pet Express an <strong>Adoption System</strong><br> for <strong>PAWS</strong></h2>
             </div>
-            <div class="col-md-5">
-                <div class="card">
+            
+            <div class="col-md-5" style="margin-top: 50px;">
+                <div class="card wow fadeInRight">
                     <div class="card-header">
                         <img src="<?= $this->config->base_url() ?>images/logo/icon.png" style="height:50px;" alt="" />
                         <br><br>
@@ -29,10 +30,11 @@
                             </div><br>
 
                         </form>
+                        <p>New to PetEx? <a href="#register">Create an Account</a></p>
                     </div> 
                     <div class="card-footer">
                         <center> 
-                            <a class="btn btn-primary pull-left" href="#">
+                            <a class="btn btn-primary pull-left" href="<?= $this->config->base_url()?>reset">
                                 <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
                             <a class="btn btn-success pull-right" href="#">
                                 <i class="fa fa-send fa-lg"></i> Login</a>
@@ -40,9 +42,8 @@
                     </div>
                 </div>
             </div>
-
-        </div><br>
-        <a href="#about" class="btn-get-started">Get Started</a>
+        </div>
+        <a href="#about" class="btn-get-started wow fadeInUp">Get Started</a>
     </div>
 </section><!-- #hero -->
 
@@ -143,14 +144,14 @@
     <section id="call-to-action">
         <div class="container wow fadeIn">
             <div class="row">
-                <div class="col-lg-6 text-center text-lg-left">
+                <div class="col-lg-6 text-center wow fadeInLeft">
                     <h3 class="cta-title">PetEx Pet Manager</h3>
                     <p class="cta-text"> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
-                <div class="col-lg-1">
-                </div>
-                <div class="col-lg-5 text-center">
-                    <img src="<?= $this->config->base_url() ?>images/logo/mobilePrev2.png" alt="" />
+                <div class="col-lg-6 wow fadeInRight">
+                    <center>
+                        <img src="<?= $this->config->base_url() ?>images/logo/mobilePrev2.png" alt="" />
+                    </center>
                 </div>
             </div>
 
