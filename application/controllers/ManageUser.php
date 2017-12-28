@@ -61,11 +61,15 @@ class ManageUser extends CI_Controller {
     }
     public function show_user_info(){
         $selected_user = $this->ManageUsers_model->get_user_info("user", array("user_id" => $this->session->userdata("show_user_info")))[0];
-        $user_transaction = $this->ManageUsers_model->get_user_transaction(array("transaction.user_id" => $this->session->userdata("show_user_info")));
+        $user_transaction = $this->ManageUsers_model->get_user_transactions(array("transaction.user_id" => $this->session->userdata("show_user_info")));
+        $user_pet = $this->ManageUsers_model->get_user_pets(array("adoption.user_id" => $this->session->userdata("show_user_info")));
+        $user_activity = $this->ManageUsers_model->get_user_activities(array("event.user_id" => $this->session->userdata("show_user_info")));
         $data = array(
             "title" => $selected_user->user_firstname." ".$selected_user->user_lastname." | Information",
             "user" => $selected_user,
             "transactions" => $user_transaction,
+            "pets" => $user_pet,
+            "activities" => $user_activity,
             //FOR DUMMY VARIABLES
             'user_name' => "Juan Carlo D.R. Valencia",
             'user_picture' => "images/user/jc.png",
