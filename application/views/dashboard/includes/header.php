@@ -15,6 +15,8 @@
   <link href="<?= base_url()?>assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
   <link href="<?= base_url()?>assets/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+   <!-- Timeline CSS Files-->
+   <link rel ="stylesheet" href = "<?= base_url()?>assets/timeline/timeline.css">
   <!-- Custom styles for this template-->
   <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
 </head>
