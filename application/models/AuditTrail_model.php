@@ -1,6 +1,6 @@
 <?php
 class AuditTrail_model extends CI_Model {
-    public function get_audit_trail($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL){
+    public function get_audit_trail($table, $join = NULL, $on = NULL, $where = NULL){
         if (!empty($where)) {
             $this->db->where($where);
         }

@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -41,6 +41,5 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer small text-muted">Last updated on <?= date('F d, Y \a\t h:m A', $logs_last_update[0]->event_added_at)?></div>
     </div>
 <?php endif; ?>

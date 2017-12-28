@@ -42,7 +42,7 @@ class ManageUsers_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
-    public function get_user_transaction($where = NULL){
+    public function get_user_transactions($where = NULL){
         $table = "transaction";
         $join = "user";
         $on = "transaction.user_id = user.user_id";
@@ -79,8 +79,30 @@ class ManageUsers_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
     public function get_user_pets($where = NULL){
+        $table = "adoption";
+        $join = "user";
+        $on = "adoption.user_id = user.user_id";
+        $join2 = "pet";
+        $on2 = "adoption.pet_id = pet.pet_id";
         if (!empty($where)) {
             $this->db->where($where);
         }
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->order_by("adoption.adoption_adopted_at", "DESC");
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    public function get_user_activities($where = NULL){
+        $table = "event";
+        $join = "user";
+        $on = "event.user_id = user.user_id";
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->join($join, $on, "left outer");
+        $this->db->order_by("event.event_added_at", "DESC");
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 }

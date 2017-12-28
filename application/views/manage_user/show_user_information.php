@@ -100,6 +100,13 @@ SHOW INFORMATION
         border-right: 1px solid white;
         border-left: 1px solid white;
     }
+    .nav-pills .nav-link:hover{
+        background: #ddd;
+    }
+    .nav-pills .nav-link.active:hover{
+        background: #ccc;
+        color:#737373;
+    }
 </style>
 
 <div class="content-wrapper">
@@ -136,16 +143,29 @@ SHOW INFORMATION
                             }else{
                                 echo count($transactions);
                             }?>
-
                         </span>
                         <p>Transactions</p>
                     </a>
                     <a class="nav-item nav-link active" data-toggle="tab" href="#pet" role="tab" aria-controls="home" aria-selected="true">
-                        <span data-toggle="counter-up" class ="sp">521</span>
+                        <span data-toggle="counter-up" class ="sp">
+                            <?php 
+                            if (empty($pets)){
+                                echo "0";
+                            }else{
+                                echo count($pets);
+                            }?>
+                        </span>
                         <p>Pets</p>
                     </a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#activities" role="tab" aria-controls="home" aria-selected="true">
-                        <span data-toggle="counter-up" class ="sp">521</span>
+                        <span data-toggle="counter-up" class ="sp">
+                        <?php 
+                            if (empty($activities)){
+                                echo "0";
+                            }else{
+                                echo count($activities);
+                            }?>
+                        </span>
                         <p>Activities</p>
                     </a>
                 </nav>
@@ -154,10 +174,10 @@ SHOW INFORMATION
                         <?php include_once("show_transaction.php");?>
                     </div>
                     <div class="p-3 tab-pane fade show active" id="pet" role="tabpanel" aria-labelledby="profile-tab">
-                        Profile
+                        <?php include_once("show_pet.php");?>
                     </div>
                     <div class="p-3 tab-pane fade" id="activities" role="tabpanel" aria-labelledby="contact-tab">
-                        Contact
+                        <?php include_once("show_activity.php");?>
                     </div>
                 </div>
             </div>
