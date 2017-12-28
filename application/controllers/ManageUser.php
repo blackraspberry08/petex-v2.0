@@ -1,9 +1,10 @@
 <?php
 
-class UserLogs extends CI_Controller {
+class ManageUser extends CI_Controller {
     function __construct() {
         parent::__construct();
         //---> MODELS HERE!
+
         
         //---> LIBRARIES HERE!
 
@@ -14,9 +15,9 @@ class UserLogs extends CI_Controller {
     
     public function index(){
         $data = array(
-            'title' => "User Logs",
-            'logs' => $this->UserLogs_model->get_userlogs("event", "user", "event.user_id = user.user_id", "admin", "event.admin_id = admin.admin_id", array("event_classification" => "log")),
-            'logs_last_update' => $this->UserLogs_model->get_recent_timestamp("event", array("event_classification" => "log"), "event_added_at"),
+            'title' => "Manage Users",
+            'users' => $this->ManageUsers_model->get_users("user", array("user_access"=>"User")),
+            'user_last_update' => $this->ManageUsers_model->get_recent_timestamp("user", array("user_access"=>"User"), "user_added_at"),
             //FOR DUMMY VARIABLES
             'user_name' => "Juan Carlo D.R. Valencia",
             'user_picture' => "images/user/jc.png",
@@ -24,9 +25,7 @@ class UserLogs extends CI_Controller {
             );
         $this->load->view("dashboard/includes/header", $data);
         $this->load->view("admin_nav/navheader");
-        $this->load->view("userlogs/main");
+        $this->load->view("manage_user/main");
         $this->load->view("dashboard/includes/footer");
     }
 }
-
-

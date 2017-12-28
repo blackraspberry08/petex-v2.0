@@ -1,6 +1,6 @@
-<!--===========================
-User Logs
-============================-->
+<!--======================
+MANAGE USERS
+=======================-->
 <div class="content-wrapper">
     <div class="container-fluid">
         <!-- Breadcrumbs-->
@@ -8,6 +8,6 @@ User Logs
             <li class="breadcrumb-item">
                 <a href="<?= base_url()?>AdminDashboard">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">User Logs</li>
+            <li class="breadcrumb-item active">Manage Users</li>
         </ol>
-        <?php include_once "userlogs.php";?>
+        <?php include_once 'manage_user.php';?>
