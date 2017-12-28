@@ -10,6 +10,7 @@ class UserLogs_model extends CI_Model {
         if (!(empty($join2) || empty($on2))) {
             $this->db->join($join2, $on2, "left outer");
         }
+        $this->db->order_by('event_added_at', 'DESC');
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }

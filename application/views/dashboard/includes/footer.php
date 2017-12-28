@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-<!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript-->
     <script src="<?= base_url()?>assets/jquery/jquery.min.js"></script>
     <script src="<?= base_url()?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
@@ -43,6 +43,17 @@
     <!-- Custom scripts for this page-->
     <script src="<?= base_url()?>assets/admin/js/sb-admin-datatables.min.js"></script>
     <script src="<?= base_url()?>assets/admin/js/sb-admin-charts.min.js"></script>
+    <!-- Counters Scripts-->
+    <script src="<?= base_url() ?>assets/waypoints/waypoints.min.js"></script>
+    <script src="<?= base_url() ?>assets/counterup/counterup.min.js"></script>
+    <script src="<?= base_url() ?>assets/admin/js/sb-admin-counter.js"></script>
+    <!-- Tab Script-->
+    <script>
+        $('#user_tab a').click(function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
+     </script>
 </div>
 </body>
 </html>

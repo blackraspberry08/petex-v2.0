@@ -9,5 +9,5 @@ MANAGE USERS
                 <a href="<?= base_url()?>AdminDashboard">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Manage Users</li>
-        </ol>
+        </ol>  
         <?php include_once 'manage_user.php';?>
