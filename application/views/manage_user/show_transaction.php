@@ -58,23 +58,40 @@
                                             <center><h4 id="timeline" style = "color: #2dc997;">Progress</h4></center>
                                         </div>
                                         <ul class="timeline">
-                                            <li>
-                                                <div class="timeline-badge warning"><i class="glyphicon glyphicon-check"></i></div>
-                                                <div class="timeline-panel">
-                                                    <div class="timeline-heading">
-                                                        <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                            <?php foreach($transaction_info as $info):?>
+                                                <?php if($info->progress_isSuccessful == 1):?>
+                                                <li>
+                                                    <div class="timeline-badge success"><i class="fa fa-check"></i></div>
+                                                    <div class="timeline-panel">
+                                                        <div class="timeline-heading">
+                                                            <h4 class="timeline-title"><?=$info->checklist_title;?></h4>
+                                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> Accomplished on <?= date('F d, Y \a\t h:m A', $info->progress_accomplished_at);?></small></p>
+                                                        </div>
+                                                        <div class="timeline-body">
+                                                            <p><?=$info->progress_comment == ""? "No comments" : $info->progress_comment;?></p>
+                                                        </div>
                                                     </div>
-                                                    <div class="timeline-body">
-                                                        <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                                </li>
+                                                <?php else:?>
+                                                <li class = "timeline-inverted">
+                                                    <div class="timeline-badge primary"><i class="fa fa-spinner"></i></div>
+                                                    <div class="timeline-panel">
+                                                        <div class="timeline-heading">
+                                                            <h4 class="timeline-title"><?=$info->checklist_title;?></h4>
+                                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> Not accomplished yet.</small></p>
+                                                        </div>
+                                                        <div class="timeline-body">
+                                                            <p><?=$info->progress_comment == ""? "No comments" : $info->progress_comment;?></p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
+                                                </li>
+                                                <?php endif;?>
+                                            <?php endforeach;?>
                                         </ul>
+                                        <div class="page-header">
+                                            <center><h4 class = "text-danger">End</h4></center>
+                                        </div>
                                     </div>
-                                    <?php foreach($transaction_info as $info):?>
-                                        
-                                    <?php endforeach;?>
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal" style = "cursor: pointer;">Cancel</button>
