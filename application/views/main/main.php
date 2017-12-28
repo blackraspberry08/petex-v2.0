@@ -10,7 +10,7 @@
                 <h1>Welcome to PetEx</h1>
                 <h2>Pet Express an <strong>Adoption System</strong><br> for <strong>PAWS</strong></h2>
             </div>
-            
+
             <div class="col-md-5" style="margin-top: 50px;">
                 <div class="card wow fadeInRight">
                     <div class="card-header">
@@ -18,28 +18,24 @@
                         <br><br>
                         <h4> <i class="fa fa-sign-in fa-lg"></i> Sign in to PetEx</h4>
                     </div>
-                    <div class="card-body">
-                        <form method="POST" action="">
+                    <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
+                        <div class="card-body">
                             <div class="input-group margin-bottom-sm">
                                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                <input class="form-control" type="text" placeholder="Username">
+                                <input class="form-control" type="text" name="username" placeholder="Username">
                             </div><br>
                             <div class="input-group margin-bottom-sm">
                                 <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                                <input class="form-control" type="password" placeholder="Password">
+                                <input class="form-control" type="password" name="password" placeholder="Password">
                             </div><br>
-
-                        </form>
-                        <p>New to PetEx? <a href="#register">Create an Account</a></p>
-                    </div> 
-                    <div class="card-footer">
-                        <center> 
-                            <a class="btn btn-primary pull-left" href="<?= $this->config->base_url()?>reset">
+                            <p>New to PetEx? <a href="#register">Create an Account</a></p>
+                        </div> 
+                        <div class="card-footer" style="padding-bottom: 25px; margin-top:-20px;">
+                            <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
                                 <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
-                            <a class="btn btn-success pull-right" href="#">
-                                <i class="fa fa-send fa-lg"></i> Login</a>
-                        </center>
-                    </div>
+                            <button type="submit" class="btn btn-success pull-right">Login</button>
+                        </div><br>
+                    </form>
                 </div>
             </div>
         </div>
