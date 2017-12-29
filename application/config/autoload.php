@@ -137,5 +137,5 @@ $autoload['model'] = array(
     "UserLogs_model",
     "AuditTrail_model",
     "ManageUsers_model",
-    "ManageAdmin_model"
+    "ManageOfficer_model"
     );

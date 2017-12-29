@@ -1,5 +1,5 @@
 <!--===========================
-SHOW USER INFORMATION
+SHOW OFFICER INFORMATION
 ============================-->
 <style>
     /* USER PROFILE PAGE */
@@ -127,20 +127,20 @@ SHOW USER INFORMATION
                 <a href="<?= base_url() ?>AdminDashboard">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>ManageUser">Manage Users</a>
+                <a href="<?= base_url() ?>ManageOfficer">Manage Officers</a>
             </li>
-            <li class="breadcrumb-item active"><?= $user->user_firstname . " " . $user->user_lastname . " Information" ?></li>
+            <li class="breadcrumb-item active"><?= $officer->user_firstname . " " . $officer->user_lastname . " Information" ?></li>
         </ol>
         <div class = "row">
             <div class = "col-lg-12 col-sm-12">
                 <div id = "header-card" class=" hovercard border border-secondary border-bottom-0 rounded-top">
                     <div class="card-background">
-                        <img class="card-bkimg" alt="" src="<?= base_url() . $user->user_picture ?>">
+                        <img class="card-bkimg" alt="" src="<?= base_url() . $officer->user_picture ?>">
                     </div>
                     <div class="useravatar">
-                        <img alt="" src="<?= base_url() . $user->user_picture ?>">
+                        <img alt="" src="<?= base_url() . $officer->user_picture ?>">
                     </div>
-                    <div class="card-info"> <span class="card-title"><?= $user->user_firstname . " " . $user->user_lastname ?></span></div>
+                    <div class="card-info"> <span class="card-title"><?= $officer->user_firstname . " " . $officer->user_lastname ?></span></div>
                 </div>
             </div>
         </div>
@@ -152,30 +152,30 @@ SHOW USER INFORMATION
                 <div class="card-body">                    
                     <div class = "row">
                         <div class ="col-lg-4 col-sm-12">
-                            <img class="img-fluid img-thumbnail mx-auto d-block" id = "user_image" src="<?= base_url().$user->user_picture;?>" alt="<?= $user->user_firstname." ".$user->user_lastname;?>">
+                            <img class="img-fluid img-thumbnail mx-auto d-block" id = "user_image" src="<?= base_url().$officer->user_picture;?>" alt="<?= $officer->user_firstname." ".$officer->user_lastname;?>">
                         </div>
                         <div class ="col-lg-8 col-sm-12">
                             <table class="table borderless table-responsive-sm">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Username</th>
-                                        <td><?= $user->user_username;?></td>
+                                        <td><?= $officer->user_username;?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Birthday</th>
-                                        <td><?= date("F d, Y", $user->user_bday);?></td>
+                                        <td><?= date("F d, Y", $officer->user_bday);?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Email</th>
-                                        <td><?= $user->user_email;?></td>
+                                        <td><?= $officer->user_email;?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Contact No.</th>
-                                        <td><?= $user->user_contact_no;?></td>
+                                        <td><?= $officer->user_contact_no;?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Address</th>
-                                        <td><?= $user->user_address.", ".$user->user_brgy.", ".$user->user_city;?></td>
+                                        <td><?= $officer->user_address.", ".$officer->user_brgy.", ".$officer->user_city;?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -187,31 +187,7 @@ SHOW USER INFORMATION
         <div class = "row">
             <div class = "col-lg-12 col-sm-12 counters">
                 <nav class="nav nav-pills nav-fill my-1" id="user_tab" role="tablist">
-                    <a class="nav-item nav-link " data-toggle="tab" href="#transaction" role="tab" aria-controls="home" aria-selected="true">
-                        <span data-toggle="counter-up" class ="sp">
-                            <?php
-                            if (empty($transactions)) {
-                                echo "0";
-                            } else {
-                                echo count($transactions);
-                            }
-                            ?>
-                        </span>
-                        <p>Transactions</p>
-                    </a>
-                    <a class="nav-item nav-link active" data-toggle="tab" href="#pet" role="tab" aria-controls="home" aria-selected="true">
-                        <span data-toggle="counter-up" class ="sp">
-                            <?php
-                            if (empty($pets)) {
-                                echo "0";
-                            } else {
-                                echo count($pets);
-                            }
-                            ?>
-                        </span>
-                        <p>Pets</p>
-                    </a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#activities" role="tab" aria-controls="home" aria-selected="true">
+                    <a class="nav-item nav-link active" data-toggle="tab" href="#activities" role="tab" aria-controls="home" aria-selected="true">
                         <span data-toggle="counter-up" class ="sp">
                             <?php
                             if (empty($activities)) {
@@ -225,14 +201,8 @@ SHOW USER INFORMATION
                     </a>
                 </nav>
                 <div class="tab-content" id="user_tab_content">
-                    <div class="p-3 tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="home-tab">
-                        <?php include_once("show_transaction.php"); ?>
-                    </div>
-                    <div class="p-3 tab-pane fade show active" id="pet" role="tabpanel" aria-labelledby="profile-tab">
-                        <?php include_once("show_pet.php"); ?>
-                    </div>
-                    <div class="p-3 tab-pane fade" id="activities" role="tabpanel" aria-labelledby="contact-tab">
-                        <?php include_once("show_activity.php"); ?>
+                    <div class="p-3 tab-pane fade show active" id="activities" role="tabpanel" aria-labelledby="contact-tab">
+                        <?php include_once("show_officer_activities.php"); ?>
                     </div>
                 </div>
             </div>

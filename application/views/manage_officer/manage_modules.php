@@ -1,5 +1,5 @@
 <!--======================
-MANAGE ADMIN
+MANAGE OFFICER MMODULES
 =======================-->
 <div class="content-wrapper">
     <div class="container-fluid">
@@ -8,9 +8,9 @@ MANAGE ADMIN
             <li class="breadcrumb-item">
                 <a href="<?= base_url()?>AdminDashboard">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Manage Admin</li>
+            <li class="breadcrumb-item">
+                <a href="<?= base_url()?>ManageOfficer">Manage Officers</a>
+            </li>
+            <li class="breadcrumb-item active"><?= $officer->user_firstname." ".$officer->user_lastname?> Module Access</li>
         </ol>
-        <div class="row">
-            
-        </div>
-    </div>
+        Modules here.
