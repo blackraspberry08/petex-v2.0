@@ -67,10 +67,10 @@ Admin Nav Header
                         <span class="nav-link-text">Manage Users</span>
                     </a>
                 </li>
-                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."ManageAdmin") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Manage Admin">
-                    <a class="nav-link" href="<?= base_url()?>ManageAdmin">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."ManageOfficer") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Manage Admin">
+                    <a class="nav-link" href="<?= base_url()?>ManageOfficer">
                         <i class="fa fa-fw fa-lock"></i>
-                        <span class="nav-link-text">Manage Admin</span>
+                        <span class="nav-link-text">Manage Officers</span>
                     </a>
                 </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."UserLogs") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="User Logs">

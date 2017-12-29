@@ -15,20 +15,20 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-<?php endif;?>
-<div class="card mb-3">
-    <div class="card-header">
-        <i class="fa fa-table"></i> Manage User
-    </div>
-    <div class="card-body">
-<?php if (empty($users)): ?>
-        <center>
-            <h4>No users yet</h4>
-            <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
-        </center>
-    </div>
-</div>
-<?php else: ?>
+    <?php endif;?>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Manage Officers
+            </div>
+            <div class="card-body">
+                <?php if (empty($admins)): ?>
+                <center>
+                    <h4>No officers yet</h4>
+                    <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                </center>
+            </div>
+        </div>
+    <?php else: ?>
         <div class="table-responsive">
             <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
                 <thead>
@@ -40,44 +40,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($users as $user): ?>
+                    <?php foreach ($admins as $admin): ?>
                         <tr>
-                            <td><?= $user->user_firstname . " " . $user->user_lastname ?></td>
-                            <td><?= $user->user_status == 1? "Active" : "Inactive" ; ?></td>
-                            <td><?= date('F d, Y \a\t h:m A', $user->user_added_at); ?></td>
+                            <td><?= $admin->user_firstname . " " . $admin->user_lastname ?></td>
+                            <td><?= $admin->user_status == 1? "Active" : "Inactive" ; ?></td>
+                            <td><?= date('F d, Y \a\t h:m A', $admin->user_added_at); ?></td>
                             <td>
                                 <center>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href = "<?= base_url()?>ManageUser/show_user_info_exec/<?= $user->user_id?>" class = "btn btn-outline-primary">Show Information</a>
-                                        <a href = "#" class = "btn btn-outline-primary" style = "width:100px;" data-toggle="modal" data-target="#activate_user_<?= $user->user_id?>">
-                                            <?= $user->user_status == 0 ? "Activate" : "Deactivate";?>
+                                        <a href = "<?= base_url()?>ManageOfficer/show_officer_info_exec/<?= $admin->user_id?>" class = "btn btn-outline-primary">Show Information</a>
+                                        <a href = "<?= base_url()?>ManageOfficer/manage_module_exec/<?= $admin->user_id?>" class = "btn btn-outline-primary">Modules</a>
+                                        <a href = "#" class = "btn btn-outline-primary" style = "width:100px;" data-toggle="modal" data-target="#activate_officer_<?= $admin->user_id?>">
+                                            <?= $admin->user_status == 0 ? "Activate" : "Deactivate";?>
                                         </a>
                                     </div>
                                 </center>
                             </td>
                         </tr>
-                        <div class="modal fade" id="activate_user_<?= $user->user_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="activate_officer_<?= $admin->user_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><?= $user->user_status == 0 ? "Activate" : "Deactivate";?> User</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel"><?= $admin->user_status == 0 ? "Activate" : "Deactivate";?> Officer</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <?php if($user->user_status == 0):?>
-                                            Once you activate this user, <?= $user->user_sex == "Male"? "he" : "she";?> will be able to log into the system.
+                                        <?php if($admin->user_status == 0):?>
+                                            Once you activate this officer's account, <?= $admin->user_sex == "Male"? "he" : "she";?> will be able to log into the system.
                                         <?php else:?>
-                                            Once you deactivate this user, <?= $user->user_sex == "Male"? "he" : "she";?> will no longer be able to log into the system.
+                                            Once you deactivate this officer's account, <?= $admin->user_sex == "Male"? "he" : "she";?> will no longer be able to log into the system.
                                         <?php endif;?>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal" style = "cursor: pointer;">Cancel</button>
-                                        <?php if($user->user_status == 0):?>
-                                        <a class="btn btn-primary" href="<?= base_url()?>ManageUser/activate_user_exec/<?= $user->user_id?>">Activate</a>
+                                        <?php if($admin->user_status == 0):?>
+                                        <a class="btn btn-primary" href="<?= base_url()?>ManageOfficer/activate_officer_exec/<?= $admin->user_id?>">Activate</a>
                                         <?php else:?>
-                                        <a class="btn btn-primary" href="<?= base_url()?>ManageUser/deactivate_user_exec/<?= $user->user_id?>">Deactivate</a>
+                                        <a class="btn btn-primary" href="<?= base_url()?>ManageOfficer/deactivate_officer_exec/<?= $admin->user_id?>">Deactivate</a>
                                         <?php endif;?>
                                     </div>
                                 </div>
@@ -87,6 +88,6 @@
                 </tbody>
             </table>
         </div>
-</div>
+    </div>
 </div>
 <?php endif; ?>
