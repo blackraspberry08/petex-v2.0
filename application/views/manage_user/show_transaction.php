@@ -12,12 +12,13 @@
     </div>
 <?php else: ?>
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Pet Name</th>
-                    <th>Status</th>
+                    <th>State</th>
+                    <th>Progress</th>
                     <th>Started at</th>
                     <th>Finished at</th>
                     <th>Action</th>
@@ -28,9 +29,10 @@
                     <tr>
                         <td><?= $transaction->transaction_id;?></td>
                         <td><?= $transaction->pet_name;?></td>
-                        <td><?= $transaction->transaction_isFinished == 1? "Done":"In Progress";?></td>
-                        <td><?= date("F d, Y - h:m A", $transaction->transaction_started_at)?></td>
-                        <td><?= $transaction->transaction_isFinished == 1? date("F d, Y - h:m A", $transaction->transaction_finished_at): "In Progress";?></td>
+                        <td><?= $transaction->transaction_isActivated == 1? "Active" : "Inactive"?></td>
+                        <td><?= $transaction->transaction_progress."%";?></td>
+                        <td><?= date("F d, Y<\b\\r>h:m A", $transaction->transaction_started_at)?></td>
+                        <td><?= $transaction->transaction_isFinished == 1? date("F d, Y<\b\\r>h:m A", $transaction->transaction_finished_at): "In Progress";?></td>
                         <td>
                             <center><a href = "#" class = "btn btn-outline-primary" data-toggle="modal" data-target="#show_transaction_info_<?= $transaction->transaction_id?>">Show Information</a></center>
                         </td>
@@ -65,23 +67,45 @@
                                                     <div class="timeline-panel">
                                                         <div class="timeline-heading">
                                                             <h4 class="timeline-title"><?=$info->checklist_title;?></h4>
-                                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> Accomplished on <?= date('F d, Y \a\t h:m A', $info->progress_accomplished_at);?></small></p>
+                                                            <p>
+                                                                <small class="text-muted"><i class="fa fa-clock-o"></i> Not accomplished yet.</small><br>
+                                                                <small><i class="fa fa-user"></i> Administered by <?= $info->user_firstname." ".$info->user_lastname;?></small>
+                                                            </p>
                                                         </div>
                                                         <div class="timeline-body">
-                                                            <p><?=$info->progress_comment == ""? "No comments" : $info->progress_comment;?></p>
+                                                            <p><?= $info->checklist_desc?></p>
+                                                            <?php if($info->progress_comment != ""):?>
+                                                            <div class="card border-secondary mb-3">
+                                                                <div class="card-body text-secondary">
+                                                                    <h6 class="card-title">Comments : </h6>
+                                                                    <p><?= $info->progress_comment;?></p>
+                                                                </div>
+                                                            </div>
+                                                            <?php endif;?>
                                                         </div>
                                                     </div>
                                                 </li>
                                                 <?php else:?>
                                                 <li class = "timeline-inverted">
-                                                    <div class="timeline-badge primary"><i class="fa fa-spinner"></i></div>
+                                                    <div class="timeline-badge primary"><i class="fa fa-times"></i></div>
                                                     <div class="timeline-panel">
                                                         <div class="timeline-heading">
                                                             <h4 class="timeline-title"><?=$info->checklist_title;?></h4>
-                                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> Not accomplished yet.</small></p>
+                                                            <p>
+                                                                <small class="text-muted"><i class="fa fa-clock-o"></i> Not accomplished yet.</small><br>
+                                                                <small><i class="fa fa-user"></i> Administered by <?= $info->user_firstname." ".$info->user_lastname;?></small>
+                                                            </p>
                                                         </div>
                                                         <div class="timeline-body">
-                                                            <p><?=$info->progress_comment == ""? "No comments" : $info->progress_comment;?></p>
+                                                            <p><?= $info->checklist_desc?></p>
+                                                            <?php if($info->progress_comment != ""):?>
+                                                            <div class="card border-secondary mb-3">
+                                                                <div class="card-body text-secondary">
+                                                                    <h6 class="card-title">Comments : </h6>
+                                                                    <p><?= $info->progress_comment;?></p>
+                                                                </div>
+                                                            </div>
+                                                            <?php endif;?>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -89,13 +113,12 @@
                                             <?php endforeach;?>
                                         </ul>
                                         <div class="page-header">
-                                            <center><h4 class = "text-danger">End</h4></center>
+                                            <center><h4 class = "text-secondary"><?= $transaction->transaction_isActivated == 1? "Active" : "Inactive"?></h4></center>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal" style = "cursor: pointer;">Cancel</button>
-                                    <a class="btn btn-primary" href ="#" >Agree</a>
+                                    <button class="btn btn-primary" type="button" data-dismiss="modal" style = "cursor: pointer;">Close</button>
                                 </div>
                             </div>
                         </div>

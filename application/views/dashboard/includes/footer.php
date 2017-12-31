@@ -53,7 +53,7 @@
           e.preventDefault()
           $(this).tab('show')
         })
-     </script>
+    </script>
 </div>
 </body>
 </html>
