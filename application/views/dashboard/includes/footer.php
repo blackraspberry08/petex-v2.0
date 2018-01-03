@@ -47,6 +47,11 @@
     <script src="<?= base_url() ?>assets/waypoints/waypoints.min.js"></script>
     <script src="<?= base_url() ?>assets/counterup/counterup.min.js"></script>
     <script src="<?= base_url() ?>assets/admin/js/sb-admin-counter.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="<?= base_url()?>assets/bootstrap-switch/js/bootstrap-switch.js"></script>
+    <script>
+        $(".switch-style").bootstrapSwitch();
+    </script>
     <!-- Tab Script-->
     <script>
         $('#user_tab a').click(function (e) {
@@ -54,6 +59,7 @@
           $(this).tab('show')
         })
     </script>
+    
 </div>
 </body>
 </html>
