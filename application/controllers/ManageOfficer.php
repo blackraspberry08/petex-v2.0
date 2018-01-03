@@ -91,9 +91,13 @@ class ManageOfficer extends CI_Controller {
     
     public function manage_module(){
         $selected_officer = $this->ManageUsers_model->get_user_info("user", array("user_id" => $this->session->userdata("manage_module")))[0];
+        $officer_modules = $this->ManageOfficer_model->get_officer_modules(array("module_access.user_id" => $this->session->userdata("manage_module")));
+        $modules = $this->ManageOfficer_model->get_modules();
         $data = array(
-            'title' => $selected_officer->user_firstname." ".$selected_officer->user_lastname. "| Module Access",
+            'title' => $selected_officer->user_firstname." ".$selected_officer->user_lastname. " | Module Access",
             'officer' => $selected_officer,
+            'officer_modules' => $officer_modules,
+            'modules' => $modules,
             //FOR DUMMY VARIABLES
             'user_name' => "Juan Carlo D.R. Valencia",
             'user_picture' => "images/user/jc.png",
@@ -103,5 +107,33 @@ class ManageOfficer extends CI_Controller {
         $this->load->view("admin_nav/navheader");
         $this->load->view("manage_officer/manage_modules.php");
         $this->load->view("dashboard/includes/footer");
+    }
+    public function add_modules_exec(){
+        $officer = $this->ManageUsers_model->get_users("user", array("user_id" => $this->uri->segment(3), "user_access" => "Subadmin"))[0];;
+        $officer_module_access = $this->ManageOfficer_model->get_officer_modules(array("module_access.user_id" => $this->uri->segment(3)));
+        $officer_module_id = array();
+        for($i = 0; $i < sizeof($officer_module_access); $i++){
+            if($officer_module_access[0] == NULL){
+                break;
+            }else{
+                array_push($officer_module_id, $officer_module_access[$i]->module_id);
+            }
+        }
+        if(empty($this->input->post("modules"))){
+            // NO SELECTED MODULE. REMOVE ALL MODULES RELATED TO THIS OFFICER
+            $this->ManageOfficer_model->remove_all_modules(array("module_access.user_id" => $this->uri->segment(3)));
+        }else{
+            $this->ManageOfficer_model->remove_all_modules(array("module_access.user_id" => $this->uri->segment(3)));
+            $selected_modules = $this->input->post("modules");
+            foreach($selected_modules as $selected_module){
+                $data = array(
+                    'user_id' => $this->uri->segment(3),
+                    'module_id' => $selected_module
+                );
+                $this->ManageOfficer_model->add_module($data);
+            }
+        }
+        $this->session->set_flashdata("module_update", "Successfully updated ".$officer->user_firstname." ".$officer->user_lastname."'s modules.");
+        redirect(base_url()."ManageOfficer/manage_module");
     }
 }
