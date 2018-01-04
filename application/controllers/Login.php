@@ -2,6 +2,20 @@
 
 class Login extends CI_Controller {
 
+    /*=======================================
+     * ERROR LOGS:
+     * err_1        -   "Invalid Account"
+     * err_2        -   "Account is blocked"
+     * err_3        -   "Account is not yet verified"
+     * err_4        -   "Login First"
+     * err_5        -   "You are currently logged in as ????? "
+     *  
+     =======================================*/
+    
+    
+    
+    
+    
     function __construct() {
         parent::__construct();
         //---> MODELS HERE!
@@ -44,56 +58,62 @@ class Login extends CI_Controller {
 
         if (!$accountDetailsUser && !$accountDetailsAdmin) {
             //OOPS no accounts like that!
-            echo "<script>alert('Account Failed');"
-            . "window.location='" . base_url() . "main'</script>";
+            $this->session->set_flashdata("err_1", "Invalid Account");
+            redirect(base_url()."main");
         } else {
             $accountDetailsAdmin = $accountDetailsAdmin[0];
             $accountDetailsUser = $accountDetailsUser[0];
             if ($accountDetailsUser->user_access == "User") {
                 if ($accountDetailsUser->user_status == 0) {
                     //OOPS user is blocked by the admin. Please contact the admin.
-                    echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "main/'</script>";
+                    $this->session->set_flashdata("err_2", "Account is blocked. Please contact the administrator to reactivate your account.");
+                    redirect(base_url()."main");
                 } else {
                     if ($accountDetailsUser->user_isverified == 0) {
                         //OOPS user is not verified yet.
-                        echo "<script>alert('Account is not yet verified');"
-                        . "window.location='" . base_url() . "main/'</script>";
+                        $this->session->set_flashdata("err_3", "Account is not yet verified. Please verify your account through your email.");
+                        redirect(base_url()."main");
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetailsUser->user_id);
+                        $this->session->set_userdata('current_user', $accountDetailsUser);
+                        $this->session->set_userdata('user_access', "user");
                         redirect(base_url() . 'UserDashboard/');
                     }
                 }
             } else if ($accountDetailsUser->user_access == "Subadmin") {
                 if ($accountDetailsUser->user_status == 0) {
                     //OOPS user is blocked by the admin. Please contact the admin.
-                    echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "main/'</script>";
+                    $this->session->set_flashdata("err_2", "Account is blocked. Please contact the administrator to reactivate your account.");
+                    redirect(base_url()."main");
                 } else {
                     if ($accountDetailsUser->user_isverified == 0) {
                         //OOPS user is not verified yet.
-                        echo "<script>alert('Account is not yet verified');"
-                        . "window.location='" . base_url() . "main/'</script>";
+                        $this->session->set_flashdata("err_3", "Account is not yet verified. Please verify your account through your email.");
+                        redirect(base_url()."main");
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetailsUser->user_id);
+                        $this->session->set_userdata('current_user', $accountDetailsUser);
+                        $this->session->set_userdata('user_access', "subadmin");
                         redirect(base_url() . 'SubadminDashboard/');
                     }
                 }
             } else {
                 if ($accountDetailsAdmin->admin_status == 0) {
                     //OOPS user is blocked by the admin. Please contact the admin.
-                    echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "main/'</script>";
+                    $this->session->set_flashdata("err_2", "Account is blocked. Please contact the administrator to reactivate your account.");
+                    redirect(base_url()."main");
                 } else {
                     if ($accountDetailsAdmin->admin_isverified == 0) {
                         //OOPS user is not verified yet.
-                        echo "<script>alert('Account is not yet verified');"
-                        . "window.location='" . base_url() . "main/'</script>";
+                        $this->session->set_flashdata("err_3", "Account is not yet verified. Please verify your account through your email.");
+                        redirect(base_url()."main");
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetailsAdmin->admin_id);
+                        $this->session->set_userdata('current_user', $accountDetailsUser);
+                        $this->session->set_userdata('user_access', "admin");
                         redirect(base_url() . 'AdminDashboard/');
                     }
                 }
