@@ -28,7 +28,7 @@
                                 <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                                 <input class="form-control" type="password" name="password" placeholder="Password">
                             </div><br>
-                            <p>New to PetEx? <a href="#register">Create an Account</a></p>
+                            <p>New to PetEx? <a href="<?= $this->config->base_url() ?>register">Create an Account</a></p>
                         </div> 
                         <div class="card-footer" style="padding-bottom: 25px; margin-top:-20px;">
                             <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
