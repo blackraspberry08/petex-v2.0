@@ -17,6 +17,9 @@
   <link href="<?= base_url()?>assets/datatables/dataTables.bootstrap4.css" rel="stylesheet">
    <!-- Timeline CSS Files-->
    <link rel ="stylesheet" href = "<?= base_url()?>assets/timeline/timeline.css">
-  <!-- Custom styles for this template-->
-  <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
+   <!-- Bootstrap Switch -->
+   <link href="<?= base_url()?>assets/bootstrap-switch/css/bootstrap-switch.css" rel="stylesheet">
+   <!-- Custom styles for this template-->
+   <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
+   <style>button{cursor:pointer !important;}</style>
 </head>

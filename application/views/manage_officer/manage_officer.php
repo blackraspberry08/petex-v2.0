@@ -1,5 +1,4 @@
 <?php if(!empty($this->session->flashdata("activation_success"))):?>
-    <?php if($this->session->flashdata("activation_success")){}?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("activation_success");?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -8,7 +7,6 @@
     </div>
 <?php endif;?>
 <?php if(!empty($this->session->flashdata("activation_fail"))):?>
-    <?php if($this->session->flashdata("activation_fail")){}?>
     <div class="alert alert-alert alert-dismissible fade show" role="alert">
         <strong><i class = "fa fa-times"></i></strong> <?= $this->session->flashdata("activation_fail");?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
