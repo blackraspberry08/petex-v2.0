@@ -34,6 +34,14 @@ MANAGE OFFICER MODULES
                 </button>
             </div>
         <?php endif;?>
+        <?php if(!empty($this->session->flashdata("module_removed"))):?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("module_removed");?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif;?>
         <div class="row">
             <div class="col-lg-12 py-3 ">
                 <a href = "#" class = "btn btn-outline-primary pull-right" data-toggle="modal" data-target="#add_module"><i class = "fa fa-plus"></i> Add allowed modules</a>
@@ -76,11 +84,11 @@ MANAGE OFFICER MODULES
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                ...
+                                                Removing this module will revoke <?= $officer_module->user_firstname." ".$officer_module->user_lastname;?>'s access to this module.
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                <a href ="<?= base_url()?>ManageOfficer/remove_module_exec/<?= $officer_module->module_access_id?>" class="btn btn-danger">Remove Module</a>
                                             </div>
                                         </div>
                                     </div>
