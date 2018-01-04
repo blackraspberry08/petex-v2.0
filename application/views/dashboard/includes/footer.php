@@ -52,6 +52,15 @@
     <script>
         $(".switch-style").bootstrapSwitch();
     </script>
+    <!-- Bootstrap Lightbox-->
+    <script src = "<?= base_url()?>assets/bootstrap-lightbox/ekko-lightbox.js"></script>
+    <script src = "<?= base_url()?>assets/bootstrap-lightbox/ekko-lightbox.js.map"></script>
+    <script>
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+    </script>
     <!-- Tab Script-->
     <script>
         $('#user_tab a').click(function (e) {
