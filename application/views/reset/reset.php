@@ -12,15 +12,18 @@
                     </div>
                     <div class="card-body">
                         <p>Enter your email address and username and we will send you instructions on how to reset your password.</p>
-
-                        <div class="input-group margin-bottom-sm">
-                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                            <input class="form-control" type="text" name="username" placeholder="Username">
-                        </div><br>
-                        <div class="input-group margin-bottom-sm">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-                            <input class="form-control" type="email" name="email" placeholder="Email Address">
-                        </div><br>
+                        <div class="row">
+                            <div class="col">
+                                <input class="form-control" type="text" name="username" placeholder="Username" autofocus> 
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input class="form-control" type="email" name="email" placeholder="Email Address">
+                                <br>
+                            </div>
+                        </div> 
                     </div> 
                     <div class="card-footer ">
                         <button class="btn btn-success pull-right">
