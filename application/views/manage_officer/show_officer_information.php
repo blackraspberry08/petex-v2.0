@@ -199,10 +199,25 @@ SHOW OFFICER INFORMATION
                         </span>
                         <p>Activities</p>
                     </a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#modules" role="tab" aria-controls="home" aria-selected="true">
+                        <span data-toggle="counter-up" class ="sp">
+                            <?php
+                            if (empty($module_access)) {
+                                echo "0";
+                            } else {
+                                echo count($module_access);
+                            }
+                            ?>
+                        </span>
+                        <p>Modules</p>
+                    </a>
                 </nav>
                 <div class="tab-content" id="user_tab_content">
-                    <div class="p-3 tab-pane fade show active" id="activities" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="p-3 tab-pane fade show active" id="activities" role="tabpanel" aria-labelledby="activities-tab">
                         <?php include_once("show_officer_activities.php"); ?>
+                    </div>
+                    <div class="p-3 tab-pane fade" id="modules" role="tabpanel" aria-labelledby="module-tab">
+                        <?php include_once("show_officer_modules.php"); ?>
                     </div>
                 </div>
             </div>

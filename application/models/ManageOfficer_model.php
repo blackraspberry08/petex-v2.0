@@ -27,6 +27,15 @@ class ManageOfficer_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
     public function remove_all_modules($where = NULL){
+        //"WHERE" must be user_id
+        if(!empty($where)){
+            $this->db->where($where);
+        }
+        $this->db->delete("module_access");
+        return $this->db->affected_rows();
+    }
+    public function remove_module($where = NULL){
+        //"WHERE" must be module_access_id
         if(!empty($where)){
             $this->db->where($where);
         }
