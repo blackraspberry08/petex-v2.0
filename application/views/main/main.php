@@ -20,6 +20,9 @@
                     </div>
                     <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
                         <div class="card-body">
+                            <pre>
+                                <?php print_r($_SESSION)?>
+                            </pre>
                             <?php include_once("show_error.php") ?>
                             <div class="row">
                                 <div class="col">
