@@ -2,6 +2,7 @@
 MANAGE ADMIN
 =======================-->
 <div class="content-wrapper">
+    <?php include_once (APPPATH."views/show_error/show_error.php");?>
     <div class="container-fluid">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">

@@ -61,6 +61,12 @@ Admin Nav Header
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."PetManagement") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Pet Management">
+                    <a class="nav-link" href="<?= base_url()?>PetManagement">
+                        <i class="fa fa-fw fa-paw"></i>
+                        <span class="nav-link-text">Pet Management</span>
+                    </a>
+                </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."ManageUser") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Manage Users">
                     <a class="nav-link" href="<?= base_url()?>ManageUser">
                         <i class="fa fa-fw fa-users"></i>
