@@ -68,11 +68,13 @@ class ManageOfficer extends CI_Controller {
         $selected_officer = $this->ManageUsers_model->get_user_info("user", array("user_id" => $this->session->userdata("show_officer_info")))[0];
         $officer_transaction = $this->ManageUsers_model->get_user_transactions(array("transaction.user_id" => $this->session->userdata("show_officer_info")));
         $officer_activity = $this->ManageUsers_model->get_user_activities(array("event.user_id" => $this->session->userdata("show_officer_info")));
+        $officer_modules = $this->ManageOfficer_model->get_officer_modules(array("module_access.user_id" => $this->session->userdata("manage_module")));
         $data = array(
             "title" => $selected_officer->user_firstname." ".$selected_officer->user_lastname." | Information",
             "officer" => $selected_officer,
             "transactions" => $officer_transaction,
             "activities" => $officer_activity,
+            "module_access" => $officer_modules,
             //FOR DUMMY VARIABLES
             'user_name' => "Juan Carlo D.R. Valencia",
             'user_picture' => "images/user/jc.png",
@@ -109,7 +111,7 @@ class ManageOfficer extends CI_Controller {
         $this->load->view("dashboard/includes/footer");
     }
     public function add_modules_exec(){
-        $officer = $this->ManageUsers_model->get_users("user", array("user_id" => $this->uri->segment(3), "user_access" => "Subadmin"))[0];;
+        $officer = $this->ManageUsers_model->get_users("user", array("user_id" => $this->uri->segment(3), "user_access" => "Subadmin"))[0];
         $officer_module_access = $this->ManageOfficer_model->get_officer_modules(array("module_access.user_id" => $this->uri->segment(3)));
         $officer_module_id = array();
         for($i = 0; $i < sizeof($officer_module_access); $i++){
@@ -134,6 +136,13 @@ class ManageOfficer extends CI_Controller {
             }
         }
         $this->session->set_flashdata("module_update", "Successfully updated ".$officer->user_firstname." ".$officer->user_lastname."'s modules.");
+        redirect(base_url()."ManageOfficer/manage_module");
+    }
+    public function remove_module_exec(){
+        $module_access_id = $this->uri->segment(3);
+        $module_access = $officer_module_access = $this->ManageOfficer_model->get_officer_modules(array("module_access.module_access_id" => $module_access_id));
+        $this->ManageOfficer_model->remove_module(array("module_access_id" => $module_access_id));
+        $this->session->set_flashdata("module_removed", "Successfully removed ".$module_access->module_title." module to ".$module_access->user_firstname." ".$module_access->user_lastname."'s modules.");
         redirect(base_url()."ManageOfficer/manage_module");
     }
 }
