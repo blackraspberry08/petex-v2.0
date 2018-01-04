@@ -23,5 +23,3 @@
    <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
    <style>button{cursor:pointer !important;}</style>
 </head>
-<body>
-<?php include_once 'show_error.php';?>
