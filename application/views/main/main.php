@@ -20,27 +20,33 @@
                     </div>
                     <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
                         <div class="card-body">
-                            <div class="input-group margin-bottom-sm">
-                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                <input class="form-control" type="text" name="username" placeholder="Username">
-                            </div><br>
-                            <div class="input-group margin-bottom-sm">
-                                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                                <input class="form-control" type="password" name="password" placeholder="Password">
-                            </div><br>
+                            <?php include_once("show_error.php") ?>
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
+                                    <br>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-control" type="password" name="password" placeholder="Password">
+                                    <br>
+                                </div>
+                            </div>
                             <p>New to PetEx? <a href="<?= $this->config->base_url() ?>register">Create an Account</a></p>
-                        </div> 
-                        <div class="card-footer" style="padding-bottom: 25px; margin-top:-20px;">
-                            <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
-                                <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
-                            <button type="submit" class="btn btn-success pull-right">Login</button>
-                        </div><br>
+                            <div class="card-footer" style=" margin-top:-20px;">
+                                <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
+                                    <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
+                                <button type="submit" class="btn btn-success pull-right">Login</button>
+                            </div><br>
+                        </div>
                     </form>
                 </div>
+
             </div>
+
         </div>
         <a href="#about" class="btn-get-started wow fadeInUp">Get Started</a>
-    </div>
 </section><!-- #hero -->
 
 <main id="main">
@@ -180,7 +186,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic"><img src="<?= base_url() ?>images/team/jcMatFinal.png" alt=""></div>
+                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/jcMatFinal.png" alt=""></div>
                         <h4>Juan Carlo Valencia</h4>
                         <span>Project Manager</span>
                     </div>
@@ -188,7 +194,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic"><img src="<?= base_url() ?>images/team/markusMatFinal.png" alt=""></div>
+                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/markusMatFinal.png" alt=""></div>
                         <h4>Angelo Markus Zaguirre</h4>
                         <span>Webmaster</span>
                     </div>
@@ -196,7 +202,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic"><img src="<?= base_url() ?>images/team/allenMatFinal.png" alt=""></div>
+                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/allenMatFinal.png" alt=""></div>
                         <h4>Allen Torres</h4>
                         <span>Quality Assurance</span>
                     </div>
@@ -204,7 +210,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic"><img src="<?= base_url() ?>images/team/joshMatFinal.png" alt=""></div>
+                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/joshMatFinal.png" alt=""></div>
                         <h4>Joshua Vitug</h4>
                         <span>Writer And Editor</span>
                     </div>

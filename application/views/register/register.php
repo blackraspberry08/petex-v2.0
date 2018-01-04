@@ -3,28 +3,84 @@
     <div class="row">
         <div class="col-md-3">
         </div>
-        <div class="col-md-6" style="margin-top:100px;">
-            <form method="POST" action="<?= $this->config->base_url() ?>reset/resetPass_exec">
+        <div class="col-md-6" style="margin-top:50px; margin-bottom: 50px;">
+            <form method="POST" action="<?= $this->config->base_url() ?>register/register_exec">
                 <div class="card wow fadeInRight">
                     <div class="card-header">
                         <br>
-                        <h4> <i class="fa fa-refresh fa-lg"></i> Reset Password</h4>
+                        <h4> <i class="fa fa-user-plus fa-lg"></i> Register</h4>
                     </div>
                     <div class="card-body">
-                        <p>Enter your email address and username and we will send you instructions on how to reset your password.</p>
+                        <div class="form-row">
+                            <div class="col">
+                                <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <input class="form-control" type="password" name="password" placeholder="Password">
+                            </div>
+                            <div class="col">
+                                <input class="form-control" type="password" name="conpassword" placeholder="Confirm Password">
+                                <br>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <input class="form-control" type="email" name="email" placeholder="Email Address">
+                                <br>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <input class="form-control" type="text" name="phone" placeholder="Mobile Phone">
+                                <br>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <input class="form-control" type="text" name="lname" placeholder="Lastname">
+                                <br>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" type="text" name="fname" placeholder="Firstname">
+                            </div>
+                        </div>
+                        <div class="form-row"> 
+                            <div class="col">
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input" type="radio" name="gender" value="Male" checked>
+                                <label class="form-check-label">
+                                    Male
+                                </label>
+                                <br>
+                            </div>
+                            <div class="col">
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input" type="radio" name="gender" value="Female" >
+                                <label class="form-check-label">
+                                    Female
+                                </label>
+                                <br>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div><br>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" name="bday" class="form_datetime form-control" placeholder="Birthday">
+                            </div>
+                        </div>
 
-                        <div class="input-group margin-bottom-sm">
-                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                            <input class="form-control" type="text" name="username" placeholder="Username">
-                        </div><br>
-                        <div class="input-group margin-bottom-sm">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-                            <input class="form-control" type="email" name="email" placeholder="Email Address">
-                        </div><br>
                     </div> 
+
                     <div class="card-footer ">
                         <button class="btn btn-success pull-right">
-                            <i class="fa fa-send fa-lg"></i> Submit</button>
+                            <i class="fa fa-send fa-lg"></i> Submit
+                        </button>
                     </div>
                 </div>
             </form>
