@@ -3,6 +3,7 @@ Dashboard
 ============================-->
 <div class="content-wrapper">
     <div class="container-fluid">
+        <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">

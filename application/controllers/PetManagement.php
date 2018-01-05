@@ -1,6 +1,6 @@
 <?php
 
-class AdminDashboard extends CI_Controller {
+class PetManagement extends CI_Controller {
     function __construct() {
         parent::__construct();
         //---> MODELS HERE!
@@ -33,10 +33,10 @@ class AdminDashboard extends CI_Controller {
     
     public function index(){
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $all_animals = $this->PetManagement_model->get_all_animals();
         $data = array(
-            'title' => "Dashboard",
-            'trails' => $this->AuditTrail_model->get_audit_trail("event", "user", "event.user_id = user.user_id", array("event_classification" => "trail")),
-            'logs' => $this->UserLogs_model->get_userlogs("event", "user", "event.user_id = user.user_id", array("event_classification" => "log")),
+            'title' => "Pet Management",
+            'all_animals' => $all_animals,
             //NAV INFO
             'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
@@ -44,9 +44,8 @@ class AdminDashboard extends CI_Controller {
         );
         $this->load->view("dashboard/includes/header", $data);
         $this->load->view("admin_nav/navheader");
-        $this->load->view("dashboard/main");
+        $this->load->view("pet_management/main");
         $this->load->view("dashboard/includes/footer");
     }
 }
-
 

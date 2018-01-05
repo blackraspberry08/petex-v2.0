@@ -112,7 +112,7 @@ class Login extends CI_Controller {
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetailsAdmin->admin_id);
-                        $this->session->set_userdata('current_user', $accountDetailsUser);
+                        $this->session->set_userdata('current_user', $accountDetailsAdmin);
                         $this->session->set_userdata('user_access', "admin");
                         redirect(base_url() . 'AdminDashboard/');
                     }

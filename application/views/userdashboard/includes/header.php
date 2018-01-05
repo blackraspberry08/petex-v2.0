@@ -24,4 +24,3 @@
    <style>button{cursor:pointer !important;}</style>
 </head>
 <body>
-<?php include_once 'show_error.php';?>
