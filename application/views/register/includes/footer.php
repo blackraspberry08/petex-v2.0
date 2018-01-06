@@ -7,7 +7,7 @@
     dt.setFullYear(new Date().getFullYear() - 18);
     $(document).ready(function () {
         $(".form_datetime").datetimepicker({
-            format: 'mm dd, yyyy',
+            format: 'MM dd, yyyy',
             todayBtn: true,
             autoclose: true,
             minView: 2,

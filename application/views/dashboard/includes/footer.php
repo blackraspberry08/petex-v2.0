@@ -61,6 +61,21 @@
             $(this).ekkoLightbox();
         });
     </script>
+    <!-- Bootstrap Datepicker -->
+    <script src ="<?= base_url()?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript">
+        var dt = new Date();
+        dt.setFullYear(new Date().getFullYear());
+        $(document).ready(function () {
+            $(".form_datetime").datetimepicker({
+                format: 'MM dd, yyyy',
+                todayBtn: true,
+                autoclose: true,
+                //minView: 2,      --> WITHOUT TIME INPUT
+            });
+            $('.form_datetime').datetimepicker('setEndDate', dt);
+        });
+    </script>  
     <!-- Tab Script-->
     <script>
         $('#user_tab a').click(function (e) {
