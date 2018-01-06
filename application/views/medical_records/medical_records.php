@@ -4,9 +4,6 @@ MEDICAL RECORDS
 
 <div class="content-wrapper">
     <div class="container-fluid">
-        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
-        <?php include_once (APPPATH . "views/show_error/show_error_medical_record.php"); ?>
-        
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -17,6 +14,8 @@ MEDICAL RECORDS
             </li>
             <li class="breadcrumb-item active"><?= "Medical Records of ".$animal->pet_name?></li>
         </ol>
+        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
+        <?php include_once (APPPATH . "views/show_error/show_error_medical_record.php"); ?>
         <div class = "row my-3">
             <div class ="col-lg-12">
                 <a href = "#" class = "btn btn-outline-primary pull-right" data-toggle="modal" data-target="#add_medical_record"><i class = "fa fa-plus"></i> Add Medical Records</a>
