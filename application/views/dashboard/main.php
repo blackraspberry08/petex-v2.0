@@ -3,7 +3,6 @@ Dashboard
 ============================-->
 <div class="content-wrapper">
     <div class="container-fluid">
-        <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -11,6 +10,7 @@ Dashboard
             </li>
             <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
+        <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <!-- Icon Cards-->
         <div class="row">
             <div class="col-xl-3 col-sm-6 mb-3">

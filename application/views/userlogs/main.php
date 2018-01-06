@@ -10,4 +10,6 @@ User Logs
             </li>
             <li class="breadcrumb-item active">User Logs</li>
         </ol>
+        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
         <?php include_once "userlogs.php";?>
+    </div>
