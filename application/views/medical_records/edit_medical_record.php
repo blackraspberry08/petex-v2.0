@@ -30,7 +30,7 @@ EDIT MEDICAL RECORD
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="medicalRecord_date">Date</label>
-                                    <input type="text" name="medicalRecord_date" value = "<?= set_value("medicalRecord_date", date("F d, Y - h:i A", $record->medicalRecord_date));?>" class="form_datetime form-control" placeholder="Date" readonly>
+                                    <input type="text" name="medicalRecord_date" value = "<?= set_value("medicalRecord_date", date("F d, Y", $record->medicalRecord_date));?>" class="form_datetime form-control" placeholder="Date" readonly>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="medicalRecord_weight">Weight <small>(kg)</small></label>
