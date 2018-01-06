@@ -209,9 +209,6 @@ Dashboard
                         <?php endforeach; ?>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="<?= base_url() ?>PetAdoption" class="pull-right">See more</a>
-                </div>
             <?php endif; ?>
         </div><br>
     </div>
