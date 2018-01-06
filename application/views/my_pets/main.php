@@ -50,7 +50,7 @@ My Pets
                                             <div class = "btn-group" role="group" aria-label="Button Group">
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
-                                                <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopters" data-placement="bottom" title="Edit Details"><i class = "fa fa-pencil fa-2x"></i></a>
+                                                <a href = "<?= base_url() ?>MyPets/edit_details_exec/<?= $pet->pet_id ?>" class = "btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit Details"><i class = "fa fa-pencil fa-2x"></i></a>
                                             </div>
                                         </div>
                                     </div>
