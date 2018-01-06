@@ -34,6 +34,8 @@
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Bootstrap Switch -->
 <script src="<?= base_url() ?>assets/bootstrap-switch/js/bootstrap-switch.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="<?= base_url() ?>assets/admin/js/sb-admin.min.js"></script>
 <script>
     $(".switch-style").bootstrapSwitch();
 </script>

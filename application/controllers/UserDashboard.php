@@ -31,6 +31,7 @@ class UserDashboard extends CI_Controller {
 
     public function index() {
         $allPets = $this->UserDashboard_model->fetchPetDesc("pet");
+        $allAdopted = $this->UserDashboard_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id");
         $petAdopters = $this->UserDashboard_model->fetchJoinThreeProgressDesc("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id");
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
         $data = array(
@@ -40,7 +41,8 @@ class UserDashboard extends CI_Controller {
             'user_picture' => $current_user->user_picture,
             'pets' => $allPets,
             'adopters' => $petAdopters,
-            'user_access' => "User"
+            'user_access' => "User",
+            'adoptedPets' => $allAdopted
         );
         $this->load->view("userdashboard/includes/header", $data);
         $this->load->view("user_nav/navheader");

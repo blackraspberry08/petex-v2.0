@@ -49,37 +49,37 @@ User Nav Header
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html"><img src = "<?= base_url()?>images/logo/logo.png" height="25"/></a>
+        <a class="navbar-brand" href="index.html"><img src = "<?= base_url() ?>images/logo/logo.png" height="25"/></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav scrollbar-custom" id="exampleAccordion">
-                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."UserDashboard") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="<?= base_url()?>UserDashboard">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "UserDashboard") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="<?= base_url() ?>UserDashboard">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."MyPets") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="My Pets">
-                    <a class="nav-link" href="<?= base_url()?>MyPets">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "MyPets") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="My Pets">
+                    <a class="nav-link" href="<?= base_url() ?>MyPets">
                         <i class="fa fa-fw fa-users"></i>
                         <span class="nav-link-text">My Pets</span>
                     </a>
                 </li>
-                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."PetAdoption") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Pet Adoption">
-                    <a class="nav-link" href="<?= base_url()?>PetAdoption">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "PetAdoption") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="Pet Adoption">
+                    <a class="nav-link" href="<?= base_url() ?>PetAdoption">
                         <i class="fa fa-fw fa-lock"></i>
                         <span class="nav-link-text">Pet Adoption</span>
                     </a>
                 </li>
-                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."MyProgress") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="My Progress">
-                    <a class="nav-link" href="<?= base_url()?>MyProgress">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "MyProgress") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="My Progress">
+                    <a class="nav-link" href="<?= base_url() ?>MyProgress">
                         <i class="fa fa-fw fa-key"></i>
                         <span class="nav-link-text">My Progress</span>
                     </a>
                 </li>
-                
+
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
@@ -89,7 +89,7 @@ User Nav Header
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto" >
-                
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                         <i class="fa fa-fw fa-bell"></i>
@@ -112,7 +112,7 @@ User Nav Header
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <div class="crop-word">
-                            <?= $user_name?>&emsp;   
+                            <?= $user_name ?>&emsp;   
                         </div>       
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -120,13 +120,13 @@ User Nav Header
                             <div class ="row no-gutters">
                                 <div class = "col-lg-4 ">
                                     <div class="profile-header-img ">
-                                        <img class="img-circle" src="<?= base_url().$user_picture?>" />
+                                        <img class="img-circle" src="<?= base_url() . $user_picture ?>" />
                                     </div>
                                 </div>
                                 <div class = "col-lg-8" style = "overflow:hidden;">
-                                    <span id = "user-name" data-toggle="tooltip" data-placement="bottom" title="<?= $user_name?>"><?= $user_name?></span>
+                                    <span id = "user-name" data-toggle="tooltip" data-placement="bottom" title="<?= $user_name ?>"><?= $user_name ?></span>
                                     <br>
-                                    <span id = "user-access"><?= $user_access?></span>
+                                    <span id = "user-access"><?= $user_access ?></span>
                                 </div>
                             </div>
                         </div>
