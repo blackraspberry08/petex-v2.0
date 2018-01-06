@@ -131,6 +131,7 @@ SHOW OFFICER INFORMATION
             </li>
             <li class="breadcrumb-item active"><?= $officer->user_firstname . " " . $officer->user_lastname . " Information" ?></li>
         </ol>
+        <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <div class = "row">
             <div class = "col-lg-12 col-sm-12">
                 <div id = "header-card" class=" hovercard border border-secondary border-bottom-0 rounded-top">
