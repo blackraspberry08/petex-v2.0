@@ -21,6 +21,8 @@
    <link href="<?= base_url()?>assets/bootstrap-switch/css/bootstrap-switch.css" rel="stylesheet">
    <!-- Bootstrap Lightbox-->
    <link rel="stylesheet" href = "<?= base_url()?>assets/bootstrap-lightbox/ekko-lightbox.css">
+   <!-- Bootstrap Datepicker -->
+   <link rel = "stylesheet" href = "<?= base_url()?>assets/bootstrap-datepicker/css/bootstrap-datetimepicker.css">
    <!-- Custom styles for this template-->
    <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
    <style>button{cursor:pointer !important;}</style>
