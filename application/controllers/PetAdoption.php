@@ -16,7 +16,7 @@ class PetAdoption extends CI_Controller {
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
 
         $data = array(
-            'title' => "My Pets | " . $current_user->user_firstname . " " . $current_user->user_lastname,
+            'title' => "Pet Adoption | " . $current_user->user_firstname . " " . $current_user->user_lastname,
             //NAV INFO
             'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
             'user_picture' => $current_user->user_picture,
