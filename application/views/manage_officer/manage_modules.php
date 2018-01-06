@@ -26,6 +26,7 @@ MANAGE OFFICER MODULES
             </li>
             <li class="breadcrumb-item active"><?= $officer->user_firstname . " " . $officer->user_lastname ?> Module Access</li>
         </ol>
+        <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <?php if(!empty($this->session->flashdata("module_update"))):?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong><i class = "fa fa-check"></i></strong> <?= $this->session->flashdata("module_update");?>

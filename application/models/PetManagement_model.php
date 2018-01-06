@@ -55,6 +55,14 @@ class PetManagement_model extends CI_Model {
         $this->db->update("medical_record", $medical_record);
         return $this->db->affected_rows();
     }
+    public function remove_animal($where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $data = array("pet_access" => 0);
+        $this->db->update("pet", $data);
+        return $this->db->affected_rows();
+    }
 }
 
 

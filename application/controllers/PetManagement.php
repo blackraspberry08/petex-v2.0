@@ -161,6 +161,39 @@ class PetManagement extends CI_Controller {
             redirect(base_url()."PetManagement/medical_records_exec/".$animal_id);
         }
     }
-        
+    
+    public function animal_info_exec(){
+        $this->session->set_userdata("animal_info", $this->uri->segment(3));
+        redirect(base_url()."PetManagement/animal_info");
+    }
+    
+    public function animal_info(){
+        $animal_id = $this->session->userdata("animal_info");
+        $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            'title' => $animal->pet_name." | Pet Information",
+            'animal' => $animal,
+            //NAV INFO
+            'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        $this->load->view("admin_nav/navheader");
+        $this->load->view("pet_management/animal_information");
+        $this->load->view("dashboard/includes/footer");
+    }
+    
+    public function remove_animal_exec(){
+        $animal_id = $this->uri->segment(3);
+        $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
+        if($this->PetManagement_model->remove_animal(array("pet_id", $animal_id))){
+            $this->session->set_flashdata("remove_animal_success", "Successfully removed ".$animal->pet_name." from the database. Bye ".$animal->pet_name."!");
+        }else{
+            $this->session->set_flashdata("remove_animal_fail", "Something went wrong while removing ".$animal->pet_name." from the database");
+        }
+        redirect(base_url()."PetManagement");
+    }
 }
 

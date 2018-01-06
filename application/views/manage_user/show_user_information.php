@@ -131,14 +131,15 @@ SHOW USER INFORMATION
             </li>
             <li class="breadcrumb-item active"><?= $user->user_firstname . " " . $user->user_lastname . " Information" ?></li>
         </ol>
+        <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <div class = "row">
             <div class = "col-lg-12 col-sm-12">
                 <div id = "header-card" class=" hovercard border border-secondary border-bottom-0 rounded-top">
                     <div class="card-background">
-                        <img class="card-bkimg" alt="" src="<?= base_url() . $user->user_picture ?>">
+                        <img class="card-bkimg" alt="<?= $user->user_firstname . " " . $user->user_lastname . "/'s Picture"?>" src="<?= base_url() . $user->user_picture ?>">
                     </div>
                     <div class="useravatar">
-                        <img alt="" src="<?= base_url() . $user->user_picture ?>">
+                        <img alt="<?= $user->user_firstname . " " . $user->user_lastname . "/'s Picture"?>" src="<?= base_url() . $user->user_picture ?>">
                     </div>
                     <div class="card-info"> <span class="card-title"><?= $user->user_firstname . " " . $user->user_lastname ?></span></div>
                 </div>
