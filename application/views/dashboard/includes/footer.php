@@ -68,14 +68,27 @@
         dt.setFullYear(new Date().getFullYear());
         $(document).ready(function () {
             $(".form_datetime").datetimepicker({
-                format: 'MM dd, yyyy',
+                format: 'MM d, yyyy',
                 todayBtn: true,
                 autoclose: true,
                 //minView: 2,      --> WITHOUT TIME INPUT
             });
             $('.form_datetime').datetimepicker('setEndDate', dt);
         });
-    </script>  
+    </script>
+    
+    <!-- Bootstrap File Upload with preview -->
+    <script>
+        $(document).ready(function(){
+            $('#pet_picture_edit_preview').css("background-image", "url(<?= base_url().$animal->pet_picture?>)");
+            $('#btnReset_edit').click(function(){
+                $('#pet_picture_edit_preview').css("background-image", "url(<?= base_url().$animal->pet_picture?>)");
+                $('#pet_picture_edit').val('');
+            });
+        });
+        
+    </script>
+    
     <!-- Tab Script-->
     <script>
         $('#user_tab a').click(function (e) {
