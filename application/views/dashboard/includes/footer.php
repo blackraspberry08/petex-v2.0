@@ -68,14 +68,17 @@
         dt.setFullYear(new Date().getFullYear());
         $(document).ready(function () {
             $(".form_datetime").datetimepicker({
-                format: 'MM dd, yyyy',
+                format: 'MM d, yyyy',
                 todayBtn: true,
                 autoclose: true,
                 //minView: 2,      --> WITHOUT TIME INPUT
             });
             $('.form_datetime').datetimepicker('setEndDate', dt);
         });
-    </script>  
+    </script>
+    
+   
+    
     <!-- Tab Script-->
     <script>
         $('#user_tab a').click(function (e) {
