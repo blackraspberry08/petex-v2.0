@@ -63,19 +63,19 @@ User Nav Header
                 </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "MyPets") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="My Pets">
                     <a class="nav-link" href="<?= base_url() ?>MyPets">
-                        <i class="fa fa-fw fa-users"></i>
+                        <i class="fa fa-fw fa-paw"></i>
                         <span class="nav-link-text">My Pets</span>
                     </a>
                 </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "PetAdoption") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="Pet Adoption">
                     <a class="nav-link" href="<?= base_url() ?>PetAdoption">
-                        <i class="fa fa-fw fa-lock"></i>
+                        <i class="fa fa-fw fa-home"></i>
                         <span class="nav-link-text">Pet Adoption</span>
                     </a>
                 </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "MyProgress") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="My Progress">
                     <a class="nav-link" href="<?= base_url() ?>MyProgress">
-                        <i class="fa fa-fw fa-key"></i>
+                        <i class="fa fa-fw fa-history"></i>
                         <span class="nav-link-text">My Progress</span>
                     </a>
                 </li>
