@@ -51,7 +51,7 @@ Animal Information
     
 </style>
 <?php 
-    function wrap_iframe($src, $method = NULL){
+    function wrap_iframe($src){
         if($src == ''){
             $new_src = '';
         }else{
@@ -209,7 +209,7 @@ Animal Information
                                 <label for="pet_video">Video</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class = "fa fa-link"></i></span>
-                                    <input type="text" class="form-control" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_description", wrap_iframe($animal->pet_video, "escape_char"));?>'>
+                                    <input type="text" class="form-control" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_description", wrap_iframe($animal->pet_video));?>'>
                                 </div>
                                 <small id="videoHelp" class="form-text text-muted">
                                     Right click on a youtube video, and select "Copy embed code". Paste it here.
