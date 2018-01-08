@@ -5,7 +5,12 @@
         object-fit: cover;
     }
 </style>
-    
+    <div class = "row my-3">
+        <div class ="col-lg-12">
+            <a href = "<?= base_url()?>PetManagement/add_animal" class = "btn btn-outline-primary pull-right" ><i class = "fa fa-plus"></i> Register a Pet</a>
+            <br>
+        </div>
+    </div>
         <?php if(empty($all_animals)):?>
         <div class="row">
             <div class = "col-lg-12">

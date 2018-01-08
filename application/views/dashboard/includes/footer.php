@@ -77,17 +77,7 @@
         });
     </script>
     
-    <!-- Bootstrap File Upload with preview -->
-    <script>
-        $(document).ready(function(){
-            $('#pet_picture_edit_preview').css("background-image", "url(<?= base_url().$animal->pet_picture?>)");
-            $('#btnReset_edit').click(function(){
-                $('#pet_picture_edit_preview').css("background-image", "url(<?= base_url().$animal->pet_picture?>)");
-                $('#pet_picture_edit').val('');
-            });
-        });
-        
-    </script>
+   
     
     <!-- Tab Script-->
     <script>

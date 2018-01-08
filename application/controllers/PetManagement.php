@@ -33,6 +33,7 @@ class PetManagement extends CI_Controller {
 
     //------------ FUNCTIONS ----------------
     function getTextBetween($start, $end, $text){
+        $text = str_replace(" ","",$text);
         // explode the start string
         $holder = explode($start,$text,2);
         $first_strip= end($holder);
@@ -264,6 +265,21 @@ class PetManagement extends CI_Controller {
             $this->session->set_flashdata("remove_animal_fail", "Something went wrong while removing ".$animal->pet_name." from the database");
         }
         redirect(base_url()."PetManagement");
+    }
+    
+    public function add_animal(){
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            'title' => "Animal Registration",
+            //NAV INFO
+            'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        $this->load->view("admin_nav/navheader");
+        $this->load->view("pet_management/animal_registration");
+        $this->load->view("dashboard/includes/footer");
     }
 }
 
