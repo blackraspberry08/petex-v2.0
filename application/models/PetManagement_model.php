@@ -70,6 +70,11 @@ class PetManagement_model extends CI_Model {
         $this->db->update("pet", $animal_record);
         return $this->db->affected_rows();
     }
+    public function register_animal_record($animal_record){
+        $table = "pet";
+        $this->db->insert($table, $animal_record);
+        return $this->db->affected_rows();
+    }
 }
 
 

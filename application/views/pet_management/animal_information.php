@@ -132,9 +132,7 @@ Animal Information
                                 <div class="form-group col-md-4">
                                     <label for = "pet_status">Status</label>
                                     <?php if($animal->pet_status == "Adopted"):?>
-                                    <select class="form-control" name = "pet_status" id="pet_status" readonly>
-                                        <option disabled value = "Adopted" <?= $animal->pet_status == "Adopted" ? "selected": "";?>>Adopted</option>
-                                    </select>
+                                    <input class="form-control" name = "pet_status" id="pet_status" value = "Adopted" readonly>
                                     <?php else:?>
                                     <select class="form-control" name = "pet_status" id="pet_status">
                                         <option value = "Adoptable" <?= $animal->pet_status == "Adoptable" ? "selected": "";?>>Adoptable</option>
