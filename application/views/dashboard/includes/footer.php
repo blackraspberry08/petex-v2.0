@@ -54,7 +54,6 @@
     </script>
     <!-- Bootstrap Lightbox-->
     <script src = "<?= base_url()?>assets/bootstrap-lightbox/ekko-lightbox.js"></script>
-    <script src = "<?= base_url()?>assets/bootstrap-lightbox/ekko-lightbox.js.map"></script>
     <script>
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
@@ -71,7 +70,7 @@
                 format: 'MM d, yyyy',
                 todayBtn: true,
                 autoclose: true,
-                //minView: 2,      --> WITHOUT TIME INPUT
+                minView: 2,      
             });
             $('.form_datetime').datetimepicker('setEndDate', dt);
         });
