@@ -2,7 +2,7 @@
 Animal Registration
 ============================-->
 <?php 
-    function wrap_iframe($src, $method = NULL){
+    function wrap_iframe($src){
         if($src == ''){
             $new_src = '';
         }else{
