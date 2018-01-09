@@ -1,6 +1,17 @@
 <?php
 $userInfo = $this->MyPets_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", array('user.user_id' => $this->session->userid));
 ?>
+<?php
+
+function wrap_iframe($src) {
+    if ($src == '') {
+        $new_src = '';
+    } else {
+        $new_src = '<iframe class="embed-responsive-item" src="' . $src . '" allowfullscreen></iframe>';
+    }
+    return $new_src;
+}
+?>
 <!--===========================
 My Pets
 ============================-->
@@ -16,6 +27,9 @@ My Pets
         </ol>
         <!-- My Pets -->
         <div class="card">
+            <div class="card-header">
+                <i class="fa fa-paw"></i> My Pets
+            </div>
             <?php if (empty($userInfo)): ?>
                 <div class = "col-lg-12">
                     <center>
@@ -24,7 +38,6 @@ My Pets
                     </center>
                 </div>
             <?php else: ?>
-                <h3 class="card-header">My Pets</h3>
                 <div class="card-body container-fluid">
                     <div class="row">
                         <?php foreach ($userInfo as $pet): ?>
@@ -147,8 +160,8 @@ My Pets
                                                     <?php if ($pet->pet_video == NULL): ?>
                                                         <h2>This pet has no Video</h2>
                                                     <?php else: ?>
-                                                        <div class="embed-responsive embed-responsive-16by9">
-                                                            <iframe class="embed-responsive-item" src="..."></iframe>
+                                                        <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                                            <?= wrap_iframe($pet->pet_video); ?>
                                                         </div>
                                                     <?php endif; ?>
                                                 </div>

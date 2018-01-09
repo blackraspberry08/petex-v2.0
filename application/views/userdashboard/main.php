@@ -1,3 +1,15 @@
+
+<?php
+
+function wrap_iframe($src) {
+    if ($src == '') {
+        $new_src = '';
+    } else {
+        $new_src = '<iframe class="embed-responsive-item" src="' . $src . '" allowfullscreen></iframe>';
+    }
+    return $new_src;
+}
+?>
 <!--===========================
 Dashboard
 ============================-->
@@ -13,6 +25,9 @@ Dashboard
         </ol>
         <!-- Registered -->
         <div class="card">
+            <div class="card-header">
+                <i class="fa fa-dashboard"></i> Dashboard
+            </div>
             <?php if (empty($pets)): ?>
                 <div class = "col-lg-12">
                     <center>
@@ -21,7 +36,6 @@ Dashboard
                     </center>
                 </div>
             <?php else: ?>
-                <h3 class="card-header">Newly Registered Pet</h3>
                 <div class="card-body container-fluid">
                     <div class="row">
                         <?php $counter = 0; ?>
@@ -143,13 +157,15 @@ Dashboard
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row container">
-                                                    <?php if ($pet->pet_video == NULL): ?>
-                                                        <h2>This pet has no Video</h2>
-                                                    <?php else: ?>
-                                                        <div class="embed-responsive embed-responsive-16by9">
-                                                            <iframe class="embed-responsive-item" src="..."></iframe>
-                                                        </div>
-                                                    <?php endif; ?>
+                                                    <div class="row container">
+                                                        <?php if ($pet->pet_video == NULL): ?>
+                                                            <h2>This pet has no Video</h2>
+                                                        <?php else: ?>
+                                                            <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                                                <?= wrap_iframe($pet->pet_video); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -222,6 +238,7 @@ Dashboard
         </div><br>
         <!-- Adopted -->
         <div class="card">
+            <h3 class="card-header ">Newly Adopted Pet</h3>
             <?php if (empty($adoptedPets)): ?>
                 <div class = "col-lg-12">
                     <center>
@@ -230,7 +247,6 @@ Dashboard
                     </center>
                 </div>
             <?php else: ?>
-                <h3 class="card-header ">Newly Adopted Pet</h3>
                 <div class="card-body container-fluid">
                     <div class="row">
                         <?php $counter1 = 0; ?>
