@@ -1,5 +1,17 @@
+
+<?php
+
+function wrap_iframe($src) {
+    if ($src == '') {
+        $new_src = '';
+    } else {
+        $new_src = '<iframe class="embed-responsive-item" src="' . $src . '" allowfullscreen></iframe>';
+    }
+    return $new_src;
+}
+?>
 <!--===========================
-Dashboard
+Pet Adoption
 ============================-->
 <div class="content-wrapper">
     <div class="container-fluid">
@@ -13,6 +25,9 @@ Dashboard
         </ol>
         <!-- Registered -->
         <div class="card">
+            <div class="card-header">
+                <i class="fa fa-home"></i> Pet Adoption
+            </div>
             <?php if (empty($pets)): ?>
                 <div class = "col-lg-12">
                     <center>
@@ -21,9 +36,6 @@ Dashboard
                     </center>
                 </div>
             <?php else: ?>
-                <div class="card-header">
-                    <i class="fa fa-home"></i> Pet Adoption
-                </div>
                 <div class="card-body container-fluid">
                     <div class="row">
                         <?php foreach ($pets as $pet): ?>
@@ -147,8 +159,8 @@ Dashboard
                                                     <?php if ($pet->pet_video == NULL): ?>
                                                         <h2>This pet has no Video</h2>
                                                     <?php else: ?>
-                                                        <div class="embed-responsive embed-responsive-16by9">
-                                                            <iframe class="embed-responsive-item" src="..."></iframe>
+                                                        <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                                            <?= wrap_iframe($pet->pet_video); ?>
                                                         </div>
                                                     <?php endif; ?>
                                                 </div>
