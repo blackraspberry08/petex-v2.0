@@ -231,7 +231,7 @@ Animal Information
     
     
     <!-- Bootstrap File Upload with preview -->
-    <script src = "<?= base_url()?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
+    <script src = "https://unpkg.com/file-upload-with-preview"></script>
     <script>
         var upload = new FileUploadWithPreview('pet_picture')
     </script>

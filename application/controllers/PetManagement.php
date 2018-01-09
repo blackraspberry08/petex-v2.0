@@ -11,7 +11,7 @@ class PetManagement extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_4", "Login First!");
-            redirect(base_url().'login/');
+            redirect(base_url().'main/');
         }else{
             $current_user = $this->session->userdata("current_user");
             if($this->session->userdata("user_access") == "user"){
@@ -259,7 +259,7 @@ class PetManagement extends CI_Controller {
     public function remove_animal_exec(){
         $animal_id = $this->uri->segment(3);
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
-        if($this->PetManagement_model->remove_animal(array("pet_id", $animal_id))){
+        if($this->PetManagement_model->remove_animal(array("pet_id" => $animal_id))){
             $this->session->set_flashdata("remove_animal_success", "Successfully removed ".$animal->pet_name." from the database. Bye ".$animal->pet_name."!");
         }else{
             $this->session->set_flashdata("remove_animal_fail", "Something went wrong while removing ".$animal->pet_name." from the database");
