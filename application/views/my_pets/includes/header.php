@@ -22,7 +22,39 @@
         <link href="<?= base_url() ?>assets/admin/css/sb-admin.css" rel="stylesheet">
         <!-- Bootstrap Lightbox-->
         <link rel="stylesheet" href = "<?= base_url() ?>assets/bootstrap-lightbox/ekko-lightbox.css">
-        <style>button{cursor:pointer !important;}</style>
+        <!-- Bootstrap File Upload with preview -->
+        <link rel ="stylesheet" href ="<?= base_url() ?>assets/bootstrap-fileupload/css/file-upload-with-preview.css">
+        <style>
+            button{cursor:pointer !important;}
+            /* Small devices (landscape phones, 576px and up) */
+            @media (min-width: 576px) {
+                #animal_info{
+                    border-left: 0px solid #ccc;   
+                }
+            }
+
+            /* Medium devices (tablets, 768px and up) */
+            @media (min-width: 768px) {
+                #animal_info{
+                    border-left: 1px solid #ccc;   
+                }
+            }
+
+            /* Large devices (desktops, 992px and up) */
+            @media (min-width: 992px) {
+                #animal_info{
+                    border-left: 1px solid #ccc;   
+                }
+            }
+
+            /* Extra large devices (large desktops, 1200px and up)*/
+            @media (min-width: 1200px) {
+                #animal_info{
+                    border-left: 1px solid #ccc;   
+                }
+
+            }
+        </style>
     </head>
     <body>
         <?php
