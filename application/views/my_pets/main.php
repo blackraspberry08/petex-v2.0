@@ -56,7 +56,6 @@ My Pets
                                                 <i class="fa fa-venus" style="color:red"></i> <?= $pet->pet_sex ?><br>
                                             <?php endif; ?>
                                             <i class="fa fa-paw"></i> <?= $pet->pet_breed ?><br>
-                                            <i class="fa fa-check-square" style="color:green"></i> <?= $pet->pet_status ?>
                                         </div>
 
                                         <div class="card-footer text-center">
