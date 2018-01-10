@@ -32,13 +32,15 @@ class MyProgress extends CI_Controller {
 
     public function index() {
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
-
+        $userInfo = $this->MyProgress_model->fetchJoinProgress(array('transaction.user_id' => $this->session->userid));
         $data = array(
             'title' => "My Progress | " . $current_user->user_firstname . " " . $current_user->user_lastname,
+            'userInfo' => $userInfo,
+            'transaction_progress' => $userInfo[0]->transaction_progress,
             //NAV INFO
             'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
             'user_picture' => $current_user->user_picture,
-            'user_access' => "User"
+            'user_access' => "User",
         );
         $this->load->view("my_progress/includes/header", $data);
         $this->load->view("user_nav/navheader");
