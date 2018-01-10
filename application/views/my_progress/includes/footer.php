@@ -29,8 +29,7 @@
         </div>
     </div>
 </div>
-<!-- Bootstrap core JavaScript-->
-<script src="<?= base_url() ?>assets/jquery/jquery.min.js"></script>
+
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Bootstrap Switch -->
 <script src="<?= base_url() ?>assets/bootstrap-switch/js/bootstrap-switch.js"></script>
@@ -50,7 +49,6 @@
 </script>
 <!-- Bootstrap Lightbox-->
 <script src = "<?= base_url() ?>assets/bootstrap-lightbox/ekko-lightbox.js"></script>
-<script src = "<?= base_url() ?>assets/bootstrap-lightbox/ekko-lightbox.js.map"></script>
 <script>
     $(document).on('click', '[data-toggle="lightbox"]', function (event) {
         event.preventDefault();

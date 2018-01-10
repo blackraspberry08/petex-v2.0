@@ -8,6 +8,8 @@
         <meta name="author" content="">
         <title><?= $title ?></title>
         <link rel="shortcut icon" href="<?= $this->config->base_url() ?>images/logo/icon.png">
+        <!-- JQUERY -->
+        <script src="<?= base_url() ?>assets/jquery/jquery.min.js"></script>
         <!-- Bootstrap core CSS-->
         <link href="<?= base_url() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom fonts for this template-->
@@ -22,8 +24,6 @@
         <link href="<?= base_url() ?>assets/admin/css/sb-admin.css" rel="stylesheet">
         <!-- Bootstrap Lightbox-->
         <link rel="stylesheet" href = "<?= base_url() ?>assets/bootstrap-lightbox/ekko-lightbox.css">
-        <!-- Stepper -->
-        <link rel="stylesheet" href = "<?= base_url() ?>assets/stepper/css/mdb.css">
         <style>button{cursor:pointer !important;}</style>
     </head>
     <style>
@@ -61,6 +61,31 @@
         .vertical-divider:before {
             top: -93%;
         }
+
+        .btn-default {
+            background-color: #2BBBAD; }
+        .btn-default:hover {
+            background-color: #30cfc0 !important; }
+        .btn-default:focus, .btn-default:active, .btn-default.active {
+            background-color: #1d7d73 !important; }
+        .btn-default.dropdown-toggle {
+            background-color: #2BBBAD !important; }
+        .btn-default.dropdown-toggle:hover, .btn-default.dropdown-toggle:focus {
+            background-color: #30cfc0 !important; }
+
+        .indigo {
+            background-color: #3f51b5 !important; }
+
+        .btn-indigo {
+            background-color: #3f51b5; }
+        .btn-indigo:hover {
+            background-color: #4d5ec1 !important; }
+        .btn-indigo:focus, .btn-indigo:active, .btn-indigo.active {
+            background-color: #2b387c !important; }
+        .btn-indigo.dropdown-toggle {
+            background-color: #3f51b5 !important; }
+        .btn-indigo.dropdown-toggle:hover, .btn-indigo.dropdown-toggle:focus {
+            background-color: #4d5ec1 !important; }
 
         .steps-form {
             display: table;
