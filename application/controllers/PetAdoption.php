@@ -51,6 +51,7 @@ class PetAdoption extends CI_Controller {
         $allPets = $this->PetAdoption_model->fetchPetDesc("pet");
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
         $petAdopters = $this->PetAdoption_model->fetchJoinThreeProgressDesc("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id");
+        $userInfo = $this->PetAdoption_model->fetchJoinThreeProgress("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id", array('user.user_id' => $this->session->userid));
 
         $data = array(
             'title' => "Pet Adoption | " . $current_user->user_firstname . " " . $current_user->user_lastname,
@@ -60,6 +61,7 @@ class PetAdoption extends CI_Controller {
             'user_access' => "User",
             'pets' => $allPets,
             'adopters' => $petAdopters,
+            'userInfo' => $userInfo
         );
         $this->load->view("pet_adoption/includes/header", $data);
         $this->load->view("user_nav/navheader");

@@ -43,13 +43,14 @@ class MyPets extends CI_Controller {
 
     public function index() {
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
-
+        $userInfo = $this->MyPets_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", array('user.user_id' => $this->session->userid));
         $data = array(
             'title' => "My Pets | " . $current_user->user_firstname . " " . $current_user->user_lastname,
             //NAV INFO
             'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
             'user_picture' => $current_user->user_picture,
-            'user_access' => "User"
+            'user_access' => "User",
+            'userInfo' => $userInfo
         );
         $this->load->view("my_pets/includes/header", $data);
         $this->load->view("user_nav/navheader");

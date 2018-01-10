@@ -1,10 +1,4 @@
-<?php
-$userInfo = $this->PetAdoption_model->fetchJoinThreeProgress("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id", array('user.user_id' => $this->session->userid));
-/* echo "<pre>";
-  print_r($userInfo);
-  echo "</pre>";
-  die; */
-?>
+
 <?php
 
 function wrap_iframe($src) {

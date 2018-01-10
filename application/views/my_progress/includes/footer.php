@@ -29,10 +29,10 @@
         </div>
     </div>
 </div>
-
-<script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.bundle.min.js" integrity="sha384-VspmFJ2uqRrKr3en+IG0cIq1Cl/v/PHneDw6SQZYgrcr8ZZmZoQ3zhuGfMnSR/F2" crossorigin="anonymous"></script>
 <!-- Bootstrap Switch -->
-<script src="<?= base_url() ?>assets/bootstrap-switch/js/bootstrap-switch.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url() ?>assets/admin/js/sb-admin.min.js"></script>
 <!-- Stepper -->
@@ -48,7 +48,7 @@
     })
 </script>
 <!-- Bootstrap Lightbox-->
-<script src = "<?= base_url() ?>assets/bootstrap-lightbox/ekko-lightbox.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
 <script>
     $(document).on('click', '[data-toggle="lightbox"]', function (event) {
         event.preventDefault();

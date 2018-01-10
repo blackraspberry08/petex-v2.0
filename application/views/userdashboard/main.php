@@ -63,7 +63,11 @@ Dashboard
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopters" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-users fa-2x"></i></a>
-                                                <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star fa-2x"></i></a>
+                                                <?php if (!$userInfo): ?>
+                                                    <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopt" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star fa-2x"></i></a>
+                                                <?php else: ?>
+                                                    <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>warning" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star fa-2x"></i></a>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
@@ -212,6 +216,56 @@ Dashboard
                                                         <?php endforeach; ?>
                                                     <?php endif; ?>
 
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Adopt -->
+                                <div class="modal fade <?= $pet->pet_id; ?>adopt" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><i class = "fa fa-star"></i> Adopt a Pet</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row container">
+                                                    <p><strong>There are two options for you to decide, its either download the form or fill up the form and send to our email online.</strong></p>
+                                                    <div class="col-md-3"></div>
+                                                    <div class="col-md-3">
+                                                        <a href="<?= base_url() ?>download/adoption_application_form.pdf" class="btn btn-outline-primary">Download <i class = "fa fa-download"></i></a>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <a href="<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn btn-outline-primary">Fill up the Form Online</a>
+                                                    </div>
+                                                    <div class="col-md-3"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Warning -->
+                                <div class="modal fade <?= $pet->pet_id; ?>warning" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><i class = "fa fa-warning"></i> Warning!</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row container">
+                                                    <h3>Oops! Sorry, you cannot adopt this pet because you already have in progress...</h3>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

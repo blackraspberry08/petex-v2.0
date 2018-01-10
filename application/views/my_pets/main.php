@@ -1,6 +1,4 @@
-<?php
-$userInfo = $this->MyPets_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", array('user.user_id' => $this->session->userid));
-?>
+
 <?php
 
 function wrap_iframe($src) {
