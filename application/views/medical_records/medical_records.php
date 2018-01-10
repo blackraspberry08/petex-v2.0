@@ -4,9 +4,6 @@ MEDICAL RECORDS
 
 <div class="content-wrapper">
     <div class="container-fluid">
-        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
-        <?php include_once (APPPATH . "views/show_error/show_error_medical_record.php"); ?>
-        
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -17,6 +14,8 @@ MEDICAL RECORDS
             </li>
             <li class="breadcrumb-item active"><?= "Medical Records of ".$animal->pet_name?></li>
         </ol>
+        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
+        <?php include_once (APPPATH . "views/show_error/show_error_medical_record.php"); ?>
         <div class = "row my-3">
             <div class ="col-lg-12">
                 <a href = "#" class = "btn btn-outline-primary pull-right" data-toggle="modal" data-target="#add_medical_record"><i class = "fa fa-plus"></i> Add Medical Records</a>
@@ -57,8 +56,10 @@ MEDICAL RECORDS
                                 <td><?= $record->medicalRecord_treatment?></td>
                                 <td>
                                     <center>
-                                        <a href = "<?= base_url()?>PetManagement/edit_medical_record_exec/<?= $animal->pet_id?>/<?= $record->medicalRecord_id?>" class = "btn btn-outline-success" data-toggle = "tooltip" data-placement = "bottom" title = "Edit"><i class = "fa fa-pencil"></i></a>
-                                        <a href = "#" class = "btn btn-outline-danger" data-toggle = "modal" data-target = "#remove_medical_record_<?= $record->medicalRecord_id?>" title = "Remove"><i class = "fa fa-trash"></i></a>
+                                        <div class = "btn-group" role = "group" aria-label="buttonGroup">
+                                            <a href = "<?= base_url()?>PetManagement/edit_medical_record_exec/<?= $animal->pet_id?>/<?= $record->medicalRecord_id?>" class = "btn btn-outline-success" data-toggle = "tooltip" data-placement = "bottom" title = "Edit"><i class = "fa fa-pencil"></i></a>
+                                            <a href = "#" class = "btn btn-outline-danger" data-toggle = "modal" data-target = "#remove_medical_record_<?= $record->medicalRecord_id?>" title = "Remove"><i class = "fa fa-trash"></i></a>
+                                        </div>
                                     </center>
                                 </td>
                             </tr>
@@ -143,9 +144,10 @@ MEDICAL RECORDS
                             <textarea class="form-control" id="medicalRecord_treatment" rows="3" name = "medicalRecord_treatment"><?= set_value("medicalRecord_treatment");?></textarea>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add Medical Record</button>
+                    <div class="modal-footer " >
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add Medical Record</button>
+                        
                     </div>
                 </form>
             </div>

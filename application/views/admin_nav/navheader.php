@@ -67,6 +67,18 @@ Admin Nav Header
                         <span class="nav-link-text">Pet Management</span>
                     </a>
                 </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."RemovedPets") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Removed Pets">
+                    <a class="nav-link" href="<?= base_url()?>RemovedPets">
+                        <i class="fa fa-fw fa-ban"></i>
+                        <span class="nav-link-text">Removed Pets</span>
+                    </a>
+                </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."Schedules") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Schedules">
+                    <a class="nav-link" href="<?= base_url()?>Schedules">
+                        <i class="fa fa-fw fa-calendar"></i>
+                        <span class="nav-link-text">Schedules</span>
+                    </a>
+                </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."ManageUser") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Manage Users">
                     <a class="nav-link" href="<?= base_url()?>ManageUser">
                         <i class="fa fa-fw fa-users"></i>
@@ -91,38 +103,6 @@ Admin Nav Header
                         <span class="nav-link-text">Audit Trail</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-                        <i class="fa fa-fw fa-sitemap"></i>
-                        <span class="nav-link-text">Menu Levels</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti">
-                        <li>
-                            <a href="#">Second Level Item</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Item</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Item</a>
-                        </li>
-                        <li>
-                            <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-                            <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                                <li>
-                                    <a href="#">Third Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Item</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">

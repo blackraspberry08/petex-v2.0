@@ -86,5 +86,5 @@
             </table>
         </div>
 </div>
-</div>
+
 <?php endif; ?>

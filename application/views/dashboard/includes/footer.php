@@ -30,31 +30,30 @@
         </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <script src="<?= base_url()?>assets/jquery/jquery.min.js"></script>
-    <script src="<?= base_url()?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.bundle.min.js" integrity="sha384-VspmFJ2uqRrKr3en+IG0cIq1Cl/v/PHneDw6SQZYgrcr8ZZmZoQ3zhuGfMnSR/F2" crossorigin="anonymous"></script>
+    
     <!-- Core plugin JavaScript-->
-    <script src="<?= base_url()?>assets/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="<?= base_url()?>assets/chartjs/Chart.min.js"></script>
-    <script src="<?= base_url()?>assets/datatables/jquery.dataTables.js"></script>
-    <script src="<?= base_url()?>assets/datatables/dataTables.bootstrap4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url()?>assets/admin/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="<?= base_url()?>assets/admin/js/sb-admin-datatables.min.js"></script>
     <script src="<?= base_url()?>assets/admin/js/sb-admin-charts.min.js"></script>
     <!-- Counters Scripts-->
-    <script src="<?= base_url() ?>assets/waypoints/waypoints.min.js"></script>
-    <script src="<?= base_url() ?>assets/counterup/counterup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
     <script src="<?= base_url() ?>assets/admin/js/sb-admin-counter.js"></script>
     <!-- Bootstrap Switch -->
-    <script src="<?= base_url()?>assets/bootstrap-switch/js/bootstrap-switch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
     <script>
         $(".switch-style").bootstrapSwitch();
     </script>
     <!-- Bootstrap Lightbox-->
-    <script src = "<?= base_url()?>assets/bootstrap-lightbox/ekko-lightbox.js"></script>
-    <script src = "<?= base_url()?>assets/bootstrap-lightbox/ekko-lightbox.js.map"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
     <script>
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
@@ -62,20 +61,21 @@
         });
     </script>
     <!-- Bootstrap Datepicker -->
-    <script src ="<?= base_url()?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
         var dt = new Date();
         dt.setFullYear(new Date().getFullYear());
         $(document).ready(function () {
             $(".form_datetime").datetimepicker({
-                format: 'MM dd, yyyy',
+                format: 'MM d, yyyy',
                 todayBtn: true,
                 autoclose: true,
-                //minView: 2,      --> WITHOUT TIME INPUT
+                minView: 2,      
             });
             $('.form_datetime').datetimepicker('setEndDate', dt);
         });
-    </script>  
+    </script>
+    
     <!-- Tab Script-->
     <script>
         $('#user_tab a').click(function (e) {

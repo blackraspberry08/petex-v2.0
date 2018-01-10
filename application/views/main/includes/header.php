@@ -33,7 +33,18 @@
     </head>
 
     <body>
+        <?php
 
+        function get_age($birth_date) {
+            if (date("Y", $birth_date) == "2018") {
+//Month
+                return floor((time() - $birth_date) / 2678400) . " months old";
+            } else {
+//Year
+                return floor((time() - $birth_date) / 31556926) . " years old";
+            }
+        }
+        ?>
         <!--==========================
         Header
         ============================-->

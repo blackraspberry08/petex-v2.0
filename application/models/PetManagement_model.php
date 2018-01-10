@@ -55,6 +55,41 @@ class PetManagement_model extends CI_Model {
         $this->db->update("medical_record", $medical_record);
         return $this->db->affected_rows();
     }
+    public function remove_animal($where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $data = array("pet_access" => 0);
+        $this->db->update("pet", $data);
+        return $this->db->affected_rows();
+    }
+    public function restore_animal($where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $data = array("pet_access" => 1);
+        $this->db->update("pet", $data);
+        return $this->db->affected_rows();
+    }
+    public function update_animal_record($animal_record, $where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->update("pet", $animal_record);
+        return $this->db->affected_rows();
+    }
+    public function register_animal_record($animal_record){
+        $table = "pet";
+        $this->db->insert($table, $animal_record);
+        return $this->db->affected_rows();
+    }
+    public function get_removed_animals(){
+        $table = "pet";
+        $where = array("pet_access" => 0);
+        $this->db->where($where);
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
 }
 
 
