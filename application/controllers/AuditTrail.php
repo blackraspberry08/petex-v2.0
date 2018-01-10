@@ -13,7 +13,7 @@ class AuditTrail extends CI_Controller {
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
             $this->session->set_flashdata("err_4", "Login First!");
-            redirect(base_url().'login/');
+            redirect(base_url().'main/');
         }else{
             $current_user = $this->session->userdata("current_user");
             if($this->session->userdata("user_access") == "user"){
