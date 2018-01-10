@@ -6,7 +6,8 @@ class PetAdoption extends CI_Controller {
         parent::__construct();
         //---> MODELS HERE!
         $this->load->model('PetAdoption_model');
-
+        //---> HELPERS HERE!
+        $this->load->helper('download');
         //---> LIBRARIES HERE!
         //---> SESSIONS HERE!
         if ($this->session->has_userdata('isloggedin') == FALSE) {
@@ -30,6 +31,22 @@ class PetAdoption extends CI_Controller {
         }
     }
 
+    public function download($fileName = NULL) {
+        if ($fileName) {
+            $file = realpath("download") . "\\" . $fileName;
+// check file exists    
+            if (file_exists($file)) {
+// get file content
+                $data = file_get_contents($file);
+//force download
+                force_download($fileName, $data);
+            } else {
+// Redirect to base url
+                redirect(base_url());
+            }
+        }
+    }
+
     public function index() {
         $allPets = $this->PetAdoption_model->fetchPetDesc("pet");
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
@@ -47,6 +64,30 @@ class PetAdoption extends CI_Controller {
         $this->load->view("pet_adoption/includes/header", $data);
         $this->load->view("user_nav/navheader");
         $this->load->view("pet_adoption/main");
+        $this->load->view("pet_adoption/includes/footer");
+    }
+
+    public function petAdoptionOnlineForm_exec() {
+        $this->session->set_userdata("petadopterid", $this->uri->segment(3));
+        redirect(base_url() . "PetAdoption/petAdoptionOnlineForm");
+    }
+
+    public function petAdoptionOnlineForm() {
+        $selectedPetId = $this->session->userdata("petadopterid");
+        $pet = $this->PetAdoption_model->fetch('pet', array('pet_id' => $selectedPetId))[0];
+        $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            'title' => "Online Adoption Application Form | " . $current_user->user_firstname . " " . $current_user->user_lastname,
+            //NAV INFO
+            'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
+            'user_picture' => $current_user->user_picture,
+            'user_access' => "User",
+            'wholeUrl' => base_url(uri_string()),
+            'pet' => $pet
+        );
+        $this->load->view("pet_adoption/includes/header", $data);
+        $this->load->view("user_nav/navheader");
+        $this->load->view("pet_adoption/petAdoptionOnlineForm");
         $this->load->view("pet_adoption/includes/footer");
     }
 
