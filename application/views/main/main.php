@@ -52,7 +52,6 @@
                     <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
                         <div class="card-body">
                             <?php include_once (APPPATH."views/show_error/show_error.php");?>
-                            <?= print_r($_SESSION);?>
                             <div class="row">
                                 <div class="col">
                                     <input class="form-control" type="text" name="username" placeholder="Username" autofocus>

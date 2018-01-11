@@ -12,7 +12,7 @@ class PetAdoption extends CI_Controller {
         //---> SESSIONS HERE!
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
-            $this->session->set_flastdata("err_4", "Login First!");
+            $this->session->set_flashdata("err_4", "Login First!");
             redirect(base_url() . 'main/');
         } else {
             $current_user = $this->session->userdata("current_user");
