@@ -12,4 +12,12 @@ class Main_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
+    public function count($table, $where = NULL) {
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $query = $this->db->count_all($table);
+        return $query;
+    }
+
 }
