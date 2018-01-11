@@ -29,6 +29,23 @@
         </div>
     </div>
 </div>
+<script src="<?= base_url() ?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript">
+
+    var dt = new Date();
+    dt.setFullYear(new Date().getFullYear());
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: 'MM dd, yyyy',
+            todayBtn: true,
+            autoclose: true,
+            minView: 2,
+        });
+
+        $('.form_datetime').datetimepicker('setEndDate', dt);
+    });
+
+</script>  
 <!-- Bootstrap core JavaScript-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.bundle.min.js" integrity="sha384-VspmFJ2uqRrKr3en+IG0cIq1Cl/v/PHneDw6SQZYgrcr8ZZmZoQ3zhuGfMnSR/F2" crossorigin="anonymous"></script>
 <!-- Bootstrap Switch -->
@@ -45,6 +62,9 @@
         $(this).tab('show')
     })
 </script>
+<!-- Core plugin JavaScript-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
 <!-- Bootstrap Lightbox-->
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
 <script>

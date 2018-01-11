@@ -7,10 +7,11 @@ class UserDashboard extends CI_Controller {
         //---> MODELS HERE!
         $this->load->model('UserDashboard_model');
         //---> LIBRARIES HERE!
+        $this->load->helper('download');
         //---> SESSIONS HERE!
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
-            $this->session->set_userdata("err_4", "Login First!");
+            $this->session->set_flastdata("err_4", "Login First!");
             redirect(base_url() . 'main/');
         } else {
             $current_user = $this->session->userdata("current_user");
@@ -29,12 +30,28 @@ class UserDashboard extends CI_Controller {
         }
     }
 
+    public function download($fileName = NULL) {
+        if ($fileName) {
+            $file = realpath("download") . "\\" . $fileName;
+// check file exists    
+            if (file_exists($file)) {
+// get file content
+                $data = file_get_contents($file);
+//force download
+                force_download($fileName, $data);
+            } else {
+// Redirect to base url
+                redirect(base_url());
+            }
+        }
+    }
+
     public function index() {
         $allPets = $this->UserDashboard_model->fetchPetDesc("pet");
         $allAdopted = $this->UserDashboard_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id");
         $petAdopters = $this->UserDashboard_model->fetchJoinThreeProgressDesc("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id");
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
-        $userInfo = $this->UserDashboard_model->fetchJoinThreeProgress("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id", array('user.user_id' => $this->session->userid));
+        $userInfo = $this->UserDashboard_model->fetchJoinProgress(array('transaction.user_id' => $this->session->userid));
 
         $data = array(
             'title' => "User Dashboard | " . $current_user->user_firstname . " " . $current_user->user_lastname,

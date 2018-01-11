@@ -63,7 +63,7 @@ Dashboard
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopters" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-users fa-2x"></i></a>
-                                                <?php if (!$userInfo): ?>
+                                                <?php if (empty($userInfo)): ?>
                                                     <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopt" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star fa-2x"></i></a>
                                                 <?php else: ?>
                                                     <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>warning" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star fa-2x"></i></a>
@@ -422,11 +422,11 @@ Dashboard
                                         </div>
                                         <div class="modal-body">
                                             <div class="row container">
-                                                <?php if ($adopted->pet_video == NULL): ?>
+                                                <?php if ($pet->pet_video == NULL): ?>
                                                     <h2>This pet has no Video</h2>
                                                 <?php else: ?>
-                                                    <div class="embed-responsive embed-responsive-16by9">
-                                                        <iframe class="embed-responsive-item" src="..."></iframe>
+                                                    <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                                        <?= wrap_iframe($pet->pet_video); ?>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
