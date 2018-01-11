@@ -1,5 +1,4 @@
 <?php
-
 //echo $this->db->last_query();
 //echo "<pre>";
 //print_r($userInfo);
@@ -20,21 +19,6 @@ function getIcon($var) {
     } else if ($var == 5) {
         echo "fa fa-home";
     } else if ($var == 6) {
-        echo "fa fa-check";
-    }
-}
-function get_progress($var) {
-    if ($var <= '16') {
-        echo "active";
-    } else if ($var == '32') {
-        echo "fa fa-handshake-o";
-    } else if ($var == '49') {
-        echo "fa fa-comments";
-    } else if ($var == '66') {
-        echo "fa fa-eye";
-    } else if ($var == '83') {
-        echo "fa fa-home";
-    } else if ($var == '100') {
         echo "fa fa-check";
     }
 }
@@ -82,14 +66,14 @@ My Progress
                             <div class="steps-row setup-panel">
                                 <?php foreach ($userInfo as $progress): ?>
                                     <div class="steps-step">
-                                        <a href="#<?= $progress->checklist_id ?>"  class="btn btn-default btn-circle <?= $progress->transaction_progress <= '32' ? "active" : "disabled" ?>" style="height:45px; width:45px;"><i class="<?= getIcon($progress->checklist_id) ?>"></i><br><?= $progress->checklist_id ?></a>
+                                        <a id = "step_id_<?= $progress->checklist_id ?>" href="#step_<?= $progress->checklist_id ?>"  class="btn btn-default btn-circle" style="height:45px; width:45px; color:white;"><i class="<?= getIcon($progress->checklist_id) ?> fa-1x"></i><br><?= $progress->checklist_id ?></a>
                                         <p><?= $progress->checklist_title ?></p>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
                         </div>
                         <?php foreach ($userInfo as $progress): ?>
-                            <div class="row setup-content" id="<?= $progress->checklist_id ?>">
+                            <div class="row setup-content" id="step_<?= $progress->checklist_id ?>">
                                 <div class="col-md-12">
                                     <h3 class="font-bold pl-0 my-4"><strong> <?= $progress->checklist_title ?></strong></h3>
                                     <div class="row">
@@ -243,50 +227,71 @@ My Progress
 
 
 <script>
-    switch (<?= $transaction_progress ?>) {
-        case 16:
-        {
-            $("#1").addClass("active");
-            break;
+    $(document).ready(function () {
+        switch (<?= $transaction_progress ?>) {
+            case 16:
+            {
+                $("#step_id_1").addClass("active");
+                $("#step_id_2").addClass("disabled");
+                $("#step_id_3").addClass("disabled");
+                $("#step_id_4").addClass("disabled");
+                $("#step_id_5").addClass("disabled");
+                $("#step_id_6").addClass("disabled");
+                break;
+            }
+            case 32:
+            {
+                $("#step_id_1").addClass("");
+                $("#step_id_2").addClass("active");
+                $("#step_id_3").addClass("disabled");
+                $("#step_id_4").addClass("disabled");
+                $("#step_id_5").addClass("disabled");
+                $("#step_id_6").addClass("disabled");
+                $("#step_id_6").addClass("disabled");
+
+                break;
+            }
+            case 49:
+            {
+                $("#step_id_1").addClass("");
+                $("#step_id_2").addClass("");
+                $("#step_id_3").addClass("active");
+                $("#step_id_4").addClass("disabled");
+                $("#step_id_5").addClass("disabled");
+                $("#step_id_6").addClass("disabled");
+                break;
+            }
+            case 66:
+            {
+                $("#step_id_1").addClass("");
+                $("#step_id_2").addClass("");
+                $("#step_id_3").addClass("");
+                $("#step_id_4").addClass("active");
+                $("#step_id_5").addClass("disabled");
+                $("#step_id_6").addClass("disabled");
+                break;
+            }
+            case 83:
+            {
+                $("#step_id_1").addClass("");
+                $("#step_id_2").addClass("");
+                $("#step_id_3").addClass("");
+                $("#step_id_4").addClass("");
+                $("#step_id_5").addClass("active");
+                $("#step_id_6").addClass("disabled");
+                break;
+            }
+            case 100:
+            {
+                $("#step_id_1").addClass("");
+                $("#step_id_2").addClass("");
+                $("#step_id_3").addClass("");
+                $("#step_id_4").addClass("");
+                $("#step_id_5").addClass("");
+                $("#step_id_6").addClass("active");
+                break;
+            }
         }
-        case 32:
-        {
-            $("#1").addClass("active");
-            $("#2").addClass("active");
-            break;
-        }
-        case 49:
-        {
-            $("#1").addClass("active");
-            $("#2").addClass("active");
-            $("#3").addClass("active");
-            break;
-        }
-        case 66:
-        {
-            $("#1").addClass("active");
-            $("#2").addClass("active");
-            $("#3").addClass("active");
-            $("#4").addClass("active");
-            break;
-        }
-        case 83:
-        {
-            $("#1").addClass("active");
-            $("#2").addClass("active");
-            $("#3").addClass("active");
-            $("#4").addClass("active");
-            $("#5").addClass("active");
-            break;
-        }
-        case 100:
-        {
-            $("#1").addClass("active");
-            $("#2").addClass("active");
-            $("#3").addClass("active");
-            $("#4").addClass("active");
-            $("#5").addClass("active");
-            break;
-        }
-    }
+    });
+
 </script>

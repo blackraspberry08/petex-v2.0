@@ -42,7 +42,7 @@ User Nav Header
     .scrollbar-custom::-webkit-scrollbar-thumb{
         background-color: #24282C;
     }
-    .dropdown-menu {
+    .nav-item .dropdown-menu {
         width: 300px !important;
     }
 </style>
