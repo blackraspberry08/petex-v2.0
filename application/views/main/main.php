@@ -4,15 +4,46 @@
 ============================-->
 
 <section id="hero">
-    <div class="hero-container">
-        <div class="row container-fluid">
-            <div class="col-md-7 wow fadeInLeft" style="margin-top: 200px;">
+        
+    <div class="hero-container ">
+        <div class="row container-fluid align-items-center mt-5">
+            <div class="col-lg-7 col-md-12 py-5 wow fadeInLeft">
                 <h1>Welcome to PetEx</h1>
-                <h2>Pet Express an <strong>Adoption System</strong><br> for <strong>PAWS</strong></h2>
+                <h2><strong>Pet Express</strong>, an Adoption System<br> for <strong>PAWS</strong></h2>
             </div>
 
-            <div class="col-md-5" style="margin-top: 50px;">
-                <div class="card wow fadeInRight">
+            <div class="col-lg-5 col-md-12 py-5">
+                <div class="card wow fadeInRight ">
+                    <?php if($this->session->has_userdata("userid") && $this->session->has_userdata("isloggedin")):?>
+                        <div class="card-header">
+                            You are currently logged in as
+                        </div>    
+                        <div class="card-body text-center">
+                        <?php 
+                            $current_user = $this->session->userdata("current_user");
+                            if($this->session->userdata("user_access") == "subadmin" || $this->session->userdata("user_access") == "user"):?>
+                                <img src = "<?= base_url().$current_user->user_picture?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
+                                <strong><?= $current_user->user_firstname." ".$current_user->user_lastname?></strong><br>
+                                <span><?= $current_user->user_access == "Subadmin"? "PAWS Officer" : "Pet Adopter" ?></span>
+                        <?php elseif($this->session->userdata("user_access") == "admin"):?>
+                                <img src = "<?= base_url().$current_user->admin_picture?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
+                                <strong><?= $current_user->admin_firstname." ".$current_user->admin_lastname?></strong><br>
+                                <span>Administrator</span>
+                        <?php endif;?>
+                    </div>
+                    <div class="card-footer">
+                        <?php 
+                            if($this->session->userdata("user_access") == "user"):?>
+                            <a class="btn btn-primary pull-left" href="<?= base_url()."UserDashboard"?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>
+                        <?php elseif($this->session->userdata("user_access") == "subadmin"):?>
+                            <a class="btn btn-primary pull-left" href="<?= base_url()."SubadminDashboard"?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>
+                        <?php elseif($this->session->userdata("user_access") == "admin"):?>
+                            <a class="btn btn-primary pull-left" href="<?= base_url()."AdminDashboard"?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>  
+                        <?php endif;?>
+                        
+                        <a class="btn btn-secondary pull-right" href="<?= base_url()."AdminLogout"?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                    </div>
+                    <?php else:?>
                     <div class="card-header">
                         <img src="<?= $this->config->base_url() ?>images/logo/icon.png" style="height:50px;" alt="" />
                         <br><br>
@@ -21,6 +52,7 @@
                     <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
                         <div class="card-body">
                             <?php include_once (APPPATH."views/show_error/show_error.php");?>
+                            <?= print_r($_SESSION);?>
                             <div class="row">
                                 <div class="col">
                                     <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
@@ -41,12 +73,12 @@
                             </div><br>
                         </div>
                     </form>
+                    <?php endif;?>
                 </div>
-
             </div>
-
         </div>
-        <a href="#about" class="btn-get-started wow fadeInUp">Get Started</a>
+        <a href="#about" class="btn-get-started wow fadeInUp mt-5">Get Started</a>
+    </div>
 </section><!-- #hero -->
 
 <main id="main">
@@ -145,12 +177,12 @@
     ============================-->
     <section id="call-to-action">
         <div class="container wow fadeIn">
-            <div class="row">
-                <div class="col-lg-6 text-center wow fadeInLeft">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center wow fadeInLeft ">
                     <h3 class="cta-title">PetEx Pet Manager</h3>
                     <p class="cta-text"> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
-                <div class="col-lg-6 wow fadeInRight">
+                <div class="col-lg-6 wow fadeInRight my-5">
                     <center>
                         <img src="<?= $this->config->base_url() ?>images/logo/mobilePrev2.png" alt="" />
                     </center>
@@ -301,7 +333,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row container">
-                                                    <?php if ($pet->pet_video == NULL): ?>
+                                                    <?php if ($adopted->pet_video == NULL): ?>
                                                         <h2>This pet has no Video</h2>
                                                     <?php else: ?>
                                                         <div class="embed-responsive embed-responsive-16by9">

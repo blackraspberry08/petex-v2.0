@@ -90,6 +90,43 @@ class PetManagement_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
+    public function get_active_transactions($where = NULL){
+        $table = "transaction";
+        $join = "pet";
+        $on = "transaction.pet_id = pet.pet_id";
+        $join2 = "user";
+        $on2 = "transaction.user_id = user.user_id";
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->where(array("transaction.transaction_isActivated" => 1));
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    public function get_not_active_transactions($where = NULL){
+        $table = "transaction";
+        $join = "pet";
+        $on = "transaction.pet_id = pet.pet_id";
+        $join2 = "user";
+        $on2 = "transaction.user_id = user.user_id";
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->where(array("transaction.transaction_isActivated" => 0));
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    public function restore_transaction($where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->update("pet", array("transaction_isActivated" => 1));
+        return $this->db->affected_rows();
+    }
 }
 
 
