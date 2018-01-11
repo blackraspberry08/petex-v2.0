@@ -140,4 +140,5 @@ $autoload['model'] = array(
     "ManageOfficer_model",
     "SaveEvent",
     "PetManagement_model",
+    "ManageProgress_model"
     );
