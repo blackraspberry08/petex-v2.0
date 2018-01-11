@@ -12,7 +12,10 @@ class Main extends CI_Controller {
     }
 
     public function index() {
+        
+        
         $allPets = $this->Main_model->fetchPetDesc("pet");
+        
         $data = array(
             'title' => 'Pet Ex | Pet Express Homepage',
             'wholeUrl' => base_url(uri_string()),
