@@ -124,7 +124,14 @@ class PetManagement_model extends CI_Model {
         if(!empty($where)){
              $this->db->where($where);
         }
-        $this->db->update("pet", array("transaction_isActivated" => 1));
+        $this->db->update("transaction", array("transaction_isActivated" => 1));
+        return $this->db->affected_rows();
+    }
+    public function drop_transaction($where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->update("transaction", array("transaction_isActivated" => 0));
         return $this->db->affected_rows();
     }
 }

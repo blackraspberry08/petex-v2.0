@@ -368,8 +368,24 @@ class PetManagement extends CI_Controller {
         if($this->PetManagement_model->restore_transaction(array("transaction_id" => $transaction_id))){
             $this->session->set_flashdata("restore_success", "Successfully restored the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
         }else{
-            $this->session->set_flashdata("restore_fail", "Something went wrong while transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
+            $this->session->set_flashdata("restore_fail", "Something went wrong while restoring the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
         }
+        redirect(base_url()."PetManagement/interested_adopters_exec/".$this->session->userdata("interested_adopters"));
+    }
+    public function drop_transaction_exec(){
+        $transaction_id = $this->uri->segment(3);
+        $transaction_user_id = $this->uri->segment(4);
+        $transaction_user = $this->ManageUsers_model->get_users("user", array("user_id" => $transaction_user_id))[0];
+        if($this->PetManagement_model->drop_transaction(array("transaction_id" => $transaction_id))){
+            $this->session->set_flashdata("drop_success", "Dropped the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
+        }else{
+            $this->session->set_flashdata("drop_fail", "Something went wrong while dropping the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
+        }
+        redirect(base_url()."PetManagement/interested_adopters_exec/".$this->session->userdata("interested_adopters"));
+    }
+    public function manage_progress_exec(){
+        $this->session->set_userdata("manage_progress_transaction_id", $this->uri->segment(3));
+        redirect(base_url()."ManageProgress");
     }
 }
 
