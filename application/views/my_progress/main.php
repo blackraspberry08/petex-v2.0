@@ -60,14 +60,14 @@ My Progress
             <?php else: ?>
                 <!-- Steps form -->
                 <div class="card">
-                    <div class="card-body mb-4">
-                        <h2 class="text-center font-bold pt-4 pb-5"></h2>
+                    <div class="card-body">
+                        <h2 class="text-center font-bold"></h2>
                         <div class="steps-form">
                             <div class="steps-row setup-panel">
                                 <?php foreach ($userInfo as $progress): ?>
                                     <div class="steps-step">
                                         <a id = "step_id_<?= $progress->checklist_id ?>" href="#step_<?= $progress->checklist_id ?>"  class="btn btn-default btn-circle" style="height:45px; width:45px; color:white;"><i class="<?= getIcon($progress->checklist_id) ?> fa-1x"></i><br><?= $progress->checklist_id ?></a>
-                                        <p><?= $progress->checklist_title ?></p>
+                                        <p><small><?= $progress->checklist_title ?></small></p>
                                     </div>
                                 <?php endforeach; ?>
                             </div>

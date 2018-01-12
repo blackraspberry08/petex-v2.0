@@ -1,13 +1,13 @@
 <?php
 
-class UserDashboard extends CI_Controller {
+class Profile extends CI_Controller {
 
     function __construct() {
         parent::__construct();
         //---> MODELS HERE!
-        $this->load->model('UserDashboard_model');
+        $this->load->model('Profile_model');
+        //---> HELPERS HERE!
         //---> LIBRARIES HERE!
-        $this->load->helper('download');
         //---> SESSIONS HERE!
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
@@ -30,44 +30,38 @@ class UserDashboard extends CI_Controller {
         }
     }
 
-    public function download($fileName = NULL) {
-        if ($fileName) {
-            $file = realpath("download") . "\\" . $fileName;
-// check file exists    
-            if (file_exists($file)) {
-// get file content
-                $data = file_get_contents($file);
-//force download
-                force_download($fileName, $data);
-            } else {
-// Redirect to base url
-                redirect(base_url());
-            }
-        }
-    }
-
     public function index() {
-        $allPets = $this->UserDashboard_model->fetchPetDesc("pet");
-        $allAdopted = $this->UserDashboard_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id");
-        $petAdopters = $this->UserDashboard_model->fetchJoinThreeProgressDesc("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id");
+        $userDetails = $this->Profile_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
-        $userInfo = $this->UserDashboard_model->fetchJoinProgress(array('transaction.user_id' => $this->session->userid));
-
         $data = array(
-            'title' => "Dashboard | " . $current_user->user_firstname . " " . $current_user->user_lastname,
+            'title' => "Profile | " . $current_user->user_firstname . " " . $current_user->user_lastname,
             //NAV INFO
             'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
             'user_picture' => $current_user->user_picture,
-            'pets' => $allPets,
-            'adopters' => $petAdopters,
             'user_access' => "User",
-            'adoptedPets' => $allAdopted,
-            'userInfo' => $userInfo
+            'userDetails' => $userDetails
         );
-        $this->load->view("userdashboard/includes/header", $data);
+        $this->load->view("profile/includes/header", $data);
         $this->load->view("user_nav/navheader");
-        $this->load->view("userdashboard/main");
-        $this->load->view("userdashboard/includes/footer");
+        $this->load->view("profile/main");
+        $this->load->view("profile/includes/footer");
+    }
+
+    public function edit_profile() {
+        $userDetails = $this->Profile_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            'title' => "Edit Profile | " . $current_user->user_firstname . " " . $current_user->user_lastname,
+            //NAV INFO
+            'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
+            'user_picture' => $current_user->user_picture,
+            'user_access' => "User",
+            'userDetails' => $userDetails
+        );
+        $this->load->view("profile/includes/header", $data);
+        $this->load->view("user_nav/navheader");
+        $this->load->view("profile/edit_profile");
+        $this->load->view("profile/includes/footer");
     }
 
 }

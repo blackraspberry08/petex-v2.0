@@ -26,7 +26,7 @@ Dashboard
         <!-- Registered -->
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-dashboard"></i> Dashboard
+                <h3>Newly Registered Pet</h3>
             </div>
             <?php if (empty($pets)): ?>
                 <div class = "col-lg-12">
