@@ -184,7 +184,7 @@
                 </div>
                 <div class="col-lg-6 wow fadeInRight my-5">
                     <center>
-                        <img src="<?= $this->config->base_url() ?>images/logo/mobilePrev2.png" alt="" />
+                        <img src="<?= $this->config->base_url() ?>images/logo/mobilePrev2.png" class= "img-fluid" alt="" />
                     </center>
                 </div>
             </div>
@@ -426,7 +426,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/jcMatFinal.png" alt=""></div>
+                        <div class="pic img-fluid"><img src="<?= base_url() ?>images/team/jcMatFinal.png" alt=""></div>
                         <h4>Juan Carlo Valencia</h4>
                         <span>Project Manager</span>
                     </div>
@@ -434,7 +434,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/markusMatFinal.png" alt=""></div>
+                        <div class="pic img-fluid"><img src="<?= base_url() ?>images/team/markusMatFinal.png" alt=""></div>
                         <h4>Angelo Markus Zaguirre</h4>
                         <span>Webmaster</span>
                     </div>
@@ -442,7 +442,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/allenMatFinal.png" alt=""></div>
+                        <div class="pic img-fluid"><img src="<?= base_url() ?>images/team/allenMatFinal.png" alt=""></div>
                         <h4>Allen Torres</h4>
                         <span>Quality Assurance</span>
                     </div>
@@ -450,7 +450,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="member">
-                        <div class="pic image-fluid"><img src="<?= base_url() ?>images/team/joshMatFinal.png" alt=""></div>
+                        <div class="pic img-fluid"><img src="<?= base_url() ?>images/team/joshMatFinal.png" alt=""></div>
                         <h4>Joshua Vitug</h4>
                         <span>Writer And Editor</span>
                     </div>
