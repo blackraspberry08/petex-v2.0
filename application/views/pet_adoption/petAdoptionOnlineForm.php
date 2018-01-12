@@ -321,14 +321,17 @@ Pet Adoption
                                 <div id="num4Hidden"  class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
                                         <span>Please attach a letter from your landlord granting you permission to keep pets.</span>
-                                        <div class="custom-file-container" data-upload-id="pet_picture">
+                                        <div class="custom-file-container" data-upload-id="num4file">
                                             <label class="custom-file-container__custom-file" >
-                                                <input type="file" name = "pet_picture" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
+                                                <input type="file" name = "num4file" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="application/*" onClick="this.form.reset()">
                                                 <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
                                                 <span class="custom-file-container__custom-file__custom-file-control"></span>
                                                 <button class="custom-file-container__image-clear">x</button>
                                             </label>
                                         </div>
+                                        <small id="videoHelp" class="form-text text-muted">
+                                            Max size is 5MB. Allowed types is .docx, .pdf
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -592,144 +595,212 @@ Pet Adoption
                         <div class = "row container">
                             <div class="form-group col-sm-6">
                                 <span>17.) Do you have regular veterinarian?</span><br>
-                                <input type="radio" id="num17yes" value ="Yes" name = "num17" class = "with-gap num17"/>
-                                <label for="num17yes">Yes</label>
-                                <input type="radio" id="num17no" value ="No" name = "num17" class = "with-gap num17"/>
-                                <label for="num17no">No</label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="num17yes" value ="Yes" name = "num17" class = "with-gap num17"/>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="num17no" value ="No" name = "num17" class = "with-gap num17"/>
+                                        No
+                                    </label>
+                                </div> 
                                 <div id = "num17Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
-                                        <div class = "input-field col s12 green-theme">
-                                            <input id = "num17name" type="text" name = "num17name" >
-                                            <label for = "num17name">Name</label>
+                                        <div class = "form-group col-sm-12">
+                                            <input id = "num17name" type="text" class="form-control" name = "num17name" >
+                                            <label for = "num17name">&nbsp;Name</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col s6 green-theme">
                                 <span>18.) Do you have other companion animal(s) in the past?</span><br>
-                                <input type="radio"id="num18yes" value ="Yes" name = "num18" class = "with-gap num18"/>
-                                <label for="num18yes">Yes</label>
-                                <input type="radio"id="num18no" value ="No" name = "num18" class = "with-gap num18"/>
-                                <label for="num18no">No</label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio"id="num18yes" value ="Yes" name = "num18" class = "with-gap num18"/>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio"id="num18no" value ="No" name = "num18" class = "with-gap num18"/>
+                                        No
+                                    </label>
+                                </div> 
                                 <div id = "num18Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
                                         <div class = "col s12 green-theme">
                                             <br><span>What animal?</span>
-                                            <input type="radio" value ="Dog" id="num18HiddenDog" name = "num18animal" class = "with-gap "/>
-                                            <label for="num18HiddenDog">Dog</label>
-                                            <input type="radio" value ="Cat" id="num18HiddenCat" name = "num18animal" class = "with-gap "/>
-                                            <label for="num18HiddenCat">Cat</label>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="radio" value ="Dog" id="num18HiddenDog" name = "num18animal" class = "with-gap "/>
+                                                    Dog
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="radio" value ="Cat" id="num18HiddenCat" name = "num18animal" class = "with-gap "/>
+                                                    Cat
+                                                </label>
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class = "row">
-                            <div class="col s6 green-theme">
+                        <div class = "row container">
+                            <div class="col-sm-6">
                                 <span>19.) What part of your house do you want this animal to stay?</span><br> 
-                                <input type="radio" id="inside" value ="Inside only" name = "num19" class = "with-gap"/>
-                                <label for="inside">Inside only</label><br>
-                                <input type="radio" id="insideoutside" value ="Inside/outside" name = "num19" class = "with-gap"/>
-                                <label for="insideoutside">Inside/outside</label><br>
-                                <input type="radio" id="outside" value ="Outside only" name = "num19" class = "with-gap"/>
-                                <label for="outside">Outside only</label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="inside" value ="Inside only" name = "num19" class = "with-gap"/>
+                                        Inside only
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="insideoutside" value ="Inside/outside" name = "num19" class = "with-gap"/>
+                                        Inside/outside
+                                    </label>
+                                </div> 
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="outside" value ="Outside only" name = "num19" class = "with-gap"/>
+                                        Outside only
+                                    </label>
+                                </div> 
                             </div>
-                            <div class="input-field col s6 green-theme" style = "margin-top:0 !important;">
+                            <div class="form-group col-sm-6" style = "margin-top:0 !important;">
                                 <span>20.) Where will this animal be kept during the Day? Night?</span>
-                                <textarea id="num20" name="num20" class="materialize-textarea"></textarea>
+                                <textarea id="num20" name="num20" class="form-control"></textarea>
                             </div>
                         </div>
-                        <div class = "row">
-                            <div class="col s6 green-theme">
+                        <div class = "row container">
+                            <div class="col-sm-6">
                                 <span>21.) Do you have a fenced yard?</span><br>
-                                <input type="radio"id="num21yes" value ="Yes" name = "num21" class = "with-gap num21"/>
-                                <label for="num21yes">Yes</label>
-                                <input type="radio"id="num21no" value ="No" name = "num21" class = "with-gap num21"/>
-                                <label for="num21no">No</label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio"id="num21yes" value ="Yes" name = "num21" class = "with-gap num21"/>
+                                        Yes
+                                    </label>
+                                </div> 
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio"id="num21no" value ="No" name = "num21" class = "with-gap num21"/>
+                                        No
+                                    </label>
+                                </div> 
                                 <div id = "num21Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
-                                        <div class = "input-field col s12 green-theme">
-                                            <input id = "num21fence" type="text" name = "num21fence" >
+                                        <div class = "form-group col-sm-12">
+                                            <input id = "num21fence" type="text" class="form-control" name = "num21fence" >
                                             <label for = "num21fence">Fence height and type</label>
                                         </div>
                                     </div>
-                                    <div class="file-field input-field">
-                                        <div class="btn">
-                                            <span>File</span>
-                                            <input type="file" name ="num21file">
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text" placeholder="No File Chosen">
-                                        </div>
+                                    <div class="custom-file-container" data-upload-id="num21file">
+                                        <label class="custom-file-container__custom-file" >
+                                            <input type="file" name = "num21file" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
+                                            <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
+                                            <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                            <button class="custom-file-container__image-clear">x</button>
+                                        </label>
+                                        <small id="videoHelp" class="form-text text-muted">
+                                            Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png
+                                        </small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col s6 green-theme">
                                 <span>22.) If adopting a dog, does fencing completely enclose the yard?</span><br>
-                                <input type="radio" id="num22yes" value ="Yes" name = "num22" class = "with-gap num22"/>
-                                <label for="num22yes">Yes</label>
-                                <input type="radio" id="num22no" value ="No" name = "num22" class = "with-gap num22"/>
-                                <label for="num22no">No</label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="num22yes" value ="Yes" name = "num22" class = "with-gap num22"/>
+                                        Yes
+                                    </label>
+                                </div> 
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="num22no" value ="No" name = "num22" class = "with-gap num22"/>
+                                        No
+                                    </label>
+                                </div> 
                                 <div id = "num22Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
-                                        <div class="input-field col s12 green-theme">
-                                            <textarea id="num22how" name="num22how" class="materialize-textarea"></textarea>
-                                            <label for = "num22how">How will you handle he dog's exercise and toilet duties?</label>
+                                        <div class="form-group col-sm-12">
+                                            <textarea id="num22how" name="num22how" class="form-control"></textarea>
+                                            <label for = "num22how">&nbsp;How will you handle he dog's exercise and toilet duties?</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class = "row">
-                            <div class="col s6 green-theme">
+                        <div class = "row container">
+                            <div class="col-sm-6">
                                 <span>23.) If adopting a cat, where will the litterbox be kept?</span>
                                 <div class = "row">
-                                    <div class="col s6 green-theme">
-                                        <input type="radio" value ="Inside house" id="insidehouse" name = "num23" class = "with-gap num23"/>
-                                        <label for="insidehouse">Inside house</label><br>
-                                        <input type="radio" value ="Garage" id="garage" name = "num23" class = "with-gap num23"/>
-                                        <label for="garage">Garage</label>
+                                    <div class="col-sm-6">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" value ="Inside house" id="insidehouse" name = "num23" class = "with-gap num23"/>
+                                                Inside house
+                                            </label>
+                                        </div> 
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" value ="Garage" id="garage" name = "num23" class = "with-gap num23"/>
+                                                Garage
+                                            </label>
+                                        </div> 
                                     </div>
-                                    <div class="col s6">
-                                        <input type="radio" value ="No need" id="noneed" name = "num23" class = "with-gap num23"/>
-                                        <label for="noneed">No need</label><br>
-                                        <input type="radio" id="other23" name = "num23" class = "with-gap num23"/>
-                                        <label for="other23">Other Location</label>
+                                    <div class="col-sm-6">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" value ="No need" id="noneed" name = "num23" class = "with-gap num23"/>
+                                                No need
+                                            </label>
+                                        </div> 
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" id="other23" name = "num23" class = "with-gap num23"/>
+                                                Other Location
+                                            </label>
+                                        </div> 
                                     </div>
                                 </div>
                                 <div id = "num23Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
-                                        <div class = "input-field col s12 green-theme">
-                                            <input id = "num23location" type="text"name = "num23specify" >
+                                        <div class = "form-group col-sm-12">
+                                            <input id = "num23location" type="text" class="form-control" name = "num23specify" >
                                             <label for = "num23specify">Please Specify</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="input-field col s6 green-theme" style = "margin-top:0 !important;">
+                            <div class="form-group col-sm-6">
                                 <span>24.) As a matter of policy, PARC will neuter all animals prior to releasing
                                     for adoption. What is your opinion about spaying and neutering (kapon) of companion animals?</span>
-                                <textarea id="num24" name="num24" class="materialize-textarea"></textarea>
+                                <textarea id="num24" name="num24" class="form-control"></textarea>
                             </div>
                         </div>
-                        <div class = "row">
-                            <div class="input-field col s12 green-theme">
+                        <div class = "row container">
+                            <div class="form-group col-sm-12">
                                 <span>25.) Do you have questions and comments?</span>
-                                <textarea id="num25" name="num25" class="materialize-textarea"></textarea>
+                                <textarea id="num25" name="num25" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
-                        <div class = "row">
-                            <div class = "col s2"></div>
-                            <div class = "col s8">
+                        <div class = "row container">
+                            <div class = "col-sm-2"></div>
+                            <div class = "col-sm-8">
                                 <p><center><strong>I certify that the above information are true and understand that false information may result in the automative nullification of my proposed adoption. PARC reserves the right to refuse and adoption.</strong></center></p>
                                 <center>
                                     <br>
-                                    <button class="btn-large waves-effect waves-light green darken-3" type="submit" name="action">Submit
-                                        <i class="material-icons right">send</i>
-                                    </button>
+                                    <button type="submit" class="btn btn-outline-primary">Submit</button>
                                 </center>
                             </div>
-                            <div class = "col s2"></div>
+                            <div class = "col-sm-2"></div>
                         </div>
                     </form>
                 </div>
