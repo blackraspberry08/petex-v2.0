@@ -33,9 +33,13 @@ class ManageProgress extends CI_Controller {
     
     public function index(){
         $transaction_id = $this->session->userdata("manage_progress_transaction_id");
+        $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+        $progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id));
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
-            'title' => "Dashboard",
+            'title' => $current_transaction->user_firstname." ".$current_transaction->user_lastname." | Manage Progress",
+            'transaction' => $current_transaction,
+            'progresses' => $progress,
             //NAV INFO
             'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
