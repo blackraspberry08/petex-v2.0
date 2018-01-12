@@ -47,4 +47,21 @@ class Profile extends CI_Controller {
         $this->load->view("profile/includes/footer");
     }
 
+    public function edit_profile() {
+        $userDetails = $this->Profile_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            'title' => "Edit Profile | " . $current_user->user_firstname . " " . $current_user->user_lastname,
+            //NAV INFO
+            'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
+            'user_picture' => $current_user->user_picture,
+            'user_access' => "User",
+            'userDetails' => $userDetails
+        );
+        $this->load->view("profile/includes/header", $data);
+        $this->load->view("user_nav/navheader");
+        $this->load->view("profile/edit_profile");
+        $this->load->view("profile/includes/footer");
+    }
+
 }

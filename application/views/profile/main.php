@@ -20,14 +20,14 @@ Profile
             <div class="card-body container-fluid">
                 <div class="row">
                     <div class="col-md-2">
-                        <img src="<?= $userDetails->user_picture ?>" class="img-fluid img-thumbnail">
+                        <img src="<?= base_url() . $userDetails->user_picture ?>" class="img-fluid img-thumbnail">
                     </div>
                     <div class="col-md-8">
                     </div>
                     <div class="col-md-2">
                         <br>
                         <center>
-                            <a class="btn btn-outline-info"><i class="fa fa-pencil"></i> Edit Profile</a>
+                            <a class="btn btn-outline-info" href="<?= base_url() ?>Profile/edit_profile"><i class="fa fa-pencil"></i> Edit Profile</a>
                         </center>
                     </div>
                 </div>
@@ -37,52 +37,109 @@ Profile
                         <h5><i class="fa fa-user"></i> Personal Information</h5>
                         <hr class="my-3">
                     </div>
-                    <div class="col-md-2">
-                        <h5>Name:</h5>
-                        <h5>Gender:</h5>
-                        <h5>Birthday:</h5>
-                        <h5>Age:</h5>
-                        <h5>Address:</h5>
-                    </div>
-
-                    <div class = "col-md-8" id = "user_info">
-                        <h5><?= $userDetails->user_firstname ?> <?= $userDetails->user_lastname ?></h5>
-                        <h5><?= $userDetails->user_sex ?></h5>
-                        <h5><?= date("F d, Y", $userDetails->user_bday); ?></h5>
-                        <h5><?= get_age($userDetails->user_bday); ?></h5>
-                        <h5><?= $userDetails->user_address ?> <?= $userDetails->user_brgy ?> <?= $userDetails->user_city ?></h5>
-                    </div>
-                </div><br><br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5><i class="fa fa-info"></i> Login Information</h5>
-                        <hr class="my-3">
-                    </div>
-                    <div class="col-md-2">
-                        <h5>Username:</h5>
-                        <h5>Password:</h5>
-                    </div>
-                    <div class = "col-md-8" id = "user_info">
-                        <h5><?= $userDetails->user_username ?></h5>
-                        <h5>********</h5> 
-                    </div>
-                </div><br><br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5><i class="fa fa-address-book"></i> Contact Information</h5>
-                        <hr class="my-3">
-                    </div>
-                    <div class="col-md-2">
-                        <h5>Phone Number:</h5>
-                        <h5>Email Address:</h5>
-                    </div>
-                    <div class = "col-md-8" id = "user_info">
-                        <h5><?= $userDetails->user_contact_no ?></h5>
-                        <h5><?= $userDetails->user_email ?></h5> 
+                    <div class="row container">
+                        <div class="col-md-12">
+                            <h5>
+                                <div class="col-sm-6 pull-left">
+                                    Name:
+                                </div>
+                                <div class="col-sm-6 pull-right" id="user_info">
+                                    <?= $userDetails->user_firstname ?> <?= $userDetails->user_lastname ?>
+                                </div> 
+                            </h5>
+                            <h5>
+                                <div class="col-sm-6 pull-left">
+                                    Gender:
+                                </div>
+                                <div class="col-sm-6 pull-right" id="user_info">
+                                    <?= $userDetails->user_sex ?>
+                                </div> 
+                            </h5>
+                            <h5>
+                                <div class="col-sm-6 pull-left">
+                                    Birthday:
+                                </div>
+                                <div class="col-sm-6 pull-right" id="user_info">
+                                    <?= date("F d, Y", $userDetails->user_bday); ?>
+                                </div> 
+                            </h5>
+                            <h5>
+                                <div class="col-sm-6 pull-left">
+                                    Age:
+                                </div>
+                                <div class="col-sm-6 pull-right" id="user_info">
+                                    <?= get_age($userDetails->user_bday); ?>
+                                </div> 
+                            </h5>
+                            <h5>
+                                <div class="col-sm-6 pull-left">
+                                    Address:
+                                </div>
+                                <div class="col-sm-6 pull-right" id="user_info">
+                                    <?= $userDetails->user_address ?> <?= $userDetails->user_brgy ?> <?= $userDetails->user_city ?>
+                                </div> 
+                            </h5>
+                        </div>
                     </div>
                 </div>
+            </div><br><br>
+            <div class="row container">
+                <div class="col-md-12">
+                    <h5><i class="fa fa-info"></i> Login Information</h5>
+                    <hr class="my-3">
+                </div>
+                <div class="row container">
+                    <div class="col-md-12">
+                        <h5>
+                            <div class="col-sm-6 pull-left">
+                                Username:
+                            </div>
+                            <div class="col-sm-6 pull-right" id="user_info">
+                                <?= $userDetails->user_username ?>
+                            </div> 
+                        </h5>
+                        <h5>
+                            <div class="col-sm-6 pull-left">
+                                Password:
+                            </div>
+                            <div class="col-sm-6 pull-right" id="user_info">
+                                ********
+                            </div> 
+                        </h5>
+                    </div>
+                </div>
+            </div><br><br>
+            <div class="row container">
+                <div class="col-md-12">
+                    <h5><i class="fa fa-address-book"></i> Contact Information</h5>
+                    <hr class="my-3">
+                </div>
+                <div class="row container">
+                    <div class="col-md-12">
+                        <h5>
+                            <div class="col-sm-6 pull-left">
+                                Phone Number:
+                            </div>
+                            <div class="col-sm-6 pull-right" id="user_info">
+                                <?= $userDetails->user_contact_no ?>
+                            </div> 
+                        </h5>
+                        <h5>
+                            <div class="col-sm-6 pull-left">
+                                Email Address:
+                            </div>
+                            <div class="col-sm-6 pull-right" id="user_info">
+                                <?= $userDetails->user_email ?>
+
+                            </div> 
+                        </h5>
+                    </div>
+
+                </div>
             </div>
-        </div><br>
-    </div>
+            <br><br>
+        </div>
+    </div><br>
+</div>
 </div>
 </div>
