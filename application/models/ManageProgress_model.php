@@ -22,4 +22,21 @@ class ManageProgress_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
+    public function get_adoption_form($where = NULL){
+        $table = "adoption_form";
+        $join = "transaction";
+        $on = "adoption_form.transaction_id = transaction.transaction_id";
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->join($join, $on, "left outer");
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
+    public function add_adoption_form($data){
+        $table = "adoption_form";
+        $this->db->insert($table, $data);
+        return $this->db->affected_rows();
+    }
 }

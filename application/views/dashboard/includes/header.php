@@ -27,6 +27,8 @@
    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css">
    <!-- Bootstrap File Upload with preview -->
    <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+   <!-- AnimateCss -->
+   <link href="<?= base_url() ?>assets/animate/animate.min.css" rel="stylesheet">
    <!-- Full Calendar -->
    <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.css">
    <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.print.min.css">

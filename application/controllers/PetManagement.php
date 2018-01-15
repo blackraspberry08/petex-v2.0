@@ -295,6 +295,7 @@ class PetManagement extends CI_Controller {
             } else {
                 echo $this->upload->display_errors();
                 $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
+                redirect(base_url()."PetManagement/");
             }
         }
         else {
