@@ -132,7 +132,7 @@ Manage Progress
 <script>
     $(document).ready(function () {
         switch (<?= $transaction->transaction_progress ?>) {
-            case 16:
+            case 0:
             {
                 $("#step_id_1").addClass("active");
                 $("#step_id_2").addClass("disabled");
@@ -142,7 +142,7 @@ Manage Progress
                 $("#step_id_6").addClass("disabled");
                 break;
             }
-            case 32:
+            case 16:
             {
                 $("#step_id_1").addClass("bg-success");
                 $("#step_id_2").addClass("active");
@@ -154,7 +154,7 @@ Manage Progress
 
                 break;
             }
-            case 49:
+            case 32:
             {
                 $("#step_id_1").addClass("bg-success");
                 $("#step_id_2").addClass("bg-success");
@@ -164,7 +164,7 @@ Manage Progress
                 $("#step_id_6").addClass("disabled");
                 break;
             }
-            case 66:
+            case 49:
             {
                 $("#step_id_1").addClass("bg-success");
                 $("#step_id_2").addClass("bg-success");
@@ -174,7 +174,7 @@ Manage Progress
                 $("#step_id_6").addClass("disabled");
                 break;
             }
-            case 83:
+            case 66:
             {
                 $("#step_id_1").addClass("bg-success");
                 $("#step_id_2").addClass("bg-success");
@@ -184,7 +184,7 @@ Manage Progress
                 $("#step_id_6").addClass("disabled");
                 break;
             }
-            case 100:
+            case 83:
             {
                 $("#step_id_1").addClass("bg-success");
                 $("#step_id_2").addClass("bg-success");
@@ -192,6 +192,16 @@ Manage Progress
                 $("#step_id_4").addClass("bg-success");
                 $("#step_id_5").addClass("bg-success");
                 $("#step_id_6").addClass("active");
+                break;
+            }
+            case 100:
+            {
+                $("#step_id_1").addClass("bg-success");
+                $("#step_id_2").addClass("bg-success");
+                $("#step_id_3").addClass("bg-success");
+                $("#step_id_4").addClass("bg-success");
+                $("#step_id_5").addClass("bg-success");
+                $("#step_id_6").addClass("bg-success");
                 break;
             }
             default:

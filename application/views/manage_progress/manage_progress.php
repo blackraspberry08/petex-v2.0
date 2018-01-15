@@ -101,8 +101,37 @@
                 </div>
             </div>
             <?php else:?>
-            <div class="embed-responsive embed-responsive-16by9 mx-3 my-5 rounded">
-                <iframe class="embed-responsive-item" src="<?= base_url().$adoption_form->adoption_form_location?>" allowfullscreen type="application/pdf"></iframe>
+            <div class = "col-lg-12 text-center">
+                <?php if($adoption_form->adoption_form_isPending == 1):?>
+                    <!-- Adoption Form not yet checked -->
+                    <h3 class = "mt-3">Pending Adoption Form</h3>
+                    <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
+                        <iframe class="embed-responsive-item" src="<?= base_url().$adoption_form->adoption_form_location?>" allowfullscreen type="application/pdf"></iframe>
+                    </div>
+                    <form method = "POST" action = "<?= base_url()?>ManageProgress/step_1/<?= $transaction->transaction_id?>">
+                        <div class="form-group text-left" >
+                            <label for="comment" >Comment:</label>
+                            <textarea class="form-control" name = "comment" id="comment" rows="3" placeholder="Your comment here"></textarea>
+                        </div>
+                        <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                            <button type = "submit" name = "disapprove" class = "btn btn-outline-secondary" value = "disapprove" ><i class = "fa fa-thumbs-o-down"></i> Disapprove</button>
+                            <button type = "submit" name = "approve" class = "btn btn-outline-primary" value = "approve"><i class = "fa fa-thumbs-o-up"></i> Approve</button>
+                        </div>
+                    </form>
+                <?php else:?>
+                    <h3 class = "mt-3">Adoption Form</h3>
+                    <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
+                        <iframe class="embed-responsive-item" src="<?= base_url().$adoption_form->adoption_form_location?>" allowfullscreen type="application/pdf"></iframe>
+                    </div>
+                    <?php
+                        $get_progress = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction->transaction_id))[0];
+                    ?>
+                    <!-- Adoption Form is checked -->
+                    <div class="form-group text-left" >
+                        <label for="comment">Comment:</label>
+                        <textarea class="form-control" name = "comment" id="comment" rows="3" readonly><?= $get_progress->progress_comment?></textarea>
+                    </div>
+                <?php endif;?>
             </div>
             <?php endif;?>   
         </div>
