@@ -29,130 +29,92 @@
                 <?php endforeach; ?>
             </div>
         </div>
-            <?php foreach ($progresses as $progress): ?>
-            <div class="row setup-content" id="step_<?= $progress->checklist_id ?>">
-                <div class="col-md-12">
-                    <h3 class="font-bold pl-0 my-4"><strong> <?= $progress->checklist_title ?></strong></h3>
-                    <div class="row">
-                        <div class="col-md-4"><br>
-                            <div class="card">
-                                <a href = "<?= $this->config->base_url() . $progress->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $progress->pet_name ?></b>">
-                                    <img class="card-img-top" src = "<?= $this->config->base_url() . $progress->pet_picture ?>" alt="picture">
-                                </a>
-                                <div class="card-body">
-                                    <h4 class="card-title"><?= $progress->pet_name ?></h4>
-                                    <i class="fa fa-calendar"></i> <?= date('M. j, Y', $progress->pet_bday) ?><br>
-                                    <?php if ($progress->pet_sex == "Male" || $progress->pet_sex == "male"): ?>
-                                        <i class="fa fa-mars" style="color:blue"></i> <?= $progress->pet_sex ?><br>
-                                    <?php else: ?>
-                                        <i class="fa fa-venus" style="color:red"></i> <?= $progress->pet_sex ?><br>
-                                    <?php endif; ?>
-                                    <i class="fa fa-paw"></i> <?= $progress->pet_breed ?><br>
-                                    <i class="fa fa-check-square" style="color:green"></i> <?= $progress->pet_status ?>
-                                </div>
-
-                                <div class="card-footer text-center">
-                                    <div class = "btn-group" role="group" aria-label="Button Group">
-                                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
-                                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <p><?= $progress->progress_comment ?></p>
-                        </div>
+        <!-- Adoption Form  --> 
+        <div class="row setup-content" id="step_1">
+            <?php if(empty($adoption_form->adoption_form_location)):?>
+            <div class = "col-lg-12 mt-3 text-center">
+                <div class = "mb-5">
+                    <h4>No Adoption Form Submitted</h4>
+                    <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                </div>
+                <div class = "mt-5">
+                    <span class = "text-secondary">If submitted manually</span><br>
+                    <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                        <a href = "#" data-toggle = "modal" data-target = "#upload_adoption_form" class = "btn btn-outline-primary"><i class = "fa fa-upload"></i> Upload</a>
+                        <a href = "#" data-toggle = "modal" data-target = "#manual_input" class = "btn btn-outline-primary"><i class = "fa fa-keyboard-o"></i> Manual Input</a>
                     </div>
                 </div>
             </div>
-            <!-- Modal Details-->
-            <div class="modal fade <?= $progress->pet_id; ?>detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+            <!-- Upload Adoption Form -->
+            <div class="modal fade" id="upload_adoption_form" tabindex="-1" role="dialog" aria-labelledby="uploadAdoptionForm" aria-hidden="true">
+                <form enctype="multipart/form-data" method = "POST" action = "<?= base_url()?>ManageProgress/upload_adoption_form/<?= $transaction->transaction_id?>">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><i class = "fa fa-upload"></i> Upload Adoption Form</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                    <div class = "form-group">
+                                        <label for ="adoption_form">Adoption Form</label>
+                                        <div class="custom-file-container" data-upload-id="adoption_form">
+                                            <label class="custom-file-container__custom-file" >
+                                                <input type="file" name = "adoption_form" id = "adoption_form_add" class="custom-file-container__custom-file__custom-file-input" accept="application/pdf" required>
+                                                <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
+                                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                                <button class="custom-file-container__image-clear">x</button>
+                                            </label>
+                                            <div class="custom-file-container__image-preview" id = "adoption_form_preview"></div>
+                                        </div>
+                                    </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- MANUAL INPUT -->
+            <div class="modal fade" id="manual_input" tabindex="-1" role="dialog" aria-labelledby="uploadAdoptionForm" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title"><i class = "fa fa-info"></i> Pet Info</h4>
+                            <h5 class="modal-title" id="exampleModalLabel"><i class = "fa fa-keyboard-o"></i> Manual Input</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
-                                <div class ="col-md-5">
-                                    <img src = "<?= $this->config->base_url() . $progress->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
-                                </div>
-                                <div class ="col-md-7">
-                                    <table class = "table table-responsive table-striped">
-                                        <tbody>
-                                            <tr>
-                                                <th>Name: </th>
-                                                <td><?= $progress->pet_name; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Status: </th>
-                                                <td><?= $progress->pet_status; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Size: </th>
-                                                <td><?= $progress->pet_size; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Birthday: </th>
-                                                <td><?= date("F d, Y", $progress->pet_bday); ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Age:</th>
-                                                <td><?= get_age($progress->pet_bday); ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Specie: </th>
-                                                <td><?= $progress->pet_specie; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Sex: </th>
-                                                <td><?= $progress->pet_sex; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Breed: </th>
-                                                <td><?= $progress->pet_breed; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Sterilized: </th>
-                                                <td><?= $progress->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Admission: </th>
-                                                <td><?= $progress->pet_admission; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Description: </th>
-                                                <td><?= $progress->pet_description; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Findings: </th>
-                                                <td><?= $progress->pet_history; ?></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <?php include_once 'adoption_form.php';?> 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Upload</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <?php endforeach;?>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+            <?php else:?>
+            <div class="embed-responsive embed-responsive-16by9 mx-3 my-5 rounded">
+                <iframe class="embed-responsive-item" src="<?= base_url().$adoption_form->adoption_form_location?>" allowfullscreen type="application/pdf"></iframe>
+            </div>
+            <?php endif;?>   
+        </div>
+            
+
     </div>
 </div>
+
+<!-- Bootstrap File Upload with preview -->
+<script src = "https://unpkg.com/file-upload-with-preview"></script>
+<script>
+    var upload = new FileUploadWithPreview('adoption_form')
+</script>
+
+ <!-- Bootstrap File Upload with preview -->

@@ -100,10 +100,10 @@ Manage Progress
 <?php
     function get_age($birth_date) {
         if (date("Y", $birth_date) == date("Y")) {
-//Month
+            //Month
             return floor((time() - $birth_date) / 2678400) . " months old";
         } else {
-//Year
+            //Year
             return floor((time() - $birth_date) / 31556926) . " years old";
         }
     }
@@ -124,6 +124,7 @@ Manage Progress
             <li class="breadcrumb-item active">Manage Progress of <?= $transaction->user_firstname." ".$transaction->user_lastname?></li>
         </ol>
         <?php include_once (APPPATH."views/show_error/show_error.php");?>
+        <?php include_once (APPPATH."views/show_error/show_error_manage_progress.php");?>
         <?php include_once "manage_progress.php";?>
     </div>
     
@@ -143,7 +144,7 @@ Manage Progress
             }
             case 32:
             {
-                $("#step_id_1").addClass("");
+                $("#step_id_1").addClass("bg-success");
                 $("#step_id_2").addClass("active");
                 $("#step_id_3").addClass("disabled");
                 $("#step_id_4").addClass("disabled");
@@ -155,8 +156,8 @@ Manage Progress
             }
             case 49:
             {
-                $("#step_id_1").addClass("");
-                $("#step_id_2").addClass("");
+                $("#step_id_1").addClass("bg-success");
+                $("#step_id_2").addClass("bg-success");
                 $("#step_id_3").addClass("active");
                 $("#step_id_4").addClass("disabled");
                 $("#step_id_5").addClass("disabled");
@@ -165,9 +166,9 @@ Manage Progress
             }
             case 66:
             {
-                $("#step_id_1").addClass("");
-                $("#step_id_2").addClass("");
-                $("#step_id_3").addClass("");
+                $("#step_id_1").addClass("bg-success");
+                $("#step_id_2").addClass("bg-success");
+                $("#step_id_3").addClass("bg-success");
                 $("#step_id_4").addClass("active");
                 $("#step_id_5").addClass("disabled");
                 $("#step_id_6").addClass("disabled");
@@ -175,22 +176,32 @@ Manage Progress
             }
             case 83:
             {
-                $("#step_id_1").addClass("");
-                $("#step_id_2").addClass("");
-                $("#step_id_3").addClass("");
-                $("#step_id_4").addClass("");
+                $("#step_id_1").addClass("bg-success");
+                $("#step_id_2").addClass("bg-success");
+                $("#step_id_3").addClass("bg-success");
+                $("#step_id_4").addClass("bg-success");
                 $("#step_id_5").addClass("active");
                 $("#step_id_6").addClass("disabled");
                 break;
             }
             case 100:
             {
-                $("#step_id_1").addClass("");
-                $("#step_id_2").addClass("");
-                $("#step_id_3").addClass("");
-                $("#step_id_4").addClass("");
-                $("#step_id_5").addClass("");
+                $("#step_id_1").addClass("bg-success");
+                $("#step_id_2").addClass("bg-success");
+                $("#step_id_3").addClass("bg-success");
+                $("#step_id_4").addClass("bg-success");
+                $("#step_id_5").addClass("bg-success");
                 $("#step_id_6").addClass("active");
+                break;
+            }
+            default:
+            {
+                $("#step_id_1").addClass("disabled");
+                $("#step_id_2").addClass("disabled");
+                $("#step_id_3").addClass("disabled");
+                $("#step_id_4").addClass("disabled");
+                $("#step_id_5").addClass("disabled");
+                $("#step_id_6").addClass("disabled");
                 break;
             }
         }
