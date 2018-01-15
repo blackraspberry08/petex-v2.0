@@ -98,6 +98,38 @@ class ManageProgress extends CI_Controller {
         redirect(base_url()."ManageProgress");
     }
     
+    public function step_1(){
+        $transaction_id = $this->uri->segment(3);
+        $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
+        if ($this->input->post('approve') == "approve"){
+            $data = array(
+                "user_id"                   => $current_user->admin_id,
+                "progress_accomplished_at"  => time(),
+                "progress_isSuccessful"     => 1,
+                "progress_comment"          => $this->input->post("comment")
+            );
+            $transaction_progress = array(
+                "transaction_progress"      => 16
+            );
+            $adoption_form = array(
+                "adoption_form_isPending"   => 0,
+                "adoption_form_location"    => "download/adoption_form/".$transaction_id."_adopter-".$current_transaction->user_id."_pet-".$current_transaction->pet_id.".pdf"
+            );
+            // rename() moves file, not rename them.
+            rename($current_adoption_form->adoption_form_location, $adoption_form['adoption_form_location']);
+            if($this->ManageProgress_model->approve_adoption_form($data, array("checklist_id" => 1, "transaction_id" => $transaction_id)) && $this->ManageProgress_model->update_progress($transaction_progress, array("transaction_id" => $transaction_id)) && $this->ManageProgress_model->update_adoption_form($adoption_form, array("transaction_id" => $transaction_id))){
+                $this->session->set_flashdata("approve_adoption_form_success", "Successfully approved adoption form!");
+            }else{
+                $this->session->set_flashdata("approve_adoption_form_fail", "Something went wrong while approving adoption form");
+            }
+        }
+        elseif ($this->input->post('disapprove') == "disapprove") {
+            
+        }
+        redirect(base_url()."ManageProgress");
+    }
     
 }
 

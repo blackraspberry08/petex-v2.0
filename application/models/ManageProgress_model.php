@@ -19,6 +19,7 @@ class ManageProgress_model extends CI_Model {
         if (!empty($where)) {
             $this->db->where($where);
         }
+        $this->db->order_by("progress.checklist_id", "ASC");
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
@@ -39,4 +40,29 @@ class ManageProgress_model extends CI_Model {
         $this->db->insert($table, $data);
         return $this->db->affected_rows();
     }
+    
+    public function update_progress($progress, $where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->update("transaction", $progress);
+        return $this->db->affected_rows();
+    }
+    
+    public function update_adoption_form($adoption_form, $where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->update("adoption_form", $adoption_form);
+        return $this->db->affected_rows();
+    }
+    
+    public function approve_adoption_form($data, $where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->update("progress", $data);
+        return $this->db->affected_rows();
+    }
+    
 }
