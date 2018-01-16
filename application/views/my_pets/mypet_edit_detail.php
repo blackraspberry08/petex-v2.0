@@ -59,7 +59,7 @@ EDIT PET INFO
                         </ul>
                     </div>
                     <div class = "col-lg-8 col-sm-12" id = "animal_info">
-                        <form method = "POST" action = "<?= base_url() ?>MyPets/edit_details_submit/<?= $animal->pet_id ?>">   
+                        <form method = "POST" action = "<?= base_url() ?>MyPets/edit_details_submit/<?= $animal->pet_id ?>"  enctype="multipart/form-data">   
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="pet_name">Name: </label>

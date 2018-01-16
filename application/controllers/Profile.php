@@ -64,4 +64,103 @@ class Profile extends CI_Controller {
         $this->load->view("profile/includes/footer");
     }
 
+    public function edit_picture_submit() {
+        $userDetails = $this->Profile_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+
+        $config['upload_path'] = './images/user/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['file_ext_tolower'] = true;
+        $config['max_size'] = 5120;
+        $config['encrypt_name'] = true;
+        $this->load->library('upload', $config);
+
+        if (!empty($_FILES["user_picture"]["name"])) {
+            if ($this->upload->do_upload('user_picture')) {
+                $imagePath = "images/user/" . $this->upload->data("file_name");
+                unlink($userDetails->user_picture);
+            } else {
+                echo $this->upload->display_errors();
+                $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
+            }
+        } else {
+            //DO METHOD WITHOUT PICTURE PROVIDED
+            if ($userDetails->user_picture == "images/user/male.png" || $userDetails->user_picture == "images/user/female.png") {
+                if ($this->input->post('user_sex') == "Male") {
+                    $imagePath = "images/user/male.png";
+                } else {
+                    $imagePath = "images/user/female.png";
+                }
+            } else {
+                $imagePath = $userDetails->user_picture;
+            }
+        }
+        $data = array(
+            'user_picture' => $imagePath,
+            'user_updated_at' => time()
+        );
+
+        if ($this->Profile_model->update_user_record($data, array("user_id" => $userDetails->user_id))) {
+            //SUCCESS
+            $this->session->set_flashdata("uploading_success", "Successfully update the image");
+        } else {
+            
+        }
+        redirect(base_url() . "Profile/");
+    }
+
+    public function edit_personalInfo_submit() {
+        $userDetails = $this->Profile_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            'user_firstname' => $this->input->post("user_firstname"),
+            'user_lastname' => $this->input->post("user_lastname"),
+            'user_sex' => $this->input->post("user_sex"),
+            'user_bday' => strtotime($this->input->post('user_bday')),
+            'user_address' => $this->input->post("user_address"),
+            'user_brgy' => $this->input->post("user_brgy"),
+            'user_city' => $this->input->post("user_city"),
+            'user_updated_at' => time()
+        );
+
+        if ($this->Profile_model->update_user_record($data, array("user_id" => $userDetails->user_id))) {
+            //SUCCESS
+            $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $userDetails->user_lastname);
+        } else {
+            $this->session->set_flashdata("uploading_fail2", $userDetails->user_lastname . " seems to not exist in the database.");
+        }
+        redirect(base_url() . "Profile/");
+    }
+
+    public function edit_loginInfo_submit() {
+        $userDetails = $this->Profile_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+        if (!empty($this->input->post('user_password'))) {
+            
+            $data = array(
+                'user_username' => $this->input->post("user_username"),
+                'user_password' => $this->input->post("user_password"),
+                'user_updated_at' => time()
+            );
+
+            if ($this->Profile_model->update_user_record($data, array("user_id" => $userDetails->user_id))) {
+                //SUCCESS
+                $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $userDetails->user_lastname);
+            } else {
+                $this->session->set_flashdata("uploading_fail2", $userDetails->user_lastname . " seems to not exist in the database.");
+            }
+            redirect(base_url() . "Profile/");
+        } else {
+            $data = array(
+                'user_username' => $this->input->post("user_username"),
+                'user_updated_at' => time()
+            );
+
+            if ($this->Profile_model->update_user_record($data, array("user_id" => $userDetails->user_id))) {
+                //SUCCESS
+                $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $userDetails->user_lastname);
+            } else {
+                $this->session->set_flashdata("uploading_fail2", $userDetails->user_lastname . " seems to not exist in the database.");
+            }
+            redirect(base_url() . "Profile/");
+        }
+    }
+
 }
