@@ -295,6 +295,7 @@ class PetManagement extends CI_Controller {
             } else {
                 echo $this->upload->display_errors();
                 $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
+                redirect(base_url()."PetManagement/");
             }
         }
         else {
@@ -341,10 +342,8 @@ class PetManagement extends CI_Controller {
         $animal_id = $this->session->userdata("interested_adopters");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
-        $active_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.pet_id"));
-        $not_active_transaction = $this->PetManagement_model->get_not_active_transactions(array("transaction.pet_id"));
-        
-        
+        $active_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.pet_id" => $animal_id));
+        $not_active_transaction = $this->PetManagement_model->get_not_active_transactions(array("transaction.pet_id" => $animal_id));
         $data = array(
             'title' => $animal->pet_name." | Interested Adopters",
             'animal' => $animal,

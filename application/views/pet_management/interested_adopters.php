@@ -39,7 +39,7 @@ INTERESTED ADOPTERS
                         <thead>
                             <tr>
                                 <th>Adopters</th>
-                                <th>Progress</th>
+                                <th width = "500">Progress</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -49,7 +49,7 @@ INTERESTED ADOPTERS
                                     <td><?= $transaction->user_firstname . " " . $transaction->user_lastname ?></td>
                                     <td>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: <?= $transaction->transaction_progress?>%" aria-valuenow="<?= $transaction->transaction_progress?>" aria-valuemin="0" aria-valuemax="100"><?= $transaction->transaction_progress?>%</div>
+                                            <div class=" progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: <?= $transaction->transaction_progress?>%" aria-valuenow="<?= $transaction->transaction_progress?>" aria-valuemin="0" aria-valuemax="100"><?= $transaction->transaction_progress?>%</div>
                                         </div>
                                     </td>
                                     <td>
