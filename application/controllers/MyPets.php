@@ -50,20 +50,6 @@ class MyPets extends CI_Controller {
         }
     }
 
-    function _getYoutubeVideoId($iframeCode) {
-
-        // Extract video url from embed code
-        return preg_replace_callback('/<iframe\s+.*?\s+src=(".*?").*?<\/iframe>/', function ($matches) {
-            // Remove quotes
-            $youtubeUrl = $matches[1];
-            $youtubeUrl = trim($youtubeUrl, '"');
-            $youtubeUrl = trim($youtubeUrl, "'");
-            // Extract id
-            preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $youtubeUrl, $videoId);
-            return $youtubeVideoId = isset($videoId[1]) ? $videoId[1] : "";
-        }, $iframeCode);
-    }
-
     public function index() {
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
         $userInfo = $this->MyPets_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", array('user.user_id' => $this->session->userid));
@@ -82,8 +68,7 @@ class MyPets extends CI_Controller {
     }
 
     public function edit_details_exec() {
-        $animal_id = $this->uri->segment(3);
-        $this->session->set_userdata("animal_id", $animal_id);
+        $this->session->set_userdata("animal_id", $this->uri->segment(3));
         redirect(base_url() . "MyPets/edit_details");
     }
 
@@ -107,8 +92,6 @@ class MyPets extends CI_Controller {
 
     public function edit_details_submit() {
         header('X-XSS-Protection:0');
-        $this->load->helper(array('form', 'url'));
-        $this->load->library('form_validation');
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $this->uri->segment(3), "pet_access" => 1))[0];
         $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[10]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
