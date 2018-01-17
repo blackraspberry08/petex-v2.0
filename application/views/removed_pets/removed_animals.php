@@ -55,25 +55,26 @@
                     <div class = "card-group mb-3">
                 <?php endif;?>
                 <?php $counter = $counter + 1;?>
-            <?php endforeach;?>
-            </div>
-            <div class="modal fade" id="restore_animal_<?= $animal->pet_id?>" tabindex="-1" role="dialog" aria-labelledby="VerificationModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="VerificationModal">Restore Animal</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <strong><?= $animal->pet_name?></strong> will be added again to the animal database. Select "Restore" to proceed
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <a href ="<?= base_url()?>RemovedPets/restore_animal_exec/<?= $animal->pet_id?>" class="btn btn-primary">Restore</a>
+                <div class="modal fade" id="restore_animal_<?= $animal->pet_id?>" tabindex="-1" role="dialog" aria-labelledby="VerificationModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="VerificationModal">Restore Animal</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <strong><?= $animal->pet_name?></strong> will be added again to the animal database. Select "Restore" to proceed
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a href ="<?= base_url()?>RemovedPets/restore_animal_exec/<?= $animal->pet_id?>" class="btn btn-primary">Restore</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+            <?php endforeach;?>
             </div>
+            
         <?php endif;?>
