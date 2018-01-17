@@ -1,6 +1,6 @@
 <?php
 class ManageUsers_model extends CI_Model {
-    public function get_users($table, $where){
+    public function get_users($table, $where = NULL){
         if (!empty($where)) {
             $this->db->where($where);
         }
@@ -66,8 +66,8 @@ class ManageUsers_model extends CI_Model {
         $on = "progress.checklist_id = checklist.checklist_id";
         $join2 = "transaction";
         $on2 = "progress.transaction_id = transaction.transaction_id";
-        $join3 = "user";
-        $on3 = "progress.user_id = user.user_id";
+        $join3 = "admin";
+        $on3 = "progress.admin_id = admin.admin_id";
         if (!empty($where)) {
             $this->db->where($where);
         }
@@ -97,10 +97,13 @@ class ManageUsers_model extends CI_Model {
         $table = "event";
         $join = "user";
         $on = "event.user_id = user.user_id";
+        $join2 = "admin";
+        $on2 ="event.admin_id = admin.admin_id";
         if (!empty($where)) {
             $this->db->where($where);
         }
         $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
         $this->db->order_by("event.event_added_at", "DESC");
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;

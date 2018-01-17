@@ -1,16 +1,26 @@
 <?php
 class ManageOfficer_model extends CI_Model {
+    public function get_admin($where = NULL){
+        $table = "admin";
+        $this->db->where(array("admin_access" => "Subadmin"));
+        $this->db->where(array("admin_status" => 1));
+        if(!empty($where)){
+            $this->db->where($where);
+        }
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
     public function get_admins(){
-        $table = "user";
-        $where = array("user_access" => "Subadmin");
+        $table = "admin";
+        $where = array("admin_access" => "Subadmin");
         $this->db->where($where);
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
     public function get_officer_modules($where = NULL){
         $table = "module_access";
-        $join = "user";
-        $on = "module_access.user_id = user.user_id";
+        $join = "admin";
+        $on = "module_access.admin_id = admin.admin_id";
         $join2 = "module";
         $on2 = "module_access.module_id = module.module_id";
         $this->db->join($join, $on, "left outer");

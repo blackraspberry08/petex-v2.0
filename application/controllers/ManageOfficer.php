@@ -86,13 +86,13 @@ class ManageOfficer extends CI_Controller {
     }
     
     public function show_officer_info(){
-        $selected_officer = $this->ManageUsers_model->get_user_info("user", array("user_id" => $this->session->userdata("show_officer_info")))[0];
+        $selected_officer = $this->ManageUsers_model->get_user_info("admin", array("admin_id" => $this->session->userdata("show_officer_info")))[0];
         $officer_transaction = $this->ManageUsers_model->get_user_transactions(array("transaction.user_id" => $this->session->userdata("show_officer_info")));
-        $officer_activity = $this->ManageUsers_model->get_user_activities(array("event.user_id" => $this->session->userdata("show_officer_info")));
-        $officer_modules = $this->ManageOfficer_model->get_officer_modules(array("module_access.user_id" => $this->session->userdata("manage_module")));
+        $officer_activity = $this->ManageUsers_model->get_user_activities(array("event.admin_id" => $this->session->userdata("show_officer_info")));
+        $officer_modules = $this->ManageOfficer_model->get_officer_modules(array("module_access.admin_id" => $this->session->userdata("manage_module")));
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
-            "title" => $selected_officer->user_firstname." ".$selected_officer->user_lastname." | Information",
+            "title" => $selected_officer->admin_firstname." ".$selected_officer->admin_lastname." | Information",
             "officer" => $selected_officer,
             "transactions" => $officer_transaction,
             "activities" => $officer_activity,

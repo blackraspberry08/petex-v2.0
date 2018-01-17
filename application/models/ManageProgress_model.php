@@ -6,8 +6,8 @@ class ManageProgress_model extends CI_Model {
         $on = "progress.checklist_id = checklist.checklist_id";
         $join2 = "transaction";
         $on2 = "progress.transaction_id = transaction.transaction_id";
-        $join3 = "user";
-        $on3 = "progress.user_id = user.user_id";
+        $join3 = "admin";
+        $on3 = "progress.admin_id = admin.admin_id";
         $join4 = "pet";
         $on4 = "transaction.pet_id = pet.pet_id";
         $this->db->where(array("transaction_isFinished" => 0));

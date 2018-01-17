@@ -129,19 +129,19 @@ SHOW OFFICER INFORMATION
             <li class="breadcrumb-item">
                 <a href="<?= base_url() ?>ManageOfficer">Manage Officers</a>
             </li>
-            <li class="breadcrumb-item active"><?= $officer->user_firstname . " " . $officer->user_lastname . " Information" ?></li>
+            <li class="breadcrumb-item active"><?= $officer->admin_firstname . " " . $officer->admin_lastname . " Information" ?></li>
         </ol>
         <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <div class = "row">
             <div class = "col-lg-12 col-sm-12">
                 <div id = "header-card" class=" hovercard border border-secondary border-bottom-0 rounded-top">
                     <div class="card-background">
-                        <img class="card-bkimg" alt="" src="<?= base_url() . $officer->user_picture ?>">
+                        <img class="card-bkimg" alt="" src="<?= base_url() . $officer->admin_picture ?>">
                     </div>
                     <div class="useravatar">
-                        <img alt="" src="<?= base_url() . $officer->user_picture ?>">
+                        <img alt="" src="<?= base_url() . $officer->admin_picture ?>">
                     </div>
-                    <div class="card-info"> <span class="card-title"><?= $officer->user_firstname . " " . $officer->user_lastname ?></span></div>
+                    <div class="card-info"> <span class="card-title"><?= $officer->admin_firstname . " " . $officer->admin_lastname ?></span></div>
                 </div>
             </div>
         </div>
@@ -153,30 +153,30 @@ SHOW OFFICER INFORMATION
                 <div class="card-body">                    
                     <div class = "row">
                         <div class ="col-lg-4 col-sm-12">
-                            <img class="img-fluid img-thumbnail mx-auto d-block" id = "user_image" src="<?= base_url().$officer->user_picture;?>" alt="<?= $officer->user_firstname." ".$officer->user_lastname;?>">
+                            <img class="img-fluid img-thumbnail mx-auto d-block" id = "user_image" src="<?= base_url().$officer->admin_picture;?>" alt="<?= $officer->admin_firstname." ".$officer->admin_lastname;?>">
                         </div>
                         <div class ="col-lg-8 col-sm-12">
                             <table class="table borderless table-responsive-sm">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Username</th>
-                                        <td><?= $officer->user_username;?></td>
+                                        <td><?= $officer->admin_username;?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Birthday</th>
-                                        <td><?= date("F d, Y", $officer->user_bday);?></td>
+                                        <td><?= date("F d, Y", $officer->admin_bday);?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Email</th>
-                                        <td><?= $officer->user_email;?></td>
+                                        <td><?= $officer->admin_email;?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Contact No.</th>
-                                        <td><?= $officer->user_contact_no;?></td>
+                                        <td><?= $officer->admin_contact_no;?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Address</th>
-                                        <td><?= $officer->user_address.", ".$officer->user_brgy.", ".$officer->user_city;?></td>
+                                        <td><?= $officer->admin_address.", ".$officer->admin_brgy.", ".$officer->admin_city;?></td>
                                     </tr>
                                 </tbody>
                             </table>

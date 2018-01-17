@@ -188,7 +188,7 @@ SHOW USER INFORMATION
         <div class = "row">
             <div class = "col-lg-12 col-sm-12 counters">
                 <nav class="nav nav-pills nav-fill my-1" id="user_tab" role="tablist">
-                    <a class="nav-item nav-link " data-toggle="tab" href="#transaction" role="tab" aria-controls="home" aria-selected="true">
+                    <a class="nav-item nav-link active" data-toggle="tab" href="#transaction" role="tab" aria-controls="home" aria-selected="true">
                         <span data-toggle="counter-up" class ="sp">
                             <?php
                             if (empty($transactions)) {
@@ -200,19 +200,7 @@ SHOW USER INFORMATION
                         </span>
                         <p>Transactions</p>
                     </a>
-                    <a class="nav-item nav-link active" data-toggle="tab" href="#pet" role="tab" aria-controls="home" aria-selected="true">
-                        <span data-toggle="counter-up" class ="sp">
-                            <?php
-                            if (empty($pets)) {
-                                echo "0";
-                            } else {
-                                echo count($pets);
-                            }
-                            ?>
-                        </span>
-                        <p>Pets</p>
-                    </a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#activities" role="tab" aria-controls="home" aria-selected="true">
+                    <a class="nav-item nav-link " data-toggle="tab" href="#activities" role="tab" aria-controls="home" aria-selected="true">
                         <span data-toggle="counter-up" class ="sp">
                             <?php
                             if (empty($activities)) {
@@ -226,11 +214,8 @@ SHOW USER INFORMATION
                     </a>
                 </nav>
                 <div class="tab-content" id="user_tab_content">
-                    <div class="p-3 tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="p-3 tab-pane fade show active" id="transaction" role="tabpanel" aria-labelledby="home-tab">
                         <?php include_once("show_transaction.php"); ?>
-                    </div>
-                    <div class="p-3 tab-pane fade show active" id="pet" role="tabpanel" aria-labelledby="profile-tab">
-                        <?php include_once("show_pet.php"); ?>
                     </div>
                     <div class="p-3 tab-pane fade" id="activities" role="tabpanel" aria-labelledby="contact-tab">
                         <?php include_once("show_activity.php"); ?>
