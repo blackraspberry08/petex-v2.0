@@ -126,7 +126,17 @@ class ManageProgress extends CI_Controller {
             }
         }
         elseif ($this->input->post('disapprove') == "disapprove") {
-            
+            $data = array(
+                "user_id"                   => $current_user->admin_id,
+                "progress_accomplished_at"  => 0,
+                "progress_isSuccessful"     => 0,
+                "progress_comment"          => $this->input->post("comment")
+            );
+            if($this->ManageProgress_model->approve_adoption_form($data, array("checklist_id" => 1, "transaction_id" => $transaction_id))){
+                $this->session->set_flashdata("approve_adoption_form_success", "Disapproved adoption form. Comment has been sent to the pet adopter.");
+            }else{
+                $this->session->set_flashdata("approve_adoption_form_fail", "Something went wrong while disapproving adoption form");
+            }
         }
         redirect(base_url()."ManageProgress");
     }
