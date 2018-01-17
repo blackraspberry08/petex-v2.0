@@ -171,7 +171,7 @@ Admin Nav Header
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="<?= base_url() ?>AdminProfile">Profiles</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" style = "cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
                             Logout
