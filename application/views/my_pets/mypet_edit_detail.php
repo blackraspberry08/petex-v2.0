@@ -24,9 +24,6 @@ EDIT PET INFO
             <li class="breadcrumb-item">
                 <a href="<?= base_url() ?>MyPets">My Pets</a>
             </li>
-            <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>MyPets/edit_details_exec/<?= $animal->pet_id ?>"><?= "Details of " . $animal->pet_name ?></a>
-            </li>
             <li class="breadcrumb-item active">Edit Pet Details</li>
         </ol>
         <div class="card mb-3">
@@ -59,16 +56,18 @@ EDIT PET INFO
                         </ul>
                     </div>
                     <div class = "col-lg-8 col-sm-12" id = "animal_info">
-                        <form method = "POST" action = "<?= base_url() ?>MyPets/edit_details_submit/<?= $animal->pet_id ?>">   
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="pet_name">Name: </label>
-                                    <input type="text" name="pet_name" value = "<?= set_value("pet_name", $animal->pet_name); ?>" class="form_datetime form-control" placeholder="Date">
-                                </div>
+                        <form method = "POST" action = "<?= base_url() ?>MyPets/edit_details_submit/<?= $animal->pet_id ?>"  enctype="multipart/form-data">   
+
+                            <div class="form-group <?php if (!empty(form_error("pet_name"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <label for="pet_name" class=form-control-label">Name: </label>
+                                <input type="text" class="form-control <?php if (!empty(form_error("pet_name"))): ?>is-invalid<?php else: ?><?php endif; ?>" name="pet_name" value = "<?= set_value("pet_name", $animal->pet_name); ?>" class="form-control form-control-danger" placeholder="Name">
+                                <div class="invalid-feedback"><?= form_error('pet_name') ?></div>
                             </div>
-                            <div class = "form-group">
-                                <label for="description">Description: </label>
-                                <textarea class="form-control" id="description" rows="3" name = "pet_description"><?= set_value("pet_description", $animal->pet_description); ?></textarea>
+
+                            <div class = "form-group <?php if (!empty(form_error("pet_description"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <label for="description" class=form-control-label">Description: </label>
+                                <textarea class="form-control <?php if (!empty(form_error("pet_description"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="description" rows="3" name = "pet_description"><?= set_value("pet_description", $animal->pet_description); ?></textarea>
+                                <div class="invalid-feedback"><?= form_error('pet_description') ?></div>
                             </div>
                             <div class = "form-group">
                                 <label for ="pet_picture">Picture</label>
@@ -82,14 +81,15 @@ EDIT PET INFO
                                     <small id="videoHelp" class="form-text text-muted">
                                         Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png
                                     </small>
-                                    <div class="custom-file-container__image-preview" id = "pet_picture_edit_preview"></div>
+                                    <div class="custom-file-container__image-preview" id = "pet_picture_edit_preview" style="height:500px;"></div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group <?php if (!empty(form_error("pet_video"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <label for="pet_video">Video</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class = "fa fa-link"></i></span>
-                                    <input type="text" class="form-control" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_description", wrap_iframe($animal->pet_video)); ?>'>
+                                    <input type="text" class="form-control <?php if (!empty(form_error("pet_video"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_video", wrap_iframe($animal->pet_video)); ?>'>
+                                    <div class="invalid-feedback"><?= form_error('pet_video') ?></div>
                                 </div>
                                 <small id="videoHelp" class="form-text text-muted">
                                     Right click on a youtube video, and select "Copy embed code". Paste it here.
