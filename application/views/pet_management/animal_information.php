@@ -51,7 +51,7 @@ Animal Information
     
 </style>
 <?php 
-    function wrap_iframe($src, $method = NULL){
+    function wrap_iframe($src){
         if($src == ''){
             $new_src = '';
         }else{
@@ -132,9 +132,7 @@ Animal Information
                                 <div class="form-group col-md-4">
                                     <label for = "pet_status">Status</label>
                                     <?php if($animal->pet_status == "Adopted"):?>
-                                    <select class="form-control" name = "pet_status" id="pet_status" readonly>
-                                        <option disabled value = "Adopted" <?= $animal->pet_status == "Adopted" ? "selected": "";?>>Adopted</option>
-                                    </select>
+                                    <input class="form-control" name = "pet_status" id="pet_status" value = "Adopted" readonly>
                                     <?php else:?>
                                     <select class="form-control" name = "pet_status" id="pet_status">
                                         <option value = "Adoptable" <?= $animal->pet_status == "Adoptable" ? "selected": "";?>>Adoptable</option>
@@ -194,7 +192,7 @@ Animal Information
                                 <label for ="pet_picture">Picture</label>
                                 <div class="custom-file-container" data-upload-id="pet_picture">
                                     <label class="custom-file-container__custom-file" >
-                                        <input type="file" name = "pet_picture" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*">
+                                        <input type="file" name = "pet_picture" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
                                         <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
                                         <span class="custom-file-container__custom-file__custom-file-control"></span>
                                         <button class="custom-file-container__image-clear">x</button>
@@ -209,15 +207,17 @@ Animal Information
                                 <label for="pet_video">Video</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class = "fa fa-link"></i></span>
-                                    <input type="text" class="form-control" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_description", wrap_iframe($animal->pet_video, "escape_char"));?>'>
+                                    <input type="text" class="form-control" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_description", wrap_iframe($animal->pet_video));?>'>
                                 </div>
                                 <small id="videoHelp" class="form-text text-muted">
                                     Right click on a youtube video, and select "Copy embed code". Paste it here.
                                 </small>
                             </div>
-                            <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
-                                <?= wrap_iframe($animal->pet_video);?>
-                            </div>
+                            <?php if(!empty($animal->pet_video)):?>
+                                <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                    <?= wrap_iframe($animal->pet_video);?>
+                                </div>
+                            <?php endif;?>
                             <div class ="text-center">
                                 <button type="reset" class="btn btn-outline-secondary" id = "btnReset_edit">Reset</button>
                                 <button type="submit" class="btn btn-outline-primary">Save Changes</button>
@@ -231,9 +231,19 @@ Animal Information
     
     
     <!-- Bootstrap File Upload with preview -->
-    <script src = "<?= base_url()?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
+    <script src = "https://unpkg.com/file-upload-with-preview"></script>
     <script>
         var upload = new FileUploadWithPreview('pet_picture')
+    </script>
+     <!-- Bootstrap File Upload with preview -->
+    <script>
+        document.getElementById("pet_picture_edit_preview").style.backgroundImage = "url('<?= base_url().$animal->pet_picture?>')";
+        
+        document.getElementById("btnReset_edit").onclick = function() {reset_upload()};
+        function reset_upload() {
+            document.getElementById("pet_picture_edit_preview").style.backgroundImage = "url('<?= base_url().$animal->pet_picture?>')";
+            document.getElementById("pet_picture_edit").value = "";
+        }   
     </script>
     
     

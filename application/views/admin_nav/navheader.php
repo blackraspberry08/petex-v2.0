@@ -61,10 +61,22 @@ Admin Nav Header
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."PetManagement") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Pet Management">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."PetManagement") !== FALSE || strpos(base_url(uri_string()), $this->config->base_url()."ManageProgress") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Pet Management">
                     <a class="nav-link" href="<?= base_url()?>PetManagement">
                         <i class="fa fa-fw fa-paw"></i>
                         <span class="nav-link-text">Pet Management</span>
+                    </a>
+                </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."RemovedPets") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Removed Pets">
+                    <a class="nav-link" href="<?= base_url()?>RemovedPets">
+                        <i class="fa fa-fw fa-ban"></i>
+                        <span class="nav-link-text">Removed Pets</span>
+                    </a>
+                </li>
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."Schedules") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Schedules">
+                    <a class="nav-link" href="<?= base_url()?>Schedules">
+                        <i class="fa fa-fw fa-calendar"></i>
+                        <span class="nav-link-text">Schedules</span>
                     </a>
                 </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."ManageUser") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Manage Users">
@@ -159,7 +171,7 @@ Admin Nav Header
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="<?= base_url() ?>AdminProfile">Profiles</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" style = "cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
                             Logout

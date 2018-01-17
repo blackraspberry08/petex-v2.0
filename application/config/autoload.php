@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'session', 'form_validation');
+$autoload['libraries'] = array('database', 'session', 'form_validation', 'Pdf');
 
 /*
 | -------------------------------------------------------------------
@@ -140,4 +140,5 @@ $autoload['model'] = array(
     "ManageOfficer_model",
     "SaveEvent",
     "PetManagement_model",
+    "ManageProgress_model"
     );
