@@ -295,6 +295,7 @@ class PetManagement extends CI_Controller {
             } else {
                 echo $this->upload->display_errors();
                 $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
+                redirect(base_url()."PetManagement/");
             }
         }
         else {
@@ -331,6 +332,59 @@ class PetManagement extends CI_Controller {
             $this->session->set_flashdata("registration_fail", "Something went wrong while registering ".$pet->pet_name." to the database");
         }
         redirect(base_url()."PetManagement/");
+    }
+    
+    public function interested_adopters_exec(){
+        $this->session->set_userdata("interested_adopters", $this->uri->segment(3));
+        redirect(base_url()."PetManagement/interested_adopters");
+    }
+    public function interested_adopters(){
+        $animal_id = $this->session->userdata("interested_adopters");
+        $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $active_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.pet_id" => $animal_id));
+        $not_active_transaction = $this->PetManagement_model->get_not_active_transactions(array("transaction.pet_id" => $animal_id));
+        $data = array(
+            'title' => $animal->pet_name." | Interested Adopters",
+            'animal' => $animal,
+            'active_transactions' => $active_transaction,
+            'not_active_transactions' => $not_active_transaction,
+            //NAV INFO
+            'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        $this->load->view("admin_nav/navheader");
+        $this->load->view("pet_management/interested_adopters");
+        $this->load->view("dashboard/includes/footer");
+    }
+    
+    public function restore_transaction_exec(){
+        $transaction_id = $this->uri->segment(3);
+        $transaction_user_id = $this->uri->segment(4);
+        $transaction_user = $this->ManageUsers_model->get_users("user", array("user_id" => $transaction_user_id))[0];
+        if($this->PetManagement_model->restore_transaction(array("transaction_id" => $transaction_id))){
+            $this->session->set_flashdata("restore_success", "Successfully restored the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
+        }else{
+            $this->session->set_flashdata("restore_fail", "Something went wrong while restoring the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
+        }
+        redirect(base_url()."PetManagement/interested_adopters_exec/".$this->session->userdata("interested_adopters"));
+    }
+    public function drop_transaction_exec(){
+        $transaction_id = $this->uri->segment(3);
+        $transaction_user_id = $this->uri->segment(4);
+        $transaction_user = $this->ManageUsers_model->get_users("user", array("user_id" => $transaction_user_id))[0];
+        if($this->PetManagement_model->drop_transaction(array("transaction_id" => $transaction_id))){
+            $this->session->set_flashdata("drop_success", "Dropped the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
+        }else{
+            $this->session->set_flashdata("drop_fail", "Something went wrong while dropping the transaction of ".$transaction_user->user_firstname." ".$transaction_user->user_lastname);
+        }
+        redirect(base_url()."PetManagement/interested_adopters_exec/".$this->session->userdata("interested_adopters"));
+    }
+    public function manage_progress_exec(){
+        $this->session->set_userdata("manage_progress_transaction_id", $this->uri->segment(3));
+        redirect(base_url()."ManageProgress");
     }
 }
 

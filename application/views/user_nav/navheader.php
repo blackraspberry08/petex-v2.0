@@ -42,7 +42,7 @@ User Nav Header
     .scrollbar-custom::-webkit-scrollbar-thumb{
         background-color: #24282C;
     }
-    .dropdown-menu {
+    .nav-item .dropdown-menu {
         width: 300px !important;
     }
 </style>
@@ -120,7 +120,7 @@ User Nav Header
                             <div class ="row no-gutters">
                                 <div class = "col-lg-4 ">
                                     <div class="profile-header-img ">
-                                        <img class="img-circle" src="<?= base_url() . $user_picture ?>" />
+                                        <img class="img-circle img-fluid" src="<?= base_url() . $user_picture ?>" />
                                     </div>
                                 </div>
                                 <div class = "col-lg-8" style = "overflow:hidden;">
@@ -131,7 +131,7 @@ User Nav Header
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Profiles</a>
+                        <a class="dropdown-item" href="<?= base_url() ?>Profile">Profiles</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"  style = "cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
                             Logout

@@ -44,7 +44,7 @@
     <script src="<?= base_url()?>assets/admin/js/sb-admin-datatables.min.js"></script>
     <script src="<?= base_url()?>assets/admin/js/sb-admin-charts.min.js"></script>
     <!-- Counters Scripts-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
     <script src="<?= base_url() ?>assets/admin/js/sb-admin-counter.js"></script>
     <!-- Bootstrap Switch -->
