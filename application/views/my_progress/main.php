@@ -97,6 +97,7 @@ My Progress
                                                 <div class="card-footer text-center">
                                                     <div class = "btn-group" role="group" aria-label="Button Group">
                                                         <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
+                                                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
                                                         <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                                                     </div>
                                                 </div>
@@ -104,7 +105,7 @@ My Progress
                                             </div>
                                         </div>
                                         <div class="col-md-8">
-                                            <p><?= $progress->progress_comment ?></p>
+                                            <p><?= $progress->checklist_desc?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -177,6 +178,53 @@ My Progress
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Medical -->
+                            <?php $medical = $this->MyProgress_model->get_animal_medical_records(array("medical_record.pet_id" => $progress->pet_id))[0]; ?>
+                            <div class="modal fade <?= $progress->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title"><i class = "fa fa-stethoscope"></i> Medical Records</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class ="row">
+                                                <div class = "col-lg-12">
+                                                    <?php if (empty($medical)): ?>
+                                                        <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
+                                                    <?php else: ?>
+                                                        <table class = "table table-striped">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>Date: </th>
+                                                                    <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Weight: </th>
+                                                                    <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Diagnosis: </th>
+                                                                    <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Treatment: </th>
+                                                                    <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         </div>
