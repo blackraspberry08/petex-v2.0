@@ -69,19 +69,19 @@
                                                             <h4 class="timeline-title"><?=$info->checklist_title;?></h4>
                                                             <p>
                                                                 <small class="text-muted"><i class="fa fa-clock-o"></i> Not accomplished yet.</small><br>
-                                                                <small><i class="fa fa-user"></i> Administered by <?= $info->user_firstname." ".$info->user_lastname;?></small>
+                                                                <small><i class="fa fa-user"></i> Administered by <?= $info->admin_firstname." ".$info->admin_lastname;?></small>
                                                             </p>
                                                         </div>
                                                         <div class="timeline-body">
                                                             <p><?= $info->checklist_desc?></p>
-                                                            <?php if($info->progress_comment != ""):?>
-                                                            <div class="card border-secondary mb-3">
+                                                            <?php //if($info->progress_comment != ""):?>
+<!--                                                            <div class="card border-secondary mb-3">
                                                                 <div class="card-body text-secondary">
                                                                     <h6 class="card-title">Comments : </h6>
                                                                     <p><?= $info->progress_comment;?></p>
                                                                 </div>
-                                                            </div>
-                                                            <?php endif;?>
+                                                            </div>-->
+                                                            <?php //endif;?>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -93,19 +93,19 @@
                                                             <h4 class="timeline-title"><?=$info->checklist_title;?></h4>
                                                             <p>
                                                                 <small class="text-muted"><i class="fa fa-clock-o"></i> Not accomplished yet.</small><br>
-                                                                <small><i class="fa fa-user"></i> Administered by <?= $info->user_firstname." ".$info->user_lastname;?></small>
+                                                                <small><i class="fa fa-user"></i> Administered by <?= $info->admin_firstname." ".$info->admin_lastname;?></small>
                                                             </p>
                                                         </div>
                                                         <div class="timeline-body">
                                                             <p><?= $info->checklist_desc?></p>
-                                                            <?php if($info->progress_comment != ""):?>
-                                                            <div class="card border-secondary mb-3">
+                                                            <?php //if($info->progress_comment != ""):?>
+<!--                                                            <div class="card border-secondary mb-3">
                                                                 <div class="card-body text-secondary">
                                                                     <h6 class="card-title">Comments : </h6>
                                                                     <p><?= $info->progress_comment;?></p>
                                                                 </div>
-                                                            </div>
-                                                            <?php endif;?>
+                                                            </div>-->
+                                                            <?php //endif;?>
                                                         </div>
                                                     </div>
                                                 </li>

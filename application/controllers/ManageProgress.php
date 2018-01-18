@@ -105,10 +105,10 @@ class ManageProgress extends CI_Controller {
         $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
         if ($this->input->post('approve') == "approve"){
             $data = array(
-                "user_id"                   => $current_user->admin_id,
+                "admin_id"                   => $current_user->admin_id,
                 "progress_accomplished_at"  => time(),
                 "progress_isSuccessful"     => 1,
-                "progress_comment"          => $this->input->post("comment")
+                
             );
             $transaction_progress = array(
                 "transaction_progress"      => 16

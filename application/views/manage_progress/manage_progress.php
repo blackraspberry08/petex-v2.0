@@ -40,7 +40,7 @@
                 </div>
                 <div class = "mt-5">
                     <span class = "text-secondary">If submitted manually</span><br>
-                    <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                    <div class = "btn-group mt-2 text-center" role="group" aria-label="Actions">
                         <a href = "#" data-toggle = "modal" data-target = "#upload_adoption_form" class = "btn btn-outline-primary"><i class = "fa fa-upload"></i> Upload</a>
                         <a href = "#" data-toggle = "modal" data-target = "#manual_input" class = "btn btn-outline-primary"><i class = "fa fa-keyboard-o"></i> Manual Input</a>
                     </div>
@@ -58,20 +58,18 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
-                                    <div class = "form-group">
-                                        <label for ="adoption_form">Adoption Form</label>
-                                        <div class="custom-file-container" data-upload-id="adoption_form">
-                                            <label class="custom-file-container__custom-file" >
-                                                <input type="file" name = "adoption_form" id = "adoption_form_add" class="custom-file-container__custom-file__custom-file-input" accept="application/pdf" required>
-                                                <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
-                                                <span class="custom-file-container__custom-file__custom-file-control"></span>
-                                                <button class="custom-file-container__image-clear">x</button>
-                                            </label>
-                                            <div class="custom-file-container__image-preview" id = "adoption_form_preview"></div>
-                                        </div>
+                                <div class = "form-group">
+                                    <label for ="adoption_form">Adoption Form</label>
+                                    <div class="custom-file-container" data-upload-id="adoption_form">
+                                        <label class="custom-file-container__custom-file" >
+                                            <input type="file" name = "adoption_form" id = "adoption_form_add" class="custom-file-container__custom-file__custom-file-input" accept="application/pdf" required>
+                                            <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
+                                            <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                            <button class="custom-file-container__image-clear">x</button>
+                                        </label>
+                                        <div class="custom-file-container__image-preview" id = "adoption_form_preview"></div>
                                     </div>
-
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -102,34 +100,31 @@
                 </div>
             </div>
             <?php else:?>
-            <div class = "col-lg-12 text-center">
+            <div class = "col-lg-12">
                 <?php $get_progress = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction->transaction_id))[0];?>
                 <?php if($adoption_form->adoption_form_isPending == 1):?>
                     <!-- Adoption Form not yet checked -->
-                    <h3 class = "mt-3">Pending Adoption Form</h3>
+                    <h3 class = "mt-3 text-center">Pending Adoption Form</h3>
                     <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
                         <iframe class="embed-responsive-item" src="<?= base_url().$adoption_form->adoption_form_location?>" allowfullscreen type="application/pdf"></iframe>
                     </div>
+                    
                     <form method = "POST" action = "<?= base_url()?>ManageProgress/step_1/<?= $transaction->transaction_id?>">
-                        <div class="form-group text-left" >
-                            <label for="comment" >Comment:</label>
-                            <textarea class="form-control" name = "comment" id="comment" rows="3" placeholder="Your comment here"><?= $get_progress->progress_comment?></textarea>
-                        </div>
-                        <div class = "btn-group mt-2" role="group" aria-label="Actions">
-                            <button type = "submit" name = "disapprove" class = "btn btn-outline-secondary" value = "disapprove" ><i class = "fa fa-thumbs-o-down"></i> Disapprove</button>
-                            <button type = "submit" name = "approve" class = "btn btn-outline-primary" value = "approve"><i class = "fa fa-thumbs-o-up"></i> Approve</button>
-                        </div>
+                        <label for ="comment">Comment:</label>
+                        <textarea class = "form-control" rows = 3 name = "comment"></textarea>
+                        <center>
+                            <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                                <button type = "submit" name = "disapprove" class = "btn btn-outline-secondary" value = "disapprove" ><i class = "fa fa-thumbs-o-down"></i> Disapprove</button>
+                                <button type = "submit" name = "approve" class = "btn btn-outline-primary" value = "approve"><i class = "fa fa-thumbs-o-up"></i> Approve</button>
+                            </div>
+                        </center>
                     </form>
                 <?php else:?>
-                    <h3 class = "mt-3">Adoption Form</h3>
+                    <h3 class = "mt-3 text-center">Adoption Form</h3>
                     <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
                         <iframe class="embed-responsive-item" src="<?= base_url().$adoption_form->adoption_form_location?>" allowfullscreen type="application/pdf"></iframe>
                     </div>
-                    <!-- Adoption Form is checked -->
-                    <div class="form-group text-left" >
-                        <label for="comment">Comment:</label>
-                        <textarea class="form-control" name = "comment" id="comment" rows="3" readonly><?= $get_progress->progress_comment?></textarea>
-                    </div>
+                    
                 <?php endif;?>
             </div>
             <?php endif;?>   
@@ -137,6 +132,66 @@
         
         <!-- Meet And Greet  --> 
         <div class="row setup-content" id="step_2">
+            
+            <div class = "col-lg-12 pt-5">
+                <form method = "POST" action = "<?= base_url()?>ManageProgress/step_2/<?= $transaction->transaction_id?>">
+                    <label for ="comment">Comment:</label>
+                    <textarea class = "form-control" rows = 3 name = "comment"></textarea>
+                    <center>
+                        <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                            <button type = "submit" name = "disapprove" class = "btn btn-outline-secondary" value = "disapprove" ><i class = "fa fa-thumbs-o-down"></i> Disapprove</button>
+                            <button type = "submit" name = "approve" class = "btn btn-outline-primary" value = "approve"><i class = "fa fa-thumbs-o-up"></i> Approve</button>
+                        </div>
+                    </center>
+                </form>
+            </div>
+            
+        </div>
+        
+        <!-- Interview --> 
+        <div class="row setup-content" id="step_3">
+            <form method = "POST" action = "<?= base_url()?>ManageProgress/step_3/<?= $transaction->transaction_id?>">
+                <label for ="comment">Comment:</label>
+                <textarea class = "form-control" rows = 3 name = "comment"></textarea>
+                <center>
+                    <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                        <button type = "submit" name = "disapprove" class = "btn btn-outline-secondary" value = "disapprove" ><i class = "fa fa-thumbs-o-down"></i> Disapprove</button>
+                        <button type = "submit" name = "approve" class = "btn btn-outline-primary" value = "approve"><i class = "fa fa-thumbs-o-up"></i> Approve</button>
+                    </div>
+                </center>
+            </form>
+        </div>
+        
+        <!-- Home Visit --> 
+        <div class="row setup-content" id="step_4">
+            <form method = "POST" action = "<?= base_url()?>ManageProgress/step_4/<?= $transaction->transaction_id?>">
+                <label for ="comment">Comment:</label>
+                <textarea class = "form-control" rows = 3 name = "comment"></textarea>
+                <center>
+                    <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                        <button type = "submit" name = "disapprove" class = "btn btn-outline-secondary" value = "disapprove" ><i class = "fa fa-thumbs-o-down"></i> Disapprove</button>
+                        <button type = "submit" name = "approve" class = "btn btn-outline-primary" value = "approve"><i class = "fa fa-thumbs-o-up"></i> Approve</button>
+                    </div>
+                </center>
+            </form>
+        </div>
+        
+        <!-- Visit chosen adoptee  --> 
+        <div class="row setup-content" id="step_5">
+            <form method = "POST" action = "<?= base_url()?>ManageProgress/step_5/<?= $transaction->transaction_id?>">
+                <label for ="comment">Comment:</label>
+                <textarea class = "form-control" rows = 3 name = "comment"></textarea>
+                <center>
+                    <div class = "btn-group mt-2" role="group" aria-label="Actions">
+                        <button type = "submit" name = "disapprove" class = "btn btn-outline-secondary" value = "disapprove" ><i class = "fa fa-thumbs-o-down"></i> Disapprove</button>
+                        <button type = "submit" name = "approve" class = "btn btn-outline-primary" value = "approve"><i class = "fa fa-thumbs-o-up"></i> Approve</button>
+                    </div>
+                </center>
+            </form>
+        </div>
+        
+        <!-- Release day  --> 
+        <div class="row setup-content" id="step_6">
             
         </div>
 </div>
