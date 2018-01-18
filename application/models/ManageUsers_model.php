@@ -7,7 +7,7 @@ class ManageUsers_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
-    public function activate_user($table, $where){
+    public function activate_user($table, $where = NULL){
         $this->db->set("user_status", 1);
         if (!empty($where)) {
             $this->db->where($where);
@@ -15,7 +15,7 @@ class ManageUsers_model extends CI_Model {
         $this->db->update($table);
         return $this->db->affected_rows();
     }
-    public function deactivate_user($table, $where){
+    public function deactivate_user($table, $where = NULL){
         $this->db->set("user_status", 0);
         if (!empty($where)) {
             $this->db->where($where);
@@ -35,7 +35,7 @@ class ManageUsers_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
     
-    public function get_user_info($table, $where){
+    public function get_user_info($table, $where = NULL){
         if (!empty($where)) {
             $this->db->where($where);
         }

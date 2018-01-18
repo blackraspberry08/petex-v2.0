@@ -10,6 +10,24 @@ class ManageOfficer_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
+    
+    public function activate_admin($table, $where = NULL){
+        $this->db->set("admin_status", 1);
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->update($table);
+        return $this->db->affected_rows();
+    }
+    public function deactivate_admin($table, $where = NULL){
+        $this->db->set("admin_status", 0);
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->update($table);
+        return $this->db->affected_rows();
+    }
+    
     public function get_admins(){
         $table = "admin";
         $where = array("admin_access" => "Subadmin");
