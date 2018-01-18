@@ -195,7 +195,7 @@
     <!--==========================
       Portfolio Section
     ============================-->
-    <section id="portfolio">
+    <section id="adoptables">
         <div class="container wow fadeInUp">
             <div class="section-header">
                 <h3 class="section-title">Adoptables</h3>
@@ -420,7 +420,7 @@
     <section id="team">
         <div class="container wow fadeInUp">
             <div class="section-header">
-                <h3 class="section-title">Team</h3>
+                <h3 class="section-title">Developers</h3>
                 <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
             </div>
             <div class="row">
@@ -471,7 +471,7 @@
             </div>
         </div>
 
-        <div id="google-map" data-latitude="14.6041612" data-longitude="120.9864179"></div>
+        <div id="google-map" data-latitude="14.6326954" data-longitude="121.0770871"></div>
 
         <div class="container wow fadeInUp">
             <div class="row justify-content-center">
@@ -481,17 +481,17 @@
                     <div class="info">
                         <div>
                             <i class="fa fa-map-marker"></i>
-                            <p>A108 Adam Street<br>New York, NY 535022</p>
+                            <p>Aurora Blvd, Quezon City,<br>1800 Metro Manila</p>
                         </div>
 
                         <div>
                             <i class="fa fa-envelope"></i>
-                            <p>info@example.com</p>
+                            <p>philpaws@paws.org.ph /<br>codebusters.solutions@gmail.com</p>
                         </div>
 
                         <div>
                             <i class="fa fa-phone"></i>
-                            <p>+1 5589 55488 55s</p>
+                            <p>475-1688</p>
                         </div>
                     </div>
 
