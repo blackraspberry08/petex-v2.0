@@ -7,7 +7,7 @@ Edit Profile
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>AdminDashboard">Dashboard</a>
+                <a href="<?= base_url() ?>UserDashboard">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
                 <a href="<?= base_url() ?>AdminProfile">Profile</a>
@@ -35,81 +35,70 @@ Edit Profile
                         <hr class="my-3">
                     </div>
                     <div class="row container">
-                        <div class="col-md-12">
+                        <div class="col-sm-12">
                             <form method="POST" action = "<?= base_url() ?>AdminProfile/edit_personalInfo_submit/" >
-                                <h5>
-                                    <div class="col-sm-6 pull-left">
-                                        Name:
-                                    </div>
-                                    <div class="col-sm-6 pull-right" id="user_info">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="user_firstname">Firstname: </label>
-                                                <input type="text" name="user_firstname" value = "<?= set_value("user_firstname", $userDetails->admin_firstname); ?>"  class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="user_lastname">Lastname: </label>
-                                                <input type="text" name="user_lastname" value = "<?= set_value("user_lastname", $userDetails->admin_lastname); ?>" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </h5>
-                                <h5>
-                                    <div class="col-sm-6 pull-left">
-                                        <br><br>
-                                        Gender:
-                                    </div>
-                                    <div class="col-sm-6 pull-right" id="user_info">
-                                        <div class="form-check">
-                                            <label class="form-check-label col-md-3" style="margin-left:-30px;">
-                                                <input name="user_sex" type="radio" id="user_sex" class = "form-check-label" value ="Male" <?= $userDetails->admin_sex == "Male" ? "checked = \"\"" : "" ?>/>
-                                                Male
-                                            </label>
-                                            <label class="form-check-label col-md-4" style="margin-left:-30px;">
-                                                <input name="user_sex" type="radio" id="user_sex" class = "form-check-label" value ="Female" <?= $userDetails->admin_sex == "Female" ? "checked = \"\"" : "" ?>/>
-                                                Female
-                                            </label>
 
+                                <fieldset class="form-group">
+                                    <legend>Name:</legend>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 <?php if (!empty(form_error("admin_firstname"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="admin_firstname" class=form-control-label">Firstname: </label>
+                                            <input type="text" name="admin_firstname" value = "<?= set_value("admin_firstname", $userDetails->admin_firstname); ?>"  class="form-control <?php if (!empty(form_error("admin_firstname"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('admin_firstname') ?></div>
+                                        </div>
+                                        <div class="form-group col-md-6 <?php if (!empty(form_error("admin_lastname"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="admin_lastname">Lastname: </label>
+                                            <input type="text" name="admin_lastname" value = "<?= set_value("admin_lastname", $userDetails->admin_lastname); ?>" class="form-control <?php if (!empty(form_error("admin_lastname"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('admin_lastname') ?></div>
                                         </div>
                                     </div>
-                                </h5>
-                                <h5>
-                                    <div class="col-sm-6 pull-left" >
-                                        <br>
-                                        Birthday:
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <legend>Gender:</legend>
+                                    <div class="form-check">
+
+                                        <label class="form-check-label col-md-3">
+                                            <input name="admin_sex" type="radio" id="admin_sex" class = "form-check-label" value ="Male" <?= $userDetails->admin_sex == "Male" ? "checked = \"\"" : "" ?>/>
+                                            Male
+                                        </label>
+                                        <label class="form-check-label col-md-3" >
+                                            <input name="admin_sex" type="radio" id="admin_sex" class = "form-check-label" value ="Female" <?= $userDetails->admin_sex == "Female" ? "checked = \"\"" : "" ?>/>
+                                            Female
+                                        </label>
                                     </div>
-                                    <div class="col-sm-6 pull-right" id="user_info" >
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="user_bday" class="form_datetime form-control" value="<?= set_value("user_bday", date("F d, Y", $userDetails->admin_bday)); ?>" style="margin-top:10px;">
-                                            </div>    
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <legend>Birthday:</legend>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="admin_bday" class="form_datetime form-control" value="<?= set_value("admin_bday", date("F d, Y", $userDetails->admin_bday)); ?>" style="margin-top:10px;">
+                                        </div>    
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <legend>Address:</legend>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-8 <?php if (!empty(form_error("admin_address"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="admin_address">Address: </label>
+                                            <input type="text" name="admin_address" value = "<?= set_value("admin_address", $userDetails->admin_address); ?>" class="form-control <?php if (!empty(form_error("admin_address"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('admin_address') ?></div>
+                                        </div>
+                                        <div class="form-group col-md-4 <?php if (!empty(form_error("admin_brgy"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="admin_brgy">Barangay: </label>
+                                            <input type="text" name="admin_brgy" value = "<?= set_value("admin_brgy", $userDetails->admin_brgy); ?>" class="form-control <?php if (!empty(form_error("admin_brgy"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('admin_brgy') ?></div>
+                                        </div>
+                                        <div class="form-group col-md-6 <?php if (!empty(form_error("admin_city"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="admin_city">City: </label>
+                                            <input type="text" name="admin_city" value = "<?= set_value("admin_city", $userDetails->admin_city); ?>" class="form-control <?php if (!empty(form_error("admin_city"))): ?>is-invalid<?php else: ?><?php endif; ?>" >
+                                            <div class="invalid-feedback"><?= form_error('admin_city') ?></div>
                                         </div>
                                     </div>
-                                </h5>
-                                <h5>
-                                    <div class="col-sm-6 pull-left" >
-                                        <br>
-                                        Address:
-                                    </div>
-                                    <div class="col-sm-6 pull-right" id="user_info" >
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="user_address">Address: </label>
-                                                <input type="text" name="user_address" value = "<?= set_value("user_address", $userDetails->admin_address); ?>" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="user_brgy">Barangay: </label>
-                                                <input type="text" name="user_brgy" value = "<?= set_value("user_brgy", $userDetails->admin_brgy); ?>" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="user_city">City: </label>
-                                                <input type="text" name="user_city" value = "<?= set_value("user_city", $userDetails->admin_city); ?>" class="form-control" >
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
-                                    </div>
-                                </h5>
+                                </fieldset>
+
+                                <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary  pull-left" id = "btnReset_edit">Reset</button>
+
                             </form>
                         </div>
                     </div>
@@ -121,80 +110,64 @@ Edit Profile
                     <hr class="my-3">
                 </div>
                 <div class="row container">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <form method="POST" action = "<?= base_url() ?>AdminProfile/edit_loginInfo_submit/" >
-
-                            <h5>
-                                <div class="col-sm-6 pull-left" >
-                                    <br>
-                                    Username:
+                            <fieldset class="form-group">
+                                <legend>Username:</legend>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <input type="text" name="admin_username" class="form-control" value="<?= set_value("admin_username", $userDetails->admin_username); ?>" style="margin-top:10px;">
+                                    </div>    
                                 </div>
-                                <div class="col-sm-6 pull-right" id="user_info" >
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <input type="text" name="user_username" class="form-control" value="<?= set_value("user_username", $userDetails->admin_username); ?>" style="margin-top:10px;">
-                                        </div>    
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend>Password:</legend>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+
+                                        <label for="admin_password">New Password: </label>
+                                        <input type="password" name="admin_password"   class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="admin_conpassword">Confirm Password: </label>
+                                        <input type="password" name="admin_conpassword" class="form-control">
                                     </div>
                                 </div>
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    <br><br>
-                                    Password:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-
-                                            <label for="user_password">Password: </label>
-                                            <input type="password" name="user_password"   class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="user_conpassword">Confirm Password: </label>
-                                            <input type="password" name="user_conpassword" class="form-control">
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
-                                </div> 
-                            </h5>
+                            </fieldset>
+                            <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary  pull-left" id = "btnReset_edit">Reset</button>
                         </form>
                     </div>
                 </div>
-            </div><br><br>
+            </div>
             <div class="row container">
-                <div class="col-md-12">
+
+                <div class="col-md-12"><br><br>
                     <h5><i class="fa fa-address-book"></i> Contact Information</h5>
                     <hr class="my-3">
                 </div>
                 <div class="row container">
                     <div class="col-md-12">
-                        <h5>
-                            <div class="col-sm-6 pull-left" >
-                                <br>
-                                Phone Number:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info" >
+                        <form method="POST" action="">
+                            <fieldset class="form-group">
+                                <legend>Phone Number:</legend>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <input type="text" name="user_contact_no" class="form-control" value="<?= set_value("user_contact_no", $userDetails->admin_contact_no); ?>" style="margin-top:10px;">
+                                        <input type="text" name="admin_contact_no" class="form-control" value="<?= set_value("admin_contact_no", $userDetails->admin_contact_no); ?>" style="margin-top:10px;">
                                     </div>    
                                 </div>
-                            </div>
-                        </h5>
-                        <h5>
-                            <div class="col-sm-6 pull-left" >
-                                <br>
-                                Email Address:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info" >
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend>Email Address:</legend>
                                 <div class="form-row">
-                                    <div class="form-group col-md-7">
-                                        <input type="email" name="user_email" class="form-control" value="<?= set_value("user_email", $userDetails->admin_email); ?>" style="margin-top:10px;">
+                                    <div class="form-group col-md-6">
+                                        <input type="email" name="admin_email" class="form-control" value="<?= set_value("admin_email", $userDetails->admin_email); ?>" style="margin-top:10px;">
                                     </div>    
                                 </div>
-                            </div>
-                        </h5>
+                            </fieldset>
+                            <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary  pull-left" id = "btnReset_edit">Reset</button>
+                        </form>
                     </div>
 
                 </div>
@@ -216,10 +189,10 @@ Edit Profile
             <form method="POST" action = "<?= base_url() ?>Profile/edit_picture_submit/" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class = "form-group">
-                        <label for ="user_picture">Picture</label>
-                        <div class="custom-file-container" data-upload-id="user_picture">
+                        <label for ="admin_picture">Picture</label>
+                        <div class="custom-file-container" data-upload-id="admin_picture">
                             <label class="custom-file-container__custom-file" >
-                                <input type="file" name = "user_picture" id = "user_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
+                                <input type="file" name = "admin_picture" id = "admin_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
                                 <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
                                 <span class="custom-file-container__custom-file__custom-file-control"></span>
                                 <button class="custom-file-container__image-clear">x</button>
@@ -227,7 +200,7 @@ Edit Profile
                             <small id="videoHelp" class="form-text text-muted">
                                 Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png
                             </small>
-                            <div class="custom-file-container__image-preview" id = "user_picture_edit_preview"></div>
+                            <div class="custom-file-container__image-preview" id = "admin_picture_edit_preview"></div>
                         </div>
                     </div>
 
@@ -244,17 +217,17 @@ Edit Profile
 <!-- Bootstrap File Upload with preview -->
 <script src = "<?= base_url() ?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
 <script>
-                                    var upload = new FileUploadWithPreview('user_picture')
+                                    var upload = new FileUploadWithPreview('admin_picture')
 </script>
 <!-- Bootstrap File Upload with preview -->
 <script>
-    document.getElementById("user_picture_edit_preview").style.backgroundImage = "url('<?= base_url() . $userDetails->user_picture ?>')";
+    document.getElementById("admin_picture_edit_preview").style.backgroundImage = "url('<?= base_url() . $userDetails->admin_picture ?>')";
 
     document.getElementById("btnReset_edit").onclick = function () {
         reset_upload()
     };
     function reset_upload() {
-        document.getElementById("user_picture_edit_preview").style.backgroundImage = "url('<?= base_url() . $userDetails->user_picture ?>')";
-        document.getElementById("user_picture_edit").value = "";
+        document.getElementById("admin_picture_edit_preview").style.backgroundImage = "url('<?= base_url() . $userDetails->admin_picture ?>')";
+        document.getElementById("admin_picture_edit").value = "";
     }
 </script>

@@ -217,22 +217,8 @@ class PetManagement extends CI_Controller {
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
 
         if ($this->form_validation->run() == FALSE) {
-//ERROR IN FORM
-            $animal_id = $this->session->userdata("animal_info");
-            $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
-            $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
-            $data = array(
-                'title' => $animal->pet_name . " | Pet Information",
-                'animal' => $animal,
-                //NAV INFO
-                'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
-                'user_picture' => $current_user->admin_picture,
-                'user_access' => "Administrator"
-            );
-            $this->load->view("dashboard/includes/header", $data);
-            $this->load->view("admin_nav/navheader");
-            $this->load->view("pet_management/animal_information");
-            $this->load->view("dashboard/includes/footer");
+            //ERROR IN FORM
+            $this->animal_info();
         } else {
             $config['upload_path'] = './images/animal/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';
@@ -323,18 +309,7 @@ class PetManagement extends CI_Controller {
         $this->form_validation->set_rules('pet_history', "Pet History", "required");
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
         if ($this->form_validation->run() == FALSE) {
-            $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
-            $data = array(
-                'title' => "Animal Registration",
-                //NAV INFO
-                'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
-                'user_picture' => $current_user->admin_picture,
-                'user_access' => "Administrator"
-            );
-            $this->load->view("dashboard/includes/header", $data);
-            $this->load->view("admin_nav/navheader");
-            $this->load->view("pet_management/animal_registration");
-            $this->load->view("dashboard/includes/footer");
+            $this->add_animal();
         } else {
             $config['upload_path'] = './images/animal/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';
