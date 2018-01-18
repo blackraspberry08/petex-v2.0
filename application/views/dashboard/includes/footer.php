@@ -61,8 +61,8 @@
         });
     </script>
     <!-- Bootstrap Datepicker -->
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript">
+   <script src="<?= base_url() ?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+   <script type="text/javascript">
         var dt = new Date();
         dt.setFullYear(new Date().getFullYear());
         $(document).ready(function () {

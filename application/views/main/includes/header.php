@@ -62,8 +62,8 @@
                         <li class="menu-active"><a href="#hero">Home</a></li>
                         <li><a href="#about">About Us</a></li>
                         <li><a href="#services">Services</a></li>
-                        <li><a href="#portfolio">Adoptables</a></li>
-                        <li><a href="#team">Team</a></li>
+                        <li><a href="#adoptables">Adoptables</a></li>
+                        <li><a href="#team">Developers</a></li>
                         <li><a href="#contact">Contact Us</a></li>
                     </ul>
                 </nav><!-- #nav-menu-container -->
