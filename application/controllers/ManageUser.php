@@ -31,8 +31,8 @@ class ManageUser extends CI_Controller {
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
             'title' => "Manage Users",
-            'users' => $this->ManageUsers_model->get_users("user", array("user_access"=>"User")),
-            'user_last_update' => $this->ManageUsers_model->get_recent_timestamp("user", array("user_access"=>"User"), "user_added_at"),
+            'users' => $this->ManageUsers_model->get_users("user"),
+            'user_last_update' => $this->ManageUsers_model->get_recent_timestamp("user", NULL, "user_added_at"),
             //NAV INFO
             'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,

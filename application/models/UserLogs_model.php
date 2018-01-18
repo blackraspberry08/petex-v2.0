@@ -1,6 +1,6 @@
 <?php
 class UserLogs_model extends CI_Model {
-    public function get_userlogs($table, $join = NULL, $on = NULL, $where = NULL){
+    public function get_userlogs($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL){
         if (!empty($where)) {
             $this->db->where($where);
         }

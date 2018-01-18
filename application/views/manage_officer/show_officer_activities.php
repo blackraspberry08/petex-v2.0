@@ -24,9 +24,9 @@
                 <tbody>
                     <?php foreach ($activities as $activity): ?>
                         <tr>
-                            <td><?= $activity->user_firstname . " " . $activity->user_lastname ?></td>
+                            <td><?= $activity->admin_firstname . " " . $activity->admin_lastname ?></td>
                             <td><?= $activity->event_description ?></td>
-                            <td><?= $activity->user_access ?></td>
+                            <td><?= $activity->admin_access ?></td>
                             <td><?= date('F d, Y \a\t h:m A', $activity->event_added_at); ?></td>
                         </tr>
                     <?php endforeach; ?>

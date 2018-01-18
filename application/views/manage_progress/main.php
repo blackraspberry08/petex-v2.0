@@ -95,7 +95,8 @@ Manage Progress
         line-height: 1.428571429;
         border-radius: 15px;
         margin-top: 0; }
-    
+    /*============COMMENTS SECTION=============*/
+        
 </style>
 <?php
     function get_age($birth_date) {
