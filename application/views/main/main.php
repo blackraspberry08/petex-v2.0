@@ -21,15 +21,15 @@
                         <div class="card-body text-center">
                             <?php
                             $current_user = $this->session->userdata("current_user");
-                            if ($this->session->userdata("user_access") == "subadmin" || $this->session->userdata("user_access") == "user"):
+                            if ($this->session->userdata("user_access") == "user"):
                                 ?>
                                 <img src = "<?= base_url() . $current_user->user_picture ?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
                                 <strong><?= $current_user->user_firstname . " " . $current_user->user_lastname ?></strong><br>
-                                <span><?= $current_user->user_access == "Subadmin" ? "PAWS Officer" : "Pet Adopter" ?></span>
-                            <?php elseif ($this->session->userdata("user_access") == "admin"): ?>
+                                <span>Pet Adopter</span>
+                            <?php elseif ($this->session->userdata("user_access") == "subadmin" || $this->session->userdata("user_access") == "admin"): ?>
                                 <img src = "<?= base_url() . $current_user->admin_picture ?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
                                 <strong><?= $current_user->admin_firstname . " " . $current_user->admin_lastname ?></strong><br>
-                                <span>Administrator</span>
+                                <span><?= $current_user->admin_access == "Subadmin"? "PAWS Officer" : "Administrator"; ?></span>
                             <?php endif; ?>
                         </div>
                         <div class="card-footer">

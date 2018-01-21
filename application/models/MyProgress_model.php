@@ -32,6 +32,17 @@ class MyProgress_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
-    
-    
+
+    public function get_animal_medical_records($where = NULL) {
+        $table = "medical_record";
+        $join = "pet";
+        $on = "medical_record.pet_id = pet.pet_id";
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->join($join, $on, "left outer");
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+
 }
