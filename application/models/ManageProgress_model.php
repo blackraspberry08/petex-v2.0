@@ -6,15 +6,12 @@ class ManageProgress_model extends CI_Model {
         $on = "progress.checklist_id = checklist.checklist_id";
         $join2 = "transaction";
         $on2 = "progress.transaction_id = transaction.transaction_id";
-        $join3 = "admin";
-        $on3 = "progress.admin_id = admin.admin_id";
         $join4 = "pet";
         $on4 = "transaction.pet_id = pet.pet_id";
         $this->db->where(array("transaction_isFinished" => 0));
         $this->db->where(array("transaction_isActivated" => 1));
         $this->db->join($join, $on, "left outer");
         $this->db->join($join2, $on2, "left outer");
-        $this->db->join($join3, $on3, "left outer");
         $this->db->join($join4, $on4, "left outer");
         if (!empty($where)) {
             $this->db->where($where);
@@ -68,10 +65,16 @@ class ManageProgress_model extends CI_Model {
         if(!empty($where)){
              $this->db->where($where);
         }
-        $this->db->join("comment", "progress_comment.comment_id = comment.comment_id", "left outer");
         $this->db->join("progress", "progress_comment.progress_id = progress.progress_id", "left outer");
+        $this->db->join("transaction", "progress.transaction_id = transaction.transaction_id", "left outer");
         $this->db->order_by("progress_comment_added_at", "ASC");
         $query = $this->db->get("progress_comment");
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
+    public function add_progress_comment($progress_comment){
+        $table = "progress_comment";
+        $this->db->insert($table, $progress_comment);
+        return $this->db->affected_rows();
     }
 }
