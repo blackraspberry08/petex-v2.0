@@ -109,7 +109,9 @@ class PetManagement extends CI_Controller {
             );
             if ($this->PetManagement_model->add_medical_record($medical_record)) {
 //SUCCESS
-                $this->session->set_flashdata("add_medical_record_success", "Successfully added a medical record.");
+                $animal = $this->PetManagement_model->get_animal_info(array("pet_id"=>$animal_id))[0];
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a medical record for ".$animal->pet_name);
+                $this->session->set_flashdata("add_medical_record_success", "Successfully added a medical record for ".$animal->pet_name);
             } else {
 //FAILED
                 $this->session->set_flashdata("add_medical_record_fail", "Something went wrong in adding a medical record.");
@@ -121,9 +123,11 @@ class PetManagement extends CI_Controller {
     public function remove_medical_record_exec() {
         $record_id = $this->uri->segment(3);
         if ($this->PetManagement_model->remove_medical_record(array("medicalRecord_id" => $record_id))) {
-            $this->session->set_flashdata("remove_medical_record_success", "Successfully removed a medical record");
+            $record = $this->PetManagement_model->get_animal_medical_records(array("medicalRecord_id" => $record_id))[0];
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a medical record for ".$record->pet_name);
+            $this->session->set_flashdata("remove_medical_record_success", "Successfully removed a medical record from ".$record->pet_name);
         } else {
-            $this->session->set_flashdata("remove_medical_record_fail", "Something went wrong while removing the medical record");
+            $this->session->set_flashdata("remove_medical_record_fail", "Something went wrong while removing the medical record from ".$record->pet_name);
         }
         redirect(base_url() . "PetManagement/medical_records");
     }
@@ -175,7 +179,9 @@ class PetManagement extends CI_Controller {
                 "medicalRecord_treatment" => $this->input->post("medicalRecord_treatment")
             );
             if ($this->PetManagement_model->edit_medical_record($medical_record, array("medicalRecord_id" => $record_id))) {
-//SUCCESS
+//SUCCESS       
+                $record = $this->PetManagement_model->get_animal_medical_records(array("medicalRecord_id" => $record_id))[0];
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "edited a medical record from ".$record->pet_name);
                 $this->session->set_flashdata("edit_medical_record_success", "Successfully edited a medical record.");
             } else {
 //FAILED
@@ -267,7 +273,8 @@ class PetManagement extends CI_Controller {
 
             if ($this->PetManagement_model->update_animal_record($pet, array("pet_id" => $animal->pet_id))) {
 //SUCCESS
-                $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $animal->pet_name);
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated the record of " . $animal->pet_name);
+                $this->session->set_flashdata("uploading_success", "Successfully updated the record of " . $animal->pet_name);
             } else {
                 $this->session->set_flashdata("uploading_fail2", $animal->pet_name . " seems to not exist in the database.");
             }
@@ -279,6 +286,7 @@ class PetManagement extends CI_Controller {
         $animal_id = $this->uri->segment(3);
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         if ($this->PetManagement_model->remove_animal(array("pet_id" => $animal_id))) {
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Removed ".$animal->pet_name." from the database");
             $this->session->set_flashdata("remove_animal_success", "Successfully removed " . $animal->pet_name . " from the database. Bye " . $animal->pet_name . "!");
         } else {
             $this->session->set_flashdata("remove_animal_fail", "Something went wrong while removing " . $animal->pet_name . " from the database");
@@ -355,7 +363,8 @@ class PetManagement extends CI_Controller {
 
             if ($this->PetManagement_model->register_animal_record($pet)) {
 //SUCCESS
-                $this->session->set_flashdata("registration_success", "Successfully update the record of " . $pet->pet_name);
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Registered " . $pet->pet_name. " to the database");
+                $this->session->set_flashdata("registration_success", "Successfully registered " . $pet->pet_name. " to the database");
             } else {
                 $this->session->set_flashdata("registration_fail", "Something went wrong while registering " . $pet->pet_name . " to the database");
             }
@@ -395,6 +404,7 @@ class PetManagement extends CI_Controller {
         $transaction_user_id = $this->uri->segment(4);
         $transaction_user = $this->ManageUsers_model->get_users("user", array("user_id" => $transaction_user_id))[0];
         if ($this->PetManagement_model->restore_transaction(array("transaction_id" => $transaction_id))) {
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Restored the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
             $this->session->set_flashdata("restore_success", "Successfully restored the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
         } else {
             $this->session->set_flashdata("restore_fail", "Something went wrong while restoring the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
@@ -407,6 +417,7 @@ class PetManagement extends CI_Controller {
         $transaction_user_id = $this->uri->segment(4);
         $transaction_user = $this->ManageUsers_model->get_users("user", array("user_id" => $transaction_user_id))[0];
         if ($this->PetManagement_model->drop_transaction(array("transaction_id" => $transaction_id))) {
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Dropped the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
             $this->session->set_flashdata("drop_success", "Dropped the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
         } else {
             $this->session->set_flashdata("drop_fail", "Something went wrong while dropping the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);

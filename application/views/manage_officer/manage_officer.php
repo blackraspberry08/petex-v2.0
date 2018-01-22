@@ -33,6 +33,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Status</th>
+                        <th>Access</th>
                         <th>Added at</th>
                         <th>Action</th>
                     </tr>
@@ -42,6 +43,7 @@
                         <tr>
                             <td><?= $admin->admin_firstname . " " . $admin->admin_lastname ?></td>
                             <td><?= $admin->admin_status == 1? "Active" : "Inactive" ; ?></td>
+                            <td><?= $admin->admin_access == "Subadmin"? "PAWS Officer" : "Administrator" ; ?></td>
                             <td><?= date('F d, Y \a\t h:m A', $admin->admin_added_at); ?></td>
                             <td>
                                 <center>
