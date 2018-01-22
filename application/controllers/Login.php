@@ -73,6 +73,7 @@ class Login extends CI_Controller {
                         $this->session->set_userdata('userid', $accountDetailsAdmin->admin_id);
                         $this->session->set_userdata('current_user', $accountDetailsAdmin);
                         $this->session->set_userdata('user_access', "admin");
+                        $this->SaveEventAdmin->login($accountDetailsAdmin->admin_id);
                         redirect(base_url() . 'AdminDashboard/');
                     }
                 }
@@ -91,6 +92,7 @@ class Login extends CI_Controller {
                         $this->session->set_userdata('userid', $accountDetailsAdmin->admin_id);
                         $this->session->set_userdata('current_user', $accountDetailsAdmin);
                         $this->session->set_userdata('user_access', "subadmin");
+                        $this->SaveEventAdmin->login($accountDetailsAdmin->admin_id);
                         redirect(base_url() . 'SubadminDashboard/');
                     }
                 }
@@ -110,6 +112,7 @@ class Login extends CI_Controller {
                         $this->session->set_userdata('userid', $accountDetailsUser->user_id);
                         $this->session->set_userdata('current_user', $accountDetailsUser);
                         $this->session->set_userdata('user_access', "user");
+                        $this->SaveEventUser->login($accountDetailsUser->user_id);
                         redirect(base_url() . 'UserDashboard/');
                     }
                 }

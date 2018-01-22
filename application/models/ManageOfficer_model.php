@@ -28,9 +28,12 @@ class ManageOfficer_model extends CI_Model {
         return $this->db->affected_rows();
     }
     
-    public function get_admins(){
+    public function get_admins($admin_id = NULL){
         $table = "admin";
-        $where = array("admin_access" => "Subadmin");
+        $where = array("admin_isverified" => 1);
+        if (!empty($admin_id)) {
+            $this->db->where_not_in("admin_id", $admin_id);
+        }
         $this->db->where($where);
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;

@@ -102,6 +102,7 @@ class ManageProgress extends CI_Controller {
         );
         
         if($this->ManageProgress_model->add_adoption_form($data)){
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Uploaded an adoption form manually.");
             $this->session->set_flashdata("adoption_form_success", "Successfully uploaded the adoption form.");
         }
         else{
@@ -143,6 +144,7 @@ class ManageProgress extends CI_Controller {
                 && $this->ManageProgress_model->update_adoption_form($adoption_form, array("transaction_id" => $transaction_id))
                 && $this->ManageProgress_model->add_progress_comment($progress_comment)
                 ){
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Approved adoption form (step 1) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
                 $this->session->set_flashdata("approve_adoption_form_success", "Successfully approved adoption form!");
             }else{
                 die;
@@ -151,22 +153,75 @@ class ManageProgress extends CI_Controller {
         }
         
         else if ($this->input->post('disapprove') == "disapprove") {
-            
-            $data = array(
-                "user_id"                   => $current_user->admin_id,
-                "progress_accomplished_at"  => 0,
-                "progress_isSuccessful"     => 0,
-                "progress_comment"          => $this->input->post("comment")
+            $progress_comment = array(
+                "progress_id"                   => $current_progress->progress_id,
+                "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
+                "progress_comment_picture"      => $current_user->admin_picture,
+                "progress_comment_sender_access" => $current_user->admin_access,
+                "progress_comment_content"      => $this->input->post('comment'),
+                "progress_comment_added_at"     => time()
             );
-            if($this->ManageProgress_model->approve_adoption_form($data, array("checklist_id" => 1, "transaction_id" => $transaction_id))){
-                $this->session->set_flashdata("approve_adoption_form_success", "Disapproved adoption form. Comment has been sent to the pet adopter.");
+            if($this->ManageProgress_model->add_progress_comment($progress_comment)){
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Dispproved adoption form (step 1) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                $this->session->set_flashdata("approve_adoption_form_success", "Disapproved adoption form.");
             }else{
                 $this->session->set_flashdata("approve_adoption_form_fail", "Something went wrong while disapproving adoption form");
             }
         }
         redirect(base_url()."ManageProgress");
     }
-    
+    public function step_2(){
+        $transaction_id = $this->uri->segment(3);
+        $current_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 2))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        if($this->input->post('approve') == "approve"){
+            $data = array(
+                "progress_accomplished_at"  => time(),
+                "progress_isSuccessful"     => 1,
+            );
+            $transaction_progress = array(
+                "transaction_progress"      => 32
+            );
+            
+            $progress_comment = array(
+                "progress_id"                   => $current_progress->progress_id,
+                "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
+                "progress_comment_picture"      => $current_user->admin_picture,
+                "progress_comment_sender_access" => $current_user->admin_access,
+                "progress_comment_content"      => $this->input->post('comment'),
+                "progress_comment_added_at"     => time()
+            );
+            
+            if(    $this->ManageProgress_model->approve_adoption_form($data, array("checklist_id" => 2, "transaction_id" => $transaction_id)) 
+                && $this->ManageProgress_model->update_progress($transaction_progress, array("transaction_id" => $transaction_id))
+                && $this->ManageProgress_model->add_progress_comment($progress_comment)
+                ){
+                $this->session->set_flashdata("approve_step_2_success", "Successfully approved Meet and Greet!");
+            }else{
+                die;
+                $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while approving Meet and Greet");
+            }
+        }
+        
+        else if ($this->input->post('disapprove') == "disapprove") {
+            $progress_comment = array(
+                "progress_id"                   => $current_progress->progress_id,
+                "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
+                "progress_comment_picture"      => $current_user->admin_picture,
+                "progress_comment_sender_access" => $current_user->admin_access,
+                "progress_comment_content"      => $this->input->post('comment'),
+                "progress_comment_added_at"     => time()
+            );
+            if(
+                $this->ManageProgress_model->add_progress_comment($progress_comment)
+            ){
+                $this->session->set_flashdata("approve_step_2_success", "Disapproved adoption form.");
+            }else{
+                $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while disapproving Meet and Greet");
+            }
+        }
+        redirect(base_url()."ManageProgress");
+    }
 }
 
 
