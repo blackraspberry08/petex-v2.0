@@ -45,6 +45,7 @@ class PetAdoption extends CI_Controller {
                 redirect(base_url());
             }
         }
+        
     }
 
     public function index() {
