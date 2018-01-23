@@ -10,9 +10,7 @@ class UserLogout extends CI_Controller {
     }
 
     public function index() {
-        $log = array(
-            "user_id" => $this->session->userdata("userid")
-        );
+        $this->SaveEventUser->logout($this->session->userdata("userid"));
         $this->session->sess_destroy();
         redirect(base_url() . 'main/');
     }

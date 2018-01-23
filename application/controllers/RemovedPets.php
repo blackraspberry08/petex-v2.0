@@ -51,7 +51,8 @@ class RemovedPets extends CI_Controller {
         $animal_id = $this->uri->segment(3);
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         if($this->PetManagement_model->restore_animal(array("pet_id" => $animal_id))){
-            $this->session->set_flashdata("remove_animal_success", "Successfully removed ".$animal->pet_name." from the database. Bye ".$animal->pet_name."!");
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Restored ".$animal->pet_name." to the database.");
+            $this->session->set_flashdata("remove_animal_success", "Successfully restored ".$animal->pet_name." to the database.");
         }else{
             $this->session->set_flashdata("remove_animal_fail", "Something went wrong while removing ".$animal->pet_name." from the database");
         }

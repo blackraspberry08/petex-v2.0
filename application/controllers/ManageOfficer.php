@@ -37,7 +37,7 @@ class ManageOfficer extends CI_Controller {
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
             'title' => "Manage Officer",
-            'admins' => $this->ManageOfficer_model->get_admins(),
+            'admins' => $this->ManageOfficer_model->get_admins($current_user->admin_id),
             //NAV INFO
             'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
@@ -57,6 +57,8 @@ class ManageOfficer extends CI_Controller {
         $user = $this->ManageOfficer_model->get_admin(array("admin_id" => $this->session->userdata("activate_officer")))[0];
         if($this->ManageOfficer_model->activate_admin("admin", array("admin_id" => $this->session->userdata("activate_officer")))){
             $this->session->set_flashdata("activation_success", "Successfully activated ".$user->admin_firstname." ".$user->admin_lastname."'s account.");
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Activated officer ".$user->admin_firstname." ".$user->admin_lastname);
+            
         }else{
             $this->session->set_flashdata("activation_fail", "Something went wrong while activating ".$user->admin_firstname." ".$user->admin_lastname."'s account.");
         }
@@ -73,6 +75,7 @@ class ManageOfficer extends CI_Controller {
         $user = $this->ManageOfficer_model->get_admin(array("admin_id" => $this->session->userdata("deactivate_officer")))[0];
         if($this->ManageOfficer_model->deactivate_admin("admin", array("admin_id" => $this->session->userdata("deactivate_officer")))){
             $this->session->set_flashdata("activation_success", "Successfully deactivated ".$user->admin_firstname." ".$user->admin_lastname."'s account.");
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Deactivated officer ".$user->admin_firstname." ".$user->admin_lastname);
         }else{
             $this->session->set_flashdata("activation_fail", "Something went wrong while deactivating ".$user->admin_firstname." ".$user->admin_lastname."'s account.");
         }
@@ -158,6 +161,7 @@ class ManageOfficer extends CI_Controller {
                 $this->ManageOfficer_model->add_module($data);
             }
         }
+        $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated module access for ".$officer->admin_firstname." ".$officer->admin_lastname);
         $this->session->set_flashdata("module_update", "Successfully updated ".$officer->admin_firstname." ".$officer->admin_lastname."'s modules.");
         redirect(base_url()."ManageOfficer/manage_module");
     }
@@ -165,6 +169,7 @@ class ManageOfficer extends CI_Controller {
         $module_access_id = $this->uri->segment(3);
         $module_access = $officer_module_access = $this->ManageOfficer_model->get_officer_modules(array("module_access.module_access_id" => $module_access_id));
         $this->ManageOfficer_model->remove_module(array("module_access_id" => $module_access_id));
+        $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated module access for ".$module_access->admin_firstname." ".$module_access->admin_lastname);
         $this->session->set_flashdata("module_removed", "Successfully removed ".$module_access->module_title." module to ".$module_access->admin_firstname." ".$module_access->admin_lastname."'s modules.");
         redirect(base_url()."ManageOfficer/manage_module");
     }
