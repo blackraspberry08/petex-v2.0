@@ -35,81 +35,70 @@ Edit Profile
                         <hr class="my-3">
                     </div>
                     <div class="row container">
-                        <div class="col-md-12">
+                        <div class="col-sm-12">
                             <form method="POST" action = "<?= base_url() ?>Profile/edit_personalInfo_submit/" >
-                                <h5>
-                                    <div class="col-sm-6 pull-left">
-                                        Name:
-                                    </div>
-                                    <div class="col-sm-6 pull-right" id="user_info">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="user_firstname">Firstname: </label>
-                                                <input type="text" name="user_firstname" value = "<?= set_value("user_firstname", $userDetails->user_firstname); ?>"  class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="user_lastname">Lastname: </label>
-                                                <input type="text" name="user_lastname" value = "<?= set_value("user_lastname", $userDetails->user_lastname); ?>" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </h5>
-                                <h5>
-                                    <div class="col-sm-6 pull-left">
-                                        <br><br>
-                                        Gender:
-                                    </div>
-                                    <div class="col-sm-6 pull-right" id="user_info">
-                                        <div class="form-check">
-                                            <label class="form-check-label col-md-3" style="margin-left:-30px;">
-                                                <input name="user_sex" type="radio" id="user_sex" class = "form-check-label" value ="Male" <?= $userDetails->user_sex == "Male" ? "checked = \"\"" : "" ?>/>
-                                                Male
-                                            </label>
-                                            <label class="form-check-label col-md-4" style="margin-left:-30px;">
-                                                <input name="user_sex" type="radio" id="user_sex" class = "form-check-label" value ="Female" <?= $userDetails->user_sex == "Female" ? "checked = \"\"" : "" ?>/>
-                                                Female
-                                            </label>
 
+                                <fieldset class="form-group">
+                                    <legend>Name:</legend>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 <?php if (!empty(form_error("user_firstname"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="user_firstname" class=form-control-label">Firstname: </label>
+                                            <input type="text" name="user_firstname" value = "<?= set_value("user_firstname", $userDetails->user_firstname); ?>"  class="form-control <?php if (!empty(form_error("user_firstname"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('user_firstname') ?></div>
+                                        </div>
+                                        <div class="form-group col-md-6 <?php if (!empty(form_error("user_lastname"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="user_lastname">Lastname: </label>
+                                            <input type="text" name="user_lastname" value = "<?= set_value("user_lastname", $userDetails->user_lastname); ?>" class="form-control <?php if (!empty(form_error("user_lastname"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('user_lastname') ?></div>
                                         </div>
                                     </div>
-                                </h5>
-                                <h5>
-                                    <div class="col-sm-6 pull-left" >
-                                        <br>
-                                        Birthday:
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <legend>Gender:</legend>
+                                    <div class="form-check">
+
+                                        <label class="form-check-label col-md-3">
+                                            <input name="user_sex" type="radio" id="user_sex" class = "form-check-label" value ="Male" <?= $userDetails->user_sex == "Male" ? "checked = \"\"" : "" ?>/>
+                                            Male
+                                        </label>
+                                        <label class="form-check-label col-md-3" >
+                                            <input name="user_sex" type="radio" id="user_sex" class = "form-check-label" value ="Female" <?= $userDetails->user_sex == "Female" ? "checked = \"\"" : "" ?>/>
+                                            Female
+                                        </label>
                                     </div>
-                                    <div class="col-sm-6 pull-right" id="user_info" >
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="user_bday" class="form_datetime form-control" value="<?= set_value("user_bday", date("F d, Y", $userDetails->user_bday)); ?>" style="margin-top:10px;">
-                                            </div>    
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <legend>Birthday:</legend>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="user_bday" class="form_datetime form-control" value="<?= set_value("user_bday", date("F d, Y", $userDetails->user_bday)); ?>" style="margin-top:10px;">
+                                        </div>    
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <legend>Address:</legend>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-8 <?php if (!empty(form_error("user_address"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="user_address">Address: </label>
+                                            <input type="text" name="user_address" value = "<?= set_value("user_address", $userDetails->user_address); ?>" class="form-control <?php if (!empty(form_error("user_address"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('user_address') ?></div>
+                                        </div>
+                                        <div class="form-group col-md-4 <?php if (!empty(form_error("user_brgy"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="user_brgy">Barangay: </label>
+                                            <input type="text" name="user_brgy" value = "<?= set_value("user_brgy", $userDetails->user_brgy); ?>" class="form-control <?php if (!empty(form_error("user_brgy"))): ?>is-invalid<?php else: ?><?php endif; ?>">
+                                            <div class="invalid-feedback"><?= form_error('user_brgy') ?></div>
+                                        </div>
+                                        <div class="form-group col-md-6 <?php if (!empty(form_error("user_city"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                            <label for="user_city">City: </label>
+                                            <input type="text" name="user_city" value = "<?= set_value("user_city", $userDetails->user_city); ?>" class="form-control <?php if (!empty(form_error("user_city"))): ?>is-invalid<?php else: ?><?php endif; ?>" >
+                                            <div class="invalid-feedback"><?= form_error('user_city') ?></div>
                                         </div>
                                     </div>
-                                </h5>
-                                <h5>
-                                    <div class="col-sm-6 pull-left" >
-                                        <br>
-                                        Address:
-                                    </div>
-                                    <div class="col-sm-6 pull-right" id="user_info" >
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="user_address">Address: </label>
-                                                <input type="text" name="user_address" value = "<?= set_value("user_address", $userDetails->user_address); ?>" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="user_brgy">Barangay: </label>
-                                                <input type="text" name="user_brgy" value = "<?= set_value("user_brgy", $userDetails->user_brgy); ?>" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="user_city">City: </label>
-                                                <input type="text" name="user_city" value = "<?= set_value("user_city", $userDetails->user_city); ?>" class="form-control" >
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
-                                    </div>
-                                </h5>
+                                </fieldset>
+
+                                <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary  pull-left" id = "btnReset_edit">Reset</button>
+
                             </form>
                         </div>
                     </div>
@@ -121,80 +110,64 @@ Edit Profile
                     <hr class="my-3">
                 </div>
                 <div class="row container">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <form method="POST" action = "<?= base_url() ?>Profile/edit_loginInfo_submit/" >
-
-                            <h5>
-                                <div class="col-sm-6 pull-left" >
-                                    <br>
-                                    Username:
+                            <fieldset class="form-group">
+                                <legend>Username:</legend>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <input type="text" name="user_username" class="form-control" value="<?= set_value("user_username", $userDetails->user_username); ?>" style="margin-top:10px;">
+                                    </div>    
                                 </div>
-                                <div class="col-sm-6 pull-right" id="user_info" >
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <input type="text" name="user_username" class="form-control" value="<?= set_value("user_username", $userDetails->user_username); ?>" style="margin-top:10px;">
-                                        </div>    
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend>Password:</legend>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+
+                                        <label for="user_password">New Password: </label>
+                                        <input type="password" name="user_password"   class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="user_conpassword">Confirm Password: </label>
+                                        <input type="password" name="user_conpassword" class="form-control">
                                     </div>
                                 </div>
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    <br><br>
-                                    Password:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-
-                                            <label for="user_password">Password: </label>
-                                            <input type="password" name="user_password"   class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="user_conpassword">Confirm Password: </label>
-                                            <input type="password" name="user_conpassword" class="form-control">
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
-                                </div> 
-                            </h5>
+                            </fieldset>
+                            <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary  pull-left" id = "btnReset_edit">Reset</button>
                         </form>
                     </div>
                 </div>
-            </div><br><br>
+            </div>
             <div class="row container">
-                <div class="col-md-12">
+
+                <div class="col-md-12"><br><br>
                     <h5><i class="fa fa-address-book"></i> Contact Information</h5>
                     <hr class="my-3">
                 </div>
                 <div class="row container">
                     <div class="col-md-12">
-                        <h5>
-                            <div class="col-sm-6 pull-left" >
-                                <br>
-                                Phone Number:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info" >
+                        <form method="POST" action="">
+                            <fieldset class="form-group">
+                                <legend>Phone Number:</legend>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <input type="text" name="user_contact_no" class="form-control" value="<?= set_value("user_contact_no", $userDetails->user_contact_no); ?>" style="margin-top:10px;">
                                     </div>    
                                 </div>
-                            </div>
-                        </h5>
-                        <h5>
-                            <div class="col-sm-6 pull-left" >
-                                <br>
-                                Email Address:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info" >
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend>Email Address:</legend>
                                 <div class="form-row">
-                                    <div class="form-group col-md-7">
+                                    <div class="form-group col-md-6">
                                         <input type="email" name="user_email" class="form-control" value="<?= set_value("user_email", $userDetails->user_email); ?>" style="margin-top:10px;">
                                     </div>    
                                 </div>
-                            </div>
-                        </h5>
+                            </fieldset>
+                            <button type="submit" class = "btn btn-outline-success pull-right">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary  pull-left" id = "btnReset_edit">Reset</button>
+                        </form>
                     </div>
 
                 </div>

@@ -31,8 +31,8 @@ class ManageUser extends CI_Controller {
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
             'title' => "Manage Users",
-            'users' => $this->ManageUsers_model->get_users("user", array("user_access"=>"User")),
-            'user_last_update' => $this->ManageUsers_model->get_recent_timestamp("user", array("user_access"=>"User"), "user_added_at"),
+            'users' => $this->ManageUsers_model->get_users("user"),
+            'user_last_update' => $this->ManageUsers_model->get_recent_timestamp("user", NULL, "user_added_at"),
             //NAV INFO
             'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
@@ -52,6 +52,7 @@ class ManageUser extends CI_Controller {
     public function activate_user(){
         $user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("activate_user")))[0];
         if($this->ManageUsers_model->activate_user("user", array("user_id" => $this->session->userdata("activate_user")))){
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Activated ".$user->user_firstname." ".$user->user_lastname."'s account.");
             $this->session->set_flashdata("activation_success", "Successfully activated ".$user->user_firstname." ".$user->user_lastname."'s account.");
         }else{
             $this->session->set_flashdata("activation_fail", "Something went wrong while activating ".$user->user_firstname." ".$user->user_lastname."'s account.");
@@ -68,6 +69,7 @@ class ManageUser extends CI_Controller {
     public function deactivate_user(){
         $user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("deactivate_user")))[0];
         if($this->ManageUsers_model->deactivate_user("user", array("user_id" => $this->session->userdata("deactivate_user")))){
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Deactivated ".$user->user_firstname." ".$user->user_lastname."'s account.");
             $this->session->set_flashdata("activation_success", "Successfully deactivated ".$user->user_firstname." ".$user->user_lastname."'s account.");
         }else{
             $this->session->set_flashdata("activation_fail", "Something went wrong while deactivating ".$user->user_firstname." ".$user->user_lastname."'s account.");
@@ -81,6 +83,7 @@ class ManageUser extends CI_Controller {
         redirect(base_url()."ManageUser/show_user_info");
     }
     public function show_user_info(){
+        
         $selected_user = $this->ManageUsers_model->get_user_info("user", array("user_id" => $this->session->userdata("show_user_info")))[0];
         $user_transaction = $this->ManageUsers_model->get_user_transactions(array("transaction.user_id" => $this->session->userdata("show_user_info")));
         $user_pet = $this->ManageUsers_model->get_user_pets(array("adoption.user_id" => $this->session->userdata("show_user_info")));

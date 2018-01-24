@@ -33,6 +33,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Status</th>
+                        <th>Access</th>
                         <th>Added at</th>
                         <th>Action</th>
                     </tr>
@@ -40,43 +41,44 @@
                 <tbody>
                     <?php foreach ($admins as $admin): ?>
                         <tr>
-                            <td><?= $admin->user_firstname . " " . $admin->user_lastname ?></td>
-                            <td><?= $admin->user_status == 1? "Active" : "Inactive" ; ?></td>
-                            <td><?= date('F d, Y \a\t h:m A', $admin->user_added_at); ?></td>
+                            <td><?= $admin->admin_firstname . " " . $admin->admin_lastname ?></td>
+                            <td><?= $admin->admin_status == 1? "Active" : "Inactive" ; ?></td>
+                            <td><?= $admin->admin_access == "Subadmin"? "PAWS Officer" : "Administrator" ; ?></td>
+                            <td><?= date('F d, Y \a\t h:m A', $admin->admin_added_at); ?></td>
                             <td>
                                 <center>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href = "<?= base_url()?>ManageOfficer/show_officer_info_exec/<?= $admin->user_id?>" class = "btn btn-outline-primary">Show Information</a>
-                                        <a href = "<?= base_url()?>ManageOfficer/manage_module_exec/<?= $admin->user_id?>" class = "btn btn-outline-primary">Modules</a>
-                                        <a href = "#" class = "btn btn-outline-primary" style = "width:100px;" data-toggle="modal" data-target="#activate_officer_<?= $admin->user_id?>">
-                                            <?= $admin->user_status == 0 ? "Activate" : "Deactivate";?>
+                                        <a href = "<?= base_url()?>ManageOfficer/show_officer_info_exec/<?= $admin->admin_id?>" class = "btn btn-outline-primary">Show Information</a>
+                                        <a href = "<?= base_url()?>ManageOfficer/manage_module_exec/<?= $admin->admin_id?>" class = "btn btn-outline-primary">Modules</a>
+                                        <a href = "#" class = "btn btn-outline-primary" style = "width:100px;" data-toggle="modal" data-target="#activate_officer_<?= $admin->admin_id?>">
+                                            <?= $admin->admin_status == 0 ? "Activate" : "Deactivate";?>
                                         </a>
                                     </div>
                                 </center>
                             </td>
                         </tr>
-                        <div class="modal fade" id="activate_officer_<?= $admin->user_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="activate_officer_<?= $admin->admin_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><?= $admin->user_status == 0 ? "Activate" : "Deactivate";?> Officer</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel"><?= $admin->admin_status == 0 ? "Activate" : "Deactivate";?> Officer</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <?php if($admin->user_status == 0):?>
-                                            Once you activate this officer's account, <?= $admin->user_sex == "Male"? "he" : "she";?> will be able to log into the system.
+                                        <?php if($admin->admin_status == 0):?>
+                                            Once you activate this officer's account, <?= $admin->admin_sex == "Male"? "he" : "she";?> will be able to log into the system.
                                         <?php else:?>
-                                            Once you deactivate this officer's account, <?= $admin->user_sex == "Male"? "he" : "she";?> will no longer be able to log into the system.
+                                            Once you deactivate this officer's account, <?= $admin->admin_sex == "Male"? "he" : "she";?> will no longer be able to log into the system.
                                         <?php endif;?>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal" style = "cursor: pointer;">Cancel</button>
-                                        <?php if($admin->user_status == 0):?>
-                                        <a class="btn btn-primary" href="<?= base_url()?>ManageOfficer/activate_officer_exec/<?= $admin->user_id?>">Activate</a>
+                                        <?php if($admin->admin_status == 0):?>
+                                        <a class="btn btn-primary" href="<?= base_url()?>ManageOfficer/activate_officer_exec/<?= $admin->admin_id?>">Activate</a>
                                         <?php else:?>
-                                        <a class="btn btn-primary" href="<?= base_url()?>ManageOfficer/deactivate_officer_exec/<?= $admin->user_id?>">Deactivate</a>
+                                        <a class="btn btn-primary" href="<?= base_url()?>ManageOfficer/deactivate_officer_exec/<?= $admin->admin_id?>">Deactivate</a>
                                         <?php endif;?>
                                     </div>
                                 </div>

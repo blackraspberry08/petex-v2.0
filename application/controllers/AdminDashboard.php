@@ -35,8 +35,8 @@ class AdminDashboard extends CI_Controller {
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
             'title' => "Dashboard",
-            'trails' => $this->AuditTrail_model->get_audit_trail("event", "user", "event.user_id = user.user_id", array("event_classification" => "trail")),
-            'logs' => $this->UserLogs_model->get_userlogs("event", "user", "event.user_id = user.user_id", array("event_classification" => "log")),
+            'trails' => $this->AuditTrail_model->get_audit_trail("event", "admin", "event.admin_id = admin.admin_id","user", "event.user_id = user.user_id", array("event_classification" => "trail")),
+            'logs' => $this->UserLogs_model->get_userlogs("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "log")),
             //NAV INFO
             'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,

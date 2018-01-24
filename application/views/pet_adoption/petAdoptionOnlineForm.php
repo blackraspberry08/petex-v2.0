@@ -93,7 +93,7 @@ Pet Adoption
                             <br>
                             <div class="col-sm-6" style="margin-bottom:10px;">
                                 <img src = "<?= base_url() . $pet->pet_picture; ?>" class ="img-thumbnail center-cropped img-fluid mx-auto d-block">
-                            </div><
+                            </div>
                             <div class = "col-sm-12">
                                 <div class = "row">
                                     <div class="form-group col-sm-6">
@@ -152,13 +152,13 @@ Pet Adoption
 
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="interested" type="radio" id="interested_cat" class = "form-check-label" value ="Cat" <?= $pet->pet_specie == "feline" ? "checked = \"\"" : "" ?>/>
+                                        <input name="interested" type="radio" id="interested_cat"  class = "form-check-label" value ="Cat" <?= $pet->pet_specie == "Feline" ? "checked = \"\"" : "" ?>/>
                                         Cat
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="interested" type="radio" id="interested_dog" class = "with-gap" value ="Dog" <?= $pet->pet_specie == "canine" ? "checked = \"\"" : "" ?>/>
+                                        <input name="interested" type="radio" id="interested_dog" class = "with-gap" value ="Dog" <?= $pet->pet_specie == "Canine" ? "checked = \"\"" : "" ?>/>
                                         Dog
                                     </label>
                                 </div>
@@ -167,25 +167,25 @@ Pet Adoption
                                 <span>Size: </span>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="small" value ="S" class = "with-gap" <?= $pet->pet_size == "small" ? "checked = \"\"" : "" ?> />
+                                        <input name="size" type="radio" id="small" value ="S" class = "with-gap" <?= $pet->pet_size == "S" ? "checked = \"\"" : "" ?> />
                                         S
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="medium" value ="M" class = "with-gap" <?= $pet->pet_size == "medium" ? "checked = \"\"" : "" ?>  />
+                                        <input name="size" type="radio" id="medium" value ="M" class = "with-gap" <?= $pet->pet_size == "M" ? "checked = \"\"" : "" ?>  />
                                         M
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="large" value ="L" class = "with-gap" <?= $pet->pet_size == "large" ? "checked = \"\"" : "" ?>  />
+                                        <input name="size" type="radio" id="large" value ="L" class = "with-gap" <?= $pet->pet_size == "L" ? "checked = \"\"" : "" ?>  />
                                         L
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="xlarge" value ="XL" class = "with-gap" <?= $pet->pet_size == "xlarge" ? "checked = \"\"" : "" ?>  />
+                                        <input name="size" type="radio" id="xlarge" value ="XL" class = "with-gap" <?= $pet->pet_size == "XL" ? "checked = \"\"" : "" ?>  />
                                         XL
                                     </label>
                                 </div>
@@ -215,13 +215,13 @@ Pet Adoption
                                 <span>2.) Have you adopted from PAWS/PARC atleast once before?</span>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num2yes" name = "num2" value ="Yes" class = "with-gap num2"/>
+                                        <input type="radio" id="num2yes" name = "num2" value ="Yes" class = "with-gap num2" checked="" />
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num2no" name = "num2" value ="No"  class = "with-gap num2"/>
+                                        <input type="radio" id="num2no" name = "num2" value ="No"  class = "with-gap num2" checked="" />
                                         No
                                     </label>
                                 </div>
@@ -234,7 +234,7 @@ Pet Adoption
                                     <div class="form-check col-sm-12">
                                         <span>What animal?</span><br>
                                         <label class="form-check-label">
-                                            <input type="radio" id="num2HiddenDog" value ="Dog" name = "num2ifYesSpecie" class = "with-gap rdbutton"/>
+                                            <input type="radio" id="num2HiddenDog" value ="Dog" name = "num2ifYesSpecie" class = "with-gap rdbutton" checked=""/>
                                             Cat
                                         </label>
                                     </div>
@@ -254,7 +254,7 @@ Pet Adoption
                                     <div class="col-sm-4">
                                         <div class="form-check ">
                                             <label class="form-check-label">
-                                                <input type="radio" id="house" value ="House" name = "num3" class="with-gap num3"/>
+                                                <input type="radio" id="house" value ="House" name = "num3" class="with-gap num3" checked="" />
                                                 House
                                             </label>
                                         </div>
@@ -311,7 +311,7 @@ Pet Adoption
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num4no" value ="No" name = "num4" class = "with-gap num4"/>
+                                        <input type="radio" id="num4no" value ="No" name = "num4" class = "with-gap num4" checked=""/>
                                         No
                                     </label>
                                 </div>
@@ -343,7 +343,7 @@ Pet Adoption
                                     <div class="col-sm-4">
                                         <div class="form-check ">
                                             <label class="form-check-label">
-                                                <input type="radio" id="parents" value ="Parents" name = "num5" class="with-gap num5"/>
+                                                <input type="radio" id="parents" value ="Parents" name = "num5" class="with-gap num5" checked=""/>
                                                 Parents
                                             </label>
                                         </div>
@@ -404,7 +404,7 @@ Pet Adoption
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num6no" value ="No" name = "num6"  class = "with-gap num6"/>
+                                        <input type="radio" id="num6no" value ="No" name = "num6"  class = "with-gap num6" checked=""/>
                                         No
                                     </label>
                                 </div>
@@ -425,7 +425,7 @@ Pet Adoption
                                     <div class="col-sm-5">
                                         <div class="form-check ">
                                             <label class="form-check-label">
-                                                <input type="radio" id="myself" value ="for myself" name = "num7" class = "with-gap num7"/>
+                                                <input type="radio" id="myself" value ="for myself" name = "num7" class = "with-gap num7" checked=""/>
                                                 for myself
                                             </label>
                                         </div>
@@ -464,7 +464,7 @@ Pet Adoption
                                 <span>8.) Will the whole family share in the care in the care of animal??</span>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num8yes" value ="Yes" name = "num8" class = "with-gap num8"/>
+                                        <input type="radio" id="num8yes" value ="Yes" name = "num8" class = "with-gap num8" checked=""/>
                                         Yes
                                     </label>
                                 </div>
@@ -487,7 +487,7 @@ Pet Adoption
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio"id="num9no" value ="No" name = "num9" class = "with-gap num9"/>
+                                        <input type="radio"id="num9no" value ="No" name = "num9" class = "with-gap num9" checked=""/>
                                         No
                                     </label>
                                 </div>
@@ -510,7 +510,7 @@ Pet Adoption
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio"id="num10no" value ="No" name = "num10" class = "with-gap num10"/>
+                                        <input type="radio"id="num10no" value ="No" name = "num10" class = "with-gap num10" checked=""/>
                                         No
                                     </label>
                                 </div>
@@ -535,7 +535,7 @@ Pet Adoption
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num11no" value ="No" name = "num11" class = "with-gap num11"/>
+                                        <input type="radio" id="num11no" value ="No" name = "num11" class = "with-gap num11" checked=""/>
                                         No
                                     </label>
                                 </div>
@@ -552,13 +552,13 @@ Pet Adoption
                                 <span>12.) Are any members of your household allergic to cats/dogs?</span><br>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio"id="num12yes" value ="Yes"  name = "num12" class = "with-gap num12"/>
+                                        <input type="radio"id="num12yes" value ="Yes" name = "num12" class = "with-gap num12"/>
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio"id="num12no" value ="No"  name = "num12" class = "with-gap num12"/>
+                                        <input type="radio"id="num12no" value ="No"  name = "num12" class = "with-gap num12" checked=""/>
                                         No
                                     </label>
                                 </div> 
@@ -597,7 +597,7 @@ Pet Adoption
                                 <span>17.) Do you have regular veterinarian?</span><br>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num17yes" value ="Yes" name = "num17" class = "with-gap num17"/>
+                                        <input type="radio" id="num17yes" value ="Yes" name = "num17" class = "with-gap num17" checked=""/>
                                         Yes
                                     </label>
                                 </div>
@@ -626,7 +626,7 @@ Pet Adoption
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio"id="num18no" value ="No" name = "num18" class = "with-gap num18"/>
+                                        <input type="radio"id="num18no" value ="No" name = "num18" class = "with-gap num18" checked=""/>
                                         No
                                     </label>
                                 </div> 
@@ -636,7 +636,7 @@ Pet Adoption
                                             <br><span>What animal?</span>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                    <input type="radio" value ="Dog" id="num18HiddenDog" name = "num18animal" class = "with-gap "/>
+                                                    <input type="radio" value ="Dog" id="num18HiddenDog" name = "num18animal" class = "with-gap " checked=""/>
                                                     Dog
                                                 </label>
                                             </div>
@@ -656,7 +656,7 @@ Pet Adoption
                                 <span>19.) What part of your house do you want this animal to stay?</span><br> 
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="inside" value ="Inside only" name = "num19" class = "with-gap"/>
+                                        <input type="radio" id="inside" value ="Inside only" name = "num19" class = "with-gap" checked=""/>
                                         Inside only
                                     </label>
                                 </div>
@@ -689,7 +689,7 @@ Pet Adoption
                                 </div> 
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio"id="num21no" value ="No" name = "num21" class = "with-gap num21"/>
+                                        <input type="radio"id="num21no" value ="No" name = "num21" class = "with-gap num21"checked=""/>
                                         No
                                     </label>
                                 </div> 
@@ -717,7 +717,7 @@ Pet Adoption
                                 <span>22.) If adopting a dog, does fencing completely enclose the yard?</span><br>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num22yes" value ="Yes" name = "num22" class = "with-gap num22"/>
+                                        <input type="radio" id="num22yes" value ="Yes" name = "num22" class = "with-gap num22" checked=""/>
                                         Yes
                                     </label>
                                 </div> 
@@ -744,7 +744,7 @@ Pet Adoption
                                     <div class="col-sm-6">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" value ="Inside house" id="insidehouse" name = "num23" class = "with-gap num23"/>
+                                                <input type="radio" value ="Inside house" id="insidehouse" name = "num23" class = "with-gap num23" checked=""/>
                                                 Inside house
                                             </label>
                                         </div> 

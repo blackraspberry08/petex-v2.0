@@ -102,6 +102,7 @@ class AdminProfile extends CI_Controller {
         if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
             //SUCCESS
             $this->session->set_flashdata("uploading_success", "Successfully update the image");
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated his profile picture");
         } else {
             
         }
@@ -124,6 +125,7 @@ class AdminProfile extends CI_Controller {
         if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
             //SUCCESS
             $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $userDetails->user_lastname);
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated his personal information");
         } else {
             $this->session->set_flashdata("uploading_fail2", $userDetails->user_lastname . " seems to not exist in the database.");
         }
@@ -142,6 +144,7 @@ class AdminProfile extends CI_Controller {
             if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
                 //SUCCESS
                 $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $userDetails->admin_lastname);
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated his login information");
             } else {
                 $this->session->set_flashdata("uploading_fail2", $userDetails->admin_lastname . " seems to not exist in the database.");
             }
@@ -155,6 +158,8 @@ class AdminProfile extends CI_Controller {
             if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
                 //SUCCESS
                 $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $userDetails->admin_lastname);
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated his login information");
+                
             } else {
                 $this->session->set_flashdata("uploading_fail2", $userDetails->admin_lastname . " seems to not exist in the database.");
             }
