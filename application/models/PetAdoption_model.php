@@ -54,16 +54,13 @@ class PetAdoption_model extends CI_Model {
         $on = "progress.checklist_id = checklist.checklist_id";
         $join2 = "transaction";
         $on2 = "progress.transaction_id = transaction.transaction_id";
-        $join3 = "admin";
-        $on3 = "progress.admin_id = admin.admin_id";
-        $join4 = "pet";
-        $on4 = "transaction.pet_id = pet.pet_id";
+        $join3 = "pet";
+        $on3 = "transaction.pet_id = pet.pet_id";
         $this->db->where(array("transaction_isFinished" => 0));
         $this->db->where(array("transaction_isActivated" => 1));
         $this->db->join($join, $on, "left outer");
         $this->db->join($join2, $on2, "left outer");
         $this->db->join($join3, $on3, "left outer");
-        $this->db->join($join4, $on4, "left outer");
         if (!empty($where)) {
             $this->db->where($where);
         }
@@ -77,6 +74,16 @@ class PetAdoption_model extends CI_Model {
         }
         $query = $this->db->get($table);
         return ($query->num_rows() > 0) ? $query->result() : false;
+    }
+
+    public function insert($table, $data) {
+        $this->db->insert_batch($table, $data);
+        return $this->db->affected_rows();
+    }
+
+    public function singleinsert($table, $data) {
+        $this->db->insert($table, $data);
+        return $this->db->affected_rows();
     }
 
 }
