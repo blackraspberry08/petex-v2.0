@@ -143,14 +143,16 @@ class Schedules extends CI_Controller {
                 "schedule_desc" => $this->input->post('schedule_desc'),
                 "schedule_color" => $this->input->post('schedule_color'),
             );
-            $this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")));
-            
-            echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
+            if($this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")))){
+                echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
+            }else{
+                echo json_encode(array('success' => false, 'result' => 'Something went wrong while updating the event.'));
+            }
         }
     }
 
     public function deletereserve() {
-        $this->admin_model->delete("schedule", array("schedule_id" => $this->input->post("schedule_id")));
+        $this->Schedules_model->delete_sched($this->input->post("schedule_id"));
         echo json_encode(array('success' => true, 'result' => "Success"));
     }
 }
