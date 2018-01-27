@@ -47,6 +47,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
     <script src="<?= base_url() ?>assets/admin/js/sb-admin-counter.js"></script>
+    <!-- Full Calendar -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.min.js"></script>
     <!-- Bootstrap Switch -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
     <script>
@@ -71,6 +74,7 @@
                 todayBtn: true,
                 autoclose: true,
                 minView: 2,      
+                startView: 2,      
             });
             $('.form_datetime').datetimepicker('setEndDate', dt);
         });

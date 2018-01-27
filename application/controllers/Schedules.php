@@ -31,6 +31,19 @@ class Schedules extends CI_Controller {
         }
     }
     
+    //CALLBACKS
+    public function is_larger_than_startdate($str){
+        $unix_start = strtotime($this->input->post("event_startdate")." ".$this->input->post("event_starttime"));
+        $unix_end = strtotime($this->input->post("event_enddate")." ".$this->input->post("event_endtime"));
+        if ($unix_start > $unix_end){
+            $this->form_validation->set_message('is_larger_than_startdate', 'The {field} must be larger than the start date/time');
+            return FALSE;
+        }
+        else{
+            return TRUE;
+        }
+    }
+    
     public function index(){
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
@@ -49,30 +62,36 @@ class Schedules extends CI_Controller {
     public function getscheds() {
         $query = $this->db->query("SELECT * FROM schedule");
         $result = $query->result_array();
+        $res = array();
         foreach ($result as $key => $arr) {
-            $result[$key]['title'] = $arr['schedule_title'];
-            $result[$key]['description'] = $arr['schedule_desc'];
-            $result[$key]['color'] = $arr['schedule_color'];
-            $result[$key]['start'] = date("Y-m-d H:i:s", $arr['schedule_startdate']);
-            $result[$key]['end'] = date("Y-m-d H:i:s", $arr['schedule_enddate']);
+            $res[$key]["schedule_id"]   = $arr['schedule_id'];
+            $res[$key]["user_id"]       = $arr['user_id'];
+            $res[$key]["admin_id"]       = $arr['admin_id'];
+            $res[$key]["title"]         = $arr['schedule_title'];
+            $res[$key]["color"]         = $arr['schedule_color'];
+            $res[$key]["start"]         = date("Y-m-d H:i:s", $arr['schedule_startdate']);
+            $res[$key]["end"]           = date("Y-m-d H:i:s", $arr['schedule_enddate']);
+            $res[$key]["description"]   = $arr['schedule_desc'];
         }
-        echo json_encode($result);
+
+        echo json_encode($res);
     }
 
     public function getsched() {
-        $query = $this->db->query("SELECT * FROM schedule where schedule_id = " . $this->input->post("id"));
+        $query = $this->db->query("SELECT * FROM schedule WHERE schedule_id = " . $this->input->post("id"));
         $result = $query->result_array();
+        $res = array();
         foreach ($result as $key => $arr) {
-            $result[$key]['schedule_id'] = $arr['schedule_id'];
-            $result[$key]['schedule_title'] = $arr['schedule_title'];
-            $result[$key]['schedule_desc'] = $arr['schedule_desc'];
-            $result[$key]['schedule_color'] = $arr['schedule_color'];
-            $result[$key]['schedule_startdate'] = date("F d, Y", $arr['schedule_startdate']);
-            $result[$key]['schedule_starttime'] = date("h:iA", $arr['schedule_startdate']);
-            $result[$key]['schedule_enddate'] = date("F d, Y", $arr['schedule_enddate']);
-            $result[$key]['schedule_endtime'] = date("h:iA", $arr['schedule_enddate']);
+            $res[$key]['id']             = $arr['schedule_id'];
+            $res[$key]['title']          = $arr['schedule_title'];
+            $res[$key]['color']          = $arr['schedule_color'];
+            $res[$key]['startdate']      = date("F d, Y", $arr['schedule_startdate']);
+            $res[$key]['starttime']      = date("h:i A", $arr['schedule_startdate']);
+            $res[$key]['enddate']        = date("F d, Y", $arr['schedule_enddate']);
+            $res[$key]['endtime']        = date("h:i A", $arr['schedule_enddate']);
+            $res[$key]['description']    = $arr['schedule_desc'];
         }
-        echo json_encode($result);
+        echo json_encode($res);
     }
 
     public function setreserve() {
@@ -81,74 +100,57 @@ class Schedules extends CI_Controller {
         $this->form_validation->set_rules('schedule_enddate', "End Date", "required");
         $this->form_validation->set_rules('schedule_endtime', "End Time", "required");
         $this->form_validation->set_rules('schedule_title', "Title", "required");
+        
         if ($this->form_validation->run() == FALSE) {
-            echo json_encode(array('success' => false, 'result' => 'Some of the fields is wrong!'));
+            //IF THERE ARE ERRORS IN FORMS
+            echo json_encode(array('success' => false, 'result' => "There are errors in your form. Please check the fields."));
         } else {
+            //IF FORMS ARE VALID
             $startdate = strtotime($this->input->post('schedule_startdate') . " " . $this->input->post('schedule_starttime'));
             $enddate = strtotime($this->input->post('schedule_enddate') . " " . $this->input->post('schedule_endtime'));
-            if ($this->admin_model->fetch("schedule", array("schedule_startdate" => strtotime($this->input->post('schedule_startdate') . " " . $this->input->post('schedule_starttime'))))) {
+            
+            if ($this->Schedules_model->fetchSched(array("schedule_startdate" => $startdate))) {
+                //IF STARTDATE IS ALREADY EXISTING
                 echo json_encode(array('success' => false, 'result' => 'There is an existing schedule already!'));
             } else {
-                $data = array(
-                    "schedule_title" => $this->input->post('schedule_title'),
-                    "schedule_desc" => $this->input->post('schedule_desc'),
-                    "schedule_color" => $this->input->post('schedule_color'),
-                    "schedule_startdate" => $startdate,
-                    "schedule_enddate" => $enddate
-                );
-                $this->admin_model->singleinsert("schedule", $data);
-                $log = array(
-                    "user_id" => $this->session->userdata("userid"),
-                    "event_description" => "Added a schedule named ".$data["schedule_title"],
-                    "event_classification" => "audit",
-                    "event_added_at" => time()
-                );
-                $this->putToEvents($log);
-                echo json_encode(array('success' => true, 'result' => 'Success'));
+                //IF STARTDATE IS UNIQUE
+                if($startdate > $enddate){
+                    echo json_encode(array('success' => false, 'result' => 'Start Date/Time is ahead of End Date/Time'));
+                }else{
+                    $data = array(
+                        "admin_id" => $this->session->userdata("current_user")->admin_id,
+                        "schedule_title" => $this->input->post('schedule_title'),
+                        "schedule_desc" => $this->input->post('schedule_desc'),
+                        "schedule_color" => $this->input->post('schedule_color'),
+                        "schedule_startdate" => $startdate,
+                        "schedule_enddate" => $enddate
+                    );
+                    $this->Schedules_model->add_schedule($data);
+
+                    echo json_encode(array('success' => true, 'result' => 'Success'));
+                }
             }
         }
     }
 
     public function updatereserve() {
-        $this->form_validation->set_rules('schedule_startdate', "Start Date", "required");
-        $this->form_validation->set_rules('schedule_starttime', "Start Time", "required");
-        $this->form_validation->set_rules('schedule_enddate', "End Date", "required");
-        $this->form_validation->set_rules('schedule_endtime', "End Time", "required");
         $this->form_validation->set_rules('schedule_title', "Title", "required");
         if ($this->form_validation->run() == FALSE) {
-            echo json_encode(array('success' => false, 'result' => 'Some of the fields is wrong!'));
+            echo json_encode(array('success' => false, 'result' => 'Fill up the necessary fields.'));
         } else {
-            $startdate = strtotime($this->input->post('schedule_startdate') . " " . $this->input->post('schedule_starttime'));
-            $enddate = strtotime($this->input->post('schedule_enddate') . " " . $this->input->post('schedule_endtime'));
             $data = array(
                 "schedule_title" => $this->input->post('schedule_title'),
                 "schedule_desc" => $this->input->post('schedule_desc'),
                 "schedule_color" => $this->input->post('schedule_color'),
-                "schedule_startdate" => $startdate,
-                "schedule_enddate" => $enddate
             );
-            $this->admin_model->update("schedule", $data, array("schedule_id" => $this->input->post("schedule_id")));
-            $log = array(
-                    "user_id" => $this->session->userdata("userid"),
-                    "event_description" => "Edited a schedule named ".$data["schedule_title"],
-                    "event_classification" => "audit",
-                    "event_added_at" => time()
-                );
-                $this->putToEvents($log);
-            echo json_encode(array('success' => true, 'result' => "Success"));
+            $this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")));
+            
+            echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
         }
     }
 
     public function deletereserve() {
         $this->admin_model->delete("schedule", array("schedule_id" => $this->input->post("schedule_id")));
-        $selectedSched = $this->admin_model->fetch("schedule", array("schedule_id" => $this->input->post("schedule_id"))); 
-        $log = array(
-            "user_id" => $this->session->userdata("userid"),
-            "event_description" => "Removed a schedule named ".$selectedSched->schedule_title,
-            "event_classification" => "audit",
-            "event_added_at" => time()
-        );
-        $this->putToEvents($log);
         echo json_encode(array('success' => true, 'result' => "Success"));
     }
 }
