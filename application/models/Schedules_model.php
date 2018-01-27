@@ -19,4 +19,9 @@ class Schedules_model extends CI_Model {
         $this->db->update("schedule", $data);
         return $this->db->affected_rows();
     }
+    public function delete_sched($id){
+        $this->db->where(array("schedule_id" => $id));
+        $this->db->delete("schedule");
+        return $this->db->affected_rows();
+    }
 }

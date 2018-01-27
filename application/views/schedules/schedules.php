@@ -57,7 +57,7 @@
                         $('#event_startdate').val(date.format("MMMM D, YYYY")).css("pointer-events", "auto").removeAttr("tabindex");
                         $('#event_starttime').val(moment().format("h:mm A")).css("pointer-events", "auto").removeAttr("tabindex");
                         $('#event_title').val("");
-                        $('#event_desc').val("");
+                        $('#event_description').val("");
                         $('#event_enddate').val("").css("pointer-events", "auto").removeAttr("tabindex");
                         $('#event_endtime').val("").css("pointer-events", "auto").removeAttr("tabindex");
                         $('#sendReq').css({"display": "inline-block"});
@@ -74,7 +74,7 @@
                     $('#customEvent').modal('show');
                     $('#event_startdate').val(date.format("MMMM D, YYYY")).css("pointer-events", "auto").removeAttr("tabindex");
                     $('#event_title').val("");
-                    $('#event_desc').val("");
+                    $('#event_description').val("");
                     $('#event_starttime').val("").css("pointer-events", "auto").removeAttr("tabindex");
                     $('#event_enddate').val("").css("pointer-events", "auto").removeAttr("tabindex");
                     $('#event_endtime').val("").css("pointer-events", "auto").removeAttr("tabindex");
@@ -94,6 +94,11 @@
                     },
                     success: function (res) {
                         $('#customEvent').modal('show');
+                        $('#event_title').val("");
+                        $('#event_description').val("");
+                        $('#event_starttime').val("");
+                        $('#event_enddate').val("");
+                        $('#event_endtime').val("");
                         $('#event_id').val(res[0].id);
                         $('#event_startdate').val(res[0].startdate).css("pointer-events", "none").attr("tabindex", "-1");
                         $('#event_starttime').val(res[0].starttime).css("pointer-events", "none").attr("tabindex", "-1");
@@ -224,7 +229,6 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        //console.log(res);
                         location.reload();
                     } else {
                         alert(res.result);
@@ -242,14 +246,7 @@
                 "url": "<?= base_url() ?>" + "Schedules/deletereserve/",
                 "dataType": "JSON",
                 "data": {
-                    'schedule_id': $("#event_id").val(),
-                    'schedule_title': $("#event_name").val(),
-                    'schedule_desc': $("#event_description").val(),
-                    'schedule_color': $("#event_color").val(),
-                    'schedule_startdate': $("#event_startDate").val(),
-                    'schedule_starttime': $("#event_startTime").val(),
-                    'schedule_enddate': $("#event_endDate").val(),
-                    'schedule_endtime': $("#event_endTime").val()
+                    'schedule_id': $("#event_id").val()
                 },
                 success: function (res) {
                     if (res.success) {
