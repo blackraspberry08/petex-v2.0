@@ -31,10 +31,8 @@
    <link href="<?= base_url() ?>assets/animate/animate.min.css" rel="stylesheet">
    <!-- Full Calendar -->
    <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.css">
-   <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.print.min.css">
-   <!-- Full Calendar -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.min.js"></script>
+   
+   
    
    <!-- Custom styles for this template-->
    <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
