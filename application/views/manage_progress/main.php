@@ -42,7 +42,7 @@ Manage Progress
     .btn-default:hover {
         background-color: #30cfc0 !important; }
     .btn-default:focus, .btn-default:active, .btn-default.active {
-        background-color: #1d7d73 !important; }
+        background-color: #28a745 !important; }
     .btn-default.dropdown-toggle {
         background-color: #2BBBAD !important; }
     .btn-default.dropdown-toggle:hover, .btn-default.dropdown-toggle:focus {
@@ -56,7 +56,7 @@ Manage Progress
     .btn-indigo:hover {
         background-color: #4d5ec1 !important; }
     .btn-indigo:focus, .btn-indigo:active, .btn-indigo.active {
-        background-color: #2b387c !important; }
+        background-color: #1e7e34 !important; }
     .btn-indigo.dropdown-toggle {
         background-color: #3f51b5 !important; }
     .btn-indigo.dropdown-toggle:hover, .btn-indigo.dropdown-toggle:focus {
@@ -109,6 +109,71 @@ Manage Progress
         }
     }
 ?>
+<script>
+//BUTTON FUNCTIONS
+$(document).on('click', '#progressSubmit_approve', function () {
+    $.ajax({
+        "method": "POST",
+        "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
+        "dataType": "JSON",
+        "data": {
+            'schedule_title': $("#event_title").val(),
+            'schedule_desc': $("#event_description").val(),
+            'schedule_color': $("#event_color").val(),
+            'schedule_startdate': $("#event_startdate").val(),
+            'schedule_starttime': $("#event_starttime").val(),
+            'schedule_enddate': $("#event_enddate").val(),
+            'schedule_endtime': $("#event_endtime").val(),
+            'comment':$('#comment').val(),
+            'event_type':"approve"
+        },
+        success: function (res) {
+            if (res.success) {
+                location.reload();
+                console.log("SUCCESS");
+                console.log(res.result);
+            } else {
+                alert(res.result);
+                console.log("UNSUCCESSFUL");
+                console.log(res.result);
+            }
+
+        },
+        error: function(res){
+            console.log("ERROR");
+            console.log(res);
+        }
+    });
+
+});
+
+$(document).on('click', '#progressSubmit_disapprove', function () {
+    $.ajax({
+        "method": "POST",
+        "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
+        "dataType": "JSON",
+        "data": {
+            'comment':$('#comment_d').val(),
+            'event_type':"disapprove"
+        },
+        success: function (res) {
+            if (res.success) {
+                location.reload();
+            } else {
+                alert(res.result);
+            }
+
+        },
+        error: function(res){
+            console.log("ERROR");
+        }
+    });
+
+});
+
+</script>
+
+
 <div class="content-wrapper">
     <div class="container-fluid">
         <!-- Breadcrumbs-->
@@ -242,5 +307,39 @@ Manage Progress
         });
         $('div.setup-panel div a.active').trigger('click');
     });
-
 </script>
+
+<script>
+        $(document).ready(function () {
+            var dt = new Date();
+            dt.setFullYear(new Date().getFullYear());
+            //DATE PICKER FOR SCHEDULE
+            $(".schedule_datepicker").datetimepicker({
+                format: 'MM d, yyyy',
+                todayBtn: true,
+                autoclose: true,
+                minView: 2,      
+            });
+            $('.schedule_datepicker').datetimepicker('setStartDate', dt);
+            
+            //TIME PICKER FOR SCHEDULE
+            $(".limited-timepicker").datetimepicker({
+                format: 'H:ii P',
+                autoclose: true,
+                minView: 0,
+                maxView: 1,
+                startView: 1,
+                showMeridian: true,
+                startDate:new Date(),
+            });
+            //$('.limited-timepicker').datetimepicker('setStartDate', dt);
+            $(".no-limit-timepicker").datetimepicker({
+                format: 'H:ii P',
+                autoclose: true,
+                minView: 0,
+                maxView: 1,
+                startView: 1,
+                showMeridian: true,
+            });
+        });
+    </script>

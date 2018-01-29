@@ -29,6 +29,9 @@
     .fc-day-grid-event .fc-time{
         font-weight: normal;
     }
+    .fc-time{
+        font-weight: normal;
+    }
 </style>
 <script>
     $(document).ready(function () {
