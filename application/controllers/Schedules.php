@@ -126,7 +126,7 @@ class Schedules extends CI_Controller {
                         "schedule_enddate" => $enddate
                     );
                     $this->Schedules_model->add_schedule($data);
-
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a schedule named ".$this->input->post('schedule_title'));
                     echo json_encode(array('success' => true, 'result' => 'Success'));
                 }
             }
@@ -144,6 +144,7 @@ class Schedules extends CI_Controller {
                 "schedule_color" => $this->input->post('schedule_color'),
             );
             if($this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")))){
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated a schedule.");
                 echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
             }else{
                 echo json_encode(array('success' => false, 'result' => 'Something went wrong while updating the event.'));
@@ -153,6 +154,7 @@ class Schedules extends CI_Controller {
 
     public function deletereserve() {
         $this->Schedules_model->delete_sched($this->input->post("schedule_id"));
+        $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Deleted a schedule.");
         echo json_encode(array('success' => true, 'result' => "Success"));
     }
 }
