@@ -118,6 +118,7 @@ class ManageProgress extends CI_Controller {
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
         if($this->input->post('event_type') == "approve"){
+            //Approve Step + Comment + Set Sched
             $this->form_validation->set_rules('schedule_startdate', "Start Date", "required");
             $this->form_validation->set_rules('schedule_starttime', "Start Time", "required");
             $this->form_validation->set_rules('schedule_enddate', "End Date", "required");
@@ -175,7 +176,7 @@ class ManageProgress extends CI_Controller {
                             && $this->ManageProgress_model->add_progress_comment($progress_comment)
                             && $this->Schedules_model->add_schedule($sched)
                             ){
-                            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Approved adoption form (step 1) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Approved adoption form (step 1) and added a schedule for next step of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname)."";
                             $this->session->set_flashdata("approve_adoption_form_success", "Approved adoption form.");
                             echo json_encode(array('success' => true, 'result' => 'Successfully approved adoption form!'));
                         }else{
@@ -187,6 +188,7 @@ class ManageProgress extends CI_Controller {
         }
         
         else if ($this->input->post('event_type') == "disapprove") {
+            //Disapprove Step + Comment
             $progress_comment = array(
                 "progress_id"                   => $current_progress->progress_id,
                 "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
@@ -196,7 +198,7 @@ class ManageProgress extends CI_Controller {
                 "progress_comment_added_at"     => time()
             );
             if($this->ManageProgress_model->add_progress_comment($progress_comment)){
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Dispproved adoption form (step 1) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved adoption form (step 1) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
                 $this->session->set_flashdata("approve_adoption_form_success", "Disapproved adoption form.");
                 echo json_encode(array('success' => true, 'result' => 'Successfully disapproved adoption form.'));
             }else{
@@ -212,38 +214,75 @@ class ManageProgress extends CI_Controller {
 
     public function step_2(){
         $transaction_id = $this->uri->segment(3);
+        $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
         $current_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 2))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
-        if($this->input->post('approve') == "approve"){
-            $data = array(
-                "progress_accomplished_at"  => time(),
-                "progress_isSuccessful"     => 1,
-                "progress_percentage"       => 100
-            );
-            $transaction_progress = array(
-                "transaction_progress"      => 32
-            );
-            
-            $progress_comment = array(
-                "progress_id"                   => $current_progress->progress_id,
-                "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
-                "progress_comment_picture"      => $current_user->admin_picture,
-                "progress_comment_sender_access" => $current_user->admin_access,
-                "progress_comment_content"      => $this->input->post('comment'),
-                "progress_comment_added_at"     => time()
-            );
-            
-            if(    $this->ManageProgress_model->approve_adoption_form($data, array("checklist_id" => 2, "transaction_id" => $transaction_id)) 
-                && $this->ManageProgress_model->update_progress($transaction_progress, array("transaction_id" => $transaction_id))
-                && $this->ManageProgress_model->add_progress_comment($progress_comment)
-                ){
-                $this->session->set_flashdata("approve_step_2_success", "Successfully approved Meet and Greet!");
-            }else{
-                $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while approving Meet and Greet");
+        if($this->input->post('event_type') == "approve"){
+            $this->form_validation->set_rules('schedule_startdate', "Start Date", "required");
+            $this->form_validation->set_rules('schedule_starttime', "Start Time", "required");
+            $this->form_validation->set_rules('schedule_enddate', "End Date", "required");
+            $this->form_validation->set_rules('schedule_endtime', "End Time", "required");
+            $this->form_validation->set_rules('comment', "Comment", "required");
+            if ($this->form_validation->run() == FALSE) {
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "There are errors in your form. Please check the fields."));
+            } else {
+                //IF FORMS ARE VALID
+                $startdate = strtotime($this->input->post('schedule_startdate') . " " . $this->input->post('schedule_starttime'));
+                $enddate = strtotime($this->input->post('schedule_enddate') . " " . $this->input->post('schedule_endtime'));
+
+                if ($this->Schedules_model->fetchSched(array("schedule_startdate" => $startdate))) {
+                    //IF STARTDATE IS ALREADY EXISTING
+                    echo json_encode(array('success' => false, 'result' => 'There is an existing schedule already!'));
+                } else {
+                    //IF STARTDATE IS UNIQUE
+                    if($startdate > $enddate){
+                        echo json_encode(array('success' => false, 'result' => 'Start Date/Time is ahead of End Date/Time'));
+                    }else{
+                        $data = array(
+                            "progress_accomplished_at"  => time(),
+                            "progress_isSuccessful"     => 1,
+                            "progress_percentage"       => 100
+                        );
+                        $transaction_progress = array(
+                            "transaction_progress"      => 32
+                        );
+
+                        $progress_comment = array(
+                            "progress_id"                   => $current_progress->progress_id,
+                            "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
+                            "progress_comment_picture"      => $current_user->admin_picture,
+                            "progress_comment_sender_access" => $current_user->admin_access,
+                            "progress_comment_content"      => $this->input->post('comment'),
+                            "progress_comment_added_at"     => time()
+                        );
+                        $sched = array(
+                            "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "schedule_title" => $this->input->post('schedule_title'),
+                            "schedule_desc" => $this->input->post('schedule_desc'),
+                            "schedule_color" => $this->input->post('schedule_color'),
+                            "schedule_startdate" => $startdate,
+                            "schedule_enddate" => $enddate
+                        );
+                        
+                        if(    $this->ManageProgress_model->approve_adoption_form($data, array("checklist_id" => 2, "transaction_id" => $transaction_id)) 
+                            && $this->ManageProgress_model->update_progress($transaction_progress, array("transaction_id" => $transaction_id))
+                            && $this->ManageProgress_model->add_progress_comment($progress_comment)
+                            && $this->Schedules_model->add_schedule($sched)
+                            ){
+                            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Approved Meet and Greet (step 2) and added a schedule for next step of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                            $this->session->set_flashdata("approve_step_2_success", "Successfully approved Meet and Greet!");
+                            echo json_encode(array('success' => true, 'result' => "Successfully approved Meet and Greet!"));
+                        }else{
+                            echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Meet and Greet"));
+                            $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while approving Meet and Greet");
+                        }
+                    }
+                }
             }
         }
         
-        else if ($this->input->post('disapprove') == "disapprove") {
+        else if ($this->input->post('event_type') == "disapprove") {
             $progress_comment = array(
                 "progress_id"                   => $current_progress->progress_id,
                 "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
@@ -255,12 +294,101 @@ class ManageProgress extends CI_Controller {
             if(
                 $this->ManageProgress_model->add_progress_comment($progress_comment)
             ){
-                $this->session->set_flashdata("approve_step_2_success", "Disapproved adoption form.");
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved Meet And Greet (step 2) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                $this->session->set_flashdata("approve_step_2_success", "Disapproved Meet And Greet.");
+                echo json_encode(array('success' => true, 'result' => "Disapproved Meet And Greet."));
             }else{
+                echo json_encode(array('success' => false, 'result' => "Something went wrong while disapproving Meet and Greet"));
                 $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while disapproving Meet and Greet");
             }
         }
-        redirect(base_url()."ManageProgress");
+        else if($this->input->post('event_type') == "setSched_1"){
+            $this->form_validation->set_rules('schedule_startdate_1', "Start Date", "required");
+            $this->form_validation->set_rules('schedule_starttime_1', "Start Time", "required");
+            $this->form_validation->set_rules('schedule_enddate_1', "End Date", "required");
+            $this->form_validation->set_rules('schedule_endtime_1', "End Time", "required");
+            if ($this->form_validation->run() == FALSE) {
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "There are errors in your form. Please check the fields."));
+            }else{
+                //IF FORMS ARE VALID
+                $startdate = strtotime($this->input->post('schedule_startdate_1') . " " . $this->input->post('schedule_starttime_1'));
+                $enddate = strtotime($this->input->post('schedule_enddate_1') . " " . $this->input->post('schedule_endtime_1'));
+
+                if ($this->Schedules_model->fetchSched(array("schedule_startdate" => $startdate))) {
+                    //IF STARTDATE IS ALREADY EXISTING
+                    echo json_encode(array('success' => false, 'result' => 'There is an existing schedule already!'));
+                } else {
+                    //IF STARTDATE IS UNIQUE
+                    if($startdate > $enddate){
+                        echo json_encode(array('success' => false, 'result' => 'Start Date/Time is ahead of End Date/Time'));
+                    }else{
+                        //Set Schedule Only
+                        $sched = array(
+                            "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "schedule_title" => $this->input->post('schedule_title_1'),
+                            "schedule_desc" => $this->input->post('schedule_desc_1'),
+                            "schedule_color" => $this->input->post('schedule_color_1'),
+                            "schedule_startdate" => $startdate,
+                            "schedule_enddate" => $enddate
+                        );
+                        if($this->Schedules_model->add_schedule($sched)){
+                            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added Interview #1 Schedule for ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                            $this->session->set_flashdata("approve_step_2_success", "Schedule set.");
+                            echo json_encode(array('success' => true, 'result' => "Schedule set."));   
+                        }else{
+                            echo json_encode(array('success' => false, 'result' => "Something went wrong while setting schedule for Interview"));
+                            $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while setting schedule for Interview");
+                        }
+                    }
+                }
+            }
+        }
+        else if($this->input->post('event_type') == "setSched_2"){
+            $this->form_validation->set_rules('schedule_startdate_2', "Start Date", "required");
+            $this->form_validation->set_rules('schedule_starttime_2', "Start Time", "required");
+            $this->form_validation->set_rules('schedule_enddate_2', "End Date", "required");
+            $this->form_validation->set_rules('schedule_endtime_2', "End Time", "required");
+            if ($this->form_validation->run() == FALSE) {
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "There are errors in your form. Please check the fields."));
+            }else{
+                //IF FORMS ARE VALID
+                $startdate = strtotime($this->input->post('schedule_startdate_2') . " " . $this->input->post('schedule_starttime_2'));
+                $enddate = strtotime($this->input->post('schedule_enddate_2') . " " . $this->input->post('schedule_endtime_2'));
+
+                if ($this->Schedules_model->fetchSched(array("schedule_startdate" => $startdate))) {
+                    //IF STARTDATE IS ALREADY EXISTING
+                    echo json_encode(array('success' => false, 'result' => 'There is an existing schedule already!'));
+                } else {
+                    //IF STARTDATE IS UNIQUE
+                    if($startdate > $enddate){
+                        echo json_encode(array('success' => false, 'result' => 'Start Date/Time is ahead of End Date/Time'));
+                    }else{
+                        //Set Schedule Only
+                        $sched = array(
+                            "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "schedule_title" => $this->input->post('schedule_title_2'),
+                            "schedule_desc" => $this->input->post('schedule_desc_2'),
+                            "schedule_color" => $this->input->post('schedule_color_2'),
+                            "schedule_startdate" => $startdate,
+                            "schedule_enddate" => $enddate
+                        );
+                        if($this->Schedules_model->add_schedule($sched)){
+                            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added Interview #2 Schedule for ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                            $this->session->set_flashdata("approve_step_2_success", "Schedule set.");
+                            echo json_encode(array('success' => true, 'result' => "Schedule set."));   
+                        }else{
+                            echo json_encode(array('success' => false, 'result' => "Something went wrong while setting schedule for Interview"));
+                            $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while setting schedule for Interview");
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            echo json_encode(array('success' => false, 'result' => "Something Went wrong. Try again later."));
+        }
     }
 }
 

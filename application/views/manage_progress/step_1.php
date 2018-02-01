@@ -1,3 +1,66 @@
+<script>
+//BUTTON FUNCTIONS
+$(document).on('click', '#step_1_approve', function () {
+    $.ajax({
+        "method": "POST",
+        "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
+        "dataType": "JSON",
+        "data": {
+            'schedule_title': $("#event_title").val(),
+            'schedule_desc': $("#event_description").val(),
+            'schedule_color': $("#event_color").val(),
+            'schedule_startdate': $("#event_startdate").val(),
+            'schedule_starttime': $("#event_starttime").val(),
+            'schedule_enddate': $("#event_enddate").val(),
+            'schedule_endtime': $("#event_endtime").val(),
+            'comment':$('#comment').val(),
+            'event_type':"approve"
+        },
+        success: function (res) {
+            if (res.success) {
+                location.reload();
+                console.log("SUCCESS");
+                console.log(res.result);
+            } else {
+                alert(res.result);
+                console.log("UNSUCCESSFUL");
+                console.log(res.result);
+            }
+
+        },
+        error: function(res){
+            console.log("ERROR");
+            console.log(res);
+        }
+    });
+
+});
+
+$(document).on('click', '#step_1_disapprove', function () {
+    $.ajax({
+        "method": "POST",
+        "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
+        "dataType": "JSON",
+        "data": {
+            'comment':$('#comment_d').val(),
+            'event_type':"disapprove"
+        },
+        success: function (res) {
+            if (res.success) {
+                location.reload();
+            } else {
+                alert(res.result);
+            }
+
+        },
+        error: function(res){
+            console.log("ERROR");
+        }
+    });
+
+});
+
+</script>
 <?php
     $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction->transaction_id))[0];
 ?>
@@ -178,7 +241,7 @@
         <input type ="hidden"  id="event_title" name = "event_title" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
         <input type ="hidden"  id="event_color" name = "event_color" value = "#1e7e34"/>
         <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description" name ="event_description" value = "Adoption Form is completed (16%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
+        <input type ="hidden"  id="event_description" name ="event_description" value = "Meet and Greet is completed (32%)! Interview will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
         
         
         <!-- Displayed Fields -->
@@ -191,6 +254,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Meet and Greet</p>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
                             <label for="event_startdate">Start Date</label>
@@ -218,7 +282,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "progressSubmit_approve" class="btn btn-primary">Approve</button>
+                    <button type="button" id = "step_1_approve" class="btn btn-primary">Approve</button>
                 </div>
             </div>
         </div>
@@ -246,7 +310,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "progressSubmit_disapprove" class="btn btn-danger ">Disapprove</button>
+                    <button type="button" id = "step_1_disapprove" class="btn btn-danger ">Disapprove</button>
                 </div>
             </div>
         </div>
