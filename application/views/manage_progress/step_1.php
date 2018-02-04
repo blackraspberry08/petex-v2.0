@@ -143,6 +143,19 @@ $(document).on('click', '#step_1_disapprove', function () {
             <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
                 <iframe class="embed-responsive-item" src="<?= base_url() . $adoption_form->adoption_form_location ?>" allowfullscreen type="application/pdf"></iframe>
             </div>
+            <div class ="row">
+                <div class = "col-lg-12 mb-3">
+                    <div class="media mr-3">
+                        <div class="media-body text-right">
+                            <h6 class="mt-0 mb-1" style ="font-weight:normal;">Sent by <strong><?= $transaction->user_firstname." ".$transaction->user_lastname?></strong></h6>
+                            <span class = "text-muted">Submitted at <?= date('F d, Y \a\t h:i A', $adoption_form->adoption_form_added_at)?></span><br>
+                        </div>
+                        <div class = "image-fit">
+                            <img class="d-flex ml-3" src="<?= base_url() . $transaction->user_picture ?>" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php if (!empty($comments_step_1)): ?>
                 <!-- There are recent comments -->
                 <div class="card mb-3">
@@ -200,6 +213,19 @@ $(document).on('click', '#step_1_disapprove', function () {
             <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
                 <iframe class="embed-responsive-item" src="<?= base_url() . $adoption_form->adoption_form_location ?>" allowfullscreen type="application/pdf"></iframe>
             </div>
+            <div class ="row">
+                <div class = "col-lg-12 mb-3">
+                    <div class="media mr-3">
+                        <div class="media-body text-right">
+                            <h6 class="mt-0 mb-1" style ="font-weight:normal;">Sent by <strong><?= $transaction->user_firstname." ".$transaction->user_lastname?></strong></h6>
+                            <span class = "text-muted">Submitted at <?= date('F d, Y \a\t h:i A', $adoption_form->adoption_form_added_at)?></span><br>
+                        </div>
+                        <div class = "image-fit">
+                            <img class="d-flex ml-3" src="<?= base_url() . $transaction->user_picture ?>" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php if (!empty($comments_step_1)): ?>
                 <!-- If there are comments -->
                 <div class="card mb-3">
@@ -241,7 +267,7 @@ $(document).on('click', '#step_1_disapprove', function () {
         <input type ="hidden"  id="event_title" name = "event_title" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
         <input type ="hidden"  id="event_color" name = "event_color" value = "#1e7e34"/>
         <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description" name ="event_description" value = "Meet and Greet is completed (32%)! Interview will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
+        <input type ="hidden"  id="event_description" name ="event_description" value = "Adoption Form is approved (16%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
         
         
         <!-- Displayed Fields -->

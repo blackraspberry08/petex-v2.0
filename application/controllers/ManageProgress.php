@@ -115,6 +115,7 @@ class ManageProgress extends CI_Controller {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
         $current_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 1))[0];
+        $next_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 2))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
         if($this->input->post('event_type') == "approve"){
@@ -161,12 +162,13 @@ class ManageProgress extends CI_Controller {
                             "progress_comment_added_at"     => time()
                         );
                         $sched = array(
-                            "admin_id" => $this->session->userdata("current_user")->admin_id,
-                            "schedule_title" => $this->input->post('schedule_title'),
-                            "schedule_desc" => $this->input->post('schedule_desc'),
-                            "schedule_color" => $this->input->post('schedule_color'),
-                            "schedule_startdate" => $startdate,
-                            "schedule_enddate" => $enddate
+                            "progress_id"       => $next_progress->progress_id,
+                            "admin_id"          => $this->session->userdata("current_user")->admin_id,
+                            "schedule_title"    => $this->input->post('schedule_title'),
+                            "schedule_desc"     => $this->input->post('schedule_desc'),
+                            "schedule_color"    => $this->input->post('schedule_color'),
+                            "schedule_startdate"=> $startdate,
+                            "schedule_enddate"  => $enddate
                         );
                         // rename() moves file, not rename them.
                         rename($current_adoption_form->adoption_form_location, $adoption_form['adoption_form_location']);
@@ -216,6 +218,7 @@ class ManageProgress extends CI_Controller {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
         $current_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 2))[0];
+        $next_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 3))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         if($this->input->post('event_type') == "approve"){
             $this->form_validation->set_rules('schedule_startdate', "Start Date", "required");
@@ -257,12 +260,13 @@ class ManageProgress extends CI_Controller {
                             "progress_comment_added_at"     => time()
                         );
                         $sched = array(
-                            "admin_id" => $this->session->userdata("current_user")->admin_id,
-                            "schedule_title" => $this->input->post('schedule_title'),
-                            "schedule_desc" => $this->input->post('schedule_desc'),
-                            "schedule_color" => $this->input->post('schedule_color'),
-                            "schedule_startdate" => $startdate,
-                            "schedule_enddate" => $enddate
+                            "progress_id"           => $next_progress->progress_id,
+                            "admin_id"              => $this->session->userdata("current_user")->admin_id,
+                            "schedule_title"        => $this->input->post('schedule_title'),
+                            "schedule_desc"         => $this->input->post('schedule_desc'),
+                            "schedule_color"        => $this->input->post('schedule_color'),
+                            "schedule_startdate"    => $startdate,
+                            "schedule_enddate"      => $enddate
                         );
                         
                         if(    $this->ManageProgress_model->approve_adoption_form($data, array("checklist_id" => 2, "transaction_id" => $transaction_id)) 
@@ -323,8 +327,13 @@ class ManageProgress extends CI_Controller {
                     if($startdate > $enddate){
                         echo json_encode(array('success' => false, 'result' => 'Start Date/Time is ahead of End Date/Time'));
                     }else{
-                        //Set Schedule Only
+                        //Set Schedule Only and Adjust Progress Percentage
+                        $data = array(
+                            "progress_percentage"       => 33
+                        );
+                        
                         $sched = array(
+                            "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
                             "schedule_title" => $this->input->post('schedule_title_1'),
                             "schedule_desc" => $this->input->post('schedule_desc_1'),
@@ -332,7 +341,10 @@ class ManageProgress extends CI_Controller {
                             "schedule_startdate" => $startdate,
                             "schedule_enddate" => $enddate
                         );
-                        if($this->Schedules_model->add_schedule($sched)){
+                        if(
+                                $this->Schedules_model->add_schedule($sched)
+                            &&  $this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                            ){
                             $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added Interview #1 Schedule for ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
                             $this->session->set_flashdata("approve_step_2_success", "Schedule set.");
                             echo json_encode(array('success' => true, 'result' => "Schedule set."));   
@@ -365,8 +377,12 @@ class ManageProgress extends CI_Controller {
                     if($startdate > $enddate){
                         echo json_encode(array('success' => false, 'result' => 'Start Date/Time is ahead of End Date/Time'));
                     }else{
+                        $data = array(
+                            "progress_percentage"       => 66
+                        );
                         //Set Schedule Only
                         $sched = array(
+                            "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
                             "schedule_title" => $this->input->post('schedule_title_2'),
                             "schedule_desc" => $this->input->post('schedule_desc_2'),
@@ -374,7 +390,9 @@ class ManageProgress extends CI_Controller {
                             "schedule_startdate" => $startdate,
                             "schedule_enddate" => $enddate
                         );
-                        if($this->Schedules_model->add_schedule($sched)){
+                        if(     $this->Schedules_model->add_schedule($sched)
+                            &&  $this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                            ){
                             $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added Interview #2 Schedule for ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
                             $this->session->set_flashdata("approve_step_2_success", "Schedule set.");
                             echo json_encode(array('success' => true, 'result' => "Schedule set."));   

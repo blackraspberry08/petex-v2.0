@@ -17,14 +17,41 @@
     }
 </style>
 
-<?php
+<?php 
     $progress_2 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction->transaction_id))[0];
+    $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
 ?>
 
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Meet and Greet</h3>
     <p class = "text-muted">&emsp;<?= $progress_2->checklist_desc?></p>
-
+    
+    <div class="card border-dark mb-3 mx-auto text-center" style="max-width: 30rem;">
+        <div class="card-header">
+            <i class = "fa fa-clock-o fa-5x"></i>
+            <br>
+            <h5 class = "text-muted">Schedule</h5>
+        </div>
+        <div class="card-header">
+            <div class ="row">
+                <div class = "col-md-6">
+                    <h6>Start</h6>
+                    <span style = "font-size:12px;"><?= date('F d, Y', $schedule_2->schedule_startdate)?></span><br>
+                    <span style = "font-size:12px;"><?= date('h:i A', $schedule_2->schedule_startdate)?></span>
+                </div>
+                <div class = "col-md-6">
+                    <h6>End</h6>
+                    <span style = "font-size:12px;"><?= date('F d, Y', $schedule_2->schedule_enddate)?></span><br>
+                    <span style = "font-size:12px;"><?= date('h:i A', $schedule_2->schedule_enddate)?></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-dark">
+            <h6 class="card-title"><?= $schedule_2->schedule_title?></h6>
+            <p class="card-text"><?= $schedule_2->schedule_desc?></p>
+        </div>
+    </div>
+    
     <!-- Comment -->
     <?php if (!empty($comments_step_2)): ?>
         <!-- There are recent comments -->
@@ -98,14 +125,15 @@
     <div class="modal-dialog"role="document">
         <div class="modal-content" >
             <div class="modal-header">
-                <h5 class="modal-title step-1" data-step="1">Set Schedule for Interview #1</h5>
-                <h5 class="modal-title step-2" data-step="2">Set Schedule for Interview #2</h5>
-                <h5 class="modal-title step-3" data-step="3">Set Schedule for Interview #3</h5>
+                <h5 class="modal-title step-1" data-step="1"><i class = "fa fa-thumbs-o-up"></i> Approve Meet and Greet</h5>
+                <h5 class="modal-title step-2" data-step="2"><i class = "fa fa-thumbs-o-up"></i> Approve Meet and Greet</h5>
+                <h5 class="modal-title step-3" data-step="3"><i class = "fa fa-thumbs-o-up"></i> Approve Meet and Greet</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body step step-1">
+                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #1</p>
                 <form role ="form" method="POST">
                     <!-- Hidden Fields -->
                     <input type ="hidden"  id="event_title_1" name = "event_title_1" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
@@ -114,28 +142,28 @@
                     <input type ="hidden"  id="event_description_1" name ="event_description_1" value = "Meet and Greet is completed (32%)! Interview #1 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate">Start Date</label>
+                            <label for="event_startdate_1">Start Date</label>
                             <input type = "text" id = "event_startdate_1" name = "event_startdate_1" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime">Start Time</label>
+                            <label for="event_starttime_1">Start Time</label>
                             <input type = "text" id = "event_starttime_1" name = "event_starttime_1" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate">End Date</label>
+                            <label for="event_enddate_1">End Date</label>
                             <input type = "text" id = "event_enddate_1" name = "event_enddate_1" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime">End Time</label>
+                            <label for="event_endtime_1">End Time</label>
                             <input type = "text" id = "event_endtime_1" name = "event_endtime_1" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
-                    
                 </form>
             </div>
             <div class="modal-body step step-2">
+                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #2</p>
                 <form role ="form" method="POST">
                     <!-- Hidden Fields -->
                     <input type ="hidden"  id="event_title_2" name = "event_title_2" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
@@ -144,65 +172,66 @@
                     <input type ="hidden"  id="event_description_2" name ="event_description_2" value = "Meet and Greet is completed (32%)! Interview #2 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate">Start Date</label>
+                            <label for="event_startdate_2">Start Date</label>
                             <input type = "text" id = "event_startdate_2" name = "event_startdate_2" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime">Start Time</label>
+                            <label for="event_starttime_2">Start Time</label>
                             <input type = "text" id = "event_starttime_2" name = "event_starttime_2" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate">End Date</label>
+                            <label for="event_enddate_2">End Date</label>
                             <input type = "text" id = "event_enddate_2" name = "event_enddate_2" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime">End Time</label>
+                            <label for="event_endtime_2">End Time</label>
                             <input type = "text" id = "event_endtime_2" name = "event_endtime_2" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-body step step-3">
+                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #3</p>
                 <form role ="form" method="POST">
                     <!-- Hidden Fields -->
-                    <input type ="hidden"  id="event_title" name = "event_title" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-                    <input type ="hidden"  id="event_color" name = "event_color" value = "#1e7e34"/>
-                    <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
-                    <input type ="hidden"  id="event_description" name ="event_description" value = "Meet and Greet is completed (32%)! Interview #3 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
+                    <input type ="hidden"  id="event_title_prog2" name = "event_title_prog2" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
+                    <input type ="hidden"  id="event_color_prog2" name = "event_color_prog2" value = "#1e7e34"/>
+                    <input type ="hidden"  id="event_type_prog2" name = "event_type_prog2" value = "approve"/>
+                    <input type ="hidden"  id="event_description_prog2" name ="event_description_prog2" value = "Meet and Greet is completed (32%)! Interview #3 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
                             <label for="event_startdate">Start Date</label>
-                            <input type = "text" id = "event_startdate" name = "event_startdate" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <input type = "text" id = "event_startdate_prog2" name = "event_startdate_prog2" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
                             <label for="event_starttime">Start Time</label>
-                            <input type = "text" id = "event_starttime" name = "event_starttime" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <input type = "text" id = "event_starttime_prog2" name = "event_starttime_prog2" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
                             <label for="event_enddate">End Date</label>
-                            <input type = "text" id = "event_enddate" name = "event_enddate" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <input type = "text" id = "event_enddate_prog2" name = "event_enddate_prog2" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
                             <label for="event_endtime">End Time</label>
-                            <input type = "text" id = "event_endtime" name = "event_endtime" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <input type = "text" id = "event_endtime_prog2" name = "event_endtime_prog2" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_a_2" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <textarea class = "form-control" id = "comment_a_2" name = "comment_a_2" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id = "setSched_1" class="btn btn-primary step step-1" data-step="1" onclick="nextStep(1)">Set Schedule</button>
-                <button type="button" id = "setSched_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep(2)">Set Schedule</button>
-                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep(3)">Set Schedule</button>
+                <button type="button" id = "setSched_1" class="btn btn-primary step step-1" data-step="1" onclick="nextStep(1)">Set Schedule #1</button>
+                <button type="button" id = "setSched_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep(2)">Set Schedule #2</button>
+                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep(3)">Approve</button>
             </div>
         </div>
     </div>
@@ -336,13 +365,13 @@
                         "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
                         "dataType": "JSON",
                         "data": {
-                            'schedule_title': $("#event_title").val(),
-                            'schedule_desc': $("#event_description").val(),
-                            'schedule_color': $("#event_color").val(),
-                            'schedule_startdate': $("#event_startdate").val(),
-                            'schedule_starttime': $("#event_starttime").val(),
-                            'schedule_enddate': $("#event_enddate").val(),
-                            'schedule_endtime': $("#event_endtime").val(),
+                            'schedule_title': $("#event_title_prog2").val(),
+                            'schedule_desc': $("#event_description_prog2").val(),
+                            'schedule_color': $("#event_color_prog2").val(),
+                            'schedule_startdate': $("#event_startdate_prog2").val(),
+                            'schedule_starttime': $("#event_starttime_prog2").val(),
+                            'schedule_enddate': $("#event_enddate_prog2").val(),
+                            'schedule_endtime': $("#event_endtime_prog2").val(),
                             'comment':$('#comment_a_2').val(),
                             'event_type':"approve"
                         },
@@ -353,6 +382,7 @@
                             } else {
                                 alert(res.result);
                                 console.log("UNSUCCESSFUL");
+                                console.log(res);
                             }
 
                         },
