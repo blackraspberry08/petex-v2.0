@@ -65,8 +65,8 @@ class Schedules extends CI_Controller {
         $res = array();
         foreach ($result as $key => $arr) {
             $res[$key]["schedule_id"]   = $arr['schedule_id'];
-            $res[$key]["user_id"]       = $arr['user_id'];
-            $res[$key]["admin_id"]       = $arr['admin_id'];
+            $res[$key]["progress_id"]   = $arr['progress_id'];
+            $res[$key]["admin_id"]      = $arr['admin_id'];
             $res[$key]["title"]         = $arr['schedule_title'];
             $res[$key]["color"]         = $arr['schedule_color'];
             $res[$key]["start"]         = date("Y-m-d H:i:s", $arr['schedule_startdate']);

@@ -48,6 +48,40 @@ function determine_access($access){
         <i class="fa fa-paw"></i> Manage Progress
     </div>
     <div class="card-body">
+        <div class = "row mb-3">
+            <div class ="col-md-5">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center bg-success">Pet Adopter</div>
+                    <div class="card-body text-center">
+                        <div class = "image-fit">
+                            <a href = "<?= base_url() . $transaction->user_picture ?>" data-toggle="lightbox">
+                                <img class="d-flex mx-auto" src="<?= base_url() . $transaction->user_picture ?>"  style = "height:75px; width:75px;" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                            </a>
+                        </div>
+                        <h5 class="card-title"><?= $transaction->user_firstname." ".$transaction->user_lastname?></h5>
+                        <a href ="#" class = "btn btn-outline-success" data-toggle = "modal" data-target = "#user_detail_<?= $transaction->user_id;?>">Show Information</a>
+                    </div>
+                </div>
+            </div>
+            <div class ="col-md-2 align-self-center text-center" style = "font-size:1.3vw;">
+                <i class ="fa fa-long-arrow-right"></i> Adopting <i class ="fa fa-long-arrow-right"></i>
+            </div>
+            <div class ="col-md-5">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center bg-success">Animal</div>
+                    <div class="card-body text-center">
+                        <div class = "image-fit">
+                            <a href = "<?= base_url().$transaction->pet_picture?>" data-toggle="lightbox">
+                                <img class="d-flex mx-auto" src="<?= base_url() . $transaction->pet_picture ?>" style = "height:75px; width:75px;" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                            </a>
+                        </div>
+                        <h5 class="card-title"><?= $transaction->pet_name?></h5>
+                        <a href = "#" class = "btn btn-outline-success" data-toggle = "modal" data-target = "#pet_detail_<?= $transaction->pet_id;?>">Show Information</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="steps-form">
             <div class="steps-row setup-panel">
             <?php foreach ($progresses as $progress): ?>
@@ -90,6 +124,133 @@ function determine_access($access){
     </div>
 </div>
 
+<!-- PET DETAIL MODAL -->
+<div class="modal fade" id = "pet_detail_<?= $transaction->pet_id;?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class = "fa fa-info-circle"></i> Pet Info</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class ="col-md-5">
+                        <img src = "<?= $this->config->base_url() . $transaction->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
+                    </div>
+                    <div class ="col-md-7">
+                        <table class = "table table-responsive table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Name: </th>
+                                    <td><?= $transaction->pet_name; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Status: </th>
+                                    <td><?= $transaction->pet_status; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Size: </th>
+                                    <td><?= $transaction->pet_size; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Birthday: </th>
+                                    <td><?= date("F d, Y", $transaction->pet_bday); ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Age:</th>
+                                    <td><?= get_age($transaction->pet_bday); ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Specie: </th>
+                                    <td><?= $transaction->pet_specie; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Sex: </th>
+                                    <td><?= $transaction->pet_sex; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Breed: </th>
+                                    <td><?= $transaction->pet_breed; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Sterilized: </th>
+                                    <td><?= $transaction->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Admission: </th>
+                                    <td><?= $transaction->pet_admission; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Description: </th>
+                                    <td><?= $transaction->pet_description; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Findings: </th>
+                                    <td><?= $transaction->pet_history; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- USER DETAIL MODAL -->
+<div class="modal fade" id = "user_detail_<?= $transaction->user_id;?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class = "fa fa-info-circle"></i> User Info</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class ="col-md-5">
+                        <img src = "<?= $this->config->base_url() . $transaction->user_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
+                    </div>
+                    <div class ="col-md-7">
+                        <table class="table borderless table-responsive-sm">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Username</th>
+                                        <td><?= $transaction->user_username;?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Birthday</th>
+                                        <td><?= date("F d, Y", $transaction->user_bday);?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Email</th>
+                                        <td><?= $transaction->user_email;?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Contact No.</th>
+                                        <td><?= $transaction->user_contact_no;?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Address</th>
+                                        <td><?= $transaction->user_address.", ".$transaction->user_brgy.", ".$transaction->user_city;?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Bootstrap File Upload with preview -->
 <script src = "https://unpkg.com/file-upload-with-preview"></script>
 <script>
