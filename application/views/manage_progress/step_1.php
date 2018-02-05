@@ -268,8 +268,6 @@ $(document).on('click', '#step_1_disapprove', function () {
         <input type ="hidden"  id="event_color" name = "event_color" value = "#1e7e34"/>
         <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
         <input type ="hidden"  id="event_description" name ="event_description" value = "Adoption Form is approved (16%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
-        
-        
         <!-- Displayed Fields -->
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">

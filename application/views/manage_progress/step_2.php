@@ -122,7 +122,7 @@
 <!-- MODAL FOR APPROVING STEP 2 -->
 <div class="modal fade multi-step" id="step_2_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <!-- Displayed Fields -->
-    <div class="modal-dialog"role="document">
+    <div class="modal-dialog modal-lg"role="document">
         <div class="modal-content" >
             <div class="modal-header">
                 <h5 class="modal-title step-1" data-step="1"><i class = "fa fa-thumbs-o-up"></i> Approve Meet and Greet</h5>
@@ -136,7 +136,7 @@
                 <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #1</p>
                 <form role ="form" method="POST">
                     <!-- Hidden Fields -->
-                    <input type ="hidden"  id="event_title_1" name = "event_title_1" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
+                    <input type ="hidden"  id="event_title_1" name = "event_title_1" value = "Interview #1 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
                     <input type ="hidden"  id="event_color_1" name = "event_color_1" value = "#1e7e34"/>
                     <input type ="hidden"  id="event_type_1" name = "event_type_1" value = "approve"/>
                     <input type ="hidden"  id="event_description_1" name ="event_description_1" value = "Meet and Greet is completed (32%)! Interview #1 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
@@ -166,7 +166,7 @@
                 <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #2</p>
                 <form role ="form" method="POST">
                     <!-- Hidden Fields -->
-                    <input type ="hidden"  id="event_title_2" name = "event_title_2" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
+                    <input type ="hidden"  id="event_title_2" name = "event_title_2" value = "Interview #2 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
                     <input type ="hidden"  id="event_color_2" name = "event_color_2" value = "#1e7e34"/>
                     <input type ="hidden"  id="event_type_2" name = "event_type_2" value = "approve"/>
                     <input type ="hidden"  id="event_description_2" name ="event_description_2" value = "Meet and Greet is completed (32%)! Interview #2 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
@@ -196,7 +196,7 @@
                 <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #3</p>
                 <form role ="form" method="POST">
                     <!-- Hidden Fields -->
-                    <input type ="hidden"  id="event_title_prog2" name = "event_title_prog2" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
+                    <input type ="hidden"  id="event_title_prog2" name = "event_title_prog2" value = "Interview #3 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
                     <input type ="hidden"  id="event_color_prog2" name = "event_color_prog2" value = "#1e7e34"/>
                     <input type ="hidden"  id="event_type_prog2" name = "event_type_prog2" value = "approve"/>
                     <input type ="hidden"  id="event_description_prog2" name ="event_description_prog2" value = "Meet and Greet is completed (32%)! Interview #3 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">

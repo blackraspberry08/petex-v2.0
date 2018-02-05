@@ -38,7 +38,7 @@
    <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
    <style>
        button{
-           cursor:pointer !important;
+           cursor:pointer;
        }
        .custom-file-container__image-clear{
             visibility:hidden;
