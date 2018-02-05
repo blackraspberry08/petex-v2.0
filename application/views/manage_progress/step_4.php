@@ -86,8 +86,8 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_3_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_3_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_4_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_4_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
                     </div>
                 </div>
             <?php endif;?>
@@ -113,8 +113,8 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_3_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_3_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_4_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_4_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
                     </div>
                 </div>
             <?php endif;?>
@@ -123,52 +123,52 @@
 </div>
 
 <!-- MODAL FOR APPROVING STEP 3 -->
-<div class="modal fade" id="step_3_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form id = "step_3_form_a" method = "POST" role = "form">
+<div class="modal fade" id="step_4_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id = "step_4_form_a" method = "POST" role = "form">
         <!-- Hidden Fields -->
-        <input type ="hidden"  id="event_title_prog3" name = "event_title_prog3" value = "Home Visit : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-        <input type ="hidden"  id="event_color_prog3" name = "event_color_prog3" value = "#1e7e34"/>
-        <input type ="hidden"  id="event_type_prog3" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description_prog3" name ="event_description_prog3" value = "All Interviews are done (49%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
+        <input type ="hidden"  id="event_title_prog4" name = "event_title_prog4" value = "Home Visit : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
+        <input type ="hidden"  id="event_color_prog4" name = "event_color_prog4" value = "#1e7e34"/>
+        <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
+        <input type ="hidden"  id="event_description_prog4" name ="event_description_prog4" value = "All Interviews are done (49%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
         <!-- Displayed Fields -->
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader_prog3"><i class = "fa fa-thumbs-o-up"></i> Approve Interviews</h5>
+                    <h5 class="modal-title" id="eventHeader_prog4"><i class = "fa fa-thumbs-o-up"></i> Approve Home Visit</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Home Visit</p>
+                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Visiting Chosen Adoptee</p>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate_prog3">Start Date</label>
-                            <input type = "text" id = "event_startdate_prog3" name = "event_startdate_prog3" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_prog4">Start Date</label>
+                            <input type = "text" id = "event_startdate_prog4" name = "event_startdate_prog4" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime_prog3">Start Time</label>
-                            <input type = "text" id = "event_starttime_prog3" name = "event_starttime_prog3" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_prog4">Start Time</label>
+                            <input type = "text" id = "event_starttime_prog4" name = "event_starttime_prog4" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate_prog3">End Date</label>
-                            <input type = "text" id = "event_enddate_prog3" name = "event_enddate_prog3" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_prog4">End Date</label>
+                            <input type = "text" id = "event_enddate_prog4" name = "event_enddate_prog4" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime_prog3">End Time</label>
-                            <input type = "text" id = "event_endtime_prog3" name = "event_endtime_prog3" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_prog4">End Time</label>
+                            <input type = "text" id = "event_endtime_prog4" name = "event_endtime_prog4" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment_prog3">Comment</label>
-                        <textarea class = "form-control" id = "comment_prog3" name = "comment_prog3" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_prog4">Comment</label>
+                        <textarea class = "form-control" id = "comment_prog4" name = "comment_prog4" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_3_approve" class="btn btn-primary">Approve</button>
+                    <button type="button" id = "step_4_approve" class="btn btn-primary">Approve</button>
                 </div>
             </div>
         </div>
@@ -176,14 +176,14 @@
 </div>
 
 <!-- MODAL FOR DISAPPROVING STEP 2 -->
-<div class="modal fade" id="step_3_sched_disapprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form id = "step_3_form_d" method = "POST" role = "form">
+<div class="modal fade" id="step_4_sched_disapprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id = "step_4_form_d" method = "POST" role = "form">
         <input type ="hidden"  id="event_type" name = "event_type" value = "disapprove"/>
         <!-- Displayed Fields -->
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Meet and Greet</h5>
+                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Home Visit</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -191,148 +191,69 @@
                 <div class="modal-body">
                     <div class = "form-row">
                         <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_d_3" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <textarea class = "form-control" id = "comment_d_4" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_3_disapprove" class="btn btn-danger">Disapprove</button>
+                    <button type="button" id = "step_4_disapprove" class="btn btn-danger">Disapprove</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
 <script>
-    $(document).ready(function(){
-        $(document).on('click', '#step_3_disapprove', function () {
-            $.ajax({
-                "method": "POST",
-                "url": '<?= base_url() ?>' + "ManageProgress/step_3/<?= $transaction->transaction_id?>",
-                "dataType": "JSON",
-                "data": {
-                    'comment':$('#comment_d_3').val(),
-                    'event_type':"disapprove"
-                },
-                success: function (res) {
-                    if (res.success) {
-                        location.reload();
-                    } else {
-                        alert(res.result);
-                    }
-                },
-                error: function(res){
-                    console.log("ERROR");
+$(document).ready(function(){
+    $(document).on('click', '#step_4_disapprove', function () {
+        $.ajax({
+            "method": "POST",
+            "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
+            "dataType": "JSON",
+            "data": {
+                'comment':$('#comment_d_4').val(),
+                'event_type':"disapprove"
+            },
+            success: function (res) {
+                if (res.success) {
+                    location.reload();
+                } else {
+                    alert(res.result);
                 }
-            });
-        });
-});//ready()
-</script>
-<script>
-    $(document).ready(function(){
-        nextStep = function(step) {
-            switch(step){
-                case 1:{
-                    $.ajax({
-                        "method": "POST",
-                        "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
-                        "dataType": "JSON",
-                        "data": {
-                            'schedule_title_1': $("#event_title_1").val(),
-                            'schedule_desc_1': $("#event_description_1").val(),
-                            'schedule_color_1': $("#event_color_1").val(),
-                            'schedule_startdate_1': $("#event_startdate_1").val(),
-                            'schedule_starttime_1': $("#event_starttime_1").val(),
-                            'schedule_enddate_1': $("#event_enddate_1").val(),
-                            'schedule_endtime_1': $("#event_endtime_1").val(),
-                            'event_type':"setSched_1"
-                        },
-                        success: function (res) {
-                            if (res.success) {
-                                $('.step').trigger('next.m.2');
-                                console.log("SUCCESS");
-                            } else {
-                                alert(res.result);
-                                console.log("UNSUCCESSFUL");
-                                console.log(res);
-                            }
-                        },
-                        error: function(res){
-                            console.log("ERROR");
-                            console.log(res);
-                        }
-                    });
-                    
-                    break;
-                }
-                case 2:{
-                    $.ajax({
-                        "method": "POST",
-                        "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
-                        "dataType": "JSON",
-                        "data": {
-                            'schedule_title_2': $("#event_title_2").val(),
-                            'schedule_desc_2': $("#event_description_2").val(),
-                            'schedule_color_2': $("#event_color_2").val(),
-                            'schedule_startdate_2': $("#event_startdate_2").val(),
-                            'schedule_starttime_2': $("#event_starttime_2").val(),
-                            'schedule_enddate_2': $("#event_enddate_2").val(),
-                            'schedule_endtime_2': $("#event_endtime_2").val(),
-                            'event_type':"setSched_2"
-                        },
-                        success: function (res) {
-                            if (res.success) {
-                                $('.step').trigger('next.m.3');
-                                console.log("SUCCESS");
-                            } else {
-                                alert(res.result);
-                                console.log("UNSUCCESSFUL");
-                            }
-
-                        },
-                        error: function(res){
-                            console.log("ERROR");
-                            alert("Something went wrong while setting your schedule.");
-                        }
-                    });
-                    break;
-                }
-                case 3:{
-                    $.ajax({
-                        "method": "POST",
-                        "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
-                        "dataType": "JSON",
-                        "data": {
-                            'schedule_title': $("#event_title_prog2").val(),
-                            'schedule_desc': $("#event_description_prog2").val(),
-                            'schedule_color': $("#event_color_prog2").val(),
-                            'schedule_startdate': $("#event_startdate_prog2").val(),
-                            'schedule_starttime': $("#event_starttime_prog2").val(),
-                            'schedule_enddate': $("#event_enddate_prog2").val(),
-                            'schedule_endtime': $("#event_endtime_prog2").val(),
-                            'comment':$('#comment_a_2').val(),
-                            'event_type':"approve"
-                        },
-                        success: function (res) {
-                            if (res.success) {
-                                location.reload();
-                                console.log("SUCCESS");
-                            } else {
-                                alert(res.result);
-                                console.log("UNSUCCESSFUL");
-                                console.log(res);
-                            }
-
-                        },
-                        error: function(res){
-                            console.log("ERROR");
-                            alert("Something went wrong while setting your schedule.");
-                        }
-                    });
-                    break;
-                }
-                default:{}
+            },
+            error: function(res){
+                console.log("ERROR");
             }
-        }
-        
+        });
     });
+    
+    $(document).on('click', '#step_4_approve', function () {
+        $.ajax({
+            "method": "POST",
+            "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
+            "dataType": "JSON",
+            "data": {
+                'schedule_title_prog4': $("#event_title_prog4").val(),
+                'schedule_desc_prog4': $("#event_description_prog4").val(),
+                'schedule_color_prog4': $("#event_color_prog4").val(),
+                'schedule_startdate_prog4': $("#event_startdate_prog4").val(),
+                'schedule_starttime_prog4': $("#event_starttime_prog4").val(),
+                'schedule_enddate_prog4': $("#event_enddate_prog4").val(),
+                'schedule_endtime_prog4': $("#event_endtime_prog4").val(),
+                'comment_prog4': $("#comment_prog4").val(),
+                'event_type':"approve"
+            },
+            success: function (res) {
+                if (res.success) {
+                    location.reload();
+                } else {
+                    alert(res.result);
+                    console.log(res);
+                }
+            },
+            error: function(res){
+                console.log("ERROR");
+            }
+        });
+    });
+});//ready()
 </script>
