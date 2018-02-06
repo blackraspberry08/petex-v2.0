@@ -1,3 +1,38 @@
+<style>
+    .fc-event {
+        font-size: inherit !important;
+        font-weight: bold !important;
+        cursor: pointer;
+    }
+    .fc-future, .fc-today{
+        cursor: pointer;
+    }
+    .fc-widget-content.fc-future, .fc-widget-content.fc-today{
+        cursor: pointer;
+    }
+    .fc-past, .fc-past.fc-other-month{
+        background:#ececec;
+    }
+    .radio{
+        display:inline-block;
+        width:40px;
+        min-height: 10px;
+        height: 40px;
+        max-height: 40px;
+        border-radius: 100%;
+        border: 4px solid #fff;
+        cursor:pointer;
+    }
+    .radio.selected{
+        border-color:#2e7d32;
+    }
+    .fc-day-grid-event .fc-time{
+        font-weight: normal;
+    }
+    .fc-time{
+        font-weight: normal;
+    }
+</style>
 <script>
     $(document).ready(function () {
         $('#calendar').fullCalendar({
@@ -17,75 +52,157 @@
             allDayText: 'Events/Activity',
             allDay: "",
             dayClick: function (date, jsEvent, view) {
-                if(moment().date() > date.date()){
-                   alert("You cannot set a schedule before the current date!");
-                }else{
-                    $('#eventForm')[0].reset();
-                    $('#event_startDate').val(date.format("MMMM D, YYYY"));
-                    $('#event_header').html('Add a schedule');
+                if (moment() > date) {
+                    if (moment().date() === date.date()) {
+                        //Day clicked is today.
+                        //Modify Modal - restrict startdate to current time
+                        $('#customEvent').modal('show');
+                        $('#event_startdate').val(date.format("MMMM D, YYYY")).css("pointer-events", "auto").removeAttr("tabindex");
+                        $('#event_starttime').val(moment().format("h:mm A")).css("pointer-events", "auto").removeAttr("tabindex");
+                        $('#event_title').val("");
+                        $('#event_description').val("");
+                        $('#event_enddate').val("").css("pointer-events", "auto").removeAttr("tabindex");
+                        $('#event_endtime').val("").css("pointer-events", "auto").removeAttr("tabindex");
+                        $('#sendReq').css({"display": "inline-block"});
+                        $('#updateReq').css({"display": "none"});
+                        $('#deleteReq').css({"display": "none"});
+                        
+                    } else {
+                        //Day clicked is past
+                        alert("You cannot set a schedule before the current date!");
+                    }
+                } else {
+                    //Dayclick is future.
+                    //Modify Modal
+                    $('#customEvent').modal('show');
+                    $('#event_startdate').val(date.format("MMMM D, YYYY")).css("pointer-events", "auto").removeAttr("tabindex");
+                    $('#event_title').val("");
+                    $('#event_description').val("");
+                    $('#event_starttime').val("").css("pointer-events", "auto").removeAttr("tabindex");
+                    $('#event_enddate').val("").css("pointer-events", "auto").removeAttr("tabindex");
+                    $('#event_endtime').val("").css("pointer-events", "auto").removeAttr("tabindex");
                     $('#sendReq').css({"display": "inline-block"});
                     $('#updateReq').css({"display": "none"});
                     $('#deleteReq').css({"display": "none"});
-                    $("#event_startDate").prop("disabled", false);
-                    $("#event_startTime").prop("disabled", false);
-                    $("#event_endDate").prop("disabled", false);
-                    $("#event_endTime").prop("disabled", false);
-                    $('#customEvent').modal('open');
-                }    
+                    
+                }
             },
             eventClick: function (calEvent, jsEvent, view) {
-                console.log(calEvent.schedule_id);
                 $.ajax({
                     "method": "POST",
-                    "url": '<?= base_url()?>' + "Schedules/getsched/",
+                    "url": '<?= base_url() ?>' + "Schedules/getsched/",
                     "dataType": "JSON",
                     "data": {
                         'id': calEvent.schedule_id
                     },
                     success: function (res) {
-                        $('#event_header').html('Manage schedule');
+                        $('#customEvent').modal('show');
+                        $('#event_title').val("");
+                        $('#event_description').val("");
+                        $('#event_starttime').val("");
+                        $('#event_enddate').val("");
+                        $('#event_endtime').val("");
+                        $('#event_id').val(res[0].id);
+                        $('#event_startdate').val(res[0].startdate).css("pointer-events", "none").attr("tabindex", "-1");
+                        $('#event_starttime').val(res[0].starttime).css("pointer-events", "none").attr("tabindex", "-1");
+                        $('#event_enddate').val(res[0].enddate).css("pointer-events", "none").attr("tabindex", "-1");
+                        $('#event_endtime').val(res[0].endtime).css("pointer-events", "none").attr("tabindex", "-1");
+                        $('#event_title').val(res[0].title);
+                        $('#event_description').val(res[0].description);
+                        $('#event_color').val(res[0].color);
+                        
+                        $('.colors .radio').parent().find('.radio').removeClass("selected");
+                        switch(res[0].color){
+                            case '#3a87ad' :{
+                                    $("#_3a87ad").addClass("selected");
+                                    break;
+                            }
+                            case '#1b5e20' :{
+                                    $("#_1b5e20").addClass("selected");
+                                    break;
+                            }
+                            case '#fbc02d' :{
+                                    $("#_fbc02d").addClass("selected");
+                                    break;
+                                }
+                            case '#d81b60' :{
+                                    $("#_d81b60").addClass("selected");
+                                    break;
+                                }
+                            case '#7b1fa2' :{
+                                    $("#_7b1fa2").addClass("selected");
+                                    break;
+                                }
+                            case '#1976d2' :{
+                                    $("#_1976d2").addClass("selected");
+                                    break;
+                                }
+                            case '#e53935' :{
+                                    $("#_e53935").addClass("selected");
+                                    break;
+                                }
+                            case '#00897b' :{
+                                    $("#_00897b").addClass("selected");
+                                    break;
+                                }
+                            case '#e65100' :{
+                                    $("#_e65100").addClass("selected");
+                                    break;
+                                }
+                            case '#6d4c41' :{
+                                    $("#_6d4c41").addClass("selected");
+                                    break;
+                                }
+                            case '#3949ab' :{
+                                    $("#_3949ab").addClass("selected");
+                                    break;
+                                }
+                            case '#ffb300' :{
+                                    $("#_ffb300").addClass("selected");
+                                    break;
+                                }
+                            default:{
+                                    break;
+                            }
+                        }
+                        
+                        $('#eventHeader').html("<i class = 'fa fa-calendar'></i> Event Information");
                         $('#sendReq').css({"display": "none"});
                         $('#updateReq').css({"display": "inline-block"});
                         $('#deleteReq').css({"display": "inline-block"});
-                        $("#event_id").val(res[0].schedule_id);
-                        $("#event_name").val(res[0].schedule_title);
-                        $("#event_description").val(res[0].schedule_desc);
-                        $("#event_color").val(res[0].schedule_color);
-                        $("#event_startDate").val(res[0].schedule_startdate);
-                        $("#event_startDate").prop("disabled", true);
-                        $("#event_startTime").val(res[0].schedule_starttime);
-                        $("#event_startTime").prop("disabled", true);
-                        $("#event_endDate").val(res[0].schedule_enddate);
-                        $("#event_endDate").prop("disabled", true);
-                        $("#event_endTime").val(res[0].schedule_endtime);
-                        $("#event_endTime").prop("disabled", true);
-                        $('#customEvent').modal('open');
+                    },
+                    error: function(res){
+                        alert("something went wrong");
                     }
+                    
                 });
             },
+            
             events: {
                 method: "POST",
                 url: '<?= base_url() ?>' + 'Schedules/getscheds/',
                 dataType: 'JSON',
             },
-            eventRender: function (event, element) {
-                //element.css({"height":"30px"});
+            eventRender: function(event, element) {
+                //TOOLTIP
             }
         });
-        
+
+        //BUTTON FUNCTIONS
+
         $(document).on('click', '#sendReq', function () {
             $.ajax({
                 "method": "POST",
-                "url": '<?= base_url()?>' + "Schedules/setreserve/",
+                "url": '<?= base_url() ?>' + "Schedules/setreserve/",
                 "dataType": "JSON",
                 "data": {
-                    'schedule_title': $("#event_name").val(),
+                    'schedule_title': $("#event_title").val(),
                     'schedule_desc': $("#event_description").val(),
                     'schedule_color': $("#event_color").val(),
-                    'schedule_startdate': $("#event_startDate").val(),
-                    'schedule_starttime': $("#event_startTime").val(),
-                    'schedule_enddate': $("#event_endDate").val(),
-                    'schedule_endtime': $("#event_endTime").val()
+                    'schedule_startdate': $("#event_startdate").val(),
+                    'schedule_starttime': $("#event_starttime").val(),
+                    'schedule_enddate': $("#event_enddate").val(),
+                    'schedule_endtime': $("#event_endtime").val()
                 },
                 success: function (res) {
                     if (res.success) {
@@ -94,25 +211,24 @@
                         alert(res.result);
                     }
 
+                },
+                error: function(res){
+                    console.log(res);
                 }
             });
 
         });
-        
+
         $(document).on('click', '#updateReq', function () {
             $.ajax({
                 "method": "POST",
-                "url": "<?= base_url()?>" + "Schedules/updatereserve/",
+                "url": "<?= base_url() ?>" + "Schedules/updatereserve/",
                 "dataType": "JSON",
                 "data": {
                     'schedule_id': $("#event_id").val(),
-                    'schedule_title': $("#event_name").val(),
+                    'schedule_title': $("#event_title").val(),
                     'schedule_desc': $("#event_description").val(),
                     'schedule_color': $("#event_color").val(),
-                    'schedule_startdate': $("#event_startDate").val(),
-                    'schedule_starttime': $("#event_startTime").val(),
-                    'schedule_enddate': $("#event_endDate").val(),
-                    'schedule_endtime': $("#event_endTime").val()
                 },
                 success: function (res) {
                     if (res.success) {
@@ -120,24 +236,20 @@
                     } else {
                         alert(res.result);
                     }
+                },
+                error:function(res){
+                    console.log(res);
                 }
             });
         });
-        
+
         $(document).on('click', '#deleteReq', function () {
             $.ajax({
                 "method": "POST",
-                "url": "<?= base_url()?>" + "Schedules/deletereserve/",
+                "url": "<?= base_url() ?>" + "Schedules/deletereserve/",
                 "dataType": "JSON",
                 "data": {
-                    'schedule_id': $("#event_id").val(),
-                    'schedule_title': $("#event_name").val(),
-                    'schedule_desc': $("#event_description").val(),
-                    'schedule_color': $("#event_color").val(),
-                    'schedule_startdate': $("#event_startDate").val(),
-                    'schedule_starttime': $("#event_startTime").val(),
-                    'schedule_enddate': $("#event_endDate").val(),
-                    'schedule_endtime': $("#event_endTime").val()
+                    'schedule_id': $("#event_id").val()
                 },
                 success: function (res) {
                     if (res.success) {
@@ -148,12 +260,95 @@
                 }
             });
         });
-        
-        
+
+
     });
-    </script>
+</script>
 <div class ="side-nav-offset">
-    <div class ="container containerCal">
+    <div class ="container-fluid my-4">
         <div id="calendar"></div>
     </div>
 </div>
+
+<!-- Modal For Adding Events -->
+<div class="modal fade" id="customEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id ="eventForm" method = "POST" role = "form">
+        <input type ="hidden" name = "event_id" id = "event_id"/>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-calendar-plus-o"></i> Add an Event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="event_title">Title</label>
+                            <input type="text"class="form-control" id="event_title" name = "event_title" placeholder="Title">
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label for="event_color">Color</label>
+                            <div class="colors text-center">
+                                <div id = "_3a87ad" class = "radio selected" style = "background:#3a87ad;" data-value="#3a87ad"></div>
+                                <div id = "_1b5e20" class = "radio " style = "background:#1b5e20;" data-value="#1b5e20"></div>
+                                <div id = "_fbc02d" class = "radio " style = "background:#fbc02d;" data-value="#fbc02d"></div>
+                                <div id = "_d81b60" class = "radio " style = "background:#d81b60;" data-value="#d81b60"></div>
+                                <div id = "_7b1fa2" class = "radio " style = "background:#7b1fa2;" data-value="#7b1fa2"></div>
+                                <div id = "_1976d2" class = "radio " style = "background:#1976d2;" data-value="#1976d2"></div>
+                                <br>
+                                <div id = "_e53935" class = "radio " style = "background:#e53935;" data-value="#e53935"></div>
+                                <div id = "_00897b" class = "radio " style = "background:#00897b;" data-value="#00897b"></div>
+                                <div id = "_e65100" class = "radio " style = "background:#e65100;" data-value="#e65100"></div>
+                                <div id = "_6d4c41" class = "radio " style = "background:#6d4c41;" data-value="#6d4c41"></div>
+                                <div id = "_3949ab" class = "radio " style = "background:#3949ab;" data-value="#3949ab"></div>
+                                <div id = "_ffb300" class = "radio " style = "background:#ffb300;" data-value="#ffb300"></div>
+                                <input type="hidden" id="event_color" name="event_color" value = "#3a87ad"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "form-row">
+                        <div class = "col-md-6 form-group">
+                            <label for="event_startdate">Start Date</label>
+                            <input type = "text" id = "event_startdate" name = "event_startdate" class = "form-control" readonly=""/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_starttime">Start Time</label>
+                            <input type = "text" id = "event_starttime" name = "event_starttime" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                        </div>
+                    </div>
+                    <div class = "form-row">
+                        <div class = "col-md-6 form-group">
+                            <label for="event_enddate">End Date</label>
+                            <input type = "text" id = "event_enddate" name = "event_enddate" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_endtime">End Time</label>
+                            <input type = "text" id = "event_endtime" name = "event_endtime" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_description">Description</label>
+                        <textarea class="form-control" id="event_description" name ="event_description" placeholder="Description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id = "sendReq" class="btn btn-primary">Add Event</button>
+                    <button type="button" id = "deleteReq" class="btn btn-danger">Delete Event</button>
+                    <button type="button" id = "updateReq" class="btn btn-primary">Edit Event</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('.colors .radio').click(function () {
+        $(this).parent().find('.radio').removeClass('selected');
+        $(this).addClass('selected');
+        var val = $(this).attr('data-value');
+        $(this).parent().find('input').val(val);
+    });
+</script>

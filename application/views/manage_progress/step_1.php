@@ -1,3 +1,66 @@
+<script>
+//BUTTON FUNCTIONS
+$(document).on('click', '#step_1_approve', function () {
+    $.ajax({
+        "method": "POST",
+        "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
+        "dataType": "JSON",
+        "data": {
+            'schedule_title': $("#event_title").val(),
+            'schedule_desc': $("#event_description").val(),
+            'schedule_color': $("#event_color").val(),
+            'schedule_startdate': $("#event_startdate").val(),
+            'schedule_starttime': $("#event_starttime").val(),
+            'schedule_enddate': $("#event_enddate").val(),
+            'schedule_endtime': $("#event_endtime").val(),
+            'comment':$('#comment').val(),
+            'event_type':"approve"
+        },
+        success: function (res) {
+            if (res.success) {
+                location.reload();
+                console.log("SUCCESS");
+                console.log(res.result);
+            } else {
+                alert(res.result);
+                console.log("UNSUCCESSFUL");
+                console.log(res.result);
+            }
+
+        },
+        error: function(res){
+            console.log("ERROR");
+            console.log(res);
+        }
+    });
+
+});
+
+$(document).on('click', '#step_1_disapprove', function () {
+    $.ajax({
+        "method": "POST",
+        "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
+        "dataType": "JSON",
+        "data": {
+            'comment':$('#comment_d').val(),
+            'event_type':"disapprove"
+        },
+        success: function (res) {
+            if (res.success) {
+                location.reload();
+            } else {
+                alert(res.result);
+            }
+
+        },
+        error: function(res){
+            console.log("ERROR");
+        }
+    });
+
+});
+
+</script>
 <?php
     $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction->transaction_id))[0];
 ?>
@@ -69,6 +132,7 @@
             </div>
         </div>
     </div>
+    
 <?php else: ?>
     <!-- Adoption Form Submitted -->
     <div class = "col-lg-12">
@@ -78,6 +142,19 @@
             <p class = "text-muted">&emsp;<?= $progress_1->checklist_desc?></p>
             <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
                 <iframe class="embed-responsive-item" src="<?= base_url() . $adoption_form->adoption_form_location ?>" allowfullscreen type="application/pdf"></iframe>
+            </div>
+            <div class ="row">
+                <div class = "col-lg-12 mb-3">
+                    <div class="media mr-3">
+                        <div class="media-body text-right">
+                            <h6 class="mt-0 mb-1" style ="font-weight:normal;">Sent by <strong><?= $transaction->user_firstname." ".$transaction->user_lastname?></strong></h6>
+                            <span class = "text-muted">Submitted at <?= date('F d, Y \a\t h:i A', $adoption_form->adoption_form_added_at)?></span><br>
+                        </div>
+                        <div class = "image-fit">
+                            <img class="d-flex ml-3" src="<?= base_url() . $transaction->user_picture ?>" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                        </div>
+                    </div>
+                </div>
             </div>
             <?php if (!empty($comments_step_1)): ?>
                 <!-- There are recent comments -->
@@ -101,14 +178,11 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
-                    <div class="card-footer small text-muted">
-                        <form action = "<?= base_url() ?>ManageProgress/step_1/<?= $transaction->transaction_id ?>" method = "POST">
-                            <div class="input-group">
-                                <button type ="submit" name = "disapprove" value = "disapprove" class = "input-group-addon btn btn-danger" style = "border-top-right-radius:0;border-bottom-right-radius:0; width:65px;" data-toggle = "tooltip" data-placement = "bottom" title = "Disapprove"><i class = "fa fa-thumbs-o-down"></i></button>
-                                <textarea class="form-control" name = "comment" placeholder = "Comment" required></textarea>     
-                                <button type ="submit" name = "approve" value = "approve" class = "input-group-addon btn btn-primary" style = "border-top-left-radius:0;border-bottom-left-radius:0; width:65px;" data-toggle = "tooltip" data-placement = "bottom" title = "Approve"><i class = "fa fa-thumbs-o-up"></i></button>
-                            </div>
-                        </form>
+                    <div class="card-footer small text-muted text-center">
+                        <div class="btn-group" role="group" aria-label="Approval">
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_1_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_1_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        </div>
                     </div>
                 </div><!-- /Comment-->
             <?php else: ?>
@@ -124,14 +198,11 @@
                             <br><br>
                         </center>
                     </div>
-                    <div class="card-footer small text-muted">
-                        <form action = "<?= base_url() ?>ManageProgress/step_1/<?= $transaction->transaction_id ?>" method = "POST">
-                            <div class="input-group">
-                                <button type ="submit" name = "disapprove" value = "disapprove" class = "input-group-addon btn btn-danger" style = "border-top-right-radius:0;border-bottom-right-radius:0; width:65px;" data-toggle = "tooltip" data-placement = "bottom" title = "Disapprove"><i class = "fa fa-thumbs-o-down"></i></button>
-                                <textarea class="form-control" name = "comment" placeholder = "Comment" required></textarea>     
-                                <button type ="submit" name = "approve" value = "approve" class = "input-group-addon btn btn-primary" style = "border-top-left-radius:0;border-bottom-left-radius:0; width:65px;" data-toggle = "tooltip" data-placement = "bottom" title = "Approve"><i class = "fa fa-thumbs-o-up"></i></button>
-                            </div>
-                        </form>
+                    <div class="card-footer small text-muted text-center">
+                        <div class="btn-group" role="group" aria-label="Approval">
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_1_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_1_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        </div>
                     </div>
                 </div><!-- /Comment-->
             <?php endif; ?>
@@ -141,6 +212,19 @@
             <p class = "text-muted">&emsp;<?= $progress_1->checklist_desc?></p>
             <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
                 <iframe class="embed-responsive-item" src="<?= base_url() . $adoption_form->adoption_form_location ?>" allowfullscreen type="application/pdf"></iframe>
+            </div>
+            <div class ="row">
+                <div class = "col-lg-12 mb-3">
+                    <div class="media mr-3">
+                        <div class="media-body text-right">
+                            <h6 class="mt-0 mb-1" style ="font-weight:normal;">Sent by <strong><?= $transaction->user_firstname." ".$transaction->user_lastname?></strong></h6>
+                            <span class = "text-muted">Submitted at <?= date('F d, Y \a\t h:i A', $adoption_form->adoption_form_added_at)?></span><br>
+                        </div>
+                        <div class = "image-fit">
+                            <img class="d-flex ml-3" src="<?= base_url() . $transaction->user_picture ?>" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                        </div>
+                    </div>
+                </div>
             </div>
             <?php if (!empty($comments_step_1)): ?>
                 <!-- If there are comments -->
@@ -175,3 +259,84 @@
         <?php endif; ?>
     </div>
 <?php endif; ?> 
+    
+<!-- MODAL FOR APPROVING STEP 1 -->
+<div class="modal fade" id="step_1_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id = "step_1_form_a" method = "POST" role = "form">
+        <!-- Hidden Fields -->
+        <input type ="hidden"  id="event_title" name = "event_title" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
+        <input type ="hidden"  id="event_color" name = "event_color" value = "#1e7e34"/>
+        <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
+        <input type ="hidden"  id="event_description" name ="event_description" value = "Adoption Form is approved (16%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
+        <!-- Displayed Fields -->
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-up"></i> Approve Adoption Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Meet and Greet</p>
+                    <div class = "form-row">
+                        <div class = "col-md-6 form-group">
+                            <label for="event_startdate">Start Date</label>
+                            <input type = "text" id = "event_startdate" name = "event_startdate" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_starttime">Start Time</label>
+                            <input type = "text" id = "event_starttime" name = "event_starttime" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                        </div>
+                    </div>
+                    <div class = "form-row">
+                        <div class = "col-md-6 form-group">
+                            <label for="event_enddate">End Date</label>
+                            <input type = "text" id = "event_enddate" name = "event_enddate" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_endtime">End Time</label>
+                            <input type = "text" id = "event_endtime" name = "event_endtime" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                        </div>
+                    </div>
+                    <div class = "form-row">
+                        <label for="comment">Comment</label>
+                        <textarea class = "form-control" id = "comment" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id = "step_1_approve" class="btn btn-primary">Approve</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- MODAL FOR DISAPPROVING STEP 1 -->
+<div class="modal fade" id="step_1_sched_disapprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id = "step_1_form_d" method = "POST" role = "form">
+        <input type ="hidden"  id="event_type" name = "event_type" value = "disapprove"/>
+        <!-- Displayed Fields -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Adoption Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class = "form-row">
+                        <label for="comment">Comment</label>
+                        <textarea class = "form-control" id = "comment_d" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id = "step_1_disapprove" class="btn btn-danger ">Disapprove</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
