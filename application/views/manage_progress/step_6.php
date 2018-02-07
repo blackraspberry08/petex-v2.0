@@ -60,7 +60,7 @@
         <!-- There are recent comments -->
         <div class="card mb-3">
             <div class ="card-header">
-                <i class = "fa fa-comment" ></i> Comments
+                <i class = "fa fa-comment" ></i> Remarks
             </div>
             
             <?php foreach ($comments_step_6 as $comment): ?>
@@ -97,11 +97,11 @@
         <!-- There are no comments -->
         <div class="card mb-3">
             <div class ="card-header">
-                <i class = "fa fa-comment" ></i> Comments
+                <i class = "fa fa-comment" ></i> Remarks
             </div>
             <div class="card-body small bg-faded">
                 <center>
-                    <h4>No comments yet.</h4>
+                    <h4>No remarks yet.</h4>
                     <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
                     <br><br>
                 </center>
