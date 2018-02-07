@@ -28,14 +28,20 @@
                                 <td><?= $trail->user_firstname . " " . $trail->user_lastname ?></td>
                                 <td><?= $trail->event_description ?></td>
                                 <td>Pet Adopter</td>
-                                <td><?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?></td>
+                                <td>
+                                    <span style = "display:none;"><?= $trail->event_added_at?></span>
+                                    <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                </td>
                             </tr>
                         <?php else:?>
                             <tr>
                                 <td><?= $trail->admin_firstname . " " . $trail->admin_lastname ?></td>
                                 <td><?= $trail->event_description ?></td>
                                 <td><?= $trail->admin_access == "Subadmin"? "PAWS Officer" : "Administrator";?></td>
-                                <td><?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?></td>
+                                <td>
+                                    <span style = "display:none;"><?= $trail->event_added_at?></span>
+                                    <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                </td>
                             </tr>
                         <?php endif;?>
                         
