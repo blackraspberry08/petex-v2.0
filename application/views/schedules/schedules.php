@@ -67,9 +67,11 @@
                         $('#updateReq').css({"display": "none"});
                         $('#deleteReq').css({"display": "none"});
                         
+                        
                     } else {
                         //Day clicked is past
-                        alert("You cannot set a schedule before the current date!");
+                        //alert("You cannot set a schedule before the current date!");
+                        swal("Oops", "You cannot set a schedule before the current date!", "error");
                     }
                 } else {
                     //Dayclick is future.
@@ -172,7 +174,8 @@
                         $('#deleteReq').css({"display": "inline-block"});
                     },
                     error: function(res){
-                        alert("something went wrong");
+                        //alert("something went wrong");
+                        swal("Reload", "Something Went Wrong", "error");
                     }
                     
                 });
@@ -208,12 +211,64 @@
                     if (res.success) {
                         location.reload();
                     } else {
-                        alert(res.result);
+                        //Errors in form
+                        //alert(res.result);
+                        swal("Oops", res.result, "error");
+                        //VALIDATIONS
+                        var field_1 = $("#event_title");
+                        var field_2 = $("#event_startdate");
+                        var field_3 = $("#event_starttime");
+                        var field_4 = $("#event_enddate");
+                        var field_5 = $("#event_endtime");
+                        if(res.title !== ""){
+                            $(field_1).siblings(".invalid-feedback").remove();
+                            $(field_1).after("<div class = 'invalid-feedback'>"+res.title+"</div>");
+                            $(field_1).removeClass("is-invalid").addClass("is-invalid"); 
+                        }else{
+                            $(field_1).siblings(".invalid-feedback").remove();
+                            $(field_1).removeClass("is-invalid");
+                        }
+                        
+                        if(res.startdate !== ""){
+                            $(field_2).siblings(".invalid-feedback").remove();
+                            $(field_2).after("<div class = 'invalid-feedback'>"+res.startdate+"</div>");
+                            $(field_2).removeClass("is-invalid").addClass("is-invalid"); 
+                        }else{
+                            $(field_2).siblings(".invalid-feedback").remove();
+                            $(field_2).removeClass("is-invalid");
+                        }
+                        
+                        if(res.starttime !== ""){
+                            $(field_3).siblings(".invalid-feedback").remove();
+                            $(field_3).after("<div class = 'invalid-feedback'>"+res.starttime+"</div>");
+                            $(field_3).removeClass("is-invalid").addClass("is-invalid"); 
+                        }else{
+                            $(field_3).siblings(".invalid-feedback").remove();
+                            $(field_3).removeClass("is-invalid");
+                        }
+                        
+                        if(res.enddate !== ""){
+                            $(field_4).siblings(".invalid-feedback").remove();
+                            $(field_4).after("<div class = 'invalid-feedback'>"+res.enddate+"</div>");
+                            $(field_4).removeClass("is-invalid").addClass("is-invalid"); 
+                        }else{
+                            $(field_4).siblings(".invalid-feedback").remove();
+                            $(field_4).removeClass("is-invalid");
+                        }
+                        
+                        if(res.endtime !== ""){
+                            $(field_5).siblings(".invalid-feedback").remove();
+                            $(field_5).after("<div class = 'invalid-feedback'>"+res.endtime+"</div>");
+                            $(field_5).removeClass("is-invalid").addClass("is-invalid"); 
+                        }else{
+                            $(field_5).siblings(".invalid-feedback").remove();
+                            $(field_5).removeClass("is-invalid");
+                        }
                     }
-
+                    console.log(res);
                 },
                 error: function(res){
-                    console.log(res);
+                    swal("Reload", "Something Went Wrong", "error");
                 }
             });
 
@@ -234,7 +289,18 @@
                     if (res.success) {
                         location.reload();
                     } else {
-                        alert(res.result);
+                        swal("Oops", res.result, "error");
+                        if(res.title !== ""){
+                            var field = $("#event_title");
+                            $(field).siblings(".invalid-feedback").remove();
+                            $(field).after("<div class = 'invalid-feedback'>"+res.title+"</div>");
+                            $(field).removeClass("is-invalid").addClass("is-invalid");
+                        }else{
+                            var field = $("#event_title");
+                            $(field).siblings(".invalid-feedback").remove();
+                            $(field).removeClass("is-invalid");
+                        }
+                        console.log(res);
                     }
                 },
                 error:function(res){
@@ -282,11 +348,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body validate-fields">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="event_title">Title</label>
-                            <input type="text"class="form-control" id="event_title" name = "event_title" placeholder="Title">
+                            <input type="text" class="form-control" id="event_title" name = "event_title" placeholder="Title">
                         </div>
                         <div class="form-group col-md-6 ">
                             <label for="event_color">Color</label>
@@ -335,9 +401,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "sendReq" class="btn btn-primary">Add Event</button>
-                    <button type="button" id = "deleteReq" class="btn btn-danger">Delete Event</button>
-                    <button type="button" id = "updateReq" class="btn btn-primary">Edit Event</button>
+                    <button type="button" id = "sendReq" class="btn btn-primary"><i class = "fa fa-plus"></i> Create Event</button>
+                    <button type="button" id = "deleteReq" class="btn btn-danger"><i class = "fa fa-ban"></i> Cancel Event</button>
+                    <button type="button" id = "updateReq" class="btn btn-primary"><i class = "fa fa-pencil"></i> Update Event Information</button>
                 </div>
             </div>
         </div>
@@ -351,4 +417,11 @@
         var val = $(this).attr('data-value');
         $(this).parent().find('input').val(val);
     });
+</script>
+
+<!-- RESET FORM ON MODAL CLOSE -->
+<script>
+     $('.modal').on('hidden.bs.modal', function(){
+         $(this).find('form')[0].reset();
+     });
 </script>

@@ -31,8 +31,8 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
    <!-- Full Calendar -->
    <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.css">
-   
-   
+   <!-- SweetAlert -->
+   <link rel = "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
    
    <!-- Custom styles for this template-->
    <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
