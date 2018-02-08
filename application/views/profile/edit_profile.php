@@ -217,7 +217,7 @@ Edit Profile
 <!-- Bootstrap File Upload with preview -->
 <script src = "<?= base_url() ?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
 <script>
-                                    var upload = new FileUploadWithPreview('user_picture')
+var upload = new FileUploadWithPreview('user_picture')
 </script>
 <!-- Bootstrap File Upload with preview -->
 <script>

@@ -22,7 +22,7 @@ Pet Adoption
             </div>
             <div class="card-body container-fluid">
                 <div class="row">
-                    <form method="POST" enctype="multipart/form-data" action ="petAdoptionOnlineForm_send">
+                    <form method="POST" enctype="multipart/form-data" action ="petAdoptionOnlineForm_send/<?= $pet->pet_id ?>">
                         <div class="row">
                             <div class ="col-sm-3 center"><br><br>
                                 <img src ="<?= base_url(); ?>images/logo/paws.png" class ="img-fluid">
@@ -105,7 +105,7 @@ Pet Adoption
                                         <label>&nbsp;Age</label>
                                     </div>
                                     <div class="form-group col-sm-3">
-                                        <input type="text" class="form-control" name = "adoptee_specie" readonly="" value = "<?= $pet->pet_specie == "canine" ? "Dog" : "Cat"; ?>">
+                                        <input type="text" class="form-control" name = "adoptee_specie" readonly="" value = "<?= $pet->pet_specie == "Canine" ? "Dog" : "Cat"; ?>">
                                         <label>&nbsp;Specie</label>
                                     </div>
                                     <div class="form-group col-sm-3">
@@ -114,7 +114,7 @@ Pet Adoption
                                     </div>
                                     <div class="form-group col-sm-3">
                                         <input type="text" class="form-control" name = "adoptee_sterilized" readonly="" value = "<?= $pet->pet_neutered_spayed == 1 ? "Yes" : "No"; ?>">
-                                        <label for = "adoptee_sterilized">&nbsp;<?= $pet->pet_sex == "male" ? "Neutered?" : "Spayed?"; ?></label>
+                                        <label for = "adoptee_sterilized">&nbsp;<?= $pet->pet_sex == "Male" ? "Neutered?" : "Spayed?"; ?></label>
                                     </div>
                                     <div class="form-group col-sm-3">
                                         <input type="text" class="form-control" name = "adoptee_admission" readonly="" value = "<?= $pet->pet_admission; ?>">
@@ -152,13 +152,13 @@ Pet Adoption
 
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="interested" type="radio" id="interested_cat"  class = "form-check-label" value ="Cat" <?= $pet->pet_specie == "Feline" ? "checked = \"\"" : "" ?>/>
+                                        <input name="interested" type="radio" id="interested_cat" class = "form-check-label" value ="Cat" <?= $pet->pet_specie == "Feline" ? "checked = \"\"" : "disabled = \"\"" ?>/>
                                         Cat
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="interested" type="radio" id="interested_dog" class = "with-gap" value ="Dog" <?= $pet->pet_specie == "Canine" ? "checked = \"\"" : "" ?>/>
+                                        <input name="interested" type="radio" id="interested_dog" class = "with-gap" value ="Dog" <?= $pet->pet_specie == "Canine" ? "checked = \"\"" : "disabled = \"\"" ?>/>
                                         Dog
                                     </label>
                                 </div>
@@ -167,36 +167,32 @@ Pet Adoption
                                 <span>Size: </span>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="small" value ="S" class = "with-gap" <?= $pet->pet_size == "S" ? "checked = \"\"" : "" ?> />
+                                        <input name="size" type="radio" id="small" value ="S" class = "with-gap" <?= $pet->pet_size == "S" ? "checked = \"\"" : "disabled = \"\"" ?> />
                                         S
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="medium" value ="M" class = "with-gap" <?= $pet->pet_size == "M" ? "checked = \"\"" : "" ?>  />
+                                        <input name="size" type="radio" id="medium" value ="M" class = "with-gap" <?= $pet->pet_size == "M" ? "checked = \"\"" : "disabled = \"\"" ?>  />
                                         M
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="large" value ="L" class = "with-gap" <?= $pet->pet_size == "L" ? "checked = \"\"" : "" ?>  />
+                                        <input name="size" type="radio" id="large" value ="L" class = "with-gap" <?= $pet->pet_size == "L" ? "checked = \"\"" : "disabled = \"\"" ?>  />
                                         L
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="xlarge" value ="XL" class = "with-gap" <?= $pet->pet_size == "XL" ? "checked = \"\"" : "" ?>  />
+                                        <input name="size" type="radio" id="xlarge" value ="XL" class = "with-gap" <?= $pet->pet_size == "XL" ? "checked = \"\"" : "disabled = \"\"" ?>  />
                                         XL
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "breed" value="<?= $pet->pet_breed ?>" >
+                                <input type="text" class="form-control" name = "breed" readonly="" value="<?= $pet->pet_breed ?>" >
                                 <label>&nbsp;Breed/Mix</label>
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <input type="text" class="form-control" name = "petage" value="<?= get_age($pet->pet_bday); ?>" >
-                                <label>&nbsp;Age</label>
                             </div>
                             <div class="form-group col-sm-12">
                                 <label for="description" style = "padding-top:40px !important;">Name/description of animal(if animal is available at PARC)</label>
@@ -266,7 +262,7 @@ Pet Adoption
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" id="other" name = "num3" class="with-gap num3"/>
+                                                <input type="radio" id="other" value = "Other" name = "num3" class="with-gap num3"/>
                                                 Other
                                             </label>
                                         </div><br>
@@ -323,15 +319,16 @@ Pet Adoption
                                         <span>Please attach a letter from your landlord granting you permission to keep pets.</span>
                                         <div class="custom-file-container" data-upload-id="num4file">
                                             <label class="custom-file-container__custom-file" >
-                                                <input type="file" name = "num4file" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="application/*" onClick="this.form.reset()">
+                                                <input type="file" name = "num4file" id = "num21file_edit" class="custom-file-container__custom-file__custom-file-input" accept="application/*">
                                                 <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
                                                 <span class="custom-file-container__custom-file__custom-file-control"></span>
                                                 <button class="custom-file-container__image-clear">x</button>
                                             </label>
+                                            <small id="videoHelp" class="form-text text-muted">
+                                                Max size is 5MB. Allowed types is .docx, .pdf
+                                            </small>
+                                            <div class="custom-file-container__image-preview" style= "height:0px !important;" id = "num4fileedit_preview"></div>
                                         </div>
-                                        <small id="videoHelp" class="form-text text-muted">
-                                            Max size is 5MB. Allowed types is .docx, .pdf
-                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -375,7 +372,7 @@ Pet Adoption
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" id="num5other" name = "num5" class="with-gap num5"/>
+                                                <input type="radio" id="num5other" value = "Other" name = "num5" class="with-gap num5"/>
                                                 Other
                                             </label>
                                         </div>
@@ -445,7 +442,7 @@ Pet Adoption
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" id="num7others" name = "num7" class = "with-gap num7"/>
+                                                <input type="radio" id="num7others" value = "Other" name = "num7" class = "with-gap num7"/>
                                                 Other
                                             </label>
                                         </div>
@@ -461,7 +458,7 @@ Pet Adoption
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <span>8.) Will the whole family share in the care in the care of animal??</span>
+                                <span>8.) Will the whole family share in the care in the care of animal?</span>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input type="radio" id="num8yes" value ="Yes" name = "num8" class = "with-gap num8" checked=""/>
@@ -585,7 +582,7 @@ Pet Adoption
                         <div class = "row container">
                             <div class="form-group col-sm-6">
                                 <span>15.) How many hours in an average workday will your companion animal spend without a human?</span>
-                                <input type="text" class="form-control" name="num15">
+                                <input type="number" class="form-control" name="num15">
                             </div>
                             <div class="form-group col-sm-6">
                                 <span>16.) What will happen to your companion animal, when you go on a vacation or in case of emergency?</span>
@@ -597,13 +594,13 @@ Pet Adoption
                                 <span>17.) Do you have regular veterinarian?</span><br>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num17yes" value ="Yes" name = "num17" class = "with-gap num17" checked=""/>
+                                        <input type="radio" id="num17yes" value ="Yes" name = "num17" class = "with-gap num17" />
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" id="num17no" value ="No" name = "num17" class = "with-gap num17"/>
+                                        <input type="radio" id="num17no" value ="No" name = "num17" checked=""  class = "with-gap num17"/>
                                         No
                                     </label>
                                 </div> 
@@ -702,7 +699,7 @@ Pet Adoption
                                     </div>
                                     <div class="custom-file-container" data-upload-id="num21file">
                                         <label class="custom-file-container__custom-file" >
-                                            <input type="file" name = "num21file" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
+                                            <input type="file" name = "num21file" id = "num21file_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*">
                                             <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
                                             <span class="custom-file-container__custom-file__custom-file-control"></span>
                                             <button class="custom-file-container__image-clear">x</button>
@@ -710,6 +707,8 @@ Pet Adoption
                                         <small id="videoHelp" class="form-text text-muted">
                                             Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png
                                         </small>
+                                        <div class="custom-file-container__image-preview" id = "num21fileedit_preview"></div>
+
                                     </div>
                                 </div>
                             </div>
@@ -731,7 +730,7 @@ Pet Adoption
                                     <div class = "row">
                                         <div class="form-group col-sm-12">
                                             <textarea id="num22how" name="num22how" class="form-control"></textarea>
-                                            <label for = "num22how">&nbsp;How will you handle he dog's exercise and toilet duties?</label>
+                                            <label for = "num22how">&nbsp;How will you handle the dog's exercise and toilet duties?</label>
                                         </div>
                                     </div>
                                 </div>
@@ -764,7 +763,7 @@ Pet Adoption
                                         </div> 
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" id="other23" name = "num23" class = "with-gap num23"/>
+                                                <input type="radio" id="other23" value = "Other" name = "num23" class = "with-gap num23"/>
                                                 Other Location
                                             </label>
                                         </div> 
@@ -773,7 +772,7 @@ Pet Adoption
                                 <div id = "num23Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
-                                            <input id = "num23location" type="text" class="form-control" name = "num23specify" >
+                                            <input id = "num23specify" type="text" class="form-control" name = "num23specify" >
                                             <label for = "num23specify">Please Specify</label>
                                         </div>
                                     </div>
@@ -809,6 +808,7 @@ Pet Adoption
     </div>
 </div>
 </div>
+
 <script>
     $(".num2").click(function () {
         var isChecked = $("#num2yes").prop("checked");
@@ -990,6 +990,12 @@ Pet Adoption
             $("#num23Hidden").removeClass("fadeInDown");
         }
     });
+
 </script>
 
-
+<!-- Bootstrap File Upload with preview -->
+<script src = "<?= base_url() ?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
+<script>
+    var upload = new FileUploadWithPreview('num21file')
+    var upload = new FileUploadWithPreview('num4file')
+</script>

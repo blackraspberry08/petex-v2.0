@@ -4,8 +4,6 @@ class Main extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        //---> MODELS HERE!
-        $this->load->model('Main_model');
 
         //---> LIBRARIES HERE!
         //---> SESSIONS HERE!

@@ -4,8 +4,6 @@ class Profile extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        //---> MODELS HERE!
-        $this->load->model('Profile_model');
         //---> HELPERS HERE!
         //---> LIBRARIES HERE!
         //---> SESSIONS HERE!
