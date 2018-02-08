@@ -105,7 +105,7 @@ My Progress
                                             </div>
                                         </div>
                                         <div class="col-md-8">
-                                            <p><?= $progress->checklist_desc?></p>
+                                            <p><?= $progress->checklist_desc ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -277,6 +277,16 @@ My Progress
 <script>
     $(document).ready(function () {
         switch (<?= $transaction_progress ?>) {
+            case 0:
+            {
+                $("#step_id_1").addClass("disabled");
+                $("#step_id_2").addClass("disabled");
+                $("#step_id_3").addClass("disabled");
+                $("#step_id_4").addClass("disabled");
+                $("#step_id_5").addClass("disabled");
+                $("#step_id_6").addClass("disabled");
+                break;
+            }
             case 16:
             {
                 $("#step_id_1").addClass("active");

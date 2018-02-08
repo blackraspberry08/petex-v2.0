@@ -4,8 +4,6 @@ class MyPets extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        //---> MODELS HERE!
-        $this->load->model('MyPets_model');
         //---> LIBRARIES HERE!
         //---> SESSIONS HERE!
         if ($this->session->has_userdata('isloggedin') == FALSE) {
