@@ -61,6 +61,15 @@ class ManageProgress_model extends CI_Model {
         $this->db->update("progress", $data);
         return $this->db->affected_rows();
     }
+    
+    public function edit_progress($data, $where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->update("progress", $data);
+        return $this->db->affected_rows();
+    }
+    
     public function get_comments($where = NULL){
         if(!empty($where)){
              $this->db->where($where);
@@ -76,5 +85,15 @@ class ManageProgress_model extends CI_Model {
         $table = "progress_comment";
         $this->db->insert($table, $progress_comment);
         return $this->db->affected_rows();
+    }
+    
+    public function get_schedule($where = NULL){
+        if(!empty($where)){
+             $this->db->where($where);
+        }
+        $this->db->join("admin", "schedule.admin_id = admin.admin_id", "left outer");
+        $this->db->join("progress", "schedule.progress_id = progress.progress_id", "left outer");
+        $query = $this->db->get("schedule");
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 }

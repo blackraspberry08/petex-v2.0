@@ -31,6 +31,14 @@ class Schedules extends CI_Controller {
         }
     }
     
+    //CUSTOM FUNCTIONS
+    function wrap_errors(){
+        return validation_errors('<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong><i class = "fa fa-exclamation"></i></strong> ', '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>');
+    }
     //CALLBACKS
     public function is_larger_than_startdate($str){
         $unix_start = strtotime($this->input->post("event_startdate")." ".$this->input->post("event_starttime"));
@@ -65,8 +73,8 @@ class Schedules extends CI_Controller {
         $res = array();
         foreach ($result as $key => $arr) {
             $res[$key]["schedule_id"]   = $arr['schedule_id'];
-            $res[$key]["user_id"]       = $arr['user_id'];
-            $res[$key]["admin_id"]       = $arr['admin_id'];
+            $res[$key]["progress_id"]   = $arr['progress_id'];
+            $res[$key]["admin_id"]      = $arr['admin_id'];
             $res[$key]["title"]         = $arr['schedule_title'];
             $res[$key]["color"]         = $arr['schedule_color'];
             $res[$key]["start"]         = date("Y-m-d H:i:s", $arr['schedule_startdate']);
@@ -103,7 +111,15 @@ class Schedules extends CI_Controller {
         
         if ($this->form_validation->run() == FALSE) {
             //IF THERE ARE ERRORS IN FORMS
-            echo json_encode(array('success' => false, 'result' => "There are errors in your form. Please check the fields."));
+            echo json_encode(array(
+                        'success'   => false, 
+                        'result'    => "There are errors in your form. Please check the fields.", 
+                        "title"     => form_error("schedule_title"),
+                        "startdate" => form_error("schedule_startdate"),
+                        "starttime" => form_error("schedule_starttime"),
+                        "enddate"  => form_error("schedule_enddate"),
+                        "endtime"   => form_error("schedule_endtime"),
+                    ));
         } else {
             //IF FORMS ARE VALID
             $startdate = strtotime($this->input->post('schedule_startdate') . " " . $this->input->post('schedule_starttime'));
@@ -126,7 +142,7 @@ class Schedules extends CI_Controller {
                         "schedule_enddate" => $enddate
                     );
                     $this->Schedules_model->add_schedule($data);
-
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a schedule named ".$this->input->post('schedule_title'));
                     echo json_encode(array('success' => true, 'result' => 'Success'));
                 }
             }
@@ -136,23 +152,26 @@ class Schedules extends CI_Controller {
     public function updatereserve() {
         $this->form_validation->set_rules('schedule_title', "Title", "required");
         if ($this->form_validation->run() == FALSE) {
-            echo json_encode(array('success' => false, 'result' => 'Fill up the necessary fields.'));
+            echo json_encode(array(
+                        'success'   => false, 
+                        'result'    => "There are errors in your form. Please check the fields.", 
+                        "title"     => form_error("schedule_title"),
+                    ));
         } else {
             $data = array(
                 "schedule_title" => $this->input->post('schedule_title'),
                 "schedule_desc" => $this->input->post('schedule_desc'),
                 "schedule_color" => $this->input->post('schedule_color'),
             );
-            if($this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")))){
-                echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
-            }else{
-                echo json_encode(array('success' => false, 'result' => 'Something went wrong while updating the event.'));
-            }
+            $this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")));
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated a schedule.");
+            echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
         }
     }
 
     public function deletereserve() {
         $this->Schedules_model->delete_sched($this->input->post("schedule_id"));
+        $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Deleted a schedule.");
         echo json_encode(array('success' => true, 'result' => "Success"));
     }
 }

@@ -42,7 +42,7 @@ Manage Progress
     .btn-default:hover {
         background-color: #30cfc0 !important; }
     .btn-default:focus, .btn-default:active, .btn-default.active {
-        background-color: #1d7d73 !important; }
+        background-color: #28a745 !important; }
     .btn-default.dropdown-toggle {
         background-color: #2BBBAD !important; }
     .btn-default.dropdown-toggle:hover, .btn-default.dropdown-toggle:focus {
@@ -56,7 +56,7 @@ Manage Progress
     .btn-indigo:hover {
         background-color: #4d5ec1 !important; }
     .btn-indigo:focus, .btn-indigo:active, .btn-indigo.active {
-        background-color: #2b387c !important; }
+        background-color: #1e7e34 !important; }
     .btn-indigo.dropdown-toggle {
         background-color: #3f51b5 !important; }
     .btn-indigo.dropdown-toggle:hover, .btn-indigo.dropdown-toggle:focus {
@@ -242,5 +242,39 @@ Manage Progress
         });
         $('div.setup-panel div a.active').trigger('click');
     });
-
 </script>
+
+<script>
+        $(document).ready(function () {
+            var dt = new Date();
+            dt.setFullYear(new Date().getFullYear());
+            //DATE PICKER FOR SCHEDULE
+            $(".schedule_datepicker").datetimepicker({
+                format: 'MM d, yyyy',
+                todayBtn: true,
+                autoclose: true,
+                minView: 2,      
+            });
+            $('.schedule_datepicker').datetimepicker('setStartDate', dt);
+            
+            //TIME PICKER FOR SCHEDULE
+            $(".limited-timepicker").datetimepicker({
+                format: 'H:ii P',
+                autoclose: true,
+                minView: 0,
+                maxView: 1,
+                startView: 1,
+                showMeridian: true,
+                startDate:new Date(),
+            });
+            //$('.limited-timepicker').datetimepicker('setStartDate', dt);
+            $(".no-limit-timepicker").datetimepicker({
+                format: 'H:ii P',
+                autoclose: true,
+                minView: 0,
+                maxView: 1,
+                startView: 1,
+                showMeridian: true,
+            });
+        });
+    </script>

@@ -28,17 +28,17 @@
    <!-- Bootstrap File Upload with preview -->
    <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css">
    <!-- AnimateCss -->
-   <link href="<?= base_url() ?>assets/animate/animate.min.css" rel="stylesheet">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
    <!-- Full Calendar -->
    <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.css">
-   
-   
+   <!-- SweetAlert -->
+   <link rel = "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
    
    <!-- Custom styles for this template-->
    <link href="<?= base_url()?>assets/admin/css/sb-admin.css" rel="stylesheet">
    <style>
        button{
-           cursor:pointer !important;
+           cursor:pointer;
        }
        .custom-file-container__image-clear{
             visibility:hidden;
