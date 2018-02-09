@@ -3,7 +3,6 @@
 $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $progress->transaction_id))[0];
 ?>
 <div class="col-md-12">
-    <h3 class="font-bold pl-0 my-4"><strong> <?= $progress_1->checklist_title ?></strong></h3>
     <div class="row">
         <div class="col-md-4"><br>
             <div class="card">
@@ -33,6 +32,7 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
             </div>
         </div>
         <div class="col-md-8">
+            <h3 class = "mt-3 text-center">Adoption Form</h3>
             <p class = "text-muted">&emsp;<?= $progress_1->checklist_desc ?></p>
             <?php if (!empty($comments_step_1)): ?>
                 <!-- There are recent comments -->
