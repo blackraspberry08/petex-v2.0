@@ -1117,7 +1117,43 @@ class ManageProgress extends CI_Controller {
     }
     
     public function step_6(){
+        $transaction_id = $this->uri->segment(3);
+        $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+        $current_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 6))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
+        if($this->input->post('event_type') == "approve"){
+            
+        }
+        else if ($this->input->post('event_type') == "disapprove") {
+            $this->form_validation->set_rules('comment', "Comment", "required");
+            if ($this->form_validation->run() == FALSE) {
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "Pleas provide a comment.", "comment" => form_error("comment")));
+            } else {
+                //Disapprove Step + Comment
+                $progress_comment = array(
+                    "progress_id"                   => $current_progress->progress_id,
+                    "progress_comment_sender"       => $current_user->admin_firstname." ".$current_user->admin_lastname,
+                    "progress_comment_picture"      => $current_user->admin_picture,
+                    "progress_comment_sender_access" => $current_user->admin_access,
+                    "progress_comment_content"      => $this->input->post('comment'),
+                    "progress_comment_added_at"     => time()
+                );
+                if($this->ManageProgress_model->add_progress_comment($progress_comment)){
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved adoption form (step 1) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Disapproved adoption form.");
+                    echo json_encode(array('success' => true, 'result' => 'Successfully disapproved adoption form.'));
+                }else{
+                    $this->session->set_flashdata("approve_success", "Something went wrong while disapproving adoption form.");
+                    echo json_encode(array('success' => false, 'result' => 'Something went wrong while disapproving adoption form.'));
+                }
+            }
+        }
         
+        else{
+            echo json_encode(array('success' => false, 'result' => "Something Went wrong. Try again later."));
+        }
     }
 }
 
