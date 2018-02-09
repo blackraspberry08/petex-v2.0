@@ -18,7 +18,19 @@ class MyProgress_model extends CI_Model {
         if (!empty($where)) {
             $this->db->where($where);
         }
+        $this->db->order_by("progress.checklist_id", "ASC");
         $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+
+    public function get_comments($where = NULL) {
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->join("progress", "progress_comment.progress_id = progress.progress_id", "left outer");
+        $this->db->join("transaction", "progress.transaction_id = transaction.transaction_id", "left outer");
+        $this->db->order_by("progress_comment_added_at", "ASC");
+        $query = $this->db->get("progress_comment");
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
