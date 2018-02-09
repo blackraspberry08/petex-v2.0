@@ -4,7 +4,6 @@ $progress_2 = $this->ManageProgress_model->get_progress(array("progress.checklis
 $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
 ?>
 <div class="col-md-12">
-    <h3 class="font-bold pl-0 my-4"><strong> <?= $progress_2->checklist_title ?></strong></h3>
     <div class="row">
         <div class="col-md-4"><br>
             <div class="card">
@@ -25,15 +24,16 @@ $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress
 
                 <div class="card-footer text-center">
                     <div class = "btn-group" role="group" aria-label="Button Group">
-                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_2->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
-                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_2->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
-                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_2->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
+                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_2->pet_id; ?>detail2"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
+                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_2->pet_id; ?>medical2"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
+                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_2->pet_id; ?>video2" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                     </div>
                 </div>
 
             </div>
         </div>
         <div class="col-md-8">
+            <h3 class = "mt-3 text-center">Meet And Greet</h3>
             <p class = "text-muted">&emsp;<?= $progress_2->checklist_desc ?></p>
             <div class="card border-dark mb-3 mx-auto text-center" style="max-width: 30rem;">
                 <div class="card-header">
@@ -110,7 +110,7 @@ $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress
     </div>
 </div>
 <!-- Modal Details -->
-<div class="modal fade <?= $progress_2->pet_id; ?>detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade <?= $progress_2->pet_id; ?>detail2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -188,7 +188,7 @@ $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress
 </div>
 <!-- Modal Medical -->
 <?php $medical = $this->MyProgress_model->get_animal_medical_records(array("medical_record.pet_id" => $progress_2->pet_id))[0]; ?>
-<div class="modal fade <?= $progress_2->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade <?= $progress_2->pet_id; ?>medical2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,7 +234,7 @@ $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress
     </div>
 </div>
 <!-- Modal Video -->
-<div class="modal fade <?= $progress_2->pet_id; ?>video" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade <?= $progress_2->pet_id; ?>video2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
