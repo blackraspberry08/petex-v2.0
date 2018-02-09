@@ -90,7 +90,6 @@
             e.preventDefault();
             var $target = $($(this).attr('href')),
                     $item = $(this);
-
             if (!$item.hasClass('')) {
                 navListItems.removeClass('btn-indigo').addClass('btn-default');
                 $item.addClass('btn-indigo');
@@ -101,8 +100,8 @@
         });
         $('div.setup-panel div a.active').trigger('click');
     });
-
 </script>
+
 </div>
 </body>
 </html>

@@ -30,25 +30,50 @@ class MyProgress extends CI_Controller {
 
     public function index() {
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
-        $userInfo = $this->MyProgress_model->fetchJoinProgress(array('transaction.user_id' => $this->session->userid));
-        if (empty($userInfo)) {
+        $transaction = $this->MyProgress_model->fetchJoinProgress(array('transaction.user_id' => $this->session->userdata("userid")))[0];
+        $progress = $this->MyProgress_model->fetchJoinProgress(array('progress.transaction_id' => $transaction->transaction_id));
+        $comments_step_1 = $this->MyProgress_model->get_comments(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction->transaction_id));
+        $comments_step_2 = $this->MyProgress_model->get_comments(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction->transaction_id));
+        $comments_step_3 = $this->MyProgress_model->get_comments(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction->transaction_id));
+        $comments_step_4 = $this->MyProgress_model->get_comments(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction->transaction_id));
+        $comments_step_5 = $this->MyProgress_model->get_comments(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction->transaction_id));
+        $comments_step_6 = $this->MyProgress_model->get_comments(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction->transaction_id));
+//        echo "<pre>";
+//        print_r($comments_step_1);
+//        echo "</pre>";
+//        die;
+        //echo $this->db->last_query();
+        // die;
+        if (empty($transaction)) {
             $data = array(
                 'title' => "My Progress | " . $current_user->user_firstname . " " . $current_user->user_lastname,
-                'userInfo' => $userInfo,
+                'progress' => $progress,
                 //NAV INFO
                 'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
                 'user_picture' => $current_user->user_picture,
                 'user_access' => "User",
+                'comments_step_1' => $comments_step_1,
+                'comments_step_2' => $comments_step_2,
+                'comments_step_3' => $comments_step_3,
+                'comments_step_4' => $comments_step_4,
+                'comments_step_5' => $comments_step_5,
+                'comments_step_6' => $comments_step_6,
             );
         } else {
             $data = array(
                 'title' => "My Progress | " . $current_user->user_firstname . " " . $current_user->user_lastname,
-                'userInfo' => $userInfo,
-                'transaction_progress' => $userInfo[0]->transaction_progress,
+                'progress' => $progress,
+                'transaction_progress' => $transaction->transaction_progress,
                 //NAV INFO
                 'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
                 'user_picture' => $current_user->user_picture,
                 'user_access' => "User",
+                'comments_step_1' => $comments_step_1,
+                'comments_step_2' => $comments_step_2,
+                'comments_step_3' => $comments_step_3,
+                'comments_step_4' => $comments_step_4,
+                'comments_step_5' => $comments_step_5,
+                'comments_step_6' => $comments_step_6,
             );
         }
 
