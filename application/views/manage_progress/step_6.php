@@ -20,10 +20,12 @@
     }
 </style>
 
+
 <?php 
     $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction->transaction_id))[0];
     $schedule_6 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_6->progress_id))[0];
 ?>
+
 
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Release Day</h3>

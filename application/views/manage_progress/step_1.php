@@ -6,31 +6,35 @@ $(document).on('click', '#step_1_approve', function () {
         "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
         "dataType": "JSON",
         "data": {
-            'schedule_title': $("#event_title").val(),
-            'schedule_desc': $("#event_description").val(),
-            'schedule_color': $("#event_color").val(),
-            'schedule_startdate': $("#event_startdate").val(),
-            'schedule_starttime': $("#event_starttime").val(),
-            'schedule_enddate': $("#event_enddate").val(),
-            'schedule_endtime': $("#event_endtime").val(),
-            'comment':$('#comment').val(),
+            'schedule_title': "Meet and Greet : "+ "<?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+            'schedule_desc': "Adoption Form is approved (16%)! Meet and Greet will be the next step for " + "<?= $transaction->user_firstname." ".$transaction->user_lastname?>" + " to adopt " + "<?= $transaction->pet_name?>" + ".",
+            'schedule_color': "#1e7e34",
+            'schedule_startdate': $("#event_startdate_step_1").val(),
+            'schedule_starttime': $("#event_starttime_step_1").val(),
+            'schedule_enddate': $("#event_enddate_step_1").val(),
+            'schedule_endtime': $("#event_endtime_step_1").val(),
+            'comment':$('#comment_step_1').val(),
             'event_type':"approve"
         },
         success: function (res) {
             if (res.success) {
-                location.reload();
-                console.log("SUCCESS");
-                console.log(res.result);
+                swal({title: "Success", text: res.result, type: "success"},
+                    function(){ 
+                        location.reload();
+                    }
+                );
             } else {
-                alert(res.result);
-                console.log("UNSUCCESSFUL");
-                console.log(res.result);
+                swal("Oops", res.result, "error");
+                show_error(res.startdate, $("#event_startdate_step_1"));
+                show_error(res.starttime, $("#event_starttime_step_1"));
+                show_error(res.enddate, $("#event_enddate_step_1"));
+                show_error(res.endtime, $("#event_endtime_step_1"));
+                show_error(res.comment, $("#comment_step_1"));
             }
 
         },
         error: function(res){
-            console.log("ERROR");
-            console.log(res);
+            swal("Reload", "Something went wrong. Please reload your browser.", "error");
         }
     });
 
@@ -42,19 +46,24 @@ $(document).on('click', '#step_1_disapprove', function () {
         "url": '<?= base_url() ?>' + "ManageProgress/step_1/<?= $transaction->transaction_id?>",
         "dataType": "JSON",
         "data": {
-            'comment':$('#comment_d').val(),
+            'comment':$('#comment_step_1_d').val(),
             'event_type':"disapprove"
         },
         success: function (res) {
             if (res.success) {
-                location.reload();
+                swal({title: "Success", text: res.result, type: "success"},
+                    function(){ 
+                        location.reload();
+                    }
+                );
             } else {
-                alert(res.result);
+                swal("Oops", res.result, "error");
+                show_error(res.comment, $("#comment_step_1_d"));
             }
 
         },
         error: function(res){
-            console.log("ERROR");
+            swal("Reload", "Something went wrong. Please reload your browser.", "error");
         }
     });
 
@@ -262,17 +271,12 @@ $(document).on('click', '#step_1_disapprove', function () {
     
 <!-- MODAL FOR APPROVING STEP 1 -->
 <div class="modal fade" id="step_1_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form id = "step_1_form_a" method = "POST" role = "form">
-        <!-- Hidden Fields -->
-        <input type ="hidden"  id="event_title" name = "event_title" value = "Meet and Greet : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-        <input type ="hidden"  id="event_color" name = "event_color" value = "#1e7e34"/>
-        <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description" name ="event_description" value = "Adoption Form is approved (16%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
+    <form id = "step_1_form_approve" method = "POST" role = "form">
         <!-- Displayed Fields -->
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-up"></i> Approve Adoption Form</h5>
+                    <h5 class="modal-title" id="eventHeader_step_1"><i class = "fa fa-thumbs-o-up"></i> Approve Adoption Form</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -281,27 +285,27 @@ $(document).on('click', '#step_1_disapprove', function () {
                     <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Meet and Greet</p>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate">Start Date</label>
-                            <input type = "text" id = "event_startdate" name = "event_startdate" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_step_1">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_1" name = "event_startdate_step_1" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime">Start Time</label>
-                            <input type = "text" id = "event_starttime" name = "event_starttime" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_step_1">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_1" name = "event_starttime_step_1" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate">End Date</label>
-                            <input type = "text" id = "event_enddate" name = "event_enddate" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_step_1">End Date</label>
+                            <input type = "text" id = "event_enddate_step_1" name = "event_enddate_step_1" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime">End Time</label>
-                            <input type = "text" id = "event_endtime" name = "event_endtime" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_step_1">End Time</label>
+                            <input type = "text" id = "event_endtime_step_1" name = "event_endtime_step_1" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_1">Comment</label>
+                        <textarea class = "form-control" id = "comment_step_1" name = "comment_step_1" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -328,8 +332,8 @@ $(document).on('click', '#step_1_disapprove', function () {
                 </div>
                 <div class="modal-body">
                     <div class = "form-row">
-                        <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_d" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_1_d">Remarks</label>
+                        <textarea class = "form-control" id = "comment_step_1_d" name = "comment_step_1_d" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
