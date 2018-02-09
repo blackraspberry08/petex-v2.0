@@ -67,7 +67,7 @@ My Progress
             <div class="card-header">
                 <i class="fa fa-history"></i> My Progress
             </div>
-            <?php if (empty($progress)): ?>
+            <?php if (empty($transaction)): ?>
                 <div class = "col-lg-12">
                     <center>
                         <h4>You have no Progress yet</h4>

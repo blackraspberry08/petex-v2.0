@@ -99,7 +99,7 @@ class PetAdoption extends CI_Controller {
         );
 
         if ($this->PetAdoption_model->insert("progress", $data)) {
-            redirect(base_url() . "PetAdoption");
+            redirect(base_url() . "MyProgress");
         }
     }
 
