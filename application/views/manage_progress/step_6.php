@@ -145,27 +145,27 @@
                     <p class="text-muted"><i class="fa fa-check"></i> Set schedule for the Release Day</p>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate_prog6">Start Date</label>
-                            <input type = "text" id = "event_startdate_prog6" name = "event_startdate_prog6" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_step_6">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_6" name = "event_startdate_step_6" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime_prog6">Start Time</label>
-                            <input type = "text" id = "event_starttime_prog6" name = "event_starttime_prog6" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_step_6">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_6" name = "event_starttime_step_6" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate_prog6">End Date</label>
-                            <input type = "text" id = "event_enddate_prog5" name = "event_enddate_prog6" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_step_6">End Date</label>
+                            <input type = "text" id = "event_enddate_step_6" name = "event_enddate_step_6" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime_prog6">End Time</label>
-                            <input type = "text" id = "event_endtime_prog6" name = "event_endtime_prog6" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_step_6">End Time</label>
+                            <input type = "text" id = "event_endtime_step_6" name = "event_endtime_step_6" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment_prog5">Comment</label>
-                        <textarea class = "form-control" id = "comment_prog6" name = "comment_prog6" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_6">Comment</label>
+                        <textarea class = "form-control" id = "comment_step_6" name = "comment_step_6" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -193,7 +193,7 @@
                 <div class="modal-body">
                     <div class = "form-row">
                         <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_d_6" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <textarea class = "form-control" id = "comment_step_6_d" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -212,7 +212,7 @@ $(document).ready(function(){
             "url": '<?= base_url() ?>' + "ManageProgress/step_6/<?= $transaction->transaction_id?>",
             "dataType": "JSON",
             "data": {
-                'comment':$('#comment_d_6').val(),
+                'comment':$('#comment_step_6_d').val(),
                 'event_type':"disapprove"
             },
             success: function (res) {
@@ -234,14 +234,14 @@ $(document).ready(function(){
             "url": '<?= base_url() ?>' + "ManageProgress/step_6/<?= $transaction->transaction_id?>",
             "dataType": "JSON",
             "data": {
-                'schedule_title_prog6': $("#event_title_prog6").val(),
-                'schedule_desc_prog6': $("#event_description_prog6").val(),
-                'schedule_color_prog6': $("#event_color_prog6").val(),
-                'schedule_startdate_prog6': $("#event_startdate_prog6").val(),
-                'schedule_starttime_prog6': $("#event_starttime_prog6").val(),
-                'schedule_enddate_prog6': $("#event_enddate_prog6").val(),
-                'schedule_endtime_prog6': $("#event_endtime_prog6").val(),
-                'comment_prog6': $("#comment_prog6").val(),
+                'schedule_title': $("#event_title_step_6").val(),
+                'schedule_desc': $("#event_description_step_6").val(),
+                'schedule_color': $("#event_color_step_6").val(),
+                'schedule_startdate': $("#event_startdate_step_6").val(),
+                'schedule_starttime': $("#event_starttime_step_6").val(),
+                'schedule_enddate': $("#event_enddate_step_6").val(),
+                'schedule_endtime': $("#event_endtime_step_6").val(),
+                'comment': $("#comment_step_6").val(),
                 'event_type':"approve"
             },
             success: function (res) {

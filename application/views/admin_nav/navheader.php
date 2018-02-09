@@ -47,6 +47,14 @@ Admin Nav Header
     }
 </style>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('.preloader-background').delay(800).fadeOut('slow');
+            $('.preloader-wrapper').delay(800).fadeOut();
+        });
+    </script>
+    <?php include 'preloader.php' ?>
+    
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="index.html"><img src = "<?= base_url()?>images/logo/logo.png" height="25"/></a>
