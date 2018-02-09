@@ -127,11 +127,29 @@ class Schedules extends CI_Controller {
             
             if ($this->Schedules_model->fetchSched(array("schedule_startdate" => $startdate))) {
                 //IF STARTDATE IS ALREADY EXISTING
-                echo json_encode(array('success' => false, 'result' => 'There is an existing schedule already!'));
+                echo json_encode(array(
+                        'success' => false, 
+                        'result' => 'There is an existing schedule already!',
+                        'startdate' => "<p>There is an existing schedule for this date/time</p>",
+                        'starttime' => "<p>There is an existing schedule for this date/time</p>",
+                        'enddate' => "",
+                        'endtime' => "",
+                        'comment' => ""
+                        ));
+                
             } else {
                 //IF STARTDATE IS UNIQUE
                 if($startdate > $enddate){
-                    echo json_encode(array('success' => false, 'result' => 'Start Date/Time is ahead of End Date/Time'));
+                    echo json_encode(array(
+                        'success' => false, 
+                        'result' => 'Start Date/Time is ahead of End Date/Time',
+                        'startdate' => "",
+                        'starttime' => "",
+                        'enddate' => "<p>End Date/Time must be ahead of Start Date/Time</p>",
+                        'endtime' => "<p>End Date/Time must be ahead of Start Date/Time</p>",
+                        'comment' => ""
+                        ));
+                    
                 }else{
                     $data = array(
                         "admin_id" => $this->session->userdata("current_user")->admin_id,
@@ -153,10 +171,10 @@ class Schedules extends CI_Controller {
         $this->form_validation->set_rules('schedule_title', "Title", "required");
         if ($this->form_validation->run() == FALSE) {
             echo json_encode(array(
-                        'success'   => false, 
-                        'result'    => "There are errors in your form. Please check the fields.", 
-                        "title"     => form_error("schedule_title"),
-                    ));
+                'success'   => false, 
+                'result'    => "There are errors in your form. Please check the fields.", 
+                "title"     => form_error("schedule_title"),
+            ));
         } else {
             $data = array(
                 "schedule_title" => $this->input->post('schedule_title'),
