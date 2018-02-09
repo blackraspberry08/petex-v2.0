@@ -278,3 +278,11 @@ Manage Progress
             });
         });
     </script>
+    
+<!-- RESET FORM ON MODAL CLOSE -->
+<script>
+     $('.modal').on('hidden.bs.modal', function(){
+        $(this).find('input, textarea').siblings(".invalid-feedback").remove();
+        $(this).find('input, textarea').removeClass("is-invalid");
+     });
+</script>

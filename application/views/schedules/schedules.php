@@ -209,63 +209,21 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: "Successfully added a schedule", type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
                         //Errors in form
                         //alert(res.result);
                         swal("Oops", res.result, "error");
-                        //VALIDATIONS
-                        var field_1 = $("#event_title");
-                        var field_2 = $("#event_startdate");
-                        var field_3 = $("#event_starttime");
-                        var field_4 = $("#event_enddate");
-                        var field_5 = $("#event_endtime");
-                        if(res.title !== ""){
-                            $(field_1).siblings(".invalid-feedback").remove();
-                            $(field_1).after("<div class = 'invalid-feedback'>"+res.title+"</div>");
-                            $(field_1).removeClass("is-invalid").addClass("is-invalid"); 
-                        }else{
-                            $(field_1).siblings(".invalid-feedback").remove();
-                            $(field_1).removeClass("is-invalid");
-                        }
-                        
-                        if(res.startdate !== ""){
-                            $(field_2).siblings(".invalid-feedback").remove();
-                            $(field_2).after("<div class = 'invalid-feedback'>"+res.startdate+"</div>");
-                            $(field_2).removeClass("is-invalid").addClass("is-invalid"); 
-                        }else{
-                            $(field_2).siblings(".invalid-feedback").remove();
-                            $(field_2).removeClass("is-invalid");
-                        }
-                        
-                        if(res.starttime !== ""){
-                            $(field_3).siblings(".invalid-feedback").remove();
-                            $(field_3).after("<div class = 'invalid-feedback'>"+res.starttime+"</div>");
-                            $(field_3).removeClass("is-invalid").addClass("is-invalid"); 
-                        }else{
-                            $(field_3).siblings(".invalid-feedback").remove();
-                            $(field_3).removeClass("is-invalid");
-                        }
-                        
-                        if(res.enddate !== ""){
-                            $(field_4).siblings(".invalid-feedback").remove();
-                            $(field_4).after("<div class = 'invalid-feedback'>"+res.enddate+"</div>");
-                            $(field_4).removeClass("is-invalid").addClass("is-invalid"); 
-                        }else{
-                            $(field_4).siblings(".invalid-feedback").remove();
-                            $(field_4).removeClass("is-invalid");
-                        }
-                        
-                        if(res.endtime !== ""){
-                            $(field_5).siblings(".invalid-feedback").remove();
-                            $(field_5).after("<div class = 'invalid-feedback'>"+res.endtime+"</div>");
-                            $(field_5).removeClass("is-invalid").addClass("is-invalid"); 
-                        }else{
-                            $(field_5).siblings(".invalid-feedback").remove();
-                            $(field_5).removeClass("is-invalid");
-                        }
+                        show_error(res.title, $("#event_title"));
+                        show_error(res.startdate, $("#event_startdate"));
+                        show_error(res.starttime, $("#event_starttime"));
+                        show_error(res.enddate, $("#event_enddate"));
+                        show_error(res.endtime, $("#event_endtime"));
                     }
-                    console.log(res);
                 },
                 error: function(res){
                     swal("Reload", "Something Went Wrong", "error");
@@ -287,29 +245,23 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: "Successfully edited a schedule", type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
                         swal("Oops", res.result, "error");
-                        if(res.title !== ""){
-                            var field = $("#event_title");
-                            $(field).siblings(".invalid-feedback").remove();
-                            $(field).after("<div class = 'invalid-feedback'>"+res.title+"</div>");
-                            $(field).removeClass("is-invalid").addClass("is-invalid");
-                        }else{
-                            var field = $("#event_title");
-                            $(field).siblings(".invalid-feedback").remove();
-                            $(field).removeClass("is-invalid");
-                        }
-                        console.log(res);
+                        show_error(res.title, $("#event_title"));
                     }
                 },
                 error:function(res){
-                    console.log(res);
+                    swal("Reload", "Something went wrong!", "error");
                 }
             });
         });
 
-        $(document).on('click', '#deleteReq', function () {
+        $(document).on('click', '#deleteReq2', function () {
             $.ajax({
                 "method": "POST",
                 "url": "<?= base_url() ?>" + "Schedules/deletereserve/",
@@ -319,9 +271,13 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: "Successfully cancelled a schedule", type: "info"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
-                        alert(res.result);
+                        swal("Error", res.result, "error");
                     }
                 }
             });
@@ -402,14 +358,31 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" id = "sendReq" class="btn btn-primary"><i class = "fa fa-plus"></i> Create Event</button>
-                    <button type="button" id = "deleteReq" class="btn btn-danger"><i class = "fa fa-ban"></i> Cancel Event</button>
+                    <button type="button" id = "deleteReq" data-toggle = "modal" data-target = "#delete_sched" class="btn btn-danger"><i class = "fa fa-ban"></i> Cancel Event</button>
                     <button type="button" id = "updateReq" class="btn btn-primary"><i class = "fa fa-pencil"></i> Update Event Information</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
-
+<!-- Logout Modal-->
+<div class="modal fade" id="delete_sched" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Canceling Event</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Canceling Event will remove the event from the schedules. Click "Proceed" to remove event.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal" style = "cursor: pointer;">Cancel</button>
+                <a class="btn btn-primary" id = "deleteReq2">Proceed</a>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $('.colors .radio').click(function () {
         $(this).parent().find('.radio').removeClass('selected');
@@ -422,6 +395,7 @@
 <!-- RESET FORM ON MODAL CLOSE -->
 <script>
      $('.modal').on('hidden.bs.modal', function(){
-         $(this).find('form')[0].reset();
+        $(this).find('input').siblings(".invalid-feedback").remove();
+        $(this).find('input').removeClass("is-invalid");
      });
 </script>
