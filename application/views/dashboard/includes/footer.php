@@ -50,7 +50,9 @@
     <!-- Full Calendar -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.min.js"></script>
-    <!-- Bootstrap Switch -->
+   <!-- SweetAlert -->
+   <script src = "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+   <!-- Bootstrap Switch -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
     <script>
         $(".switch-style").bootstrapSwitch();
@@ -87,7 +89,7 @@
           $(this).tab('show')
         })
     </script>
-    
+   
 </div>
 </body>
 </html>

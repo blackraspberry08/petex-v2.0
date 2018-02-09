@@ -287,7 +287,7 @@
         <!-- There are recent comments -->
         <div class="card mb-3">
             <div class ="card-header">
-                <i class = "fa fa-comment" ></i> Comments
+                <i class = "fa fa-comment" ></i> Remarks
             </div>
             
             <?php foreach ($comments_step_3 as $comment): ?>
@@ -324,11 +324,11 @@
         <!-- There are no comments -->
         <div class="card mb-3">
             <div class ="card-header">
-                <i class = "fa fa-comment" ></i> Comments
+                <i class = "fa fa-comment" ></i> Remarks
             </div>
             <div class="card-body small bg-faded">
                 <center>
-                    <h4>No comments yet.</h4>
+                    <h4>No remarks yet.</h4>
                     <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
                     <br><br>
                 </center>
@@ -356,7 +356,7 @@
         <input type ="hidden"  id="event_title_prog3" name = "event_title_prog3" value = "Home Visit : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
         <input type ="hidden"  id="event_color_prog3" name = "event_color_prog3" value = "#1e7e34"/>
         <input type ="hidden"  id="event_type_prog3" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description_prog3" name ="event_description_prog3" value = "All Interviews are done (49%)! Meet and Greet will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
+        <input type ="hidden"  id="event_description_prog3" name ="event_description_prog3" value = "All Interviews are done (49%)! Home Visit will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
         <!-- Displayed Fields -->
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">

@@ -4,8 +4,6 @@ class MyProgress extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        //---> MODELS HERE!
-        $this->load->model('MyProgress_model');
 
         //---> LIBRARIES HERE!
         //---> SESSIONS HERE!

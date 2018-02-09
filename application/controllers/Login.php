@@ -13,14 +13,12 @@ class Login extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        //---> MODELS HERE!
-        $this->load->model('login_model');
 
         //---> LIBRARIES HERE!
         //---> SESSIONS HERE!
         if ($this->session->has_userdata('isloggedin') == TRUE) {
             $currentUserId = $this->session->userdata('userid');
-            $currentUser = $this->login_model->fetch("user", array("user_id" => $currentUserId))[0];
+            $currentUser = $this->Login_model->fetch("user", array("user_id" => $currentUserId))[0];
         }
     }
 
@@ -41,14 +39,14 @@ class Login extends CI_Controller {
             'admin_password' => $this->input->post('password'),
         );
 
-        $accountDetailsAdmin = $this->login_model->getinfo("admin", $dataAdmin);
+        $accountDetailsAdmin = $this->Login_model->getinfo("admin", $dataAdmin);
 
         $dataUser = array(
             'user_username' => $this->input->post('username'),
             'user_password' => $this->input->post('password'),
         );
 
-        $accountDetailsUser = $this->login_model->getinfo("user", $dataUser);
+        $accountDetailsUser = $this->Login_model->getinfo("user", $dataUser);
 
         if (!$accountDetailsUser && !$accountDetailsAdmin) {
             //OOPS no accounts like that!
