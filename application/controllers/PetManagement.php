@@ -40,7 +40,7 @@ class PetManagement extends CI_Controller {
         return $final_strip;
     }
 
-    function _alpha_dash_space($str = '') {
+    function _alpha_dash_space($str) {
         if (!preg_match("/^([-a-z_ ])+$/i", $str)) {
             $this->form_validation->set_message('_alpha_dash_space', 'The {field} may only contain alphabet characters, spaces, underscores, and dashes.');
             return FALSE;
@@ -217,7 +217,7 @@ class PetManagement extends CI_Controller {
     public function edit_animal_info_exec() {
         header('X-XSS-Protection:0');
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $this->uri->segment(3)))[0];
-        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[10]");
+        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[25]");
         $this->form_validation->set_rules('pet_breed', "Pet Breed", "required|callback__alpha_dash_space|min_length[3]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
@@ -311,13 +311,14 @@ class PetManagement extends CI_Controller {
 
     public function register_animal() {
         header('X-XSS-Protection:0');
-        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[10]");
+        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[25]");
         $this->form_validation->set_rules('pet_breed', "Pet Breed", "required|callback__alpha_dash_space|min_length[3]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
         $this->form_validation->set_rules('pet_history', "Pet History", "required");
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
         if ($this->form_validation->run() == FALSE) {
-            $this->add_animal();
+            
+            //$this->add_animal();
         } else {
             $config['upload_path'] = './images/animal/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';

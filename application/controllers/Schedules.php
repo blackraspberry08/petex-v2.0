@@ -112,14 +112,14 @@ class Schedules extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             //IF THERE ARE ERRORS IN FORMS
             echo json_encode(array(
-                        'success'   => false, 
-                        'result'    => "There are errors in your form. Please check the fields.", 
-                        "title"     => form_error("schedule_title"),
-                        "startdate" => form_error("schedule_startdate"),
-                        "starttime" => form_error("schedule_starttime"),
-                        "enddate"  => form_error("schedule_enddate"),
-                        "endtime"   => form_error("schedule_endtime"),
-                    ));
+                    'success'   => false, 
+                    'result'    => "There are errors in your form. Please check the fields.", 
+                    "title"     => form_error("schedule_title"),
+                    "startdate" => form_error("schedule_startdate"),
+                    "starttime" => form_error("schedule_starttime"),
+                    "enddate"  => form_error("schedule_enddate"),
+                    "endtime"   => form_error("schedule_endtime"),
+                ));
         } else {
             //IF FORMS ARE VALID
             $startdate = strtotime($this->input->post('schedule_startdate') . " " . $this->input->post('schedule_starttime'));
@@ -130,6 +130,7 @@ class Schedules extends CI_Controller {
                 echo json_encode(array(
                         'success' => false, 
                         'result' => 'There is an existing schedule already!',
+                        'title' => "",
                         'startdate' => "<p>There is an existing schedule for this date/time</p>",
                         'starttime' => "<p>There is an existing schedule for this date/time</p>",
                         'enddate' => "",
@@ -143,6 +144,7 @@ class Schedules extends CI_Controller {
                     echo json_encode(array(
                         'success' => false, 
                         'result' => 'Start Date/Time is ahead of End Date/Time',
+                        'title' => "",
                         'startdate' => "",
                         'starttime' => "",
                         'enddate' => "<p>End Date/Time must be ahead of Start Date/Time</p>",
@@ -170,20 +172,45 @@ class Schedules extends CI_Controller {
     public function updatereserve() {
         $this->form_validation->set_rules('schedule_title', "Title", "required");
         if ($this->form_validation->run() == FALSE) {
+            //IF THERE ARE ERRORS IN FORMS
             echo json_encode(array(
                 'success'   => false, 
                 'result'    => "There are errors in your form. Please check the fields.", 
                 "title"     => form_error("schedule_title"),
+                "startdate" => form_error("schedule_startdate"),
+                "starttime" => form_error("schedule_starttime"),
+                "enddate"  => form_error("schedule_enddate"),
+                "endtime"   => form_error("schedule_endtime"),
             ));
         } else {
-            $data = array(
-                "schedule_title" => $this->input->post('schedule_title'),
-                "schedule_desc" => $this->input->post('schedule_desc'),
-                "schedule_color" => $this->input->post('schedule_color'),
-            );
-            $this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")));
-            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated a schedule.");
-            echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
+            $startdate = strtotime($this->input->post('schedule_startdate') . " " . $this->input->post('schedule_starttime'));
+            $enddate = strtotime($this->input->post('schedule_enddate') . " " . $this->input->post('schedule_endtime'));
+            //IF STARTDATE IS UNIQUE
+            if($startdate > $enddate){
+                echo json_encode(array(
+                    'success' => false, 
+                    'result' => 'Start Date/Time is ahead of End Date/Time',
+                    'title' => "",
+                    'startdate' => "",
+                    'starttime' => "",
+                    'enddate' => "<p>End Date/Time must be ahead of Start Date/Time</p>",
+                    'endtime' => "<p>End Date/Time must be ahead of Start Date/Time</p>",
+                    'comment' => ""
+                    ));
+
+            }else{
+                $data = array(
+                    "admin_id" => $this->session->userdata("current_user")->admin_id,
+                    "schedule_title" => $this->input->post('schedule_title'),
+                    "schedule_desc" => $this->input->post('schedule_desc'),
+                    "schedule_color" => $this->input->post('schedule_color'),
+                    "schedule_startdate" => $startdate,
+                    "schedule_enddate" => $enddate
+                );
+                $this->Schedules_model->update_sched($data, array("schedule_id" => $this->input->post("schedule_id")));
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated a schedule.");
+                echo json_encode(array("data" => $data, 'id' => $this->input->post("schedule_id"), 'success' => true, 'result' => "Successfully updated."));
+            }
         }
     }
 
