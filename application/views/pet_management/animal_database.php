@@ -52,7 +52,13 @@
                         <div class = "btn-group" role="group" aria-label="Button Group">
                             <a href = "<?= base_url()?>PetManagement/medical_records_exec/<?= $animal->pet_id;?>" class = "btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
                             <a href = "<?= base_url()?>PetManagement/animal_info_exec/<?= $animal->pet_id;?>" class = "btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Animal Information"><i class = "fa fa-paw fa-2x"></i></a>
-                            <a href = "<?= base_url()?>PetManagement/interested_adopters_exec/<?= $animal->pet_id;?>" class = "btn btn-outline-secondary <?= $animal->pet_status == "Adopted"? "disabled" : "" ;?>" data-toggle="tooltip" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-heart fa-2x"></i></a>
+                            
+                            <?php if($animal->pet_status == "Adopted"):?>
+                            <a href = "<?= base_url()?>PetManagement/adoption_information_exec/<?= $animal->pet_id;?>" class = "btn btn-outline-success" data-toggle="tooltip" data-placement="bottom" title="Adoption Info"><i class = "fa fa-heart fa-2x"></i></a>
+                            <?php else:?>
+                            <a href = "<?= base_url()?>PetManagement/interested_adopters_exec/<?= $animal->pet_id;?>" class = "btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-heart fa-2x"></i></a>
+                            <?php endif;?>
+                            
                             <a href = "#" class = "btn btn-outline-danger" data-toggle="modal" data-target = "#remove_animal_<?= $animal->pet_id?>" title="Remove Animal"><i class = "fa fa-times fa-2x"></i></a>
                         </div>
                     </div>

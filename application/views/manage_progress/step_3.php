@@ -21,7 +21,6 @@
 </style>
 
 <?php 
-    $progress_3 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction->transaction_id))[0];
     $schedule_3 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_3->progress_id));
     
 ?>

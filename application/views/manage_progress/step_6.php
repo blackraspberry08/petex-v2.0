@@ -18,11 +18,14 @@
     .disabled{
         cursor:not-allowed;
     }
+    .custom-file-container__image-preview{
+        max-width:500px;
+        margin:10px auto;
+    }
 </style>
 
 
 <?php 
-    $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction->transaction_id))[0];
     $schedule_6 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_6->progress_id))[0];
 ?>
 
@@ -56,6 +59,20 @@
             <p class="card-text"><?= $schedule_6->schedule_desc?></p>
         </div>
     </div>
+    
+    
+    <?php if(!empty($adoption)): ?>
+        <?php if($adoption != ""):?>
+        <div class = "row my-3">
+            <div class = "col-md-12 text-center">
+                <h3 class = "mt-3">Adoption Proof</h3>
+                <a href = "<?= base_url().$adoption->adoption_proof_img?>" data-toggle="lightbox" data-title = "Proof of adoption" data-footer="<?= $transaction->user_firstname." ".$transaction->user_lastname?> with his newly adopted pet, <?= $transaction->pet_name?>">
+                    <img src = "<?= base_url().$adoption->adoption_proof_img?>" class = "img-fluid img-thumbnail" style = "max-height:200px">
+                </a>
+            </div>
+        </div>
+        <?php endif;?>
+    <?php endif;?>
     
     <!-- Comment -->
     <?php if (!empty($comments_step_6)): ?>
@@ -103,7 +120,7 @@
             </div>
             <div class="card-body small bg-faded">
                 <center>
-                    <h4>No remarks yet.</h4>
+                    <h4>No remarks</h4>
                     <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
                     <br><br>
                 </center>
@@ -124,60 +141,46 @@
     <?php endif; ?>
 </div>
 
-<!-- MODAL FOR APPROVING STEP 5 -->
+<!-- MODAL FOR APPROVING STEP 6 -->
 <div class="modal fade" id="step_6_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form id = "step_6_form_a" method = "POST" role = "form">
-        <!-- Hidden Fields -->
-        <input type ="hidden"  id="event_title_prog5" name = "event_title_prog6" value = "Release Day : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-        <input type ="hidden"  id="event_color_prog5" name = "event_color_prog6" value = "#1e7e34"/>
-        <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description_prog5" name ="event_description_prog6" value = "Visiting chosen adoptee is done (83%)! Release Day will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
-        <!-- Displayed Fields -->
-        <div class="modal-dialog modal-lg" role="document">
+    <!-- Displayed Fields -->
+    <div class="modal-dialog modal-lg" role="document">
+        <form method="POST" id = "adoption_picture_form" action = "<?= base_url()?>ManageProgress/step_6_adoption_proof/<?= $transaction->transaction_id?>" role = "form" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader_prog6"><i class = "fa fa-thumbs-o-up"></i> Approve Visiting Chosen Adoptee</h5>
+                    <h5 class="modal-title" id="eventHeader_prog6"><i class = "fa fa-thumbs-o-up"></i> Finishing Transaction</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for the Release Day</p>
-                    <div class = "form-row">
-                        <div class = "col-md-6 form-group">
-                            <label for="event_startdate_step_6">Start Date</label>
-                            <input type = "text" id = "event_startdate_step_6" name = "event_startdate_step_6" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                    <div class = "form-group">
+                        <label for ="adoption_picture">Picture</label>
+                        <div class="custom-file-container" data-upload-id="adoption_picture">
+                            <label class="custom-file-container__custom-file" >
+                                <input type="file" name = "adoption_picture" id = "adoption_picture" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
+                                <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                <button class="custom-file-container__image-clear">x</button>
+                            </label>
+                            <small id="videoHelp" class="form-text text-muted">
+                                Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png
+                            </small>
+                            <div class="custom-file-container__image-preview" id = "adoption_picture_edit_preview"></div>
                         </div>
-                        <div class = "col-md-6 form-group">
-                            <label for="event_starttime_step_6">Start Time</label>
-                            <input type = "text" id = "event_starttime_step_6" name = "event_starttime_step_6" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
-                        </div>
-                    </div>
-                    <div class = "form-row">
-                        <div class = "col-md-6 form-group">
-                            <label for="event_enddate_step_6">End Date</label>
-                            <input type = "text" id = "event_enddate_step_6" name = "event_enddate_step_6" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
-                        </div>
-                        <div class = "col-md-6 form-group">
-                            <label for="event_endtime_step_6">End Time</label>
-                            <input type = "text" id = "event_endtime_step_6" name = "event_endtime_step_6" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
-                        </div>
-                    </div>
-                    <div class = "form-row">
-                        <label for="comment_step_6">Comment</label>
-                        <textarea class = "form-control" id = "comment_step_6" name = "comment_step_6" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="reset" class="btn btn-danger" id = "btnReset_edit">Reset</button>
                     <button type="button" id = "step_6_approve" class="btn btn-primary">Approve</button>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
-<!-- MODAL FOR DISAPPROVING STEP 5 -->
+<!-- MODAL FOR DISAPPROVING STEP 6 -->
 <div class="modal fade" id="step_6_sched_disapprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form id = "step_6_form_d" method = "POST" role = "form">
         <input type ="hidden"  id="event_type" name = "event_type" value = "disapprove"/>
@@ -217,45 +220,42 @@ $(document).ready(function(){
             },
             success: function (res) {
                 if (res.success) {
-                    location.reload();
+                    swal({title: "Success", text: res.result, type: "success"},
+                        function(){ 
+                            location.reload();
+                        }
+                    );
                 } else {
-                    alert(res.result);
+                    swal("Error", res.result, "error");
+                    show_error(res.comment, $('#comment_step_6_d'));
                 }
             },
             error: function(res){
-                console.log("ERROR");
+                swal("Reload", "Something went wrong. Reload your browser", "error");
             }
         });
     });
     
     $(document).on('click', '#step_6_approve', function () {
-        $.ajax({
-            "method": "POST",
-            "url": '<?= base_url() ?>' + "ManageProgress/step_6/<?= $transaction->transaction_id?>",
-            "dataType": "JSON",
-            "data": {
-                'schedule_title': $("#event_title_step_6").val(),
-                'schedule_desc': $("#event_description_step_6").val(),
-                'schedule_color': $("#event_color_step_6").val(),
-                'schedule_startdate': $("#event_startdate_step_6").val(),
-                'schedule_starttime': $("#event_starttime_step_6").val(),
-                'schedule_enddate': $("#event_enddate_step_6").val(),
-                'schedule_endtime': $("#event_endtime_step_6").val(),
-                'comment': $("#comment_step_6").val(),
-                'event_type':"approve"
-            },
-            success: function (res) {
-                if (res.success) {
-                    location.reload();
-                } else {
-                    alert(res.result);
-                    console.log(res);
-                }
-            },
-            error: function(res){
-                console.log("ERROR");
+        swal({title: "Success", text: "Proof of Adoption Image", type: "success"},
+            function(){ 
+                $('#adoption_picture_form').submit();
             }
-        });
+        );
     });
 });//ready()
+</script>
+<!-- Bootstrap File Upload with preview -->
+<script src = "<?= base_url() ?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
+<script>
+    var upload = new FileUploadWithPreview('adoption_picture')
+</script>
+<!-- Bootstrap File Upload with preview -->
+<script>
+    document.getElementById("btnReset_edit").onclick = function () {
+        reset_upload()
+    };
+    function reset_upload() {
+        document.getElementById("adoption_picture_edit").value = "";
+    }
 </script>

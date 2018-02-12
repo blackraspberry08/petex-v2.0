@@ -20,6 +20,26 @@ class ManageProgress_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
+    public function get_finished_progress($where = NULL){
+        $table = "progress";
+        $join = "checklist";
+        $on = "progress.checklist_id = checklist.checklist_id";
+        $join2 = "transaction";
+        $on2 = "progress.transaction_id = transaction.transaction_id";
+        $join4 = "pet";
+        $on4 = "transaction.pet_id = pet.pet_id";
+        $this->db->where(array("transaction_isFinished" => 1));
+        $this->db->where(array("transaction_isActivated" => 0));
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->join($join4, $on4, "left outer");
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->order_by("progress.checklist_id", "ASC");
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
     public function get_adoption_form($where = NULL){
         $table = "adoption_form";
         $join = "transaction";
@@ -94,6 +114,33 @@ class ManageProgress_model extends CI_Model {
         $this->db->join("admin", "schedule.admin_id = admin.admin_id", "left outer");
         $this->db->join("progress", "schedule.progress_id = progress.progress_id", "left outer");
         $query = $this->db->get("schedule");
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
+    public function add_adoption($adoption){
+        $table = "adoption";
+        $this->db->insert($table, $adoption);
+        return $this->db->affected_rows();
+    }
+    
+    public function edit_pet_status($pet_id){
+        $where = array("pet_id" => $pet_id);
+        $this->db->where($where);
+        $this->db->update("pet", array("pet_status" => "Adopted"));
+        return $this->db->affected_rows();
+    }
+    public function get_adoption($where = NULL){
+        $table = "adoption";
+        $join = "user";
+        $on = "adoption.user_id = user.user_id";
+        $join2 = "pet";
+        $on2 = "adoption.pet_id = pet.pet_id";
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 }

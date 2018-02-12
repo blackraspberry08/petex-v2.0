@@ -17,9 +17,7 @@
     }
 </style>
 
-<?php 
-    $progress_2 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction->transaction_id))[0];
-    $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
+<?php $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
 ?>
 
 <div class = "col-lg-12">
@@ -214,9 +212,9 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id = "setSched_1" class="btn btn-primary step step-1" data-step="1" onclick="nextStep(1)">Set Schedule #1</button>
-                <button type="button" id = "setSched_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep(2)">Set Schedule #2</button>
-                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep(3)">Approve</button>
+                <button type="button" id = "setSched_1_step_2" class="btn btn-primary step step-1" data-step="1" onclick="nextStep_step_2(1)">Set Schedule #1</button>
+                <button type="button" id = "setSched_2_step_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep_step_2(2)">Set Schedule #2</button>
+                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep_step_2(3)">Approve</button>
             </div>
         </div>
     </div>
@@ -282,7 +280,7 @@
 </script>
 <script>
     $(document).ready(function(){
-        nextStep = function(step) {
+        nextStep_step_2 = function(step) {
             switch(step){
                 case 1:{
                     $.ajax({
@@ -312,6 +310,7 @@
                                 show_error(res.starttime, $("#event_starttime_step_2_prog1"));
                                 show_error(res.enddate, $("#event_enddate_step_2_prog1"));
                                 show_error(res.endtime, $("#event_endtime_step_2_prog1"));
+                                console.log(res);
                             }
                         },
                         error: function(res){
