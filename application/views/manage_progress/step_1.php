@@ -70,9 +70,7 @@ $(document).on('click', '#step_1_disapprove', function () {
 });
 
 </script>
-<?php
-    $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction->transaction_id))[0];
-?>
+
 <?php if (empty($adoption_form->adoption_form_location)): ?>
     <!-- No Adoption Form Submitted -->
     <div class = "col-lg-12 mt-3 text-center">
@@ -219,6 +217,7 @@ $(document).on('click', '#step_1_disapprove', function () {
             <!-- Adoption Form is approved -->
             <h3 class = "mt-3 text-center">Adoption Form</h3>
             <p class = "text-muted">&emsp;<?= $progress_1->checklist_desc?></p>
+            
             <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
                 <iframe class="embed-responsive-item" src="<?= base_url() . $adoption_form->adoption_form_location ?>" allowfullscreen type="application/pdf"></iframe>
             </div>

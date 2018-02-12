@@ -122,7 +122,7 @@ Manage Progress
             <li class="breadcrumb-item">
                 <a href="<?= base_url()?>PetManagement/interested_adopters_exec/<?= $transaction->pet_id?>">Interested Adopters</a>
             </li>
-            <li class="breadcrumb-item active">Manage Progress of <?= $transaction->user_firstname." ".$transaction->user_lastname?></li>
+            <li class="breadcrumb-item active">Adoption Information of <?= $transaction->user_firstname." ".$transaction->user_lastname?></li>
         </ol>
         <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <?php include_once (APPPATH."views/show_error/show_error_manage_progress.php");?>
@@ -197,7 +197,7 @@ Manage Progress
             }
             case 100:
             {
-                $("#step_id_1").addClass("bg-success");
+                $("#step_id_1").addClass("active");
                 $("#step_id_2").addClass("bg-success");
                 $("#step_id_3").addClass("bg-success");
                 $("#step_id_4").addClass("bg-success");
