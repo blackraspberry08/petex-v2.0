@@ -75,12 +75,12 @@ Pet Adoption
                                 <input type="text" class="form-control" name = "numwork" >
                                 <label>&nbsp;Tel Nos. (Work)</label>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "nummobile" value = "<?= $userInfo->user_contact_no ?>" > 
+                            <div class="form-group col-sm-4 <?php if (!empty($form_error['nummobile'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type="text" class="form-control <?php if (!empty($form_error['nummobile'])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "nummobile" value = "<?= set_value("nummobile", $userInfo->user_contact_no); ?> "> 
                                 <label>&nbsp;Mobile No.</label>
+                                <div class="invalid-feedback"><?= $form_error['nummobile'] ?></div>
                             </div>
                         </div>
-
                         <style>
                             input[type="text"]:disabled{
                                 color:black !important;
@@ -124,35 +124,42 @@ Pet Adoption
                             </div>
 
                         </div>
-
                         <div class = "row container">
                             <div class="col-sm-12">
                                 <h4>Personal Reference</h4>
                             </div>
-                            <div class="form-group col-sm-5">
-                                <input type="text" class="form-control" name = "nameref">
-                                <label>&nbsp;Name</label>
+                            <div class="form-group col-sm-5 <?php if (!empty($form_error['nameref'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type="text"  name = "nameref" class="form-control <?php if (!empty($form_error['nameref'])): ?>is-invalid<?php else: ?><?php endif; ?>" value = "<?= set_value("nameref") ?>">
+                                <label>&nbsp;
+                                    Name</label>
+                                <div class="invalid-feedback"><?= $form_error['nameref'] ?></div>
                             </div>
-                            <div class="form-group col-sm-3">
-                                <input type="text" class="form-control" name = "relref">
-                                <label>&nbsp;Relationship</label>
+                            <div class = "form-group col-sm-3 <?php if (!empty($form_error["relref"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type = "text" class = "form-control <?php if (!empty($form_error["relref"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "relref" value = "<?= set_value("relref") ?>">
+                                <label>&nbsp;
+                                    Relationship</label>
+                                <div class="invalid-feedback"><?= $form_error['relref'] ?></div>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "numref">
-                                <label>&nbsp;Tel No.</label>
+                            <div class = "form-group col-sm-4 <?php if (!empty($form_error["numref"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type = "text" class = "form-control <?php if (!empty($form_error["nameref"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "numref" value = "<?= set_value("numref") ?>">
+                                <label>&nbsp;
+                                    Mobile No.</label>
+                                <div class="invalid-feedback"><?= $form_error['numref'] ?></div>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "prompt" placeholder = " ">
-                                <label>&nbsp;What prompted you to come to PARC?</label>
+                            <div class = "form-group col-sm-4 <?php if (!empty($form_error["prompt"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type = "text" class = "form-control <?php if (!empty($form_error["prompt"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "prompt" value = "<?= set_value("prompt") ?>">
+                                <label>&nbsp;
+                                    What prompted you to come to PARC?</label>
+                                <div class="invalid-feedback"><?= $form_error['prompt'] ?></div>
                             </div>
                         </div>
-                        <div class ="row container">
-                            <div class="col-sm-3">
+                        <div class = "row container">
+                            <div class = "col-sm-3">
                                 <span>Are you interested in: </span>
 
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input name="interested" type="radio" id="interested_cat" class = "form-check-label" value ="Cat" <?= $pet->pet_specie == "Feline" ? "checked = \"\"" : "disabled = \"\"" ?>/>
+                                <div class = "form-check">
+                                    <label class = "form-check-label">
+                                        <input name = "interested" type = "radio" id = "interested_cat" class = "form-check-label" value = "Cat" <?= $pet->pet_specie == "Feline" ? "checked = \"\"" : "disabled = \"\"" ?>/>
                                         Cat
                                     </label>
                                 </div>
@@ -203,9 +210,10 @@ Pet Adoption
                             <div class="col-sm-12">
                                 <h4>Questionnaire</h4>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num1"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>1.) Why did you decide to adopt an animal from PAWS?</span>
-                                <textarea id="num1" name="num1" class="form-control" placeholder=" "></textarea>
+                                <textarea id="num1" name="num1" class="form-control <?php if (!empty($form_error["num1"])): ?>is-invalid<?php else: ?><?php endif; ?>"  placeholder = "<?= set_value("num1") ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num1'] ?></div>
                             </div>
                             <div class="col-sm-6">
                                 <span>2.) Have you adopted from PAWS/PARC atleast once before?</span>
@@ -378,9 +386,20 @@ Pet Adoption
                                         </div>
                                     </div>
                                 </div>
-                                <div class = "form-group col-sm-6">
-                                    <input id = "yearslived" type="text" class= "form-control" name = "yearslived">
-                                    <label for = "yearslived">How long have you lived in this address?</label>
+                                <label for = "yearslived">How long have you lived in this address?</label>
+                                <div class="col-sm-12">
+                                    <div class="form-group col-sm-6 <?php if (!empty($form_error["yearslived"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                        <input id = "yearslived" type="text" class= "form-control <?php if (!empty($form_error["yearslived"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "yearslived"  value = "<?= set_value("yearslived"); ?>"/>
+                                        <div class="invalid-feedback"><?= $form_error['yearslived'] ?></div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <select class="form-control" id="exampleSelect1" name="period">
+                                            <option>Days</option>
+                                            <option>Weeks</option>
+                                            <option>Months</option>
+                                            <option>Years</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div id = "num5Hidden" class = "animated fadeOutUp col-sm-s6" style = "visibility: hidden;">
                                     <div class = "row">
@@ -570,23 +589,27 @@ Pet Adoption
                             </div>
                         </div>
                         <div class = "row container">
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num13"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>13.) What will happen to this animal if you have to move unexpectedly?</span>
-                                <textarea id="num13" name="num13" class="form-control"></textarea>
+                                <textarea id="num13" name="num13" class="form-control <?php if (!empty($form_error["num13"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num13'] ?></div>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num14"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>14.) What kind of behavior(s) do you feel unable to accept?</span>
-                                <textarea id="num14" name="num14" rows="3" class="form-control"></textarea>
+                                <textarea id="num14" name="num14" rows="3" class="form-control <?php if (!empty($form_error["num13"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num14'] ?></div>
                             </div>
                         </div>
                         <div class = "row container">
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num15"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>15.) How many hours in an average workday will your companion animal spend without a human?</span>
-                                <input type="number" class="form-control" name="num15">
+                                <input type="text" class="form-control <?php if (!empty($form_error["num15"])): ?>is-invalid<?php else: ?><?php endif; ?>" value = "<?= set_value("num15"); ?>" name="num15">
+                                <div class="invalid-feedback"><?= $form_error['num15'] ?></div>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num16"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>16.) What will happen to your companion animal, when you go on a vacation or in case of emergency?</span>
-                                <textarea id="num16" name="num16" class="form-control"></textarea>
+                                <textarea id="num16" name="num16" class="form-control <?php if (!empty($form_error["num16"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num16'] ?></div>
                             </div>
                         </div>
                         <div class = "row container">
@@ -670,9 +693,10 @@ Pet Adoption
                                     </label>
                                 </div> 
                             </div>
-                            <div class="form-group col-sm-6" style = "margin-top:0 !important;">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num20"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>" >
                                 <span>20.) Where will this animal be kept during the Day? Night?</span>
-                                <textarea id="num20" name="num20" class="form-control"></textarea>
+                                <textarea id="num20" name="num20" class="form-control <?php if (!empty($form_error["num20"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num20'] ?></div>
                             </div>
                         </div>
                         <div class = "row container">
@@ -778,15 +802,16 @@ Pet Adoption
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num24"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>24.) As a matter of policy, PARC will neuter all animals prior to releasing
                                     for adoption. What is your opinion about spaying and neutering (kapon) of companion animals?</span>
-                                <textarea id="num24" name="num24" class="form-control"></textarea>
+                                <textarea id="num24" name="num24" class="form-control <?php if (!empty($form_error["num24"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num24'] ?></div>
                             </div>
                         </div>
                         <div class = "row container">
                             <div class="form-group col-sm-12">
-                                <span>25.) Do you have questions and comments?</span>
+                                <span>25.) Do you have questions and comments? (Optional)</span>
                                 <textarea id="num25" name="num25" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
