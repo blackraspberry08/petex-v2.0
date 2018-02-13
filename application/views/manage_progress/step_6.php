@@ -29,6 +29,9 @@
     $schedule_6 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_6->progress_id))[0];
 ?>
 
+<?php if(empty($schedule_6)):?>
+    <!-- NOTHING TO DO HERE -->
+<?php else:?>
 
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Release Day</h3>
@@ -259,3 +262,4 @@ $(document).ready(function(){
         document.getElementById("adoption_picture_edit").value = "";
     }
 </script>
+<?php endif;?>

@@ -21,6 +21,9 @@
     $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
 ?>
 
+<?php if(empty($schedule_4)):?>
+    <!-- NOTHING TO DO HERE -->
+<?php else:?>
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Home Visit</h3>
     <p class = "text-muted text-center"><?= $progress_4->checklist_desc?></p>
@@ -403,3 +406,4 @@
         
     });
 </script>
+<?php endif;?>

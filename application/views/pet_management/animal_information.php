@@ -202,20 +202,24 @@ function wrap_iframe($src) {
                                         <button class="custom-file-container__image-clear">x</button>
                                     </label>
                                     <small id="videoHelp" class="form-text text-muted">
-                                        Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png
+                                        Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png<br>
+                                        <small><i>Leave this blank if you don't want to change the current image.</i></small>
                                     </small>
                                     <div class="custom-file-container__image-preview" id = "pet_picture_edit_preview"></div>
                                 </div>
                             </div>
                             <div class="form-group <?php if (!empty(form_error("pet_video"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
-                                <label for="pet_video" class=form-control-label">Video</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class = "fa fa-link"></i></span>
-                                    <input type="text" class="form-control <?php if (!empty(form_error("pet_video"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_video", wrap_iframe($animal->pet_video)); ?>'>
-                                    <div class="invalid-feedback"><?= form_error('pet_video') ?></div>
+                                <label for="pet_video" class="form-control-label">Video</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class = "fa fa-link"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control <?php if (!empty(form_error("pet_video"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_video",  wrap_iframe($animal->pet_video)); ?>'>
                                 </div>
+                                <div class="invalid-feedback"><?= form_error('pet_video') ?></div>
                                 <small id="videoHelp" class="form-text text-muted">
-                                    Right click on a youtube video, and select "Copy embed code". Paste it here.
+                                    Right click on a youtube video, and select "Copy embed code". Paste it here.<br>
+                                    <small><i>Leave this blank if you don't want to change the current video.</i></small>
                                 </small>
                             </div>
                             <?php if (!empty($animal->pet_video)): ?>

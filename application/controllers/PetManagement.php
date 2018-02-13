@@ -220,7 +220,7 @@ class PetManagement extends CI_Controller {
         $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[25]");
         $this->form_validation->set_rules('pet_breed', "Pet Breed", "required|callback__alpha_dash_space|min_length[3]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
-        $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
+        $this->form_validation->set_rules('pet_video', "Pet Video", "regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
 
         if ($this->form_validation->run() == FALSE) {
             //ERROR IN FORM
@@ -253,7 +253,13 @@ class PetManagement extends CI_Controller {
                     $imagePath = $animal->pet_picture;
                 }
             }
-
+            
+            if($this->input->post("pet_video") == "" || $this->input->post("pet_video") == NULL){
+                $pet_video = $animal->pet_video;
+            }else{
+                $pet_video = $this->getTextBetween('src="', '"', $this->input->post("pet_video"));
+            }
+            
             $pet = array(
                 'pet_name' => $this->input->post("pet_name"),
                 'pet_bday' => strtotime($this->input->post("pet_bday")),
@@ -267,7 +273,7 @@ class PetManagement extends CI_Controller {
                 'pet_description' => $this->input->post("pet_description"),
                 'pet_history' => $this->input->post("pet_history"),
                 'pet_picture' => $imagePath,
-                'pet_video' => $this->getTextBetween('src="', '"', $this->input->post("pet_video")),
+                'pet_video' => $pet_video,
                 'pet_updated_at' => time()
             );
 
