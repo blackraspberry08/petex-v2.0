@@ -33,8 +33,9 @@ class ManageProgress extends CI_Controller {
     
     public function index(){
         $transaction_id = $this->session->userdata("manage_progress_transaction_id");
-        if($this->session->userdata("pet_status") == "Adopted"){
+        if($this->session->userdata("pet_status") != "Adopted"){
             $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+            $adoption = NULL;
             $progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id));
             $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id))[0];
             $progress_2 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id))[0];
@@ -44,6 +45,7 @@ class ManageProgress extends CI_Controller {
             $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
         }else{
             $current_transaction = $this->PetManagement_model->get_finished_transaction(array("transaction.transaction_id" => $transaction_id))[0];
+            $adoption = $this->ManageProgress_model->get_adoption(array("adoption.user_id" => $current_transaction->user_id, "adoption.pet_id" => $current_transaction->pet_id))[0];
             $progress = $this->ManageProgress_model->get_finished_progress(array("progress.transaction_id" => $transaction_id));
             $progress_1 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id))[0];
             $progress_2 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id))[0];
@@ -52,9 +54,6 @@ class ManageProgress extends CI_Controller {
             $progress_5 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
             $progress_6 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
         }
-        //if transaction is done
-        //THIS IS NEEDED:
-        $adoption = $this->ManageProgress_model->get_adoption(array("adoption.user_id" => $current_transaction->user_id, "adoption.pet_id" => $current_transaction->pet_id))[0];
         
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];

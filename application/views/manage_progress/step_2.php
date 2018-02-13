@@ -17,9 +17,11 @@
     }
 </style>
 
-<?php $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
-?>
+<?php $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];?>
 
+<?php if(empty($schedule_2)):?>
+    <!-- NOTHING TO DO HERE -->
+<?php else:?>
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Meet and Greet</h3>
     <p class = "text-muted">&emsp;<?= $progress_2->checklist_desc?></p>
@@ -403,3 +405,5 @@
         
     });
 </script>
+
+<?php endif;?>
