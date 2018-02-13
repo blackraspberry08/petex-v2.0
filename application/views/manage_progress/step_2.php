@@ -17,9 +17,7 @@
     }
 </style>
 
-<?php 
-    $progress_2 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction->transaction_id))[0];
-    $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
+<?php $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
 ?>
 
 <div class = "col-lg-12">
@@ -135,29 +133,24 @@
             <div class="modal-body step step-1">
                 <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #1</p>
                 <form role ="form" method="POST">
-                    <!-- Hidden Fields -->
-                    <input type ="hidden"  id="event_title_1" name = "event_title_1" value = "Interview #1 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-                    <input type ="hidden"  id="event_color_1" name = "event_color_1" value = "#1e7e34"/>
-                    <input type ="hidden"  id="event_type_1" name = "event_type_1" value = "approve"/>
-                    <input type ="hidden"  id="event_description_1" name ="event_description_1" value = "Meet and Greet is completed (32%)! Interview #1 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate_1">Start Date</label>
-                            <input type = "text" id = "event_startdate_1" name = "event_startdate_1" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_step_2_prog1">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_2_prog1" name = "event_startdate_step_2_prog1" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime_1">Start Time</label>
-                            <input type = "text" id = "event_starttime_1" name = "event_starttime_1" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_step_2_prog1">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_2_prog1" name = "event_starttime_step_2_prog1" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate_1">End Date</label>
-                            <input type = "text" id = "event_enddate_1" name = "event_enddate_1" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_step_2_prog1">End Date</label>
+                            <input type = "text" id = "event_enddate_step_2_prog1" name = "event_enddate_step_2_prog1" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime_1">End Time</label>
-                            <input type = "text" id = "event_endtime_1" name = "event_endtime_1" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_step_2_prog1">End Time</label>
+                            <input type = "text" id = "event_endtime_step_2_prog1" name = "event_endtime_step_2_prog1" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                 </form>
@@ -165,29 +158,24 @@
             <div class="modal-body step step-2">
                 <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #2</p>
                 <form role ="form" method="POST">
-                    <!-- Hidden Fields -->
-                    <input type ="hidden"  id="event_title_2" name = "event_title_2" value = "Interview #2 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-                    <input type ="hidden"  id="event_color_2" name = "event_color_2" value = "#1e7e34"/>
-                    <input type ="hidden"  id="event_type_2" name = "event_type_2" value = "approve"/>
-                    <input type ="hidden"  id="event_description_2" name ="event_description_2" value = "Meet and Greet is completed (32%)! Interview #2 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate_2">Start Date</label>
-                            <input type = "text" id = "event_startdate_2" name = "event_startdate_2" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_step_2_prog2">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_2_prog2" name = "event_startdate_step_2_prog2" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime_2">Start Time</label>
-                            <input type = "text" id = "event_starttime_2" name = "event_starttime_2" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_step_2_prog2">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_2_prog2" name = "event_starttime_step_2_prog2" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate_2">End Date</label>
-                            <input type = "text" id = "event_enddate_2" name = "event_enddate_2" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_step_2_prog2">End Date</label>
+                            <input type = "text" id = "event_enddate_step_2_prog2" name = "event_enddate_step_2_prog2" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime_2">End Time</label>
-                            <input type = "text" id = "event_endtime_2" name = "event_endtime_2" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_step_2_prog2">End Time</label>
+                            <input type = "text" id = "event_endtime_step_2_prog2" name = "event_endtime_step_2_prog2" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                 </form>
@@ -195,43 +183,38 @@
             <div class="modal-body step step-3">
                 <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #3</p>
                 <form role ="form" method="POST">
-                    <!-- Hidden Fields -->
-                    <input type ="hidden"  id="event_title_prog2" name = "event_title_prog2" value = "Interview #3 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-                    <input type ="hidden"  id="event_color_prog2" name = "event_color_prog2" value = "#1e7e34"/>
-                    <input type ="hidden"  id="event_type_prog2" name = "event_type_prog2" value = "approve"/>
-                    <input type ="hidden"  id="event_description_prog2" name ="event_description_prog2" value = "Meet and Greet is completed (32%)! Interview #3 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate">Start Date</label>
-                            <input type = "text" id = "event_startdate_prog2" name = "event_startdate_prog2" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_step_2">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_2" name = "event_startdate_step_2" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime">Start Time</label>
-                            <input type = "text" id = "event_starttime_prog2" name = "event_starttime_prog2" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_step_2">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_2" name = "event_starttime_step_2" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate">End Date</label>
-                            <input type = "text" id = "event_enddate_prog2" name = "event_enddate_prog2" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_step_2">End Date</label>
+                            <input type = "text" id = "event_enddate_step_2" name = "event_enddate_step_2" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime">End Time</label>
-                            <input type = "text" id = "event_endtime_prog2" name = "event_endtime_prog2" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_step_2">End Time</label>
+                            <input type = "text" id = "event_endtime_step_2" name = "event_endtime_step_2" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_a_2" name = "comment_a_2" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_2">Comment</label>
+                        <textarea class = "form-control" id = "comment_step_2" name = "comment_step_2" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id = "setSched_1" class="btn btn-primary step step-1" data-step="1" onclick="nextStep(1)">Set Schedule #1</button>
-                <button type="button" id = "setSched_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep(2)">Set Schedule #2</button>
-                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep(3)">Approve</button>
+                <button type="button" id = "setSched_1_step_2" class="btn btn-primary step step-1" data-step="1" onclick="nextStep_step_2(1)">Set Schedule #1</button>
+                <button type="button" id = "setSched_2_step_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep_step_2(2)">Set Schedule #2</button>
+                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep_step_2(3)">Approve</button>
             </div>
         </div>
     </div>
@@ -240,7 +223,6 @@
 <!-- MODAL FOR DISAPPROVING STEP 2 -->
 <div class="modal fade" id="step_2_sched_disapprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form id = "step_2_form_d" method = "POST" role = "form">
-        <input type ="hidden"  id="event_type" name = "event_type" value = "disapprove"/>
         <!-- Displayed Fields -->
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -252,8 +234,8 @@
                 </div>
                 <div class="modal-body">
                     <div class = "form-row">
-                        <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_d_2" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_2_d">Remarks</label>
+                        <textarea class = "form-control" id = "comment_step_2_d" name = "comment_step_2_d" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -273,18 +255,24 @@
                 "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
                 "dataType": "JSON",
                 "data": {
-                    'comment':$('#comment_d_2').val(),
+                    'comment':$('#comment_step_2_d').val(),
                     'event_type':"disapprove"
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
-                        alert(res.result);
+                        swal("Oops", res.result, "error");
+                        show_error(res.comment, $("#comment_step_2_d"));
                     }
+
                 },
                 error: function(res){
-                    console.log("ERROR");
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
                 }
             });
         });     
@@ -292,7 +280,7 @@
 </script>
 <script>
     $(document).ready(function(){
-        nextStep = function(step) {
+        nextStep_step_2 = function(step) {
             switch(step){
                 case 1:{
                     $.ajax({
@@ -300,28 +288,33 @@
                         "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
                         "dataType": "JSON",
                         "data": {
-                            'schedule_title_1': $("#event_title_1").val(),
-                            'schedule_desc_1': $("#event_description_1").val(),
-                            'schedule_color_1': $("#event_color_1").val(),
-                            'schedule_startdate_1': $("#event_startdate_1").val(),
-                            'schedule_starttime_1': $("#event_starttime_1").val(),
-                            'schedule_enddate_1': $("#event_enddate_1").val(),
-                            'schedule_endtime_1': $("#event_endtime_1").val(),
+                            'schedule_title': "Interview #1 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+                            'schedule_desc': "Meet and Greet is completed (32%)! Interview #1 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_color': "#1e7e34",
+                            'schedule_startdate': $("#event_startdate_step_2_prog1").val(),
+                            'schedule_starttime': $("#event_starttime_step_2_prog1").val(),
+                            'schedule_enddate': $("#event_enddate_step_2_prog1").val(),
+                            'schedule_endtime': $("#event_endtime_step_2_prog1").val(),
                             'event_type':"setSched_1"
                         },
                         success: function (res) {
                             if (res.success) {
-                                $('.step').trigger('next.m.2');
-                                console.log("SUCCESS");
+                                swal({title: "Success", text: res.result, type: "success"},
+                                    function(){ 
+                                        $('.step').trigger('next.m.2');
+                                    }
+                                );
                             } else {
-                                alert(res.result);
-                                console.log("UNSUCCESSFUL");
+                                swal("Error", res.result, "error");
+                                show_error(res.startdate, $("#event_startdate_step_2_prog1"));
+                                show_error(res.starttime, $("#event_starttime_step_2_prog1"));
+                                show_error(res.enddate, $("#event_enddate_step_2_prog1"));
+                                show_error(res.endtime, $("#event_endtime_step_2_prog1"));
                                 console.log(res);
                             }
                         },
                         error: function(res){
-                            console.log("ERROR");
-                            console.log(res);
+                            swal("Reload", "Something went wrong. Reload your browser", "error");
                         }
                     });
                     
@@ -333,28 +326,33 @@
                         "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
                         "dataType": "JSON",
                         "data": {
-                            'schedule_title_2': $("#event_title_2").val(),
-                            'schedule_desc_2': $("#event_description_2").val(),
-                            'schedule_color_2': $("#event_color_2").val(),
-                            'schedule_startdate_2': $("#event_startdate_2").val(),
-                            'schedule_starttime_2': $("#event_starttime_2").val(),
-                            'schedule_enddate_2': $("#event_enddate_2").val(),
-                            'schedule_endtime_2': $("#event_endtime_2").val(),
+                            'schedule_title': "Interview #2 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+                            'schedule_desc': "Meet and Greet is completed (32%)! Interview #2 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_color': "#1e7e34",
+                            'schedule_startdate': $("#event_startdate_step_2_prog2").val(),
+                            'schedule_starttime': $("#event_starttime_step_2_prog2").val(),
+                            'schedule_enddate': $("#event_enddate_step_2_prog2").val(),
+                            'schedule_endtime': $("#event_endtime_step_2_prog2").val(),
                             'event_type':"setSched_2"
                         },
                         success: function (res) {
                             if (res.success) {
-                                $('.step').trigger('next.m.3');
-                                console.log("SUCCESS");
+                                swal({title: "Success", text: res.result, type: "success"},
+                                    function(){ 
+                                        $('.step').trigger('next.m.3');
+                                    }
+                                );
                             } else {
-                                alert(res.result);
-                                console.log("UNSUCCESSFUL");
+                                swal("Error", res.result, "error");
+                                show_error(res.startdate, $("#event_startdate_step_2_prog2"));
+                                show_error(res.starttime, $("#event_starttime_step_2_prog2"));
+                                show_error(res.enddate, $("#event_enddate_step_2_prog2"));
+                                show_error(res.endtime, $("#event_endtime_step_2_prog2"));
                             }
 
                         },
                         error: function(res){
-                            console.log("ERROR");
-                            alert("Something went wrong while setting your schedule.");
+                            swal("Reload", "Something went wrong. Reload your browser", "error");
                         }
                     });
                     break;
@@ -365,30 +363,36 @@
                         "url": '<?= base_url() ?>' + "ManageProgress/step_2/<?= $transaction->transaction_id?>",
                         "dataType": "JSON",
                         "data": {
-                            'schedule_title': $("#event_title_prog2").val(),
-                            'schedule_desc': $("#event_description_prog2").val(),
-                            'schedule_color': $("#event_color_prog2").val(),
-                            'schedule_startdate': $("#event_startdate_prog2").val(),
-                            'schedule_starttime': $("#event_starttime_prog2").val(),
-                            'schedule_enddate': $("#event_enddate_prog2").val(),
-                            'schedule_endtime': $("#event_endtime_prog2").val(),
-                            'comment':$('#comment_a_2').val(),
+                            'schedule_title':"Interview #3 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+                            'schedule_desc': "Meet and Greet is completed (32%)! Interview #3 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_color': "#1e7e34",
+                            'schedule_startdate': $("#event_startdate_step_2").val(),
+                            'schedule_starttime': $("#event_starttime_step_2").val(),
+                            'schedule_enddate': $("#event_enddate_step_2").val(),
+                            'schedule_endtime': $("#event_endtime_step_2").val(),
+                            'comment':$('#comment_step_2').val(),
                             'event_type':"approve"
                         },
                         success: function (res) {
                             if (res.success) {
-                                location.reload();
-                                console.log("SUCCESS");
+                                swal({title: "Success", text: res.result, type: "success"},
+                                    function(){ 
+                                        location.reload();
+                                    }
+                                );
                             } else {
-                                alert(res.result);
-                                console.log("UNSUCCESSFUL");
+                                swal("Error", res.result, "error");
+                                show_error(res.startdate, $("#event_startdate_step_2"));
+                                show_error(res.starttime, $("#event_starttime_step_2"));
+                                show_error(res.enddate, $("#event_enddate_step_2"));
+                                show_error(res.endtime, $("#event_endtime_step_2"));
+                                show_error(res.comment, $("#comment_step_2"));
                                 console.log(res);
                             }
 
                         },
                         error: function(res){
-                            console.log("ERROR");
-                            alert("Something went wrong while setting your schedule.");
+                            swal("Reload", "Something went wrong. Reload your browser", "error");
                         }
                     });
                     break;

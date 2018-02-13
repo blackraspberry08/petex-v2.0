@@ -44,4 +44,16 @@
             visibility:hidden;
         }
    </style>
+   <script>
+        function show_error(form_error, field) {
+            if(form_error !== "" || typeof form_error === undefined){
+                $(field).siblings(".invalid-feedback").remove();
+                $(field).after("<div class = 'invalid-feedback'>"+form_error+"</div>");
+                $(field).removeClass("is-invalid").addClass("is-invalid");
+            }else{
+                $(field).siblings(".invalid-feedback").remove();
+                $(field).removeClass("is-invalid");
+            }
+        }
+   </script>
 </head>

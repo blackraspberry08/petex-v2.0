@@ -21,12 +21,17 @@
 </style>
 
 <?php 
-    $progress_3 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction->transaction_id))[0];
     $schedule_3 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_3->progress_id));
-    $sched_1    = $schedule_3[0];
-    $sched_2    = $schedule_3[1];
-    $sched_3    = $schedule_3[2];
+    
 ?>
+
+<?php if(!empty($schedule_3)):?>
+    <?php 
+        $sched_1    = $schedule_3[0];
+        $sched_2    = $schedule_3[1];
+        $sched_3    = $schedule_3[2];
+    ?>
+
 
 <script>
     $(document).ready(function(){
@@ -89,13 +94,18 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
-                        alert(res.result);
+                        swal("Error", res.result, "error");
+                        
                     }
                 },
                 error: function(res){
-                    console.log("ERROR");
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
                 }
             });
         });
@@ -113,13 +123,17 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
-                        alert(res.result);
+                        swal("Error", res.result, "error");
                     }
                 },
                 error: function(res){
-                    console.log("ERROR");
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
                 }
             });
         });
@@ -137,13 +151,17 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
-                        alert(res.result);
+                        swal("Error", res.result, "error");
                     }
                 },
                 error: function(res){
-                    console.log("ERROR");
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
                 }
             });
         });
@@ -154,27 +172,35 @@
                 "url": '<?= base_url() ?>' + "ManageProgress/step_3/<?= $transaction->transaction_id?>",
                 "dataType": "JSON",
                 "data": {
-                    'schedule_title_prog3': $("#event_title_prog3").val(),
-                    'schedule_desc_prog3': $("#event_description_prog3").val(),
-                    'schedule_color_prog3': $("#event_color_prog3").val(),
-                    'schedule_startdate_prog3': $("#event_startdate_prog3").val(),
-                    'schedule_starttime_prog3': $("#event_starttime_prog3").val(),
-                    'schedule_enddate_prog3': $("#event_enddate_prog3").val(),
-                    'schedule_endtime_prog3': $("#event_endtime_prog3").val(),
-                    'comment_prog3': $("#comment_prog3").val(),
+                    'schedule_title': "Home Visit : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+                    'schedule_desc': "All Interviews are done (49%)! Home Visit will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                    'schedule_color': "#1e7e34",
+                    'schedule_startdate': $("#event_startdate_step_3").val(),
+                    'schedule_starttime': $("#event_starttime_step_3").val(),
+                    'schedule_enddate': $("#event_enddate_step_3").val(),
+                    'schedule_endtime': $("#event_endtime_step_3").val(),
+                    'comment': $("#comment_step_3").val(),
                     'event_type':"approve"
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
-                        alert(res.result);
-                        console.log("UNSUCCESSFUL");
+                        swal("Error", res.result, "error");
+                        show_error(res.startdate, $("#event_startdate_step_3"));
+                        show_error(res.starttime, $("#event_starttime_step_3"));
+                        show_error(res.enddate, $("#event_enddate_step_3"));
+                        show_error(res.endtime, $("#event_endtime_step_3"));
+                        show_error(res.comment, $("#comment_step_3"));
                         console.log(res);
                     }
                 },
                 error: function(res){
-                    console.log("ERROR");
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
                     console.log(res);
                 }
             });
@@ -352,49 +378,40 @@
 <!-- MODAL FOR APPROVING STEP 3 -->
 <div class="modal fade" id="step_3_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form id = "step_3_form_a" method = "POST" role = "form">
-        <!-- Hidden Fields -->
-        <input type ="hidden"  id="event_title_prog3" name = "event_title_prog3" value = "Home Visit : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-        <input type ="hidden"  id="event_color_prog3" name = "event_color_prog3" value = "#1e7e34"/>
-        <input type ="hidden"  id="event_type_prog3" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description_prog3" name ="event_description_prog3" value = "All Interviews are done (49%)! Home Visit will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
         <!-- Displayed Fields -->
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="eventHeader_prog3"><i class = "fa fa-thumbs-o-up"></i> Approve Interviews</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Home Visit</p>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate_prog3">Start Date</label>
-                            <input type = "text" id = "event_startdate_prog3" name = "event_startdate_prog3" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_step_3">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_3" name = "event_startdate_step_3" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime_prog3">Start Time</label>
-                            <input type = "text" id = "event_starttime_prog3" name = "event_starttime_prog3" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_step_3">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_3" name = "event_starttime_step_3" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate_prog3">End Date</label>
-                            <input type = "text" id = "event_enddate_prog3" name = "event_enddate_prog3" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_step_3">End Date</label>
+                            <input type = "text" id = "event_enddate_step_3" name = "event_enddate_step_3" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime_prog3">End Time</label>
-                            <input type = "text" id = "event_endtime_prog3" name = "event_endtime_prog3" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_step_3">End Time</label>
+                            <input type = "text" id = "event_endtime_step_3" name = "event_endtime_step_3" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment_prog3">Comment</label>
-                        <textarea class = "form-control" id = "comment_prog3" name = "comment_prog3" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_3">Comment</label>
+                        <textarea class = "form-control" id = "comment_step_3" name = "comment_step_3" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" id = "step_3_approve" class="btn btn-primary">Approve</button>
                 </div>
             </div>
@@ -402,10 +419,9 @@
     </form>
 </div>
 
-<!-- MODAL FOR DISAPPROVING STEP 2 -->
+<!-- MODAL FOR DISAPPROVING STEP 3 -->
 <div class="modal fade" id="step_3_sched_disapprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form id = "step_3_form_d" method = "POST" role = "form">
-        <input type ="hidden"  id="event_type" name = "event_type" value = "disapprove"/>
         <!-- Displayed Fields -->
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -417,8 +433,8 @@
                 </div>
                 <div class="modal-body">
                     <div class = "form-row">
-                        <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_d_3" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_d_3">Remarks</label>
+                        <textarea class = "form-control" id = "comment_d_3" name = "comment_d_3" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -442,15 +458,21 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        location.reload();
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
                     } else {
-                        alert(res.result);
+                        swal("Error", res.result, "error");
+                        show_error(res.comment, $('#comment_d_3'));
                     }
                 },
                 error: function(res){
-                    console.log("ERROR");
+                    swal("Reload", "Something went wrong. Reload your browser", "error");
                 }
             });
         });
 });//ready()
 </script>
+<?php endif;?>

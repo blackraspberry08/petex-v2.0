@@ -50,7 +50,7 @@ MEDICAL RECORDS
                     <tbody>
                         <?php foreach ($animal_medical_records as $record): ?>
                             <tr>
-                                <td><?= date("F d, Y", $record->medicalRecord_date);?></td>
+                                <td><span style = "display:none;"><?= $record->medicalRecord_date ?></span><?= date("F d, Y", $record->medicalRecord_date);?></td>
                                 <td><?= $record->medicalRecord_weight?></td>
                                 <td><?= $record->medicalRecord_diagnosis?></td>
                                 <td><?= $record->medicalRecord_treatment?></td>

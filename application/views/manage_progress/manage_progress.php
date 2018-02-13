@@ -45,7 +45,7 @@ function determine_access($access){
 </style>
 <div class="card mb-3">
     <div class="card-header">
-        <i class="fa fa-paw"></i> Manage Progress
+        <i class="fa fa-paw"></i> Adoption Information
     </div>
     <div class="card-body">
         <div class = "row mb-3">
@@ -64,7 +64,11 @@ function determine_access($access){
                 </div>
             </div>
             <div class ="col-md-2 align-self-center text-center" style = "font-size:1.3vw;">
-                <i class ="fa fa-long-arrow-right"></i> Adopting <i class ="fa fa-long-arrow-right"></i>
+                <?php if($this->session->userdata("pet_status") == "Adopted"):?>
+                    <i class ="fa fa-long-arrow-right"></i> Adopting <i class ="fa fa-long-arrow-right"></i>
+                <?php else:?>
+                    <i class ="fa fa-long-arrow-right"></i> Adopted <i class ="fa fa-long-arrow-right"></i>
+                <?php endif;?>
             </div>
             <div class ="col-md-5">
                 <div class="card bg-light mb-3">

@@ -15,14 +15,10 @@
         vertical-align: baseline;
         border-radius: .25em;
     }
-    .disabled{
-        cursor:not-allowed;
-    }
 </style>
 
 <?php 
-    $progress_4 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction->transaction_id))[0];
-    $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_4->progress_id))[0];
+    $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
 ?>
 
 <div class = "col-lg-12">
@@ -122,76 +118,125 @@
     <?php endif; ?>
 </div>
 
-<!-- MODAL FOR APPROVING STEP 4 -->
-<div class="modal fade" id="step_4_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form id = "step_4_form_a" method = "POST" role = "form">
-        <!-- Hidden Fields -->
-        <input type ="hidden"  id="event_title_prog4" name = "event_title_prog4" value = "Visiting Chosen Adoptee : <?= $transaction->user_firstname." ".$transaction->user_lastname?>" placeholder="Title">
-        <input type ="hidden"  id="event_color_prog4" name = "event_color_prog4" value = "#1e7e34"/>
-        <input type ="hidden"  id="event_type" name = "event_type" value = "approve"/>
-        <input type ="hidden"  id="event_description_prog4" name ="event_description_prog4" value = "Home Visit is done (66%)! Visiting Chosen Adoptee will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.">
-        <!-- Displayed Fields -->
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader_prog4"><i class = "fa fa-thumbs-o-up"></i> Approve Home Visit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Visiting Chosen Adoptee</p>
+<!-- MODAL FOR APPROVING STEP 2 -->
+<div class="modal fade multi-step" id="step_4_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Displayed Fields -->
+    <div class="modal-dialog modal-lg"role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title step-1" data-step="1"><i class = "fa fa-thumbs-o-up"></i> Approve Home Visit</h5>
+                <h5 class="modal-title step-2" data-step="2"><i class = "fa fa-thumbs-o-up"></i> Approve Home Visit</h5>
+                <h5 class="modal-title step-3" data-step="3"><i class = "fa fa-thumbs-o-up"></i> Approve Home Visit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body step step-1">
+                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Visiting Chosen Adoptee #1</p>
+                <form role ="form" method="POST">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_startdate_prog4">Start Date</label>
-                            <input type = "text" id = "event_startdate_prog4" name = "event_startdate_prog4" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                            <label for="event_startdate_step_4_prog1">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_4_prog1" name = "event_startdate_step_4_prog1" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_starttime_prog4">Start Time</label>
-                            <input type = "text" id = "event_starttime_prog4" name = "event_starttime_prog4" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                            <label for="event_starttime_step_4_prog1">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_4_prog1" name = "event_starttime_step_2_prog1" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
-                            <label for="event_enddate_prog4">End Date</label>
-                            <input type = "text" id = "event_enddate_prog4" name = "event_enddate_prog4" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                            <label for="event_enddate_step_4_prog1">End Date</label>
+                            <input type = "text" id = "event_enddate_step_4_prog1" name = "event_enddate_step_4_prog1" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
                         </div>
                         <div class = "col-md-6 form-group">
-                            <label for="event_endtime_prog4">End Time</label>
-                            <input type = "text" id = "event_endtime_prog4" name = "event_endtime_prog4" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                            <label for="event_endtime_step_4_prog1">End Time</label>
+                            <input type = "text" id = "event_endtime_step_4_prog1" name = "event_endtime_step_4_prog1" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-body step step-2">
+                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Visiting Chosen Adoptee #2</p>
+                <form role ="form" method="POST">
+                    <div class = "form-row">
+                        <div class = "col-md-6 form-group">
+                            <label for="event_startdate_step_4_prog2">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_4_prog2" name = "event_startdate_step_4_prog2" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_starttime_step_4_prog2">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_4_prog2" name = "event_starttime_step_4_prog2" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment_prog4">Comment</label>
-                        <textarea class = "form-control" id = "comment_prog4" name = "comment_prog4" placeholder = "Leave a comment here." required=""></textarea>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_enddate_step_4_prog2">End Date</label>
+                            <input type = "text" id = "event_enddate_step_4_prog2" name = "event_enddate_step_4_prog2" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_endtime_step_4_prog2">End Time</label>
+                            <input type = "text" id = "event_endtime_step_4_prog2" name = "event_endtime_step_4_prog2" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_4_approve" class="btn btn-primary">Approve</button>
-                </div>
+                </form>
+            </div>
+            <div class="modal-body step step-3">
+                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Visiting Chosen Adoptee #3</p>
+                <form role ="form" method="POST">
+                    <div class = "form-row">
+                        <div class = "col-md-6 form-group">
+                            <label for="event_startdate_step_4">Start Date</label>
+                            <input type = "text" id = "event_startdate_step_4" name = "event_startdate_step_4" class = "form-control schedule_datepicker" placeholder = "Start Date" readonly="" required/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_starttime_step_4">Start Time</label>
+                            <input type = "text" id = "event_starttime_step_4" name = "event_starttime_step_4" class = "form-control no-limit-timepicker" placeholder = "Start Time" readonly="" required/>
+                        </div>
+                    </div>
+                    <div class = "form-row">
+                        <div class = "col-md-6 form-group">
+                            <label for="event_enddate_step_4">End Date</label>
+                            <input type = "text" id = "event_enddate_step_4" name = "event_enddate_step_4" class = "form-control schedule_datepicker" placeholder = "End Date" readonly="" required/>
+                        </div>
+                        <div class = "col-md-6 form-group">
+                            <label for="event_endtime_step_4">End Time</label>
+                            <input type = "text" id = "event_endtime_step_4" name = "event_endtime_step_4" class = "form-control no-limit-timepicker" placeholder = "End Time" readonly="" required/>
+                        </div>
+                    </div>
+                    <div class = "form-row">
+                        <label for="comment_step_4">Comment</label>
+                        <textarea class = "form-control" id = "comment_step_4" name = "comment_step_4" placeholder = "Leave a comment here." required=""></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id = "setSched_1_step_4" class="btn btn-primary step step-1" data-step="1" onclick="nextStep_step_4(1)">Set Schedule #1</button>
+                <button type="button" id = "setSched_2_step_4" class="btn btn-primary step step-2" data-step="2" onclick="nextStep_step_4(2)">Set Schedule #2</button>
+                <button type="button" id = "step_4_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep_step_4(3)">Approve</button>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
-<!-- MODAL FOR DISAPPROVING STEP 4 -->
+<!-- MODAL FOR DISAPPROVING STEP 2 -->
 <div class="modal fade" id="step_4_sched_disapprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form id = "step_4_form_d" method = "POST" role = "form">
-        <input type ="hidden"  id="event_type" name = "event_type" value = "disapprove"/>
         <!-- Displayed Fields -->
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Home Visit</h5>
+                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Meet and Greet</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class = "form-row">
-                        <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_d_4" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_4_d">Remarks</label>
+                        <textarea class = "form-control" id = "comment_step_4_d" name = "comment_step_4_d" placeholder = "Leave a comment here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -202,58 +247,159 @@
         </div>
     </form>
 </div>
+<script src = "<?=base_url()?>assets/bootstrap-modal-stepper/js/multi-step-modal.js"></script>
 <script>
-$(document).ready(function(){
-    $(document).on('click', '#step_4_disapprove', function () {
-        $.ajax({
-            "method": "POST",
-            "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
-            "dataType": "JSON",
-            "data": {
-                'comment':$('#comment_d_4').val(),
-                'event_type':"disapprove"
-            },
-            success: function (res) {
-                if (res.success) {
-                    location.reload();
-                } else {
-                    alert(res.result);
+    $(document).ready(function(){
+        $(document).on('click', '#step_4_disapprove', function () {
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
+                "dataType": "JSON",
+                "data": {
+                    'comment':$('#comment_step_4_d').val(),
+                    'event_type':"disapprove"
+                },
+                success: function (res) {
+                    if (res.success) {
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
+                    } else {
+                        swal("Oops", res.result, "error");
+                        show_error(res.comment, $("#comment_step_4_d"));
+                    }
+
+                },
+                error: function(res){
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
                 }
-            },
-            error: function(res){
-                console.log("ERROR");
-            }
-        });
-    });
-    
-    $(document).on('click', '#step_4_approve', function () {
-        $.ajax({
-            "method": "POST",
-            "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
-            "dataType": "JSON",
-            "data": {
-                'schedule_title_prog4': $("#event_title_prog4").val(),
-                'schedule_desc_prog4': $("#event_description_prog4").val(),
-                'schedule_color_prog4': $("#event_color_prog4").val(),
-                'schedule_startdate_prog4': $("#event_startdate_prog4").val(),
-                'schedule_starttime_prog4': $("#event_starttime_prog4").val(),
-                'schedule_enddate_prog4': $("#event_enddate_prog4").val(),
-                'schedule_endtime_prog4': $("#event_endtime_prog4").val(),
-                'comment_prog4': $("#comment_prog4").val(),
-                'event_type':"approve"
-            },
-            success: function (res) {
-                if (res.success) {
-                    location.reload();
-                } else {
-                    alert(res.result);
-                    console.log(res);
-                }
-            },
-            error: function(res){
-                console.log("ERROR");
-            }
-        });
-    });
+            });
+        });     
 });//ready()
+</script>
+<script>
+    $(document).ready(function(){
+        nextStep_step_4 = function(step) {
+            switch(step){
+                case 1:{
+                    $.ajax({
+                        "method": "POST",
+                        "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
+                        "dataType": "JSON",
+                        "data": {
+                            'schedule_title': "Visiting Chosen Adoptee #1 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+                            'schedule_desc': "Home Visit is completed (66%)! Visiting Chosen Adoptee will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_color': "#1e7e34",
+                            'schedule_startdate': $("#event_startdate_step_4_prog1").val(),
+                            'schedule_starttime': $("#event_starttime_step_4_prog1").val(),
+                            'schedule_enddate': $("#event_enddate_step_4_prog1").val(),
+                            'schedule_endtime': $("#event_endtime_step_4_prog1").val(),
+                            'event_type':"setSched_1"
+                        },
+                        success: function (res) {
+                            if (res.success) {
+                                swal({title: "Success", text: res.result, type: "success"},
+                                    function(){ 
+                                        $('.step').trigger('next.m.2');
+                                    }
+                                );
+                            } else {
+                                swal("Error", res.result, "error");
+                                show_error(res.startdate, $("#event_startdate_step_4_prog1"));
+                                show_error(res.starttime, $("#event_starttime_step_4_prog1"));
+                                show_error(res.enddate, $("#event_enddate_step_4_prog1"));
+                                show_error(res.endtime, $("#event_endtime_step_4_prog1"));
+                            }
+                        },
+                        error: function(res){
+                            swal("Reload", "Something went wrong. Reload your browser", "error");
+                        }
+                    });
+                    
+                    break;
+                }
+                case 2:{
+                    $.ajax({
+                        "method": "POST",
+                        "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
+                        "dataType": "JSON",
+                        "data": {
+                            'schedule_title': "Visiting Chosen Adoptee #2 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+                            'schedule_desc': "Home Visit is completed (66%)! Visiting Chosen Adoptee will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_color': "#1e7e34",
+                            'schedule_startdate': $("#event_startdate_step_4_prog2").val(),
+                            'schedule_starttime': $("#event_starttime_step_4_prog2").val(),
+                            'schedule_enddate': $("#event_enddate_step_4_prog2").val(),
+                            'schedule_endtime': $("#event_endtime_step_4_prog2").val(),
+                            'event_type':"setSched_2"
+                        },
+                        success: function (res) {
+                            if (res.success) {
+                                swal({title: "Success", text: res.result, type: "success"},
+                                    function(){ 
+                                        $('.step').trigger('next.m.3');
+                                    }
+                                );
+                            } else {
+                                swal("Error", res.result, "error");
+                                show_error(res.startdate, $("#event_startdate_step_4_prog2"));
+                                show_error(res.starttime, $("#event_starttime_step_4_prog2"));
+                                show_error(res.enddate, $("#event_enddate_step_4_prog2"));
+                                show_error(res.endtime, $("#event_endtime_step_4_prog2"));
+                            }
+
+                        },
+                        error: function(res){
+                            swal("Reload", "Something went wrong. Reload your browser", "error");
+                        }
+                    });
+                    break;
+                }
+                case 3:{
+                    $.ajax({
+                        "method": "POST",
+                        "url": '<?= base_url() ?>' + "ManageProgress/step_4/<?= $transaction->transaction_id?>",
+                        "dataType": "JSON",
+                        "data": {
+                            'schedule_title':"Visiting Chosen Adoptee #3 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
+                            'schedule_desc': "Home Visit is completed (66%)! Visiting Chosen Adoptee will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_color': "#1e7e34",
+                            'schedule_startdate': $("#event_startdate_step_4").val(),
+                            'schedule_starttime': $("#event_starttime_step_4").val(),
+                            'schedule_enddate': $("#event_enddate_step_4").val(),
+                            'schedule_endtime': $("#event_endtime_step_4").val(),
+                            'comment':$('#comment_step_4').val(),
+                            'event_type':"approve"
+                        },
+                        success: function (res) {
+                            if (res.success) {
+                                swal({title: "Success", text: res.result, type: "success"},
+                                    function(){ 
+                                        location.reload();
+                                    }
+                                );
+                            } else {
+                                swal("Error", res.result, "error");
+                                show_error(res.startdate, $("#event_startdate_step_4"));
+                                show_error(res.starttime, $("#event_starttime_step_4"));
+                                show_error(res.enddate, $("#event_enddate_step_4"));
+                                show_error(res.endtime, $("#event_endtime_step_4"));
+                                show_error(res.comment, $("#comment_step_4"));
+                                console.log(res);
+                            }
+
+                        },
+                        error: function(res){
+                            swal("Reload", "Something went wrong. Reload your browser", "error");
+                        }
+                    });
+                    break;
+                }
+                default:{}
+            }
+        }
+        
+    });
 </script>

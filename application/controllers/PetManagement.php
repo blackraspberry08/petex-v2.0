@@ -40,7 +40,7 @@ class PetManagement extends CI_Controller {
         return $final_strip;
     }
 
-    function _alpha_dash_space($str = '') {
+    function _alpha_dash_space($str) {
         if (!preg_match("/^([-a-z_ ])+$/i", $str)) {
             $this->form_validation->set_message('_alpha_dash_space', 'The {field} may only contain alphabet characters, spaces, underscores, and dashes.');
             return FALSE;
@@ -217,7 +217,7 @@ class PetManagement extends CI_Controller {
     public function edit_animal_info_exec() {
         header('X-XSS-Protection:0');
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $this->uri->segment(3)))[0];
-        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[10]");
+        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[25]");
         $this->form_validation->set_rules('pet_breed', "Pet Breed", "required|callback__alpha_dash_space|min_length[3]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
@@ -311,13 +311,14 @@ class PetManagement extends CI_Controller {
 
     public function register_animal() {
         header('X-XSS-Protection:0');
-        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[10]");
+        $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[25]");
         $this->form_validation->set_rules('pet_breed', "Pet Breed", "required|callback__alpha_dash_space|min_length[3]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
         $this->form_validation->set_rules('pet_history', "Pet History", "required");
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
         if ($this->form_validation->run() == FALSE) {
-            $this->add_animal();
+            
+            //$this->add_animal();
         } else {
             $config['upload_path'] = './images/animal/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';
@@ -376,7 +377,7 @@ class PetManagement extends CI_Controller {
         $this->session->set_userdata("interested_adopters", $this->uri->segment(3));
         redirect(base_url() . "PetManagement/interested_adopters");
     }
-
+    
     public function interested_adopters() {
         $animal_id = $this->session->userdata("interested_adopters");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
@@ -398,7 +399,32 @@ class PetManagement extends CI_Controller {
         $this->load->view("pet_management/interested_adopters");
         $this->load->view("dashboard/includes/footer");
     }
-
+    
+    public function adoption_information_exec() {
+        $this->session->set_userdata("adoption_information", $this->uri->segment(3));
+        redirect(base_url() . "PetManagement/adoption_information");
+    }
+    
+    public function adoption_information() {
+        $animal_id = $this->session->userdata("adoption_information");
+        $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $finished_transaction = $this->PetManagement_model->get_finished_transaction(array("transaction.pet_id" => $animal_id));
+        $data = array(
+            'title' => $animal->pet_name . " | Interested Adopters",
+            'animal' => $animal,
+            'finished_transaction' => $finished_transaction,
+            //NAV INFO
+            'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        $this->load->view("admin_nav/navheader");
+        $this->load->view("pet_management/adoption_information");
+        $this->load->view("dashboard/includes/footer");
+    }
+    
     public function restore_transaction_exec() {
         $transaction_id = $this->uri->segment(3);
         $transaction_user_id = $this->uri->segment(4);
@@ -426,7 +452,10 @@ class PetManagement extends CI_Controller {
     }
 
     public function manage_progress_exec() {
-        $this->session->set_userdata("manage_progress_transaction_id", $this->uri->segment(3));
+        $transaction_id = $this->uri->segment(3);
+        $current_transaction = $this->PetManagement_model->get_transaction(array("transaction.transaction_id" => $transaction_id));
+        $this->session->set_userdata("manage_progress_transaction_id", $transaction_id);
+        $this->session->set_userdata("pet_status", $current_transaction->pet_status);
         redirect(base_url() . "ManageProgress");
     }
 
