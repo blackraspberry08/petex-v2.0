@@ -173,4 +173,22 @@ class ManageOfficer extends CI_Controller {
         $this->session->set_flashdata("module_removed", "Successfully removed ".$module_access->module_title." module to ".$module_access->admin_firstname." ".$module_access->admin_lastname."'s modules.");
         redirect(base_url()."ManageOfficer/manage_module");
     }
+    public function register_admin(){
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            "title" => "Admin Registration",
+            //NAV INFO
+            'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        $this->load->view("admin_nav/navheader");
+        $this->load->view("manage_officer/admin_registration");
+        $this->load->view("dashboard/includes/footer");
+    }
+    
+    public function admin_register_exec(){
+        
+    }
 }
