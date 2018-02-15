@@ -45,8 +45,19 @@ User Nav Header
     .nav-item .dropdown-menu {
         width: 300px !important;
     }
+    .tooltip { pointer-events: none; }
 </style>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('.preloader-background').delay(800).fadeOut('slow');
+            $('.preloader-wrapper').delay(800).fadeOut();
+            $('[data-toggle="tooltip"]').tooltip({
+                container: 'body'
+             });
+        });
+    </script>
+    <?php include 'preloader.php' ?>
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="index.html"><img src = "<?= base_url() ?>images/logo/logo.png" height="25"/></a>
