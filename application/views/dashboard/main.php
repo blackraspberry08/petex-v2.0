@@ -11,118 +11,139 @@ Dashboard
             <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
         <?php include_once (APPPATH."views/show_error/show_error.php");?>
-        <!-- Icon Cards-->
+        <!-- Statistics -->
         <div class="row">
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-primary o-hidden h-100">
+                <div class="card text-success border-success o-hidden h-100">
                     <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-comments"></i>
+                        <div class="card-body-icon pr-3 pt-2">
+                            <i class="fa fa-fw fa-paw"></i>
                         </div>
-                        <div class="mr-5">26 New Messages!</div>
+                        <h1 class="mr-5"><?= $adoptable_animals?></h1>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
-                        <span class="float-right">
-                            <i class="fa fa-angle-right"></i>
-                        </span>
-                    </a>
+                    <div class = "card-footer">
+                        <span class="float-left">Adoptable Animals</span>
+                    </div>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-warning o-hidden h-100">
+                <div class="card text-success border-success  o-hidden h-100">
                     <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-list"></i>
+                        <div class="card-body-icon pr-3 pt-2">
+                            <i class="fa fa-fw fa-ban"></i>
                         </div>
-                        <div class="mr-5">11 New Tasks!</div>
+                        <h1 class="mr-5"><?= $removed_animals?></h1>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
-                        <span class="float-right">
-                            <i class="fa fa-angle-right"></i>
-                        </span>
-                    </a>
+                    <div class = "card-footer">
+                        <span class="float-left">Removed Animals</span>
+                    </div>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-success o-hidden h-100">
+                <div class="card text-success border-success  o-hidden h-100">
                     <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-shopping-cart"></i>
+                        <div class="card-body-icon pr-3 pt-2">
+                            <i class="fa fa-fw fa-heart"></i>
                         </div>
-                        <div class="mr-5">123 New Orders!</div>
+                        <h1 class="mr-5"><?= $adopted_animals?></h1>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
-                        <span class="float-right">
-                            <i class="fa fa-angle-right"></i>
-                        </span>
-                    </a>
+                    <div class = "card-footer">
+                        <span class="float-left">Adopted Animals</span>
+                    </div>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-danger o-hidden h-100">
+                <div class="card text-success border-success  o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon pr-3 pt-2">
+                            <i class="fa fa-fw fa-user"></i>
+                        </div>
+                        <h1 class="mr-5"><?= $pet_adopters?></h1>
+                    </div>
+                    <div class = "card-footer">
+                        <span class="float-left">Pet Adopters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-success border-success  o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon pr-3 pt-2">
+                            <i class="fa fa-fw fa-paw"></i>
+                        </div>
+                        <h1 class="mr-5"><?= $non_adoptable_animals?></h1>
+                    </div>
+                    <div class = "card-footer">
+                        <span class="float-left">Non Adoptable Animals</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-success border-success  o-hidden h-100">
                     <div class="card-body">
                         <div class="card-body-icon">
-                            <i class="fa fa-fw fa-support"></i>
+                            <i class="fa fa-fw fa-times pr-3 pt-2"></i>
                         </div>
-                        <div class="mr-5">13 New Tickets!</div>
+                        <h1 class="mr-5"><?= $deceased_animals?></h1>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
-                        <span class="float-right">
-                            <i class="fa fa-angle-right"></i>
-                        </span>
-                    </a>
+                    <div class = "card-footer">
+                        <span class="float-left">Deceased Animals</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-success border-success  o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon pr-3 pt-2">
+                            <i class="fa fa-fw fa-exchange"></i>
+                        </div>
+                        <h1 class="mr-5"><?= $transactions?></h1>
+                    </div>
+                    <div class = "card-footer">
+                        <span class="float-left">Ongoing Transactions</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-success border-success  o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon pr-3 pt-2">
+                            <i class="fa fa-fw fa-users"></i>
+                        </div>
+                        <h1 class="mr-5"><?= $users?></h1>
+                    </div>
+                    <div class = "card-footer">
+                        <span class="float-left">Number of Users</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Area Chart Example-->
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fa fa-area-chart"></i> Area Chart Example</div>
-            <div class="card-body">
-                <canvas id="myAreaChart" width="100%" height="30"></canvas>
-            </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
+        
         <div class="row">
-            <div class="col-lg-8">
-                <!-- Example Bar Chart Card-->
+            <div class="col-lg-4">
+                <!-- Example Doughnut Chart Card-->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-bar-chart"></i> Bar Chart Example</div>
+                        <i class="fa fa-pie-chart"></i> Animals Status</div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-8 my-auto">
-                                <canvas id="myBarChart" width="100" height="50"></canvas>
-                            </div>
-                            <div class="col-sm-4 text-center my-auto">
-                                <div class="h4 mb-0 text-primary">$34,693</div>
-                                <div class="small text-muted">YTD Revenue</div>
-                                <hr>
-                                <div class="h4 mb-0 text-warning">$18,474</div>
-                                <div class="small text-muted">YTD Expenses</div>
-                                <hr>
-                                <div class="h4 mb-0 text-success">$16,219</div>
-                                <div class="small text-muted">YTD Margin</div>
-                            </div>
-                        </div>
+                        <canvas id="myDoughnutChart" width="100%" height="100"></canvas>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
-                
+            </div>
+            <div class = "col-lg-4 align-self-center text-center">
+                <h6 class = "lead">TOTAL ANIMALS IN PAWS</h6>
+                <h1 class = "display-1">
+                    25
+                </h1>
             </div>
             <div class="col-lg-4">
                 <!-- Example Pie Chart Card-->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-pie-chart"></i> Pie Chart Example</div>
+                        <i class="fa fa-pie-chart"></i> Types of Animals in PAWS</div>
                     <div class="card-body">
                         <canvas id="myPieChart" width="100%" height="100"></canvas>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
             </div>
             <div class = "col-lg-12">
@@ -131,5 +152,5 @@ Dashboard
             <div class = "col-lg-12">
                 <?php include_once (APPPATH."views/audit_trail/audit_trail.php");?>
             </div>
-                
+        </div>
     </div>

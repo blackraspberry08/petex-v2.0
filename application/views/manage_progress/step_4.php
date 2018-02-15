@@ -18,10 +18,12 @@
 </style>
 
 <?php 
-    $progress_4 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction->transaction_id))[0];
     $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
 ?>
 
+<?php if(empty($schedule_4)):?>
+    <!-- NOTHING TO DO HERE -->
+<?php else:?>
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Home Visit</h3>
     <p class = "text-muted text-center"><?= $progress_4->checklist_desc?></p>
@@ -214,9 +216,9 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id = "setSched_1" class="btn btn-primary step step-1" data-step="1" onclick="nextStep(1)">Set Schedule #1</button>
-                <button type="button" id = "setSched_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep(2)">Set Schedule #2</button>
-                <button type="button" id = "step_4_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep(3)">Approve</button>
+                <button type="button" id = "setSched_1_step_4" class="btn btn-primary step step-1" data-step="1" onclick="nextStep_step_4(1)">Set Schedule #1</button>
+                <button type="button" id = "setSched_2_step_4" class="btn btn-primary step step-2" data-step="2" onclick="nextStep_step_4(2)">Set Schedule #2</button>
+                <button type="button" id = "step_4_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep_step_4(3)">Approve</button>
             </div>
         </div>
     </div>
@@ -282,7 +284,7 @@
 </script>
 <script>
     $(document).ready(function(){
-        nextStep = function(step) {
+        nextStep_step_4 = function(step) {
             switch(step){
                 case 1:{
                     $.ajax({
@@ -404,3 +406,4 @@
         
     });
 </script>
+<?php endif;?>

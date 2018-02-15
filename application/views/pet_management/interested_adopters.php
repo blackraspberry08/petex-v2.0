@@ -15,6 +15,8 @@ INTERESTED ADOPTERS
         </ol>
         <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <?php include_once (APPPATH."views/show_error/show_error_interested_adopters.php");?>
+        
+        <!-- NOT YET ADOPTED -->
         <?php if (empty($active_transactions)): ?>
         <div class="card mb-3">
             <div class="card-header">

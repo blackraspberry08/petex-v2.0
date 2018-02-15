@@ -33,27 +33,56 @@ class ManageProgress extends CI_Controller {
     
     public function index(){
         $transaction_id = $this->session->userdata("manage_progress_transaction_id");
-        $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
-        $progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id));
+        if($this->session->userdata("pet_status") != "Adopted"){
+            $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+            $adoption = NULL;
+            $progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id));
+            $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id))[0];
+            $progress_2 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id))[0];
+            $progress_3 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction_id))[0];
+            $progress_4 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id))[0];
+            $progress_5 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
+            $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
+        }else{
+            $current_transaction = $this->PetManagement_model->get_finished_transaction(array("transaction.transaction_id" => $transaction_id))[0];
+            $adoption = $this->ManageProgress_model->get_adoption(array("adoption.user_id" => $current_transaction->user_id, "adoption.pet_id" => $current_transaction->pet_id))[0];
+            $progress = $this->ManageProgress_model->get_finished_progress(array("progress.transaction_id" => $transaction_id));
+            $progress_1 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id))[0];
+            $progress_2 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id))[0];
+            $progress_3 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction_id))[0];
+            $progress_4 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id))[0];
+            $progress_5 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
+            $progress_6 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
+        }
+        
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
-        $adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $current_transaction->transaction_id))[0];
+        $adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
         $comments_step_1 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id));
         $comments_step_2 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id));
         $comments_step_3 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction_id));
         $comments_step_4 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id));
         $comments_step_5 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id));
         $comments_step_6 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id));
+        
+        
         $data = array(
             'title' => $current_transaction->user_firstname." ".$current_transaction->user_lastname." | Manage Progress",
             'transaction' => $current_transaction,
             'progresses' => $progress,
             'adoption_form' => $adoption_form,
+            'progress_1'=> $progress_1,
+            'progress_2'=> $progress_2,
+            'progress_3'=> $progress_3,
+            'progress_4'=> $progress_4,
+            'progress_5'=> $progress_5,
+            'progress_6'=> $progress_6,
             'comments_step_1' => $comments_step_1,
             'comments_step_2' => $comments_step_2,
             'comments_step_3' => $comments_step_3,
             'comments_step_4' => $comments_step_4,
             'comments_step_5' => $comments_step_5,
             'comments_step_6' => $comments_step_6,
+            'adoption' => $adoption,
             //NAV INFO
             'user_name' => $current_user->admin_firstname." ".$current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
@@ -1121,15 +1150,11 @@ class ManageProgress extends CI_Controller {
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
         $current_progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id, "progress.checklist_id" => 6))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
-        $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
-        if($this->input->post('event_type') == "approve"){
-            
-        }
-        else if ($this->input->post('event_type') == "disapprove") {
+        if ($this->input->post('event_type') == "disapprove") {
             $this->form_validation->set_rules('comment', "Comment", "required");
             if ($this->form_validation->run() == FALSE) {
                 //IF THERE ARE ERRORS IN FORMS
-                echo json_encode(array('success' => false, 'result' => "Pleas provide a comment.", "comment" => form_error("comment")));
+                echo json_encode(array('success' => false, 'result' => "Please provide a comment.", "comment" => form_error("comment")));
             } else {
                 //Disapprove Step + Comment
                 $progress_comment = array(
@@ -1141,18 +1166,70 @@ class ManageProgress extends CI_Controller {
                     "progress_comment_added_at"     => time()
                 );
                 if($this->ManageProgress_model->add_progress_comment($progress_comment)){
-                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved adoption form (step 1) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
-                    $this->session->set_flashdata("approve_success", "Disapproved adoption form.");
-                    echo json_encode(array('success' => true, 'result' => 'Successfully disapproved adoption form.'));
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved Released Day (step 6) of ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Disapproved Released Day.");
+                    echo json_encode(array('success' => true, 'result' => 'Successfully disapproved Released Day.'));
                 }else{
-                    $this->session->set_flashdata("approve_success", "Something went wrong while disapproving adoption form.");
-                    echo json_encode(array('success' => false, 'result' => 'Something went wrong while disapproving adoption form.'));
+                    $this->session->set_flashdata("approve_success", "Something went wrong while disapproving Released Day.");
+                    echo json_encode(array('success' => false, 'result' => 'Something went wrong while disapproving Released Day.'));
                 }
             }
         }
         
         else{
             echo json_encode(array('success' => false, 'result' => "Something Went wrong. Try again later."));
+        }
+    }
+    public function step_6_adoption_proof(){
+        $transaction_id = $this->uri->segment(3);
+        $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+        $config['upload_path'] = './images/adoption_proof/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['file_ext_tolower'] = true;
+        $config['max_size'] = 5120;
+        $config['encrypt_name'] = true;
+        $this->load->library('upload', $config);
+        if (!empty($_FILES["adoption_picture"]["name"])) {
+            if ($this->upload->do_upload('adoption_picture')) {
+                $imagePath = "images/adoption_proof/".$this->upload->data("file_name");
+                $progress = array(
+                    "progress_accomplished_at"  => time(),
+                    "progress_isSuccessful"     => 1,
+                    "progress_percentage"       => 100
+                );
+                $transaction_progress = array(
+                    "transaction_progress"      => 100,
+                    "transaction_isFinished"    => 1,
+                    "transaction_isActivated"   => 0,
+                    "transaction_finished_at"   => time()
+                );
+                $adoption = array(
+                    "pet_id"                => $current_transaction->pet_id,
+                    "user_id"               => $current_transaction->user_id,
+                    "adoption_proof_img"    => $imagePath,
+                    "adoption_isMissing"    => 0,
+                    "adoption_adopted_at"   => time()
+                );
+                
+                if(     $this->ManageProgress_model->edit_progress($progress, array("checklist_id" => 6, "transaction_id" => $transaction_id)) 
+                        && $this->ManageProgress_model->update_progress($transaction_progress, array("transaction_id" => $transaction_id))
+                        && $this->ManageProgress_model->add_adoption($adoption)
+                        && $this->ManageProgress_model->edit_pet_status($current_transaction->pet_id)
+                        ){
+                        $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Transaction is done for ".$current_transaction->user_firstname." ".$current_transaction->user_lastname." in adopting ".$current_transaction->pet_name.".");
+                        $this->session->set_flashdata("approve_success", $current_transaction->pet_name." now belongs to ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
+                    }else{
+                        $this->session->set_flashdata("approve_failed", "Something went wrong while approving the Release Day");
+                        echo json_encode(array('success' => false, 'result' => 'Something went wrong while approving the Release Day'));
+                    }
+                
+            } else {
+                echo $this->upload->display_errors();
+                $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
+            }
+        } else {
+            //DO METHOD WITHOUT PICTURE PROVIDED
+            $this->session->set_flashdata("uploading_error", "You must provide an image before approving.");
         }
     }
 }
