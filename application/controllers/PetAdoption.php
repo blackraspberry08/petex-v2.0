@@ -165,6 +165,8 @@ class PetAdoption extends CI_Controller {
 
     public function petAdoptionOnlineForm_send() {
         $animal_id = $this->uri->segment(3);
+        $this->form_validation->set_rules('numhome', "Tel No. (Home)", "numeric");
+        $this->form_validation->set_rules('numwork', "Tel No. (Work)", "numeric");
         $this->form_validation->set_rules('nummobile', "Mobile No.", "required|regex_match[^(09|\+639)\d{9}$^]");
         $this->form_validation->set_rules('numref', "Mobile No.", "required|regex_match[^(09|\+639)\d{9}$^]");
         $this->form_validation->set_rules('nameref', "Name", "required|callback__alpha_dash_space|min_length[2]");
@@ -181,6 +183,8 @@ class PetAdoption extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             //ERROR IN FORM
             $errors = array(
+                "numhome" => form_error('numhome'),
+                "numwork" => form_error('numwork'),
                 "nummobile" => form_error('nummobile'),
                 "numref" => form_error('numref'),
                 "nameref" => form_error('nameref'),
@@ -195,7 +199,7 @@ class PetAdoption extends CI_Controller {
                 "yearslived" => form_error('yearslived'),
                 "num15" => form_error('num15'),
             );
-            $this->session->set_userdata("validationErrors", $errors);
+            $this->session->set_flashdata("validationErrors", $errors);
             $this->petAdoptionOnlineForm_exec();
         } else {
             $data = array(

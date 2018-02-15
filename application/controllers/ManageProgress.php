@@ -1220,7 +1220,7 @@ class ManageProgress extends CI_Controller {
                         $this->session->set_flashdata("approve_success", $current_transaction->pet_name." now belongs to ".$current_transaction->user_firstname." ".$current_transaction->user_lastname);
                     }else{
                         $this->session->set_flashdata("approve_failed", "Something went wrong while approving the Release Day");
-                        echo json_encode(array('success' => false, 'result' => 'Something went wrong while approving the Release Day'));
+                        //echo json_encode(array('success' => false, 'result' => 'Something went wrong while approving the Release Day'));
                     }
                 
             } else {
@@ -1231,6 +1231,7 @@ class ManageProgress extends CI_Controller {
             //DO METHOD WITHOUT PICTURE PROVIDED
             $this->session->set_flashdata("uploading_error", "You must provide an image before approving.");
         }
+        redirect(base_url()."ManageProgress");
     }
 }
 
