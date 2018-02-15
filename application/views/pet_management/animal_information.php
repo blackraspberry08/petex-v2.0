@@ -100,6 +100,8 @@ function wrap_iframe($src) {
                                     <small class = "text-success">Adoptable</small>
                                 <?php elseif ($animal->pet_status == "NonAdoptable"): ?>
                                     <small class = "text-secondary">Not Adoptable</small>
+                                <?php elseif ($animal->pet_status == "Deceased"): ?>
+                                    <small class = "text-secondary">Deceased</small>
                                 <?php else: ?>
                                     <small class = "text-danger">Adopted</small>
                                 <?php endif; ?>
@@ -214,7 +216,7 @@ function wrap_iframe($src) {
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class = "fa fa-link"></i></span>
                                     </div>
-                                    <input type="text" class="form-control <?php if (!empty(form_error("pet_video"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_video",  wrap_iframe($animal->pet_video)); ?>'>
+                                    <input type="text" class="form-control <?php if (!empty(form_error("pet_video"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_video", wrap_iframe($animal->pet_video)); ?>'>
                                 </div>
                                 <div class="invalid-feedback"><?= form_error('pet_video') ?></div>
                                 <small id="videoHelp" class="form-text text-muted">
