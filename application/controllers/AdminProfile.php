@@ -33,6 +33,7 @@ class AdminProfile extends CI_Controller {
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
             'title' => "Edit Profile | " . $current_user->admin_firstname . " " . $current_user->admin_lastname,
+            'trails' => $this->AuditTrail_model->get_audit_trail("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "trail", 'admin.admin_id' => $this->session->userid)),
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
@@ -157,7 +158,6 @@ class AdminProfile extends CI_Controller {
                 //SUCCESS
                 $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $userDetails->admin_lastname);
                 $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated his login information");
-                
             } else {
                 $this->session->set_flashdata("uploading_fail2", $userDetails->admin_lastname . " seems to not exist in the database.");
             }

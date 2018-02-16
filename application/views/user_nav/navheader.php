@@ -86,7 +86,7 @@ User Nav Header
                 </li>
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "MyProgress") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement="right" title="My Progress">
                     <a class="nav-link" href="<?= base_url() ?>MyProgress">
-                        <i class="fa fa-fw fa-history"></i>
+                        <i class="fa fa-fw fa-exchange"></i>
                         <span class="nav-link-text">My Progress</span>
                     </a>
                 </li>
