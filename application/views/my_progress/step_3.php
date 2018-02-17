@@ -37,6 +37,39 @@ $schedule_3 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     </div>
 
                 </div>
+                <br>
+                <?php if ($progress_3->progress_isSuccessful == 0): ?>
+                    <div class="card">
+                        <form action="step3_comment/<?= $progress_3->progress_id ?>" method="POST">
+                            <div class ="card-header">
+                                <i class = "fa fa-comment" ></i> Remarks
+                            </div>
+                            <div class="card-body">
+                                <div class = "form-group">
+                                    <label for="date_step_3">Date</label>
+                                    <input type = "text" id = "date_step_3" name = "date_step_3" class = "form-control form_datetime" readonly="" required/>
+                                </div>
+                                <div class = "form-row">
+                                    <label for="comment_step_3"> Comment</label>
+                                    <textarea class = "form-control" id = "comment_step_3" name = "comment_step_3" placeholder = "Leave a comment here." required=""></textarea>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="card-footer" style="padding-bottom:50px;">
+                                <button type="submit" class="btn btn-primary pull-right">Send <i class="fa fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                <?php else: ?>
+                    <div class="card">
+                        <div class ="card-header">
+                            <i class = "fa fa-comment" ></i> Remarks
+                        </div>
+                        <div class="card-body">
+                            <h5><i class="fa fa-check"></i>This progress is already approved.</h5>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="col-md-8">
                 <h3 class = "mt-3 text-center">Interview</h3>
@@ -178,12 +211,6 @@ $schedule_3 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                                 <i class = "fa fa-check" ></i> Closed. Approved by <strong><?= $comment->progress_comment_sender ?></strong>
                             </div>
                         <?php else: ?>
-                            <div class="card-footer small text-muted text-center">
-                                <div class="btn-group" role="group" aria-label="Approval">
-                                    <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_3_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                                    <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_3" data-toggle = "modal"  title = "Approve" data-target = "#step_3_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
-                                </div>
-                            </div>
                         <?php endif; ?>
 
                     </div><!-- /Comment-->

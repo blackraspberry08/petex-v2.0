@@ -288,8 +288,9 @@ Dashboard
                                                 <div class="row container">
                                                     <p><strong>There are two options for you to decide, its either download the form or fill up the form and send to our email online.</strong></p>
                                                     <div class="col-md-3"></div>
-                                                    <div class="col-md-3">
-                                                        <a href="<?= base_url() ?>download/adoption_application_form.pdf" onclick="downloadFunction()" download class="btn btn-outline-primary" download>Download <i class = "fa fa-download"></i></a>
+                                                    <div class="col-md-3"> 
+                                                        <a href="<?= base_url() ?>download/adoption_application_form.pdf" onclick="window.open('<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id ?>');
+                                                                            return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
                                                     </div>
                                                     <div class="col-md-3">
                                                         <a href="<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn btn-outline-primary">Fill up the Form Online</a>
