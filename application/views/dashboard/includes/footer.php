@@ -42,7 +42,6 @@
     <script src="<?= base_url()?>assets/admin/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="<?= base_url()?>assets/admin/js/sb-admin-datatables.min.js"></script>
-    <script src="<?= base_url()?>assets/admin/js/sb-admin-charts.js"></script>
     <!-- Counters Scripts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>

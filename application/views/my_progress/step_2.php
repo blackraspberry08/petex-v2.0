@@ -29,8 +29,40 @@ $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                         <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_2->pet_id; ?>video2" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                     </div>
                 </div>
-
             </div>
+            <br>
+            <?php if ($progress_2->progress_isSuccessful == 0): ?>
+                <div class="card">
+                    <form action="step2_comment/<?= $progress_2->progress_id ?>" method="POST">
+                        <div class ="card-header">
+                            <i class = "fa fa-comment" ></i> Remarks
+                        </div>
+                        <div class="card-body">
+                            <div class = "form-group">
+                                <label for="date_step_2">Date</label>
+                                <input type = "text" id = "date_step_2" name = "date_step_2" class = "form-control form_datetime" readonly="" required/>
+                            </div>
+                            <div class = "form-row">
+                                <label for="comment_step_2"> Comment</label>
+                                <textarea class = "form-control" id = "comment_step_2" name = "comment_step_2" placeholder = "Leave a comment here." required=""></textarea>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="card-footer" style="padding-bottom:50px;">
+                            <button type="submit" class="btn btn-primary pull-right">Send <i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+                </div>
+            <?php else: ?>
+                <div class="card">
+                    <div class ="card-header">
+                        <i class = "fa fa-comment" ></i> Remarks
+                    </div>
+                    <div class="card-body">
+                        <h5><i class="fa fa-check"></i>This progress is already approved.</h5>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="col-md-8">
             <h3 class = "mt-3 text-center">Meet And Greet</h3>

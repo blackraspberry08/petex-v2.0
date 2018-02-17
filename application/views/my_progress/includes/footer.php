@@ -58,6 +58,21 @@
         $(this).ekkoLightbox();
     });
 </script>
+<!-- Bootstrap Datepicker -->
+<script src="<?= base_url() ?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript">
+    var dt = new Date();
+    dt.setFullYear(new Date().getFullYear());
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: 'MM d, yyyy',
+            todayBtn: true,
+            autoclose: true,
+            minView: 2,
+        });
+        $('.form_datetime').datetimepicker('setStartDate', dt);
+    });
+</script>
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {

@@ -12,134 +12,179 @@ Profile
             <li class="breadcrumb-item active">Profile</li>
         </ol>
         <!-- Registered -->
-        <div class="card">
-            <div class="card-header">
-                <i class="fa fa-user"></i> Profile
-
-            </div>
-            <div class="card-body container-fluid">
-                <div class="row">
-                    <div class="col-md-2">
-                        <img src="<?= base_url() . $userDetails->user_picture ?>" class="img-fluid img-thumbnail">
-                    </div>
-                    <div class="col-md-8">
-                    </div>
-                    <div class="col-md-2">
-                        <br>
+        <div class="row">
+            <div class="col-md-3">   
+                <div class="card">
+                    <div class="card-header">
                         <center>
-                            <a class="btn btn-outline-info" href="<?= base_url() ?>Profile/edit_profile"><i class="fa fa-pencil"></i> Edit Profile</a>
+                            <img src="<?= base_url() . $userDetails->user_picture ?>" class="img-fluid img-circle">
+                        </center>
+                    </div>
+                    <div class="card-body">
+                        <center>
+                            <div class="card-title">
+                                <h4><?= $userDetails->user_firstname . " " . $userDetails->user_lastname ?></h4>
+                            </div>
+                            <ul class="list-group list-group-flush ">
+                                <li class="list-group-item"><?= $userDetails->user_email ?></li>
+                                <li class="list-group-item"><?= $userDetails->user_contact_no ?></li>
+                            </ul>
                         </center>
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5><i class="fa fa-user"></i> Personal Information</h5>
-                        <hr class="my-3">
+            </div> 
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fa fa-user"></i> About</h5>
                     </div>
-                    <div class="row container">
-                        <div class="col-md-12">
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Name:
+                    <div class="card-body">
+                        <a class="btn btn-outline-info pull-right" href="<?= base_url() ?>Profile/edit_profile"><i class="fa fa-pencil"></i> Edit Profile</a>
+
+                        <table style="margin-top:55px;" class = "table table-responsive-md table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Uusername: </th>
+                                    <td><?= $userDetails->user_username ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Firstname: </th>
+                                    <td><?= $userDetails->user_firstname ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Lastname: </th>
+                                    <td><?= $userDetails->user_lastname ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Birthday: </th>
+                                    <td><?= date("F d, Y", $userDetails->user_bday); ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Gender:</th>
+                                    <td><?= $userDetails->user_sex ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Address: </th>
+                                    <td><?= $userDetails->user_address ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fa fa-history"></i> Records</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-6 mb-3" style="height:50%; margin-top:100px; ">
+                                <div class="card text-success border-success  o-hidden h-100">
+                                    <div class="card-body">
+                                        <div class="card-body-icon pr-3 pt-2">
+                                            <i class="fa fa-fw fa-exchange"></i>
+                                        </div>
+                                        <h1 class="counter"><?= $transactions ?></h1>
+                                    </div>
+                                    <div class = "card-footer">
+                                        <span class="float-left">My Transactions</span>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= $userDetails->user_firstname ?> <?= $userDetails->user_lastname ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Gender:
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Example Doughnut Chart Card-->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <i class="fa fa-pie-chart"></i> My Pets</div>
+                                    <div class="card-body">
+                                        <canvas id="mypets" width="100%" height="100"></canvas>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= $userDetails->user_sex ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Birthday:
+                            </div>
+                            <div class="col-xl-4 col-sm-6 mb-3" style="height:50%; margin-top:100px; ">
+                                <div class="card text-success border-success  o-hidden h-100">
+                                    <div class="card-body">
+                                        <div class="card-body-icon pr-3 pt-2">
+                                            <i class="fa fa-fw fa-eye"></i>
+                                        </div>
+                                        <h1 class="counter"><?= $missing ?></h1>
+                                    </div>
+                                    <div class = "card-footer">
+                                        <span class="float-left">Missing Pets</span>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= date("F d, Y", $userDetails->user_bday); ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Age:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= get_age($userDetails->user_bday); ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Address:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= $userDetails->user_address ?> <?= $userDetails->user_brgy ?> <?= $userDetails->user_city ?>
-                                </div> 
-                            </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div><br><br>
-            <div class="row container">
-                <div class="col-md-12">
-                    <h5><i class="fa fa-info"></i> Login Information</h5>
-                    <hr class="my-3">
-                </div>
-                <div class="row container">
-                    <div class="col-md-12">
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Username:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                <?= $userDetails->user_username ?>
-                            </div> 
-                        </h5>
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Password:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                ********
-                            </div> 
-                        </h5>
-                    </div>
-                </div>
-            </div><br><br>
-            <div class="row container">
-                <div class="col-md-12">
-                    <h5><i class="fa fa-address-book"></i> Contact Information</h5>
-                    <hr class="my-3">
-                </div>
-                <div class="row container">
-                    <div class="col-md-12">
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Phone Number:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                <?= $userDetails->user_contact_no ?>
-                            </div> 
-                        </h5>
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Email Address:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                <?= $userDetails->user_email ?>
-
-                            </div> 
-                        </h5>
-                    </div>
-
-                </div>
             </div>
-            <br><br>
         </div>
-    </div><br>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Audit Trail
+                    </div>
+                    <div class="card-body">
+                        <?php if (empty($trails)): ?>
+                            <center>
+                                <h4>No audit trails yet</h4>
+                                <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                            </center>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Activity</th>
+                                    <th>Access</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($trails as $trail): ?>
+                                    <?php if ($trail->user_id != ""): ?>
+                                        <tr>
+                                            <td><?= $trail->user_firstname . " " . $trail->user_lastname ?></td>
+                                            <td><?= $trail->event_description ?></td>
+                                            <td>Pet Adopter</td>
+                                            <td>
+                                                <span style = "display:none;"><?= $trail->event_added_at ?></span>
+                                                <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                            </td>
+                                        </tr>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td><?= $trail->admin_firstname . " " . $trail->admin_lastname ?></td>
+                                            <td><?= $trail->event_description ?></td>
+                                            <td><?= $trail->admin_access == "Subadmin" ? "PAWS Officer" : "Administrator"; ?></td>
+                                            <td>
+                                                <span style = "display:none;"><?= $trail->event_added_at ?></span>
+                                                <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            <?php endif; ?>
+
+        </div>
+    </div>
+    <br>
 </div>
 </div>
 </div>

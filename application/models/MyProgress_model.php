@@ -54,4 +54,9 @@ class MyProgress_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
+    public function singleinsert($table, $data) {
+        $this->db->insert($table, $data);
+        return $this->db->affected_rows();
+    }
+
 }
