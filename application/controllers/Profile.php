@@ -40,10 +40,19 @@ class Profile extends CI_Controller {
     }
 
     public function index() {
+        $alldogs = $this->Profile_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", $this->db->count_all_results(), array('user.user_id' => $this->session->userid, 'pet.pet_specie' => 'Canine'));
+        $allcats = $this->Profile_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", $this->db->count_all_results(), array('user.user_id' => $this->session->userid, 'pet.pet_specie' => 'Feline'));
+        $alltransactions = $this->Profile_model->fetch_all_transactions($this->db->count_all_results());
+        $allmissing = $this->Profile_model->fetch("adoption", $this->db->count_all_results(), array('user_id' => $this->session->userid, 'adoption_isMissing' => '1'));
         $userDetails = $this->Profile_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
         $data = array(
             'title' => "Profile | " . $current_user->user_firstname . " " . $current_user->user_lastname,
+            'trails' => $this->AuditTrail_model->get_audit_trail("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "trail", 'user.user_id' => $this->session->userid)),
+            'dogs' => $alldogs,
+            'cats' => $allcats,
+            'missing' => $allmissing,
+            'transactions' => $alltransactions,
             //NAV INFO
             'user_name' => $current_user->user_firstname . " " . $current_user->user_lastname,
             'user_picture' => $current_user->user_picture,

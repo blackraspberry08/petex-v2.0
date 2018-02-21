@@ -31,6 +31,7 @@
         <link rel="stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
         <!-- Bootstrap File Upload with preview -->
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+
         <style>
             button{cursor:pointer !important;}
             /* Small devices (landscape phones, 576px and up) */
@@ -62,6 +63,30 @@
 
             }
         </style>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var dogs = "<?php echo $dogs ?>";
+                var cats = "<?php echo $cats ?>";
+                // Chart.js scripts
+                // -- Set new default font family and font color to mimic Bootstrap's default styling
+                Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                Chart.defaults.global.defaultFontColor = '#292b2c';
+                // -- Pie Chart Example
+                var ctx = document.getElementById("mypets");
+                var myPieChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Dogs", "Cats"],
+                        datasets: [{
+                                data: [dogs, cats],
+                                backgroundColor: ['#2196F3', '#e53935']
+                            }],
+                    },
+                });
+            });
+
+        </script>
     </head>
     <body>
         <?php

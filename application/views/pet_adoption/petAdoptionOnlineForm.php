@@ -1,4 +1,3 @@
-
 <!--===========================
 Pet Adoption
 ============================-->
@@ -67,20 +66,22 @@ Pet Adoption
                                 <input type="text" class="form-control" name = "address" readonly="" value="<?= $userInfo->user_address ?>, <?= $userInfo->user_brgy ?>, <?= $userInfo->user_city ?>" >
                                 <label>&nbsp;Address</label>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "numhome" >
+                            <div class="form-group col-sm-4 <?php if (!empty($form_error['numhome'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type="text" class="form-control <?php if (!empty($form_error['numhome'])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "numhome"  >
                                 <label>&nbsp;Tel Nos. (Home)</label>
+                                <div class="invalid-feedback"><?= $form_error['numhome'];?></div>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "numwork" >
+                            <div class="form-group col-sm-4 <?php if (!empty($form_error['numwork'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type="text" class="form-control <?php if (!empty($form_error['numwork'])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "numwork" >
                                 <label>&nbsp;Tel Nos. (Work)</label>
+                                <div class="invalid-feedback"><?= $form_error['numwork'];?></div>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "nummobile" value = "<?= $userInfo->user_contact_no ?>" > 
+                            <div class="form-group col-sm-4 <?php if (!empty($form_error['nummobile'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type="text" class="form-control <?php if (!empty($form_error['nummobile'])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "nummobile" value = "<?= set_value("nummobile", $userInfo->user_contact_no); ?>"> 
                                 <label>&nbsp;Mobile No.</label>
+                                <div class="invalid-feedback"><?= $form_error['nummobile'];?></div>
                             </div>
                         </div>
-
                         <style>
                             input[type="text"]:disabled{
                                 color:black !important;
@@ -124,41 +125,48 @@ Pet Adoption
                             </div>
 
                         </div>
-
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="col-sm-12">
                                 <h4>Personal Reference</h4>
                             </div>
-                            <div class="form-group col-sm-5">
-                                <input type="text" class="form-control" name = "nameref">
-                                <label>&nbsp;Name</label>
+                            <div class="form-group col-sm-5 <?php if (!empty($form_error['nameref'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type="text"  name = "nameref" class="form-control <?php if (!empty($form_error['nameref'])): ?>is-invalid<?php else: ?><?php endif; ?>" value = "<?= set_value("nameref") ?>">
+                                <label>&nbsp;
+                                    Name</label>
+                                <div class="invalid-feedback"><?= $form_error['nameref'] ?></div>
                             </div>
-                            <div class="form-group col-sm-3">
-                                <input type="text" class="form-control" name = "relref">
-                                <label>&nbsp;Relationship</label>
+                            <div class = "form-group col-sm-3 <?php if (!empty($form_error["relref"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type = "text" class = "form-control <?php if (!empty($form_error["relref"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "relref" value = "<?= set_value("relref") ?>">
+                                <label>&nbsp;
+                                    Relationship</label>
+                                <div class="invalid-feedback"><?= $form_error['relref'] ?></div>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "numref">
-                                <label>&nbsp;Tel No.</label>
+                            <div class = "form-group col-sm-4 <?php if (!empty($form_error["numref"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type = "text" class = "form-control <?php if (!empty($form_error["nameref"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "numref" value = "<?= set_value("numref") ?>">
+                                <label>&nbsp;
+                                    Mobile No.</label>
+                                <div class="invalid-feedback"><?= $form_error['numref'] ?></div>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <input type="text" class="form-control" name = "prompt" placeholder = " ">
-                                <label>&nbsp;What prompted you to come to PARC?</label>
+                            <div class = "form-group col-sm-4 <?php if (!empty($form_error["prompt"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                <input type = "text" class = "form-control <?php if (!empty($form_error["prompt"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "prompt" value = "<?= set_value("prompt") ?>">
+                                <label>&nbsp;
+                                    What prompted you to come to PARC?</label>
+                                <div class="invalid-feedback"><?= $form_error['prompt'] ?></div>
                             </div>
                         </div>
-                        <div class ="row container">
-                            <div class="col-sm-3">
+                        <div class = "row container mb-2">
+                            <div class = "col-sm-3">
                                 <span>Are you interested in: </span>
 
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input name="interested" type="radio" id="interested_cat" class = "form-check-label" value ="Cat" <?= $pet->pet_specie == "Feline" ? "checked = \"\"" : "disabled = \"\"" ?>/>
+                                <div class = "form-check">
+                                    <label class = "form-check-label">
+                                        <input name = "interested" type = "radio" id = "interested_cat" class = "form-check-label" value = "Cat" <?= $pet->pet_specie == "Feline" ? "checked = \"\"" : "" ?>/>
                                         Cat
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="interested" type="radio" id="interested_dog" class = "with-gap" value ="Dog" <?= $pet->pet_specie == "Canine" ? "checked = \"\"" : "disabled = \"\"" ?>/>
+                                        <input name="interested" type="radio" id="interested_dog" class = "with-gap" value ="Dog" <?= $pet->pet_specie == "Canine" ? "checked = \"\"" : "" ?>/>
                                         Dog
                                     </label>
                                 </div>
@@ -167,30 +175,30 @@ Pet Adoption
                                 <span>Size: </span>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="small" value ="S" class = "with-gap" <?= $pet->pet_size == "S" ? "checked = \"\"" : "disabled = \"\"" ?> />
+                                        <input name="size" type="radio" id="small" value ="S" class = "with-gap" <?= $pet->pet_size == "S" ? "checked = \"\"" : "" ?> />
                                         S
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="medium" value ="M" class = "with-gap" <?= $pet->pet_size == "M" ? "checked = \"\"" : "disabled = \"\"" ?>  />
+                                        <input name="size" type="radio" id="medium" value ="M" class = "with-gap" <?= $pet->pet_size == "M" ? "checked = \"\"" : "" ?>  />
                                         M
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="large" value ="L" class = "with-gap" <?= $pet->pet_size == "L" ? "checked = \"\"" : "disabled = \"\"" ?>  />
+                                        <input name="size" type="radio" id="large" value ="L" class = "with-gap" <?= $pet->pet_size == "L" ? "checked = \"\"" : "" ?>  />
                                         L
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input name="size" type="radio" id="xlarge" value ="XL" class = "with-gap" <?= $pet->pet_size == "XL" ? "checked = \"\"" : "disabled = \"\"" ?>  />
+                                        <input name="size" type="radio" id="xlarge" value ="XL" class = "with-gap" <?= $pet->pet_size == "XL" ? "checked = \"\"" : "" ?>  />
                                         XL
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group col-sm-4">
+                            <div class="form-group col-sm-4 ">
                                 <input type="text" class="form-control" name = "breed" readonly="" value="<?= $pet->pet_breed ?>" >
                                 <label>&nbsp;Breed/Mix</label>
                             </div>
@@ -199,13 +207,14 @@ Pet Adoption
                                 <textarea id="description" name="description" class="form-control" placeholder = " "><?= $pet->pet_description ?></textarea>
                             </div>
                         </div>
-                        <div class ="row container">
+                        <div class ="row container mb-2">
                             <div class="col-sm-12">
                                 <h4>Questionnaire</h4>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num1"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>1.) Why did you decide to adopt an animal from PAWS?</span>
-                                <textarea id="num1" name="num1" class="form-control" placeholder=" "></textarea>
+                                <textarea id="num1" name="num1" class="form-control <?php if (!empty($form_error["num1"])): ?>is-invalid<?php else: ?><?php endif; ?>"  placeholder = "<?= set_value("num1") ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num1'] ?></div>
                             </div>
                             <div class="col-sm-6">
                                 <span>2.) Have you adopted from PAWS/PARC atleast once before?</span>
@@ -221,7 +230,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div>
-                                <div id = "num2Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num2Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class="form-group col-sm-12">
                                         <input id = "num2When" type="text" class = "form_datetime form-control" name = "num2ifyes" >
                                         <label for = "num2When">When is the latest?</label>
@@ -243,7 +252,7 @@ Pet Adoption
                                 </div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="col-sm-6">
                                 <span>3.) What type of building do you live in?</span><br>
                                 <div class="row">
@@ -285,7 +294,7 @@ Pet Adoption
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div id = "num3Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num3Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class="form-group col-sm-12">
                                             <input id = "num3Other" type="text" class="form-control" name = "num3Other" >
@@ -314,7 +323,7 @@ Pet Adoption
 
                             </div>
                             <div class="col-sm-6">
-                                <div id="num4Hidden"  class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id="num4Hidden"  class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <span>Please attach a letter from your landlord granting you permission to keep pets.</span>
                                         <div class="custom-file-container" data-upload-id="num4file">
@@ -333,7 +342,7 @@ Pet Adoption
                                 </div>
                             </div>
                         </div><br><br>
-                        <div class = "row container">
+                        <div class = "row container  mb-2">
                             <div class = "col s6">
                                 <span>5.) Who do you live with?</span>
                                 <div class = "row">
@@ -353,7 +362,7 @@ Pet Adoption
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input type="radio" id="roomates" value ="Roomate(s)" name = "num5" class="with-gap num5"/>
-                                                Roomate(s)
+                                                Roommate(s)
                                             </label>
                                         </div><br>
                                     </div>
@@ -378,11 +387,22 @@ Pet Adoption
                                         </div>
                                     </div>
                                 </div>
-                                <div class = "form-group col-sm-6">
-                                    <input id = "yearslived" type="text" class= "form-control" name = "yearslived">
-                                    <label for = "yearslived">How long have you lived in this address?</label>
+                                <label for = "yearslived">How long have you lived in this address?</label>
+                                <div class="col-sm-12">
+                                    <div class="form-group col-sm-6 <?php if (!empty($form_error["yearslived"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
+                                        <input id = "yearslived" type="text" class= "form-control <?php if (!empty($form_error["yearslived"])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "yearslived"  value = "<?= set_value("yearslived"); ?>"/>
+                                        <div class="invalid-feedback"><?= $form_error['yearslived'] ?></div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <select class="form-control" id="exampleSelect1" name="period">
+                                            <option>Days</option>
+                                            <option>Weeks</option>
+                                            <option>Months</option>
+                                            <option>Years</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div id = "num5Hidden" class = "animated fadeOutUp col-sm-s6" style = "visibility: hidden;">
+                                <div id = "num5Hidden" class = "animated fadeOutUp col-sm-s6" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <input id = "num5Other" type="text" class="form-control" name = "num5Other" >
@@ -405,7 +425,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div>
-                                <div id = "num6Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num6Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <textarea id="num6explain" name="num6explain" class="form-control"></textarea>
@@ -415,7 +435,7 @@ Pet Adoption
                                 </div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container  mb-2">
                             <div class="col-sm-6">
                                 <span>7.) For whom are you adopting animal?</span>
                                 <div class = "row">
@@ -448,7 +468,7 @@ Pet Adoption
                                         </div>
                                     </div>
                                 </div>
-                                <div id = "num7Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num7Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <input id = "num7specify" class="form-control" type="text" name = "num7specify" >
@@ -473,7 +493,7 @@ Pet Adoption
                                 </div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container  mb-2">
                             <div class="col-sm-6">
                                 <span>9.) Is there anyone in your household who has objection(s) to the arrangement?</span><br>
                                 <div class="form-check">
@@ -488,7 +508,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div>
-                                <div id = "num9Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num9Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "col-sm-12 form-group">
                                             <textarea id="num9explain" name="num9explain" class="form-control"></textarea>
@@ -511,7 +531,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div>
-                                <div id = "num10Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num10Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <input id = "num10age" type="text" class="form-control" name = "num10age" >
@@ -521,7 +541,7 @@ Pet Adoption
                                 </div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="col-sm-6">
                                 <span>11.) Are there any other regular visitors to your home, human or animal, with which your new companion must get along?</span><br>
                                 <div class="form-check">
@@ -536,7 +556,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div>
-                                <div id = "num11Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num11Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <textarea id="num11explain" name="num11explain" class="form-control"></textarea>
@@ -559,7 +579,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div> 
-                                <div id = "num12Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num12Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <input id = "num12age" type="text" class="form-control" name = "num12age" >
@@ -569,27 +589,31 @@ Pet Adoption
                                 </div>
                             </div>
                         </div>
-                        <div class = "row container">
-                            <div class="form-group col-sm-6">
+                        <div class = "row container  mb-2">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num13"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>13.) What will happen to this animal if you have to move unexpectedly?</span>
-                                <textarea id="num13" name="num13" class="form-control"></textarea>
+                                <textarea id="num13" name="num13" class="form-control <?php if (!empty($form_error["num13"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num13'] ?></div>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num14"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>14.) What kind of behavior(s) do you feel unable to accept?</span>
-                                <textarea id="num14" name="num14" rows="3" class="form-control"></textarea>
+                                <textarea id="num14" name="num14" rows="3" class="form-control <?php if (!empty($form_error["num13"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num14'] ?></div>
                             </div>
                         </div>
-                        <div class = "row container">
-                            <div class="form-group col-sm-6">
+                        <div class = "row container mb-2">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num15"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>15.) How many hours in an average workday will your companion animal spend without a human?</span>
-                                <input type="number" class="form-control" name="num15">
+                                <input type="text" class="form-control <?php if (!empty($form_error["num15"])): ?>is-invalid<?php else: ?><?php endif; ?>" value = "<?= set_value("num15"); ?>" name="num15">
+                                <div class="invalid-feedback"><?= $form_error['num15'] ?></div>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num16"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>16.) What will happen to your companion animal, when you go on a vacation or in case of emergency?</span>
-                                <textarea id="num16" name="num16" class="form-control"></textarea>
+                                <textarea id="num16" name="num16" class="form-control <?php if (!empty($form_error["num16"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num16'] ?></div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="form-group col-sm-6">
                                 <span>17.) Do you have regular veterinarian?</span><br>
                                 <div class="form-check">
@@ -604,7 +628,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div> 
-                                <div id = "num17Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num17Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <input id = "num17name" type="text" class="form-control" name = "num17name" >
@@ -627,7 +651,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div> 
-                                <div id = "num18Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num18Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "col s12 green-theme">
                                             <br><span>What animal?</span>
@@ -648,7 +672,7 @@ Pet Adoption
                                 </div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="col-sm-6">
                                 <span>19.) What part of your house do you want this animal to stay?</span><br> 
                                 <div class="form-check">
@@ -670,12 +694,13 @@ Pet Adoption
                                     </label>
                                 </div> 
                             </div>
-                            <div class="form-group col-sm-6" style = "margin-top:0 !important;">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num20"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>" >
                                 <span>20.) Where will this animal be kept during the Day? Night?</span>
-                                <textarea id="num20" name="num20" class="form-control"></textarea>
+                                <textarea id="num20" name="num20" class="form-control <?php if (!empty($form_error["num20"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num20'] ?></div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="col-sm-6">
                                 <span>21.) Do you have a fenced yard?</span><br>
                                 <div class="form-check">
@@ -690,7 +715,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div> 
-                                <div id = "num21Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num21Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <input id = "num21fence" type="text" class="form-control" name = "num21fence" >
@@ -726,7 +751,7 @@ Pet Adoption
                                         No
                                     </label>
                                 </div> 
-                                <div id = "num22Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num22Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class="form-group col-sm-12">
                                             <textarea id="num22how" name="num22how" class="form-control"></textarea>
@@ -736,7 +761,7 @@ Pet Adoption
                                 </div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="col-sm-6">
                                 <span>23.) If adopting a cat, where will the litterbox be kept?</span>
                                 <div class = "row">
@@ -769,7 +794,7 @@ Pet Adoption
                                         </div> 
                                     </div>
                                 </div>
-                                <div id = "num23Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
+                                <div id = "num23Hidden" class = "animated fadeOutUp" style = "display:none; visibility: hidden;">
                                     <div class = "row">
                                         <div class = "form-group col-sm-12">
                                             <input id = "num23specify" type="text" class="form-control" name = "num23specify" >
@@ -778,15 +803,16 @@ Pet Adoption
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-6 <?php if (!empty($form_error["num24"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>24.) As a matter of policy, PARC will neuter all animals prior to releasing
                                     for adoption. What is your opinion about spaying and neutering (kapon) of companion animals?</span>
-                                <textarea id="num24" name="num24" class="form-control"></textarea>
+                                <textarea id="num24" name="num24" class="form-control <?php if (!empty($form_error["num24"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <div class="invalid-feedback"><?= $form_error['num24'] ?></div>
                             </div>
                         </div>
-                        <div class = "row container">
+                        <div class = "row container mb-2">
                             <div class="form-group col-sm-12">
-                                <span>25.) Do you have questions and comments?</span>
+                                <span>25.) Do you have questions and comments? (Optional)</span>
                                 <textarea id="num25" name="num25" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
@@ -808,16 +834,17 @@ Pet Adoption
     </div>
 </div>
 </div>
-
 <script>
     $(".num2").click(function () {
         var isChecked = $("#num2yes").prop("checked");
         if (isChecked) {
             $("#num2Hidden").addClass("fadeInDown");
-            $("#num2Hidden").css("visibility", "visible");
+            $("#num2Hidden").css("display", "block"); 
+			$("#num2Hidden").css("visibility", "visible");
             $("#num2Hidden").removeClass("fadeOutUp");
         } else {
             $("#num2Hidden").addClass("fadeOutUp");
+            $("#num2Hidden").css("display", "none");
             $("#num2Hidden").css("visibility", "hidden");
             $("#num2Hidden").removeClass("fadeInDown");
         }
@@ -826,10 +853,12 @@ Pet Adoption
         var isChecked = $("#other").prop("checked");
         if (isChecked) {
             $("#num3Hidden").addClass("fadeInDown");
+            $("#num3Hidden").css("display", "block");
             $("#num3Hidden").css("visibility", "visible");
             $("#num3Hidden").removeClass("fadeOutUp");
         } else {
             $("#num3Hidden").addClass("fadeOutUp");
+            $("#num3Hidden").css("display", "none");
             $("#num3Hidden").css("visibility", "hidden");
             $("#num3Hidden").removeClass("fadeInDown");
         }
@@ -838,10 +867,12 @@ Pet Adoption
         var isChecked = $("#num4yes").prop("checked");
         if (isChecked) {
             $("#num4Hidden").addClass("fadeInDown");
+            $("#num4Hidden").css("display", "block");
             $("#num4Hidden").css("visibility", "visible");
             $("#num4Hidden").removeClass("fadeOutUp");
         } else {
             $("#num4Hidden").addClass("fadeOutUp");
+			$("#num4Hidden").css("display", "none");
             $("#num4Hidden").css("visibility", "hidden");
             $("#num4Hidden").removeClass("fadeInDown");
         }
@@ -850,10 +881,12 @@ Pet Adoption
         var isChecked = $("#num5other").prop("checked");
         if (isChecked) {
             $("#num5Hidden").addClass("fadeInDown");
+            $("#num5Hidden").css("display", "block");
             $("#num5Hidden").css("visibility", "visible");
             $("#num5Hidden").removeClass("fadeOutUp");
         } else {
             $("#num5Hidden").addClass("fadeOutUp");
+            $("#num5Hidden").css("display", "none");
             $("#num5Hidden").css("visibility", "hidden");
             $("#num5Hidden").removeClass("fadeInDown");
         }
@@ -862,10 +895,12 @@ Pet Adoption
         var isChecked = $("#num6yes").prop("checked");
         if (isChecked) {
             $("#num6Hidden").addClass("fadeInDown");
+            $("#num6Hidden").css("display", "block");
             $("#num6Hidden").css("visibility", "visible");
             $("#num6Hidden").removeClass("fadeOutUp");
         } else {
             $("#num6Hidden").addClass("fadeOutUp");
+            $("#num6Hidden").css("display", "none");
             $("#num6Hidden").css("visibility", "hidden");
             $("#num6Hidden").removeClass("fadeInDown");
         }
@@ -874,10 +909,12 @@ Pet Adoption
         var isChecked = $("#num7others").prop("checked");
         if (isChecked) {
             $("#num7Hidden").addClass("fadeInDown");
+            $("#num7Hidden").css("display", "block");
             $("#num7Hidden").css("visibility", "visible");
             $("#num7Hidden").removeClass("fadeOutUp");
         } else {
             $("#num7Hidden").addClass("fadeOutUp");
+            $("#num7Hidden").css("display", "none");
             $("#num7Hidden").css("visibility", "hidden");
             $("#num7Hidden").removeClass("fadeInDown");
         }
@@ -886,10 +923,12 @@ Pet Adoption
         var isChecked = $("#num9yes").prop("checked");
         if (isChecked) {
             $("#num9Hidden").addClass("fadeInDown");
+            $("#num9Hidden").css("display", "block");
             $("#num9Hidden").css("visibility", "visible");
             $("#num9Hidden").removeClass("fadeOutUp");
         } else {
             $("#num9Hidden").addClass("fadeOutUp");
+            $("#num9Hidden").css("display", "none");
             $("#num9Hidden").css("visibility", "hidden");
             $("#num9Hiddens").removeClass("fadeInDown");
         }
@@ -898,10 +937,12 @@ Pet Adoption
         var isChecked = $("#num10yes").prop("checked");
         if (isChecked) {
             $("#num10Hidden").addClass("fadeInDown");
+            $("#num10Hidden").css("display", "block");
             $("#num10Hidden").css("visibility", "visible");
             $("#num10Hidden").removeClass("fadeOutUp");
         } else {
             $("#num10Hidden").addClass("fadeOutUp");
+            $("#num10Hidden").css("display", "none");
             $("#num10Hidden").css("visibility", "hidden");
             $("#num10Hidden").removeClass("fadeInDown");
         }
@@ -910,10 +951,12 @@ Pet Adoption
         var isChecked = $("#num11yes").prop("checked");
         if (isChecked) {
             $("#num11Hidden").addClass("fadeInDown");
+            $("#num11Hidden").css("display", "block");
             $("#num11Hidden").css("visibility", "visible");
             $("#num11Hidden").removeClass("fadeOutUp");
         } else {
             $("#num11Hidden").addClass("fadeOutUp");
+            $("#num11Hidden").css("display", "none");
             $("#num11Hidden").css("visibility", "hidden");
             $("#num11Hidden").removeClass("fadeInDown");
         }
@@ -922,10 +965,12 @@ Pet Adoption
         var isChecked = $("#num12yes").prop("checked");
         if (isChecked) {
             $("#num12Hidden").addClass("fadeInDown");
+            $("#num12Hidden").css("display", "block");
             $("#num12Hidden").css("visibility", "visible");
             $("#num12Hidden").removeClass("fadeOutUp");
         } else {
             $("#num12Hidden").addClass("fadeOutUp");
+            $("#num12Hidden").css("display", "none");
             $("#num12Hidden").css("visibility", "hidden");
             $("#num12Hidden").removeClass("fadeInDown");
         }
@@ -934,10 +979,12 @@ Pet Adoption
         var isChecked = $("#num17yes").prop("checked");
         if (isChecked) {
             $("#num17Hidden").addClass("fadeInDown");
+            $("#num17Hidden").css("display", "block");
             $("#num17Hidden").css("visibility", "visible");
             $("#num17Hidden").removeClass("fadeOutUp");
         } else {
             $("#num17Hidden").addClass("fadeOutUp");
+            $("#num17Hidden").css("display", "none");;
             $("#num17Hidden").css("visibility", "hidden");
             $("#num17Hidden").removeClass("fadeInDown");
         }
@@ -946,10 +993,12 @@ Pet Adoption
         var isChecked = $("#num18yes").prop("checked");
         if (isChecked) {
             $("#num18Hidden").addClass("fadeInDown");
+            $("#num18Hidden").css("display", "block");
             $("#num18Hidden").css("visibility", "visible");
             $("#num18Hidden").removeClass("fadeOutUp");
         } else {
             $("#num18Hidden").addClass("fadeOutUp");
+            $("#num18Hidden").css("display", "none");
             $("#num18Hidden").css("visibility", "hidden");
             $("#num18Hidden").removeClass("fadeInDown");
         }
@@ -958,10 +1007,12 @@ Pet Adoption
         var isChecked = $("#num21yes").prop("checked");
         if (isChecked) {
             $("#num21Hidden").addClass("fadeInDown");
+            $("#num21Hidden").css("display", "block");
             $("#num21Hidden").css("visibility", "visible");
             $("#num21Hidden").removeClass("fadeOutUp");
         } else {
             $("#num21Hidden").addClass("fadeOutUp");
+            $("#num21Hidden").css("display", "none");
             $("#num21Hidden").css("visibility", "hidden");
             $("#num21Hidden").removeClass("fadeInDown");
         }
@@ -970,10 +1021,12 @@ Pet Adoption
         var isChecked = $("#num22no").prop("checked");
         if (isChecked) {
             $("#num22Hidden").addClass("fadeInDown");
+            $("#num22Hidden").css("display", "block");
             $("#num22Hidden").css("visibility", "visible");
             $("#num22Hidden").removeClass("fadeOutUp");
         } else {
             $("#num22Hidden").addClass("fadeOutUp");
+            $("#num22Hidden").css("display", "none");
             $("#num22Hidden").css("visibility", "hidden");
             $("#num22Hidden").removeClass("fadeInDown");
         }
@@ -982,17 +1035,18 @@ Pet Adoption
         var isChecked = $("#other23").prop("checked");
         if (isChecked) {
             $("#num23Hidden").addClass("fadeInDown");
+            $("#num23Hidden").css("display", "block");
             $("#num23Hidden").css("visibility", "visible");
             $("#num23Hidden").removeClass("fadeOutUp");
         } else {
             $("#num23Hidden").addClass("fadeOutUp");
+            $("#num23Hidden").css("display", "none");
             $("#num23Hidden").css("visibility", "hidden");
             $("#num23Hidden").removeClass("fadeInDown");
         }
     });
 
 </script>
-
 <!-- Bootstrap File Upload with preview -->
 <script src = "<?= base_url() ?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
 <script>

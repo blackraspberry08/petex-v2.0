@@ -59,7 +59,7 @@ $autoload['packages'] = array();
   |
   |	$autoload['libraries'] = array('user_agent' => 'ua');
  */
-$autoload['libraries'] = array('database', 'session', 'form_validation', 'Pdf');
+$autoload['libraries'] = array('database', 'session', 'form_validation', 'Pdf','recaptcha', 'email');
 /*
   | -------------------------------------------------------------------
   |  Auto-load Drivers
@@ -151,4 +151,5 @@ $autoload['model'] = array(
     "PetAdoption_model",
     "MyPets_model",
     "MyProgress_model",
+    "Register_model"
 );

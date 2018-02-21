@@ -28,8 +28,50 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
                         <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_1->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                     </div>
                 </div>
-
             </div>
+            <br>
+            <center>
+                <?php if ($progress_1->progress_isSuccessful == 0): ?>
+                    <a href = "<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $progress_1->pet_id; ?>" class = "btn btn-outline-primary">Repeat Adoption Form</a>
+                <?php else: ?>
+                    <button  class = "btn btn-outline-primary" disabled="disabled">Repeat Adoption Form</button>
+                <?php endif; ?>
+            </center>
+            <br>
+            <?php if ($progress_1->progress_isSuccessful == 0): ?>
+                <div class="card">
+                    <form action="step1_comment_exec/<?= $progress_1->progress_id ?>" method="POST">
+                        <div class ="card-header">
+                            <i class = "fa fa-comment" ></i> Remarks
+                        </div>
+                        <div class="card-body">
+                            <div class = "form-group">
+                                <label for="date_step_1">Date</label>
+                                <input type = "text" id = "date_step_1" name = "date_step_1" class = "form-control form_datetime" readonly="" />
+                            </div>
+                            <div class = "form-row">
+                                <label for="comment_step_1"> Comment</label>
+                                <textarea class = "form-control" id = "comment_step_1" name = "comment_step_1" placeholder = "Leave a comment here."></textarea>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="card-footer" style="padding-bottom:50px;">
+                            <button type="submit" class="btn btn-primary pull-right">Send <i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+                </div>
+            <?php else: ?>
+                <div class="card">
+                    <form action="step1_comment" method="POST">
+                        <div class ="card-header">
+                            <i class = "fa fa-comment" ></i> Remarks
+                        </div>
+                        <div class="card-body">
+                            <h5><i class="fa fa-check"></i>This progress is already approved.</h5>
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="col-md-8">
             <h3 class = "mt-3 text-center">Adoption Form</h3>
