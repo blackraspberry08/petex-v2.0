@@ -7,7 +7,7 @@ class Register extends CI_Controller {
         //---> MODELS HERE!
         //$this->load->model('register_model');
         //---> LIBRARIES HERE!
-        $this->load->library('email');
+        //$this->load->library('email');
         //---> SESSIONS HERE!
     }
 
@@ -79,10 +79,12 @@ class Register extends CI_Controller {
             if ($this->Register_model->insert("user", $data)) {
                 $data += ["title" => "Verify your Email"];
                 $data += ["status" => "success"];
+                $this->sendemail($data);
+                
                 $this->load->view("register/includes/header", $data);
                 $this->load->view("register/verify_page");
                 $this->load->view("register/includes/footer");
-                $this->sendemail($data);
+                
             } else {
                 $data= array(
                     "title" => "Verify your Email",
@@ -115,24 +117,29 @@ class Register extends CI_Controller {
     }
     
     public function sendemail($user) {
-
-        $this->email->from("codebusters.solutions@gmail.com", 'Email Verification');
+        $this->email->from("codebusters.solutions@gmail.com", 'Codebusters Team');
         $this->email->to($user['user_email']);
         $this->email->subject('Email Verification');
         $data = array('name' => $user['user_firstname'], 'code' => $user['user_verification_code']);
         $this->email->message($this->load->view('register/verifyMessage', $data, true));
         
         if (!$this->email->send()) {
-            $this->email->print_debugger();
+            echo $this->email->print_debugger();
         } else {
             //VERIFY YOUR EMAIL
+            //echo $this->email->print_debugger();
+            
         }
     }
     
     public function verifyCode() {
         $code = $this->uri->segment(3);
         $this->Register_model->update('user', array('user_isverified' => '1'), array('user_verification_code' => $code));
-        echo "<script>alert('Your account is now verified.');"
-        . "window.location='" . base_url() . "login/'</script>";
+        $data= array(
+            "title" => "Welcome to new user!"
+        );
+        $this->load->view("register/includes/header", $data);
+        $this->load->view("register/is_verified");
+        $this->load->view("register/includes/footer");
     }
 }
