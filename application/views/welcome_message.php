@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
+
+<?php redirect(base_url()."main")?>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
