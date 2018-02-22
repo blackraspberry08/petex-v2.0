@@ -10,9 +10,11 @@ class AdminLogout extends CI_Controller {
     }
 
     public function index() {
+		
         $this->SaveEventAdmin->logout($this->session->userdata("userid"));
         $this->session->sess_destroy();
-        redirect(base_url() . 'main/');
+        //echo base_url();
+		redirect(base_url() . 'main/');
     }
 
 }
