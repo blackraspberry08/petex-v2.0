@@ -81,12 +81,12 @@ Profile
             <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Audit Trail
+                        <i class="fa fa-table"></i> Activities
                     </div>
                     <div class="card-body">
                         <?php if (empty($trails)): ?>
                             <center>
-                                <h4>No audit trails yet</h4>
+                                <h4>No activities yet</h4>
                                 <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
                             </center>
                         </div>

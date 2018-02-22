@@ -54,4 +54,13 @@ class UserDashboard extends CI_Controller {
         $this->load->view("userdashboard/includes/footer");
     }
 
+    public function messageRead() {
+        $data = array(
+            'adoption_isRead' => 1,
+        );
+        if ($this->UserDashboard_model->update_adoption($data, array("user_id" => $this->session->userdata("userid")))) {
+            redirect(base_url() . "MyPets");
+        }
+    }
+
 }

@@ -119,6 +119,7 @@ class Profile extends CI_Controller {
 
         if ($this->Profile_model->update_user_record($data, array("user_id" => $userDetails->user_id))) {
             //SUCCESS
+            $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "Change profile picture.");
             $this->session->set_flashdata("uploading_success", "Successfully update the image");
         } else {
             

@@ -91,7 +91,7 @@ class Login extends CI_Controller {
                         $this->session->set_userdata('current_user', $accountDetailsAdmin);
                         $this->session->set_userdata('user_access', "subadmin");
                         $this->SaveEventAdmin->login($accountDetailsAdmin->admin_id);
-						redirect(base_url() . 'SubadminDashboard/');
+                        redirect(base_url() . 'SubadminDashboard/');
                     }
                 }
             } else {

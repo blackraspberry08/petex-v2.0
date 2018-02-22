@@ -135,6 +135,7 @@ class MyPets extends CI_Controller {
             );
             if ($this->MyPets_model->update_animal_record($pet, array("pet_id" => $animal->pet_id))) {
                 //SUCCESS
+                $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "Change information of " . $animal->pet_name . ".");
                 $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $animal->pet_name);
             } else {
                 $this->session->set_flashdata("uploading_fail2", $animal->pet_name . " seems to not exist in the database.");

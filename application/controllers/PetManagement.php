@@ -109,9 +109,9 @@ class PetManagement extends CI_Controller {
             );
             if ($this->PetManagement_model->add_medical_record($medical_record)) {
 //SUCCESS
-                $animal = $this->PetManagement_model->get_animal_info(array("pet_id"=>$animal_id))[0];
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a medical record for ".$animal->pet_name);
-                $this->session->set_flashdata("add_medical_record_success", "Successfully added a medical record for ".$animal->pet_name);
+                $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a medical record for " . $animal->pet_name);
+                $this->session->set_flashdata("add_medical_record_success", "Successfully added a medical record for " . $animal->pet_name);
             } else {
 //FAILED
                 $this->session->set_flashdata("add_medical_record_fail", "Something went wrong in adding a medical record.");
@@ -124,10 +124,10 @@ class PetManagement extends CI_Controller {
         $record_id = $this->uri->segment(3);
         if ($this->PetManagement_model->remove_medical_record(array("medicalRecord_id" => $record_id))) {
             $record = $this->PetManagement_model->get_animal_medical_records(array("medicalRecord_id" => $record_id))[0];
-            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a medical record for ".$record->pet_name);
-            $this->session->set_flashdata("remove_medical_record_success", "Successfully removed a medical record from ".$record->pet_name);
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Added a medical record for " . $record->pet_name);
+            $this->session->set_flashdata("remove_medical_record_success", "Successfully removed a medical record from " . $record->pet_name);
         } else {
-            $this->session->set_flashdata("remove_medical_record_fail", "Something went wrong while removing the medical record from ".$record->pet_name);
+            $this->session->set_flashdata("remove_medical_record_fail", "Something went wrong while removing the medical record from " . $record->pet_name);
         }
         redirect(base_url() . "PetManagement/medical_records");
     }
@@ -181,7 +181,7 @@ class PetManagement extends CI_Controller {
             if ($this->PetManagement_model->edit_medical_record($medical_record, array("medicalRecord_id" => $record_id))) {
 //SUCCESS       
                 $record = $this->PetManagement_model->get_animal_medical_records(array("medicalRecord_id" => $record_id))[0];
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "edited a medical record from ".$record->pet_name);
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "edited a medical record from " . $record->pet_name);
                 $this->session->set_flashdata("edit_medical_record_success", "Successfully edited a medical record.");
             } else {
 //FAILED
@@ -253,13 +253,13 @@ class PetManagement extends CI_Controller {
                     $imagePath = $animal->pet_picture;
                 }
             }
-            
-            if($this->input->post("pet_video") == "" || $this->input->post("pet_video") == NULL){
+
+            if ($this->input->post("pet_video") == "" || $this->input->post("pet_video") == NULL) {
                 $pet_video = $animal->pet_video;
-            }else{
+            } else {
                 $pet_video = $this->getTextBetween('src="', '"', $this->input->post("pet_video"));
             }
-            
+
             $pet = array(
                 'pet_name' => $this->input->post("pet_name"),
                 'pet_bday' => strtotime($this->input->post("pet_bday")),
@@ -292,7 +292,7 @@ class PetManagement extends CI_Controller {
         $animal_id = $this->uri->segment(3);
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         if ($this->PetManagement_model->remove_animal(array("pet_id" => $animal_id))) {
-            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Removed ".$animal->pet_name." from the database");
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Removed " . $animal->pet_name . " from the database");
             $this->session->set_flashdata("remove_animal_success", "Successfully removed " . $animal->pet_name . " from the database. Bye " . $animal->pet_name . "!");
         } else {
             $this->session->set_flashdata("remove_animal_fail", "Something went wrong while removing " . $animal->pet_name . " from the database");
@@ -323,7 +323,7 @@ class PetManagement extends CI_Controller {
         $this->form_validation->set_rules('pet_history', "Pet History", "required");
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
         if ($this->form_validation->run() == FALSE) {
-            
+
             //$this->add_animal();
         } else {
             $config['upload_path'] = './images/animal/';
@@ -370,8 +370,8 @@ class PetManagement extends CI_Controller {
 
             if ($this->PetManagement_model->register_animal_record($pet)) {
 //SUCCESS
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Registered " . $pet->pet_name. " to the database");
-                $this->session->set_flashdata("registration_success", "Successfully registered " . $pet->pet_name. " to the database");
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Registered " . $pet->pet_name . " to the database");
+                $this->session->set_flashdata("registration_success", "Successfully registered " . $pet->pet_name . " to the database");
             } else {
                 $this->session->set_flashdata("registration_fail", "Something went wrong while registering " . $pet->pet_name . " to the database");
             }
@@ -383,7 +383,7 @@ class PetManagement extends CI_Controller {
         $this->session->set_userdata("interested_adopters", $this->uri->segment(3));
         redirect(base_url() . "PetManagement/interested_adopters");
     }
-    
+
     public function interested_adopters() {
         $animal_id = $this->session->userdata("interested_adopters");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
@@ -405,12 +405,12 @@ class PetManagement extends CI_Controller {
         $this->load->view("pet_management/interested_adopters");
         $this->load->view("dashboard/includes/footer");
     }
-    
+
     public function adoption_information_exec() {
         $this->session->set_userdata("adoption_information", $this->uri->segment(3));
         redirect(base_url() . "PetManagement/adoption_information");
     }
-    
+
     public function adoption_information() {
         $animal_id = $this->session->userdata("adoption_information");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
@@ -430,7 +430,7 @@ class PetManagement extends CI_Controller {
         $this->load->view("pet_management/adoption_information");
         $this->load->view("dashboard/includes/footer");
     }
-    
+
     public function restore_transaction_exec() {
         $transaction_id = $this->uri->segment(3);
         $transaction_user_id = $this->uri->segment(4);
