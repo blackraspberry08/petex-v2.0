@@ -19,8 +19,6 @@ class AdminProfile extends CI_Controller {
                 redirect(base_url() . "UserDashboard");
             } else if ($this->session->userdata("user_access") == "subadmin") {
                 //SUBADMIN!
-                $this->session->set_flashdata("err_5", "You are currently logged in as " . $current_user->user_firstname . " " . $current_user->user_lastname);
-                redirect(base_url() . "SubadminDashboard");
             } else if ($this->session->userdata("user_access") == "admin") {
                 //ADMIN!
                 // Do Nothing
@@ -29,6 +27,11 @@ class AdminProfile extends CI_Controller {
     }
 
     public function index() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $userDetails = $this->Profile_model->fetch("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
@@ -41,12 +44,21 @@ class AdminProfile extends CI_Controller {
             'userDetails' => $userDetails
         );
         $this->load->view("admin_profile/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("admin_profile/main");
         $this->load->view("admin_profile/includes/footer");
     }
 
     public function edit_profile() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $userDetails = $this->Profile_model->fetch("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
@@ -58,7 +70,11 @@ class AdminProfile extends CI_Controller {
             'userDetails' => $userDetails
         );
         $this->load->view("admin_profile/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("admin_profile/edit_profile");
         $this->load->view("admin_profile/includes/footer");
     }

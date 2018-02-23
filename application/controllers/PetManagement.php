@@ -4,26 +4,29 @@ class PetManagement extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-//---> MODELS HERE!
-//---> LIBRARIES HERE!
-//---> SESSIONS HERE!
+        //---> MODELS HERE!
+        //---> LIBRARIES HERE!
+        //---> SESSIONS HERE!
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
         if ($this->session->has_userdata('isloggedin') == FALSE) {
-//user is not yet logged in
+            //user is not yet logged in
             $this->session->set_flashdata("err_4", "Login First!");
             redirect(base_url() . 'main/');
         } else {
             $current_user = $this->session->userdata("current_user");
             if ($this->session->userdata("user_access") == "user") {
-//USER!
+                //USER!
                 $this->session->set_flashdata("err_5", "You are currently logged in as " . $current_user->user_firstname . " " . $current_user->user_lastname);
                 redirect(base_url() . "UserDashboard");
             } else if ($this->session->userdata("user_access") == "subadmin") {
-//SUBADMIN!
-                $this->session->set_flashdata("err_5", "You are currently logged in as " . $current_user->user_firstname . " " . $current_user->user_lastname);
-                redirect(base_url() . "SubadminDashboard");
+                //SUBADMIN!
+                if (empty($petManagementModule)) {
+                    $this->session->set_flashdata("err_5", "You have no access in Pet Management Module.");
+                    redirect(base_url() . "SubadminDashboard");
+                }
             } else if ($this->session->userdata("user_access") == "admin") {
-//ADMIN!
-//Do nothing!
+                //ADMIN!
+                //Do nothing!
             }
         }
     }
@@ -50,45 +53,81 @@ class PetManagement extends CI_Controller {
     }
 
     public function index() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $all_animals = $this->PetManagement_model->get_all_animals();
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => "Pet Management",
             'all_animals' => $all_animals,
-            //NAV INFO
+            /* NAV INFO */
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
             'user_access' => "Administrator"
         );
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("pet_management/main");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
     }
 
     public function medical_records_exec() {
         $this->session->set_userdata("medical_records", $this->uri->segment(3));
-        redirect(base_url() . "PetManagement/medical_records");
+        redirect(base_url() . "PetManagement/medical_records")
+
+        ;
     }
 
     public function medical_records() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $animal_id = $this->session->userdata("medical_records");
         $animal_medical_records = $this->PetManagement_model->get_animal_medical_records(array("medical_record.pet_id" => $animal_id));
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => $animal->pet_name . " | Medical Records",
             'animal_medical_records' => $animal_medical_records,
             'animal' => $animal,
-            //NAV INFO
+            // NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
             'user_access' => "Administrator"
         );
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("medical_records/medical_records");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
     }
 
     public function add_medical_record_exec() {
@@ -129,7 +168,9 @@ class PetManagement extends CI_Controller {
         } else {
             $this->session->set_flashdata("remove_medical_record_fail", "Something went wrong while removing the medical record from " . $record->pet_name);
         }
-        redirect(base_url() . "PetManagement/medical_records");
+        redirect(base_url() . "PetManagement/medical_records")
+
+        ;
     }
 
     public function edit_medical_record_exec() {
@@ -137,28 +178,47 @@ class PetManagement extends CI_Controller {
         $record_id = $this->uri->segment(4);
         $this->session->set_userdata("animal_id", $animal_id);
         $this->session->set_userdata("medical_record_id", $record_id);
-        redirect(base_url() . "PetManagement/edit_medical_record");
+        redirect(base_url() . "PetManagement/edit_medical_record")
+
+        ;
     }
 
     public function edit_medical_record() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $animal_id = $this->session->userdata("animal_id");
         $record_id = $this->session->userdata("medical_record_id");
         $current_animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         $current_record = $this->PetManagement_model->get_medical_record(array("medicalRecord_id" => $record_id))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => "Edit Medical Record",
             'animal' => $current_animal,
             'record' => $current_record,
-            //NAV INFO
+            // NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
             'user_access' => "Administrator"
         );
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("medical_records/edit_medical_record");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
     }
 
     public function edit_medical_record_submit() {
@@ -193,25 +253,44 @@ class PetManagement extends CI_Controller {
 
     public function animal_info_exec() {
         $this->session->set_userdata("animal_info", $this->uri->segment(3));
-        redirect(base_url() . "PetManagement/animal_info");
+        redirect(base_url() . "PetManagement/animal_info")
+
+        ;
     }
 
     public function animal_info() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $animal_id = $this->session->userdata("animal_info");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => $animal->pet_name . " | Pet Information",
             'animal' => $animal,
-            //NAV INFO
+            //  NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
             'user_access' => "Administrator"
         );
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("pet_management/animal_information");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
     }
 
     public function edit_animal_info_exec() {
@@ -297,12 +376,25 @@ class PetManagement extends CI_Controller {
         } else {
             $this->session->set_flashdata("remove_animal_fail", "Something went wrong while removing " . $animal->pet_name . " from the database");
         }
-        redirect(base_url() . "PetManagement");
+        redirect(base_url() . "PetManagement")
+
+        ;
     }
 
     public function add_animal() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => "Animal Registration",
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
@@ -310,9 +402,15 @@ class PetManagement extends CI_Controller {
             'user_access' => "Administrator"
         );
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("pet_management/animal_registration");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
     }
 
     public function register_animal() {
@@ -324,7 +422,7 @@ class PetManagement extends CI_Controller {
         $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
         if ($this->form_validation->run() == FALSE) {
 
-            //$this->add_animal();
+//$this->add_animal();
         } else {
             $config['upload_path'] = './images/animal/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';
@@ -381,54 +479,93 @@ class PetManagement extends CI_Controller {
 
     public function interested_adopters_exec() {
         $this->session->set_userdata("interested_adopters", $this->uri->segment(3));
-        redirect(base_url() . "PetManagement/interested_adopters");
+        redirect(base_url() . "PetManagement/interested_adopters")
+
+        ;
     }
 
     public function interested_adopters() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $animal_id = $this->session->userdata("interested_adopters");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $active_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.pet_id" => $animal_id));
         $not_active_transaction = $this->PetManagement_model->get_not_active_transactions(array("transaction.pet_id" => $animal_id));
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => $animal->pet_name . " | Interested Adopters",
             'animal' => $animal,
             'active_transactions' => $active_transaction,
             'not_active_transactions' => $not_active_transaction,
-            //NAV INFO
+            //        NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
             'user_access' => "Administrator"
         );
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
+
         $this->load->view("pet_management/interested_adopters");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
     }
 
     public function adoption_information_exec() {
         $this->session->set_userdata("adoption_information", $this->uri->segment(3));
-        redirect(base_url() . "PetManagement/adoption_information");
+        redirect(base_url() . "PetManagement/adoption_information")
+
+        ;
     }
 
     public function adoption_information() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $animal_id = $this->session->userdata("adoption_information");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $finished_transaction = $this->PetManagement_model->get_finished_transaction(array("transaction.pet_id" => $animal_id));
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => $animal->pet_name . " | Interested Adopters",
             'animal' => $animal,
             'finished_transaction' => $finished_transaction,
-            //NAV INFO
+            //        NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
             'user_access' => "Administrator"
         );
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("pet_management/adoption_information");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
     }
 
     public function restore_transaction_exec() {
@@ -441,7 +578,9 @@ class PetManagement extends CI_Controller {
         } else {
             $this->session->set_flashdata("restore_fail", "Something went wrong while restoring the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
         }
-        redirect(base_url() . "PetManagement/interested_adopters_exec/" . $this->session->userdata("interested_adopters"));
+        redirect(base_url() . "PetManagement/interested_adopters_exec/" . $this->session->userdata("interested_adopters"))
+
+        ;
     }
 
     public function drop_transaction_exec() {
@@ -454,7 +593,9 @@ class PetManagement extends CI_Controller {
         } else {
             $this->session->set_flashdata("drop_fail", "Something went wrong while dropping the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
         }
-        redirect(base_url() . "PetManagement/interested_adopters_exec/" . $this->session->userdata("interested_adopters"));
+        redirect(base_url() . "PetManagement/interested_adopters_exec/" . $this->session->userdata("interested_adopters"))
+
+        ;
     }
 
     public function manage_progress_exec() {

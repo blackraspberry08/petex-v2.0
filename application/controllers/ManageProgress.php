@@ -19,8 +19,6 @@ class ManageProgress extends CI_Controller {
                 redirect(base_url() . "UserDashboard");
             } else if ($this->session->userdata("user_access") == "subadmin") {
                 //SUBADMIN!
-                $this->session->set_flashdata("err_5", "You are currently logged in as " . $current_user->user_firstname . " " . $current_user->user_lastname);
-                redirect(base_url() . "SubadminDashboard");
             } else if ($this->session->userdata("user_access") == "admin") {
                 //ADMIN!
                 //Do nothing!
@@ -29,6 +27,11 @@ class ManageProgress extends CI_Controller {
     }
 
     public function index() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $transaction_id = $this->session->userdata("manage_progress_transaction_id");
         $current_transaction = $this->PetManagement_model->get_finished_transaction(array("transaction.transaction_id" => $transaction_id))[0];
 //        echo "<pre>";
@@ -65,6 +68,12 @@ class ManageProgress extends CI_Controller {
             $comments_step_6 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id));
         }
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => $current_transaction->user_firstname . " " . $current_transaction->user_lastname . " | Manage Progress",
             'transaction' => $current_transaction,
             'progresses' => $progress,
@@ -89,7 +98,11 @@ class ManageProgress extends CI_Controller {
         );
 
         $this->load->view("dashboard/includes/header", $data);
-        $this->load->view("admin_nav/navheader");
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
         $this->load->view("manage_progress/main");
         $this->load->view("dashboard/includes/footer");
     }
