@@ -63,3 +63,12 @@
         </button>
     </div>
 <?php endif; ?>
+
+<?php if (!empty($this->session->flashdata("register_admin_success"))): ?>
+    <div class="err_msg alert alert-success alert-dismissible fade show" role="alert">
+        <strong><i class = "fa fa-exclamation"></i></strong> <?= $this->session->flashdata("register_admin_success"); ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif; ?>

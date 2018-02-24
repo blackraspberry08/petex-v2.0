@@ -4,30 +4,39 @@ class ManageOfficer extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        //---> MODELS HERE!
-        //---> LIBRARIES HERE!
-        //---> SESSIONS HERE!
+//---> MODELS HERE!
+//---> LIBRARIES HERE!
+//---> SESSIONS HERE!
         $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
         if ($this->session->has_userdata('isloggedin') == FALSE) {
-            //user is not yet logged in
+//user is not yet logged in
             $this->session->set_flashdata("err_4", "Login First!");
             redirect(base_url() . 'main/');
         } else {
             $current_user = $this->session->userdata("current_user");
             if ($this->session->userdata("user_access") == "user") {
-                //USER!
+//USER!
                 $this->session->set_flashdata("err_5", "You are currently logged in as " . $current_user->user_firstname . " " . $current_user->user_lastname);
                 redirect(base_url() . "UserDashboard");
             } else if ($this->session->userdata("user_access") == "subadmin") {
-                //SUBADMIN!
+//SUBADMIN!
                 if (empty($manageOfficerModule)) {
                     $this->session->set_flashdata("err_5", "You have no access in Manage Officers Module.");
                     redirect(base_url() . "SubadminDashboard");
                 }
             } else if ($this->session->userdata("user_access") == "admin") {
-                //ADMIN!
-                //Do nothing!
+//ADMIN!
+//Do nothing!
             }
+        }
+    }
+
+    function _alpha_dash_space($str = '') {
+        if (!preg_match("/^([-a-z_ ])+$/i", $str)) {
+            $this->form_validation->set_message('_alpha_dash_space', 'The {field} may only contain alphabet characters, spaces, underscores, and dashes.');
+            return FALSE;
+        } else {
+            return TRUE;
         }
     }
 
@@ -152,9 +161,11 @@ class ManageOfficer extends CI_Controller {
         $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
 
         $selected_officer = $this->ManageOfficer_model->get_admin(array("admin_id" => $this->session->userdata("manage_module")))[0];
+
         $officer_modules = $this->ManageOfficer_model->get_officer_modules(array("module_access.admin_id" => $this->session->userdata("manage_module")));
         $modules = $this->ManageOfficer_model->get_modules();
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+
         $data = array(
             /* MODULE ACCESS */
             'manageUserModule' => $manageUserModule,
@@ -171,6 +182,7 @@ class ManageOfficer extends CI_Controller {
             'user_picture' => $current_user->admin_picture,
             'user_access' => "Administrator"
         );
+
         $this->load->view("dashboard/includes/header", $data);
         if ($current_user->admin_access == "Subadmin") {
             $this->load->view("subadmin_nav/navheader");
@@ -193,7 +205,7 @@ class ManageOfficer extends CI_Controller {
             }
         }
         if (empty($this->input->post("modules"))) {
-            // NO SELECTED MODULE. REMOVE ALL MODULES RELATED TO THIS OFFICER
+// NO SELECTED MODULE. REMOVE ALL MODULES RELATED TO THIS OFFICER
             $this->ManageOfficer_model->remove_all_modules(array("module_access.admin_id" => $this->uri->segment(3)));
         } else {
             $this->ManageOfficer_model->remove_all_modules(array("module_access.admin_id" => $this->uri->segment(3)));
@@ -213,7 +225,9 @@ class ManageOfficer extends CI_Controller {
 
     public function remove_module_exec() {
         $module_access_id = $this->uri->segment(3);
-        $module_access = $officer_module_access = $this->ManageOfficer_model->get_officer_modules(array("module_access.module_access_id" => $module_access_id));
+
+        $module_access = $officer_module_access = $this->ManageOfficer_model->get_officer_modules(array("module_access.module_access_id" => $module_access_id))[0];
+
         $this->ManageOfficer_model->remove_module(array("module_access_id" => $module_access_id));
         $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated module access for " . $module_access->admin_firstname . " " . $module_access->admin_lastname);
         $this->session->set_flashdata("module_removed", "Successfully removed " . $module_access->module_title . " module to " . $module_access->admin_firstname . " " . $module_access->admin_lastname . "'s modules.");
@@ -247,11 +261,54 @@ class ManageOfficer extends CI_Controller {
             $this->load->view("admin_nav/navheader");
         }
         $this->load->view("manage_officer/admin_registration");
-        $this->load->view("dashboard/includes/footer");
+        $this->load->view("manage_officer/footer");
     }
 
     public function admin_register_exec() {
-        
+        $this->form_validation->set_rules("username", "Username", "required|min_length[5]|is_unique[user.user_username]");
+        $this->form_validation->set_rules("password", "Password", "required|matches[conpassword]|alpha_numeric|min_length[8]");
+        $this->form_validation->set_rules("conpassword", "Confirm Password", "required|matches[password]|alpha_numeric|min_length[8]");
+        $this->form_validation->set_rules("email", "Email", "required|valid_email");
+        $this->form_validation->set_rules("phone", "Mobile Phone No.", "required|numeric|regex_match[^(09|\+639)\d{9}$^]");
+        $this->form_validation->set_rules("lname", "Lastname", "required|min_length[2]|callback__alpha_dash_space");
+        $this->form_validation->set_rules("fname", "Firstname", "required|min_length[2]|callback__alpha_dash_space");
+        $this->form_validation->set_rules("bday", "Birthday", "required");
+        $this->form_validation->set_rules("address", "Address", "required");
+        if ($this->form_validation->run() == FALSE) {
+            $this->register_admin();
+        } else {
+//Do Some Registering
+            if ($this->input->post('gender') == "Male") {
+                $imagePath = "images/user/male.png";
+            } else {
+                $imagePath = "images/user/female.png";
+            }
+
+            $data = array(
+                'admin_username' => $this->input->post('username'),
+                'admin_password' => sha1($this->input->post('password')),
+                'admin_contact_no' => $this->input->post('phone'),
+                'admin_email' => $this->input->post('email'),
+                'admin_lastname' => $this->input->post('lname'),
+                'admin_firstname' => $this->input->post('fname'),
+                'admin_bday' => strtotime($this->input->post('bday')),
+                'admin_status' => 1,
+                'admin_sex' => $this->input->post('gender'),
+                'admin_picture' => $imagePath,
+                'admin_address' => $this->input->post('address'),
+                'admin_isverified' => 1,
+                'admin_added_at' => time(),
+                'admin_updated_at' => time()
+            );
+
+            if ($this->Register_model->insert("admin", $data)) {
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), $user->admin_firstname . " added a new Officer");
+                $this->session->set_flashdata("register_admin_success", "New officer has been registered.");
+                redirect(base_url() . "ManageOfficer");
+            } else {
+                
+            }
+        }
     }
 
 }
