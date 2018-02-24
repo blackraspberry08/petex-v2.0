@@ -129,7 +129,7 @@ Profile
             <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Activities
+                        <h5> <i class="fa fa-table"></i> Activities</h5>
                     </div>
                     <div class="card-body">
                         <?php if (empty($trails)): ?>

@@ -45,7 +45,7 @@ Profile
                         <table style="margin-top:55px;" class = "table table-responsive-md table-hover">
                             <tbody>
                                 <tr>
-                                    <th>Uusername: </th>
+                                    <th>Username: </th>
                                     <td><?= $userDetails->admin_username ?></td>
                                 </tr>
                                 <tr>

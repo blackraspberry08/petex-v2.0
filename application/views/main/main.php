@@ -29,7 +29,7 @@
                             <?php elseif ($this->session->userdata("user_access") == "subadmin" || $this->session->userdata("user_access") == "admin"): ?>
                                 <img src = "<?= base_url() . $current_user->admin_picture ?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
                                 <strong><?= $current_user->admin_firstname . " " . $current_user->admin_lastname ?></strong><br>
-                                <span><?= $current_user->admin_access == "Subadmin"? "PAWS Officer" : "Administrator"; ?></span>
+                                <span><?= $current_user->admin_access == "Subadmin" ? "PAWS Officer" : "Administrator"; ?></span>
                             <?php endif; ?>
                         </div>
                         <div class="card-footer">
@@ -40,38 +40,41 @@
                             <?php elseif ($this->session->userdata("user_access") == "admin"): ?>
                                 <a class="btn btn-primary pull-left" href="<?= base_url() . "AdminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>  
                             <?php endif; ?>
-
+                            <?php if($this->session->userdata("user_access") == "Admin"): ?>
                             <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
-                        </div>
+                        <?php else: ?>
+                            <a class="btn btn-secondary pull-right" href="<?= base_url() . "UserLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                        <?php endif; ?>
+                    </div>
                     <?php else: ?>
-                        <div class="card-header">
-                            <img src="<?= $this->config->base_url() ?>images/logo/icon.png" style="height:50px;" alt="" />
-                            <br><br>
-                            <h4> <i class="fa fa-sign-in fa-lg"></i> Sign in to PetEx</h4>
-                        </div>
-                        <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
-                            <div class="card-body">
-                                <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
-                                <div class="row">
-                                    <div class="col">
-                                        <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
-                                        <br>
-                                    </div>
-                                </div> 
-                                <div class="row">
-                                    <div class="col">
-                                        <input class="form-control" type="password" name="password" placeholder="Password">
-                                        <br>
-                                    </div>
+                    <div class="card-header">
+                        <img src="<?= $this->config->base_url() ?>images/logo/icon.png" style="height:50px;" alt="" />
+                        <br><br>
+                        <h4> <i class="fa fa-sign-in fa-lg"></i> Sign in to PetEx</h4>
+                    </div>
+                    <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
+                        <div class="card-body">
+                            <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
+                                    <br>
                                 </div>
-                                <p>New to PetEx? <a href="<?= $this->config->base_url() ?>register">Create an Account</a></p>
-                                <div class="card-footer" style=" margin-top:-20px;">
-                                    <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
-                                        <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
-                                    <button type="submit" class="btn btn-success pull-right">Login</button>
-                                </div><br>
+                            </div> 
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-control" type="password" name="password" placeholder="Password">
+                                    <br>
+                                </div>
                             </div>
-                        </form>
+                            <p>New to PetEx? <a href="<?= $this->config->base_url() ?>register">Create an Account</a></p>
+                            <div class="card-footer" style=" margin-top:-20px;">
+                                <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
+                                    <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
+                                <button type="submit" class="btn btn-success pull-right">Login</button>
+                            </div><br>
+                        </div>
+                    </form>
                     <?php endif; ?>
                 </div>
             </div>
