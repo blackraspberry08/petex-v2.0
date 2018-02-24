@@ -315,7 +315,11 @@ class PetManagement extends CI_Controller {
             if (!empty($_FILES["pet_picture"]["name"])) {
                 if ($this->upload->do_upload('pet_picture')) {
                     $imagePath = "images/animal/" . $this->upload->data("file_name");
-                    unlink($animal->pet_picture);
+                    if ($animal->pet_picture == "images/animal/dog_temp_pic.png" || $animal->pet_picture == "images/animal/cat_temp_pic.png") {
+                        //DON'T UNLINK
+                    } else {
+                        unlink($animal->pet_picture);
+                    }
                 } else {
                     echo $this->upload->display_errors();
                     $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
@@ -419,10 +423,10 @@ class PetManagement extends CI_Controller {
         $this->form_validation->set_rules('pet_breed', "Pet Breed", "required|callback__alpha_dash_space|min_length[3]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
         $this->form_validation->set_rules('pet_history', "Pet History", "required");
-        $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
+        $this->form_validation->set_rules('pet_video', "Pet Video", "regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
         if ($this->form_validation->run() == FALSE) {
 
-//$this->add_animal();
+            $this->add_animal();
         } else {
             $config['upload_path'] = './images/animal/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';
@@ -470,6 +474,7 @@ class PetManagement extends CI_Controller {
 //SUCCESS
                 $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Registered " . $pet->pet_name . " to the database");
                 $this->session->set_flashdata("registration_success", "Successfully registered " . $pet->pet_name . " to the database");
+                redirect(base_url() . "PetManagement/");
             } else {
                 $this->session->set_flashdata("registration_fail", "Something went wrong while registering " . $pet->pet_name . " to the database");
             }

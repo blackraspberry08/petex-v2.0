@@ -176,7 +176,7 @@ SHOW USER INFORMATION
                                     </tr>
                                     <tr>
                                         <th scope="row">Address</th>
-                                        <td><?= $user->user_address.", ".$user->user_brgy.", ".$user->user_city;?></td>
+                                        <td><?= $user->user_address;?></td>
                                     </tr>
                                 </tbody>
                             </table>

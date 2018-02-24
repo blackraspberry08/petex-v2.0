@@ -69,7 +69,7 @@ Admin Nav Header
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav scrollbar-custom" id="exampleAccordion">
                 <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url() . "SubadminDashboard") !== FALSE ? "active" : ""; ?>" data-toggle="tooltip" data-placement = "right" title="Dashboard">
-                    <a class="nav-link" href="<?= base_url() ?>AdminDashboard">
+                    <a class="nav-link" href="<?= base_url() ?>SubadminDashboard">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>

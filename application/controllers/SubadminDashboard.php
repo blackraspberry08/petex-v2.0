@@ -85,7 +85,7 @@ class SubadminDashboard extends CI_Controller {
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
-            'user_access' => "Administrator"
+            'user_access' => "PAWS Officer"
         );
         $this->load->view("dashboard/includes/header", $data);
         $this->load->view("subadmin_nav/navheader");
