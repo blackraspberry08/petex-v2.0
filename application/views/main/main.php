@@ -40,41 +40,41 @@
                             <?php elseif ($this->session->userdata("user_access") == "admin"): ?>
                                 <a class="btn btn-primary pull-left" href="<?= base_url() . "AdminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>  
                             <?php endif; ?>
-                            <?php if($this->session->userdata("user_access") == "Admin"): ?>
-                            <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
-                        <?php else: ?>
-                            <a class="btn btn-secondary pull-right" href="<?= base_url() . "UserLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
-                        <?php endif; ?>
-                    </div>
-                    <?php else: ?>
-                    <div class="card-header">
-                        <img src="<?= $this->config->base_url() ?>images/logo/icon.png" style="height:50px;" alt="" />
-                        <br><br>
-                        <h4> <i class="fa fa-sign-in fa-lg"></i> Sign in to PetEx</h4>
-                    </div>
-                    <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
-                        <div class="card-body">
-                            <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
-                            <div class="row">
-                                <div class="col">
-                                    <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
-                                    <br>
-                                </div>
-                            </div> 
-                            <div class="row">
-                                <div class="col">
-                                    <input class="form-control" type="password" name="password" placeholder="Password">
-                                    <br>
-                                </div>
-                            </div>
-                            <p>New to PetEx? <a href="<?= $this->config->base_url() ?>register">Create an Account</a></p>
-                            <div class="card-footer" style=" margin-top:-20px;">
-                                <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
-                                    <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
-                                <button type="submit" class="btn btn-success pull-right">Login</button>
-                            </div><br>
+                            <?php if ($this->session->userdata("user_access") == "Admin"): ?>
+                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php else: ?>
+                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "UserLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php endif; ?>
                         </div>
-                    </form>
+                    <?php else: ?>
+                        <div class="card-header">
+                            <img src="<?= $this->config->base_url() ?>images/logo/icon.png" style="height:50px;" alt="" />
+                            <br><br>
+                            <h4> <i class="fa fa-sign-in fa-lg"></i> Sign in to PetEx</h4>
+                        </div>
+                        <form method="POST" action="<?= $this->config->base_url() ?>login/login_exec">
+                            <div class="card-body">
+                                <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
+                                        <br>
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control" type="password" name="password" placeholder="Password">
+                                        <br>
+                                    </div>
+                                </div>
+                                <p>New to PetEx? <a href="<?= $this->config->base_url() ?>register">Create an Account</a></p>
+                                <div class="card-footer" style=" margin-top:-20px;">
+                                    <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
+                                        <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
+                                    <button type="submit" class="btn btn-success pull-right">Login</button>
+                                </div><br>
+                            </div>
+                        </form>
                     <?php endif; ?>
                 </div>
             </div>
@@ -512,22 +512,22 @@
                     <div class="form">
                         <div id="sendmessage">Your message has been sent. Thank you!</div>
                         <div id="errormessage"></div>
-                        <form action="" method="post" role="form" class="contactForm">
+                        <form action="<?= base_url() ?>main/contact" method="post" role="form">
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                                <div class="validation"></div>
+                                <input type="text" name="name" class="form-control <?= !empty(form_error("name")) ? "is-invalid" : ""; ?>" id="name" placeholder="Your Name" value = "<?= set_value("name") ?>"/>
+                                <div class="invalid-feedback"><?= form_error('name') ?></div>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                                <div class="validation"></div>
+                                <input type="email" class="form-control <?= !empty(form_error("email")) ? "is-invalid" : ""; ?>" name="email" id="email" placeholder="Your Email" value = "<?= set_value("email") ?>"/>
+                                <div class="invalid-feedback"><?= form_error('email') ?></div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                                <div class="validation"></div>
+                                <input type="text" class="form-control <?= !empty(form_error("subject")) ? "is-invalid" : ""; ?>" name="subject" id="subject" placeholder="Subject" value = "<?= set_value("subject") ?>" />
+                                <div class="invalid-feedback"><?= form_error('subject') ?></div>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                                <div class="validation"></div>
+                                <textarea class="form-control <?= !empty(form_error("message")) ? "is-invalid" : ""; ?>" name="message" rows="5" placeholder="Message" value = "<?= set_value("message") ?>"></textarea>
+                                <div class="invalid-feedback"><?= form_error('message') ?></div>
                             </div>
                             <div class="text-center"><button type="submit">Send Message</button></div>
                         </form>

@@ -34,6 +34,8 @@ class SubadminDashboard extends CI_Controller {
         $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
         $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
 
+        $found_animals = $this->AdminDashboard_model->count_found_animal();
+        $missing_animals = $this->AdminDashboard_model->count_missing_animal();
         $adoptable_animals = $this->AdminDashboard_model->count_adoptable_animal();
         $non_adoptable_animals = $this->AdminDashboard_model->count_non_adoptable_animal();
         $deceased_animals = $this->AdminDashboard_model->count_deceased_animal();
@@ -70,6 +72,8 @@ class SubadminDashboard extends CI_Controller {
             'adopted_animals' => $adopted_animals,
             'pet_adopters' => $pet_adopters,
             'transactions' => $transactions,
+            'missing_animals' => $missing_animals,
+            'found_animals' => $found_animals,
             'users' => $users,
             'dogs' => $dogs,
             'cats' => $cats,
