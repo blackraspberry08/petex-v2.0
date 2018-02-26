@@ -55,6 +55,7 @@ class PetAdoption extends CI_Controller {
         );
 
         if ($this->PetAdoption_model->singleinsert("transaction", $data)) {
+            $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "download an adoption form");
             redirect(base_url() . "PetAdoption/progress");
         }
     }
@@ -716,6 +717,7 @@ class PetAdoption extends CI_Controller {
                             "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf',
                         );
                         if ($this->PetAdoption_model->update_adoption_form($data, array("transaction_id" => $transactionId->transaction_id))) {
+                            $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "fill up an adoption form");
                             redirect(base_url() . "MyProgress/");
                         }
                     }

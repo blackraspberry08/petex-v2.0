@@ -40,7 +40,7 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
             <br>
             <?php if ($progress_1->progress_isSuccessful == 0): ?>
                 <div class="card">
-                    <form action="step1_comment_exec/<?= $progress_1->progress_id ?>" method="POST">
+                    <form action="<?= base_url() ?>MyProgress/step1_comment_exec/<?= $progress_1->progress_id ?>" method="POST">
                         <div class ="card-header">
                             <i class = "fa fa-comment" ></i> Remarks
                         </div>

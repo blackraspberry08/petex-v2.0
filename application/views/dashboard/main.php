@@ -134,7 +134,40 @@ Dashboard
                             <h1 class="mr-5"><?= $users ?></h1>
                         </div>
                         <div class = "card-footer">
-                            <span class="float-left">Number of Users</span>
+                            <span class="float-left">Missing Pets</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <a href ="#" data-toggle="modal" data-target=".users"  data-placement="bottom" title="View All Users">
+                    <div class="card text-success border-success  o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon pr-3 pt-2">
+                                <i class="fa fa-fw fa-question"></i>
+                            </div>
+                            <h1 class="mr-5"><?= $missing_animals ?></h1>
+                        </div>
+                        <div class = "card-footer">
+                            <span class="float-left">Missing Pets</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <a href ="#" data-toggle="modal" data-target=".users"  data-placement="bottom" title="View All Users">
+                    <div class="card text-success border-success  o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon pr-3 pt-2">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </div>
+                            <h1 class="mr-5"><?= $found_animals ?></h1>
+                        </div>
+                        <div class = "card-footer">
+                            <span class="float-left">Found Pets</span>
                         </div>
                     </div>
                 </a>
@@ -166,6 +199,15 @@ Dashboard
                         <i class="fa fa-pie-chart"></i> Types of Animals in PAWS</div>
                     <div class="card-body">
                         <canvas id="myPieChart" width="100%" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-area-chart"></i> Adopted Animals in 2018</div>
+                    <div class="card-body">
+                        <canvas id="myAreaChart" width="100%" height="30"></canvas>
                     </div>
                 </div>
             </div>

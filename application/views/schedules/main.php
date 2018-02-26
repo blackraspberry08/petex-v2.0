@@ -3,26 +3,26 @@ SCHEDULES
 ============================-->
 <style>
     .timepicker{
-         overflow: hidden;
-     }
-     .timepicker .datetimepicker-hours .next,
-     .timepicker .datetimepicker-minutes .next > table{
-         visibility:hidden;
-     }
+        overflow: hidden;
+    }
+    .timepicker .datetimepicker-hours .next,
+    .timepicker .datetimepicker-minutes .next > table{
+        visibility:hidden;
+    }
 </style>
 <div class="content-wrapper">
     <div class="container-fluid">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="<?= base_url()?>AdminDashboard">Dashboard</a>
+                <a href="<?= base_url() ?>AdminDashboard">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Schedules</li>
         </ol>
-        <?php include_once (APPPATH."views/show_error/show_error.php");?>
-        <?php include_once ("schedules.php");?>
+        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
+        <?php include_once ("schedules.php"); ?>
     </div>
-    
+
     <script>
         $(document).ready(function () {
             var dt = new Date();
@@ -32,10 +32,10 @@ SCHEDULES
                 format: 'MM d, yyyy',
                 todayBtn: true,
                 autoclose: true,
-                minView: 2,      
+                minView: 2,
             });
             $('.schedule_datepicker').datetimepicker('setStartDate', dt);
-            
+
             //TIME PICKER FOR SCHEDULE
             $(".limited-timepicker").datetimepicker({
                 format: 'H:ii P',
@@ -44,7 +44,7 @@ SCHEDULES
                 maxView: 1,
                 startView: 1,
                 showMeridian: true,
-                startDate:new Date(),
+                startDate: new Date(),
             });
             //$('.limited-timepicker').datetimepicker('setStartDate', dt);
             $(".no-limit-timepicker").datetimepicker({

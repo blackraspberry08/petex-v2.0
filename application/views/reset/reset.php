@@ -14,14 +14,15 @@
                         <p>Enter your email address and username and we will send you instructions on how to reset your password.</p>
                         <div class="row">
                             <div class="col">
-                                <input class="form-control" type="text" name="username" placeholder="Username" autofocus> 
+                                <input class="form-control <?= !empty(form_error("username")) ? "is-invalid" : ""; ?>" type="text" name="username" placeholder="Username" autofocus value = "<?= set_value("username") ?>"> 
+                                <div class="invalid-feedback"><?= form_error('username') ?></div>
                                 <br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input class="form-control" type="email" name="email" placeholder="Email Address">
-                                <br>
+                                <input class="form-control <?= !empty(form_error("email")) ? "is-invalid" : ""; ?>" type="email" name="email" placeholder="Email Address" value = "<?= set_value("email") ?>">
+                                <div class="invalid-feedback"><?= form_error('email') ?></div>
                             </div>
                         </div> 
                     </div> 

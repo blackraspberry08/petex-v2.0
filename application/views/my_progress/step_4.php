@@ -1,7 +1,7 @@
 
 <?php
 $progress_4 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $progress->transaction_id))[0];
-$schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
+$schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_4->progress_id))[0];
 ?>
 <div class="col-md-12">
     <div class="row">
@@ -33,7 +33,7 @@ $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress
             <br>
             <?php if ($progress_4->progress_isSuccessful == 0): ?>
                 <div class="card">
-                    <form action="step4_comment/<?= $progress_4->progress_id ?>" method="POST">
+                    <form action="<?= base_url() ?>MyProgress/step4_comment_exec/<?= $progress_4->progress_id ?>" method="POST">
                         <div class ="card-header">
                             <i class = "fa fa-comment" ></i> Remarks
                         </div>
@@ -143,12 +143,7 @@ $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             <i class = "fa fa-check" ></i> Closed. Approved by <strong><?= $comment->progress_comment_sender ?></strong>
                         </div>
                     <?php else: ?>
-                        <div class="card-footer small text-muted text-center">
-                            <div class="btn-group" role="group" aria-label="Approval">
-                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_4_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_4_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
-                            </div>
-                        </div>
+                        
                     <?php endif; ?>
                 </div><!-- /Comment-->
             <?php endif; ?>

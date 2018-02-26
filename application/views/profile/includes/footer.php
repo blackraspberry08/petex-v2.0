@@ -29,6 +29,42 @@
         </div>
     </div>
 </div>
+<!-- GOOGLE MAPS-->
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD1VJrwMKjjvTi626jR6pdoaNdIHKEdp0c"></script>
+<script>
+
+    //EMPTY ADDRESS INPUT
+    var map;
+    function initialize() {
+        // Set up the map
+        var mapOptions = {
+            zoom: 18,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false,
+        };
+        map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
+        google.maps.event.addDomListener(window, 'load', initialize);
+    }
+</script>
+
+<!-- GEO COMPLETE -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.min.js"></script>
+<script>
+
+    $(function () {
+        $("#geocomplete").geocomplete({
+            map: "#google-map",
+            details: "form",
+            country: 'ph',
+        }).bind("geocode:result", function (event, result) {
+//            console.log("===== FOOTER =====");
+//            console.log(event);
+//            console.log(result);
+        });
+    });
+</script>
+
+
 <script src="<?= base_url() ?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript">
 

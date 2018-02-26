@@ -7,7 +7,11 @@ Profile
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>UserDashboard">Dashboard</a>
+                <?php if ($user_access == "Administrator"): ?>
+                    <a href="<?= base_url() ?>AdminDashboard">Dashboard</a>
+                <?php else: ?>  
+                    <a href="<?= base_url() ?>SubAdminDashboard">Dashboard</a>
+                <?php endif; ?>
             </li>
             <li class="breadcrumb-item active">Profile</li>
         </ol>
@@ -45,7 +49,7 @@ Profile
                         <table style="margin-top:55px;" class = "table table-responsive-md table-hover">
                             <tbody>
                                 <tr>
-                                    <th>Uusername: </th>
+                                    <th>Username: </th>
                                     <td><?= $userDetails->admin_username ?></td>
                                 </tr>
                                 <tr>
@@ -81,12 +85,12 @@ Profile
             <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Audit Trail
+                        <i class="fa fa-table"></i> Activities
                     </div>
                     <div class="card-body">
                         <?php if (empty($trails)): ?>
                             <center>
-                                <h4>No audit trails yet</h4>
+                                <h4>No activities yet</h4>
                                 <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
                             </center>
                         </div>

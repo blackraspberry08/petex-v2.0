@@ -109,7 +109,11 @@ class MyPets extends CI_Controller {
             if (!empty($_FILES["pet_picture"]["name"])) {
                 if ($this->upload->do_upload('pet_picture')) {
                     $imagePath = "images/animal/" . $this->upload->data("file_name");
-                    unlink($animal->pet_picture);
+                    if ($animal->pet_picture == "images/animal/dog_temp_pic.png" || $animal->pet_picture == "images/animal/cat_temp_pic.png") {
+                        //DON'T UNLINK
+                    } else {
+                        unlink($animal->pet_picture);
+                    }
                 } else {
                     echo $this->upload->display_errors();
                     $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
@@ -135,9 +139,11 @@ class MyPets extends CI_Controller {
             );
             if ($this->MyPets_model->update_animal_record($pet, array("pet_id" => $animal->pet_id))) {
                 //SUCCESS
+                $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "Change information of " . $animal->pet_name . ".");
                 $this->session->set_flashdata("uploading_success", "Successfully update the record of " . $animal->pet_name);
+                redirect(base_url() . "MyPets/edit_details");
             } else {
-                $this->session->set_flashdata("uploading_fail2", $animal->pet_name . " seems to not exist in the database.");
+                $this->session->set_flashdata("uploading_fail", $animal->pet_name . " seems to not exist in the database.");
             }
             redirect(base_url() . "MyPets/");
         }

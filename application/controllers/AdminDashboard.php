@@ -29,6 +29,55 @@ class AdminDashboard extends CI_Controller {
     }
 
     public function index() {
+        $adopted = $this->AdminDashboard_model->fetch("adoption");
+
+        $januaryCount = 0;
+        $februaryCount = 0;
+        $marchCount = 0;
+        $aprilCount = 0;
+        $mayCount = 0;
+        $juneCount = 0;
+        $julyCount = 0;
+        $augustCount = 0;
+        $septemberCount = 0;
+        $octoberCount = 0;
+        $novemberCount = 0;
+        $decemberCount = 0;
+        foreach ($adopted as $mo) {
+            $month = date("M", $mo->adoption_adopted_at);
+            if ($month == 'Jan') {
+                $januaryCount = $januaryCount + 1;
+            } else if ($month == 'Feb') {
+                $februaryCount = $februaryCount + 1;
+            } else if ($month == 'Mar') {
+                $marchCount = $marchCount + 1;
+            } else if ($month == 'Apr') {
+                $aprilCount = $aprilCount + 1;
+            } else if ($month == 'May') {
+                $mayCount = $mayCount + 1;
+            } else if ($month == 'Jun') {
+                $juneCount = $juneCount + 1;
+            } else if ($month == 'Jul') {
+                $julyCount = $julyCount + 1;
+            } else if ($month == 'Aug') {
+                $augustCount = $augustCount + 1;
+            } else if ($month == 'Sep') {
+                $septemberCount = $septemberCount + 1;
+            } else if ($month == 'Oct') {
+                $octoberCount = $octoberCount + 1;
+            } else if ($month == 'Nov') {
+                $novemberCount = $novemberCount + 1;
+            } else if ($month == 'Dec') {
+                $decemberCount = $decemberCount + 1;
+            }
+        }
+//        echo "<pre>";
+//        print_r($january);
+//        echo "</pre>";
+//        die;
+
+        $found_animals = $this->AdminDashboard_model->count_found_animal();
+        $missing_animals = $this->AdminDashboard_model->count_missing_animal();
         $adoptable_animals = $this->AdminDashboard_model->count_adoptable_animal();
         $non_adoptable_animals = $this->AdminDashboard_model->count_non_adoptable_animal();
         $deceased_animals = $this->AdminDashboard_model->count_deceased_animal();
@@ -72,6 +121,20 @@ class AdminDashboard extends CI_Controller {
             'alladopted' => $alladopted,
             'alldeceased' => $alldeceased,
             'alltransactions' => $alltransactions,
+            'missing_animals' => $missing_animals,
+            'found_animals' => $found_animals,
+            'januaryCount' => $januaryCount,
+            'februaryCount' => $februaryCount,
+            'marchCount' => $marchCount,
+            'aprilCount' => $aprilCount,
+            'mayCount' => $mayCount,
+            'juneCount' => $juneCount,
+            'julyCount' => $julyCount,
+            'augustCount' => $augustCount,
+            'septemberCount' => $septemberCount,
+            'octoberCount' => $octoberCount,
+            'novemberCount' => $novemberCount,
+            'decemberCount' => $decemberCount,
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,
