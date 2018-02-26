@@ -23,10 +23,19 @@ Dashboard
             </li>
             <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
+        <!-- Alert -->
+        <?php if ($adoptedPets == 0): ?>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Well done!</h4>
+                <p>You successfully done to all of your progress.</p>
+                <p class="mb-0">You can now check your pet by clicking the button.</p><br>
+                <a class="btn btn-outline-primary" href="<?= base_url() ?>UserDashboard/messageRead">Go to MyPets</a>
+            </div>
+        <?php endif; ?>
         <!-- Registered -->
         <div class="card">
             <div class="card-header">
-                <h3>Newly Registered Pet</h3>
+                <h5>Newly Registered Pet</h5>
             </div>
             <?php if (empty($pets)): ?>
                 <div class = "col-lg-12">
@@ -60,13 +69,14 @@ Dashboard
 
                                         <div class="card-footer text-center">
                                             <div class = "btn-group" role="group" aria-label="Button Group">
-                                                <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
-                                                <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
-                                                <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopters" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-users fa-2x"></i></a>
+                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye"></i></a>
+                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope"></i></a>
+                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera"></i></a>
+                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopters" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-users"></i></a>
                                                 <?php if (empty($userInfo)): ?>
-                                                    <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopt" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star fa-2x"></i></a>
+                                                    <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopt" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star"></i></a>
                                                 <?php else: ?>
-                                                    <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>warning" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star fa-2x"></i></a>
+                                                    <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>warning" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star"></i></a>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
@@ -140,6 +150,55 @@ Dashboard
                                                                 </tr>
                                                             </tbody>
                                                         </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Medical -->
+                                <?php $medical = $this->UserDashboard_model->get_animal_medical_records(array("medical_record.pet_id" => $pet->pet_id))[0]; ?>
+
+
+                                <div class="modal fade <?= $pet->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><i class = "fa fa-stethoscope"></i> Medical Records</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class ="row">
+                                                    <div class = "col-lg-12">
+                                                        <?php if (empty($medical)): ?>
+                                                            <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
+                                                        <?php else: ?>
+                                                            <table class = "table table-striped">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>Date: </th>
+                                                                        <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Weight: </th>
+                                                                        <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Diagnosis: </th>
+                                                                        <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Treatment: </th>
+                                                                        <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -238,8 +297,9 @@ Dashboard
                                                 <div class="row container">
                                                     <p><strong>There are two options for you to decide, its either download the form or fill up the form and send to our email online.</strong></p>
                                                     <div class="col-md-3"></div>
-                                                    <div class="col-md-3">
-                                                        <a href="<?= base_url() ?>download/adoption_application_form.pdf" class="btn btn-outline-primary">Download <i class = "fa fa-download"></i></a>
+                                                    <div class="col-md-3"> 
+                                                        <a href="<?= base_url() ?>download/adoption_application_form.pdf" onclick="window.open('<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id ?>');
+                                                                            return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
                                                     </div>
                                                     <div class="col-md-3">
                                                         <a href="<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn btn-outline-primary">Fill up the Form Online</a>
@@ -292,7 +352,7 @@ Dashboard
         </div><br>
         <!-- Adopted -->
         <div class="card">
-            <h3 class="card-header ">Newly Adopted Pet</h3>
+            <h5 class="card-header ">Newly Adopted Pet</h5>
             <?php if (empty($adoptedPets)): ?>
                 <div class = "col-lg-12">
                     <center>
@@ -324,7 +384,57 @@ Dashboard
                                     <div class="card-footer text-center">
                                         <div class = "btn-group" role="group" aria-label="Button Group">
                                             <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $adopted->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
+                                            <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $adopted->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
                                             <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $adopted->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Medical -->
+                            <?php $medical = $this->UserDashboard_model->get_animal_medical_records(array("medical_record.pet_id" => $adopted->pet_id))[0]; ?>
+
+
+                            <div class="modal fade <?= $adopted->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title"><i class = "fa fa-stethoscope"></i> Medical Records</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class ="row">
+                                                <div class = "col-lg-12">
+                                                    <?php if (empty($medical)): ?>
+                                                        <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
+                                                    <?php else: ?>
+                                                        <table class = "table table-striped">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>Date: </th>
+                                                                    <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Weight: </th>
+                                                                    <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Diagnosis: </th>
+                                                                    <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Treatment: </th>
+                                                                    <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
@@ -437,6 +547,12 @@ Dashboard
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                function downloadFunction() {
+                                    window.open("<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id; ?>");
+                                        }
+                            </script>
                         <?php endforeach; ?>
                     </div>
                 </div>

@@ -7,139 +7,136 @@ Profile
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>AdminDashboard">Dashboard</a>
+                <a href="<?= base_url() ?>UserDashboard">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Profile</li>
         </ol>
         <!-- Registered -->
-        <div class="card">
-            <div class="card-header">
-                <i class="fa fa-user"></i> Profile
-
-            </div>
-            <div class="card-body container-fluid">
-                <div class="row">
-                    <div class="col-md-2">
-                        <img src="<?= base_url() . $userDetails->admin_picture ?>" class="img-fluid img-thumbnail">
-                    </div>
-                    <div class="col-md-8">
-                    </div>
-                    <div class="col-md-2">
-                        <br>
+        <div class="row">
+            <div class="col-md-3">   
+                <div class="card">
+                    <div class="card-header">
                         <center>
-                            <a class="btn btn-outline-info" href="<?= base_url() ?>AdminProfile/edit_profile"><i class="fa fa-pencil"></i> Edit Profile</a>
+                            <img src="<?= base_url() . $userDetails->admin_picture ?>" class="img-fluid img-circle">
+                        </center>
+                    </div>
+                    <div class="card-body">
+                        <center>
+                            <div class="card-title">
+                                <h4><?= $userDetails->admin_firstname . " " . $userDetails->admin_lastname ?></h4>
+                            </div>
+                            <ul class="list-group list-group-flush ">
+                                <li class="list-group-item"><?= $userDetails->admin_email ?></li>
+                                <li class="list-group-item"><?= $userDetails->admin_contact_no ?></li>
+                            </ul>
                         </center>
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5><i class="fa fa-user"></i> Personal Information</h5>
-                        <hr class="my-3">
+            </div> 
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fa fa-user"></i> About</h5>
                     </div>
-                    <div class="row container">
-                        <div class="col-md-12">
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Name:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= $userDetails->admin_firstname ?> <?= $userDetails->admin_lastname ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Gender:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= $userDetails->admin_sex ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Birthday:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= date("F d, Y", $userDetails->admin_bday); ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Age:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= get_age($userDetails->admin_bday); ?>
-                                </div> 
-                            </h5>
-                            <h5>
-                                <div class="col-sm-6 pull-left">
-                                    Address:
-                                </div>
-                                <div class="col-sm-6 pull-right" id="user_info">
-                                    <?= $userDetails->admin_address ?> <?= $userDetails->admin_brgy ?> <?= $userDetails->admin_city ?>
-                                </div> 
-                            </h5>
-                        </div>
-                    </div>
-                </div>
-            </div><br><br>
-            <div class="row container">
-                <div class="col-md-12">
-                    <h5><i class="fa fa-info"></i> Login Information</h5>
-                    <hr class="my-3">
-                </div>
-                <div class="row container">
-                    <div class="col-md-12">
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Username:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                <?= $userDetails->admin_username ?>
-                            </div> 
-                        </h5>
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Password:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                ********
-                            </div> 
-                        </h5>
-                    </div>
-                </div>
-            </div><br><br>
-            <div class="row container">
-                <div class="col-md-12">
-                    <h5><i class="fa fa-address-book"></i> Contact Information</h5>
-                    <hr class="my-3">
-                </div>
-                <div class="row container">
-                    <div class="col-md-12">
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Phone Number:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                <?= $userDetails->admin_contact_no ?>
-                            </div> 
-                        </h5>
-                        <h5>
-                            <div class="col-sm-6 pull-left">
-                                Email Address:
-                            </div>
-                            <div class="col-sm-6 pull-right" id="user_info">
-                                <?= $userDetails->admin_email ?>
+                    <div class="card-body">
+                        <a class="btn btn-outline-info pull-right" href="<?= base_url() ?>AdminProfile/edit_profile"><i class="fa fa-pencil"></i> Edit Profile</a>
 
-                            </div> 
-                        </h5>
+                        <table style="margin-top:55px;" class = "table table-responsive-md table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Username: </th>
+                                    <td><?= $userDetails->admin_username ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Firstname: </th>
+                                    <td><?= $userDetails->admin_firstname ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Lastname: </th>
+                                    <td><?= $userDetails->admin_lastname ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Birthday: </th>
+                                    <td><?= date("F d, Y", $userDetails->admin_bday); ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Gender:</th>
+                                    <td><?= $userDetails->admin_sex ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Address: </th>
+                                    <td><?= $userDetails->admin_address ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
                 </div>
             </div>
-            <br><br>
         </div>
-    </div><br>
+        <br>
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Activities
+                    </div>
+                    <div class="card-body">
+                        <?php if (empty($trails)): ?>
+                            <center>
+                                <h4>No activities yet</h4>
+                                <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                            </center>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Activity</th>
+                                    <th>Access</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($trails as $trail): ?>
+                                    <?php if ($trail->user_id != ""): ?>
+                                        <tr>
+                                            <td><?= $trail->user_firstname . " " . $trail->user_lastname ?></td>
+                                            <td><?= $trail->event_description ?></td>
+                                            <td>Pet Adopter</td>
+                                            <td>
+                                                <span style = "display:none;"><?= $trail->event_added_at ?></span>
+                                                <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                            </td>
+                                        </tr>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td><?= $trail->admin_firstname . " " . $trail->admin_lastname ?></td>
+                                            <td><?= $trail->event_description ?></td>
+                                            <td><?= $trail->admin_access == "Subadmin" ? "PAWS Officer" : "Administrator"; ?></td>
+                                            <td>
+                                                <span style = "display:none;"><?= $trail->event_added_at ?></span>
+                                                <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            <?php endif; ?>
+
+        </div>
+    </div>
+    <br>
 </div>
 </div>
 </div>

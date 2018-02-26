@@ -29,12 +29,28 @@
                     </thead>
                     <tbody>
                         <?php foreach ($logs as $log): ?>
+                        <?php if($log->user_id != ""):?>
                             <tr>
                                 <td><?= $log->user_firstname . " " . $log->user_lastname ?></td>
                                 <td><?= $log->event_description ?></td>
-                                <td><?= $log->user_access == "Subadmin"? "PAWS Officer" : "Adopters"; ?></td>
-                                <td><?= date("F d, Y - h:m A", $log->event_added_at) ?></td>
+                                <td>Pet Adopter</td>
+                                <td>
+                                    <span style = "display:none;"><?= $log->event_added_at?></span>
+                                    <?= date("F d, Y - h:m A", $log->event_added_at) ?>
+                                </td>
                             </tr>
+                        <?php else:?>
+                            <tr>
+                                <td><?= $log->admin_firstname . " " . $log->admin_lastname ?></td>
+                                <td><?= $log->event_description ?></td>
+                                <td><?= $log->admin_access == "Subadmin"? "PAWS Officer" : "Adopters"; ?></td>
+                                <td>
+                                    <span style = "display:none;"><?= $log->event_added_at?></span>
+                                    <?= date("F d, Y - h:m A", $log->event_added_at) ?>
+                                </td>
+                            </tr>
+                        <?php endif;?>
+                            
                         <?php endforeach; ?>
                     </tbody>
                 </table>

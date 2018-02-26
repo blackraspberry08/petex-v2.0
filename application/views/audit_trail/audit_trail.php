@@ -23,12 +23,28 @@
                 </thead>
                 <tbody>
                     <?php foreach ($trails as $trail): ?>
-                        <tr>
-                            <td><?= $trail->user_firstname . " " . $trail->user_lastname ?></td>
-                            <td><?= $trail->event_description ?></td>
-                            <td><?= $trail->user_access ?></td>
-                            <td><?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?></td>
-                        </tr>
+                        <?php if($trail->user_id != ""):?>
+                            <tr>
+                                <td><?= $trail->user_firstname . " " . $trail->user_lastname ?></td>
+                                <td><?= $trail->event_description ?></td>
+                                <td>Pet Adopter</td>
+                                <td>
+                                    <span style = "display:none;"><?= $trail->event_added_at?></span>
+                                    <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                </td>
+                            </tr>
+                        <?php else:?>
+                            <tr>
+                                <td><?= $trail->admin_firstname . " " . $trail->admin_lastname ?></td>
+                                <td><?= $trail->event_description ?></td>
+                                <td><?= $trail->admin_access == "Subadmin"? "PAWS Officer" : "Administrator";?></td>
+                                <td>
+                                    <span style = "display:none;"><?= $trail->event_added_at?></span>
+                                    <?= date('F d, Y \a\t h:m A', $trail->event_added_at); ?>
+                                </td>
+                            </tr>
+                        <?php endif;?>
+                        
                     <?php endforeach; ?>
                 </tbody>
             </table>

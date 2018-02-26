@@ -42,7 +42,7 @@ Manage Progress
     .btn-default:hover {
         background-color: #30cfc0 !important; }
     .btn-default:focus, .btn-default:active, .btn-default.active {
-        background-color: #1d7d73 !important; }
+        background-color: #28a745 !important; }
     .btn-default.dropdown-toggle {
         background-color: #2BBBAD !important; }
     .btn-default.dropdown-toggle:hover, .btn-default.dropdown-toggle:focus {
@@ -56,7 +56,7 @@ Manage Progress
     .btn-indigo:hover {
         background-color: #4d5ec1 !important; }
     .btn-indigo:focus, .btn-indigo:active, .btn-indigo.active {
-        background-color: #2b387c !important; }
+        background-color: #1e7e34 !important; }
     .btn-indigo.dropdown-toggle {
         background-color: #3f51b5 !important; }
     .btn-indigo.dropdown-toggle:hover, .btn-indigo.dropdown-toggle:focus {
@@ -95,7 +95,8 @@ Manage Progress
         line-height: 1.428571429;
         border-radius: 15px;
         margin-top: 0; }
-    
+    /*============COMMENTS SECTION=============*/
+        
 </style>
 <?php
     function get_age($birth_date) {
@@ -121,7 +122,7 @@ Manage Progress
             <li class="breadcrumb-item">
                 <a href="<?= base_url()?>PetManagement/interested_adopters_exec/<?= $transaction->pet_id?>">Interested Adopters</a>
             </li>
-            <li class="breadcrumb-item active">Manage Progress of <?= $transaction->user_firstname." ".$transaction->user_lastname?></li>
+            <li class="breadcrumb-item active">Adoption Information of <?= $transaction->user_firstname." ".$transaction->user_lastname?></li>
         </ol>
         <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <?php include_once (APPPATH."views/show_error/show_error_manage_progress.php");?>
@@ -196,7 +197,7 @@ Manage Progress
             }
             case 100:
             {
-                $("#step_id_1").addClass("bg-success");
+                $("#step_id_1").addClass("active");
                 $("#step_id_2").addClass("bg-success");
                 $("#step_id_3").addClass("bg-success");
                 $("#step_id_4").addClass("bg-success");
@@ -241,5 +242,47 @@ Manage Progress
         });
         $('div.setup-panel div a.active').trigger('click');
     });
+</script>
 
+<script>
+        $(document).ready(function () {
+            var dt = new Date();
+            dt.setFullYear(new Date().getFullYear());
+            //DATE PICKER FOR SCHEDULE
+            $(".schedule_datepicker").datetimepicker({
+                format: 'MM d, yyyy',
+                todayBtn: true,
+                autoclose: true,
+                minView: 2,      
+            });
+            $('.schedule_datepicker').datetimepicker('setStartDate', dt);
+            
+            //TIME PICKER FOR SCHEDULE
+            $(".limited-timepicker").datetimepicker({
+                format: 'H:ii P',
+                autoclose: true,
+                minView: 0,
+                maxView: 1,
+                startView: 1,
+                showMeridian: true,
+                startDate:new Date(),
+            });
+            //$('.limited-timepicker').datetimepicker('setStartDate', dt);
+            $(".no-limit-timepicker").datetimepicker({
+                format: 'H:ii P',
+                autoclose: true,
+                minView: 0,
+                maxView: 1,
+                startView: 1,
+                showMeridian: true,
+            });
+        });
+    </script>
+    
+<!-- RESET FORM ON MODAL CLOSE -->
+<script>
+     $('.modal').on('hidden.bs.modal', function(){
+        $(this).find('input, textarea').siblings(".invalid-feedback").remove();
+        $(this).find('input, textarea').removeClass("is-invalid");
+     });
 </script>

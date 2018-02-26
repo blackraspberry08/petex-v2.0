@@ -45,8 +45,21 @@ Admin Nav Header
     .nav-item .dropdown-menu {
         width: 300px !important;
     }
+    .tooltip { pointer-events: none; }
+
 </style>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('.preloader-background').delay(800).fadeOut('slow');
+            $('.preloader-wrapper').delay(800).fadeOut();
+            $('[data-toggle="tooltip"]').tooltip({
+                container: 'body'
+             });
+        });
+    </script>
+    <?php include 'preloader.php' ?>
+    
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="index.html"><img src = "<?= base_url()?>images/logo/logo.png" height="25"/></a>
@@ -55,7 +68,7 @@ Admin Nav Header
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav scrollbar-custom" id="exampleAccordion">
-                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."AdminDashboard") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item <?= strpos(base_url(uri_string()), $this->config->base_url()."AdminDashboard") !== FALSE? "active":"" ;?>" data-toggle="tooltip" data-placement = "right" title="Dashboard">
                     <a class="nav-link" href="<?= base_url()?>AdminDashboard">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>

@@ -21,15 +21,15 @@
                         <div class="card-body text-center">
                             <?php
                             $current_user = $this->session->userdata("current_user");
-                            if ($this->session->userdata("user_access") == "subadmin" || $this->session->userdata("user_access") == "user"):
+                            if ($this->session->userdata("user_access") == "user"):
                                 ?>
                                 <img src = "<?= base_url() . $current_user->user_picture ?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
                                 <strong><?= $current_user->user_firstname . " " . $current_user->user_lastname ?></strong><br>
-                                <span><?= $current_user->user_access == "Subadmin" ? "PAWS Officer" : "Pet Adopter" ?></span>
-                            <?php elseif ($this->session->userdata("user_access") == "admin"): ?>
+                                <span>Pet Adopter</span>
+                            <?php elseif ($this->session->userdata("user_access") == "subadmin" || $this->session->userdata("user_access") == "admin"): ?>
                                 <img src = "<?= base_url() . $current_user->admin_picture ?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
                                 <strong><?= $current_user->admin_firstname . " " . $current_user->admin_lastname ?></strong><br>
-                                <span>Administrator</span>
+                                <span><?= $current_user->admin_access == "Subadmin" ? "PAWS Officer" : "Administrator"; ?></span>
                             <?php endif; ?>
                         </div>
                         <div class="card-footer">
@@ -40,8 +40,11 @@
                             <?php elseif ($this->session->userdata("user_access") == "admin"): ?>
                                 <a class="btn btn-primary pull-left" href="<?= base_url() . "AdminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>  
                             <?php endif; ?>
-
-                            <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php if ($this->session->userdata("user_access") == "Admin"): ?>
+                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php else: ?>
+                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "UserLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php endif; ?>
                         </div>
                     <?php else: ?>
                         <div class="card-header">
@@ -195,7 +198,7 @@
     <!--==========================
       Portfolio Section
     ============================-->
-    <section id="portfolio">
+    <section id="adoptables">
         <div class="container wow fadeInUp">
             <div class="section-header">
                 <h3 class="section-title">Adoptables</h3>
@@ -420,7 +423,7 @@
     <section id="team">
         <div class="container wow fadeInUp">
             <div class="section-header">
-                <h3 class="section-title">Team</h3>
+                <h3 class="section-title">Developers</h3>
                 <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
             </div>
             <div class="row">
@@ -471,7 +474,7 @@
             </div>
         </div>
 
-        <div id="google-map" data-latitude="14.6041612" data-longitude="120.9864179"></div>
+        <div id="google-map" data-latitude="14.6326954" data-longitude="121.0770871"></div>
 
         <div class="container wow fadeInUp">
             <div class="row justify-content-center">
@@ -481,17 +484,17 @@
                     <div class="info">
                         <div>
                             <i class="fa fa-map-marker"></i>
-                            <p>A108 Adam Street<br>New York, NY 535022</p>
+                            <p>Aurora Blvd, Quezon City,<br>1800 Metro Manila</p>
                         </div>
 
                         <div>
                             <i class="fa fa-envelope"></i>
-                            <p>info@example.com</p>
+                            <p>philpaws@paws.org.ph /<br>codebusters.solutions@gmail.com</p>
                         </div>
 
                         <div>
                             <i class="fa fa-phone"></i>
-                            <p>+1 5589 55488 55s</p>
+                            <p>475-1688</p>
                         </div>
                     </div>
 
@@ -509,22 +512,22 @@
                     <div class="form">
                         <div id="sendmessage">Your message has been sent. Thank you!</div>
                         <div id="errormessage"></div>
-                        <form action="" method="post" role="form" class="contactForm">
+                        <form action="<?= base_url() ?>main/contact" method="post" role="form">
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                                <div class="validation"></div>
+                                <input type="text" name="name" class="form-control <?= !empty(form_error("name")) ? "is-invalid" : ""; ?>" id="name" placeholder="Your Name" value = "<?= set_value("name") ?>"/>
+                                <div class="invalid-feedback"><?= form_error('name') ?></div>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                                <div class="validation"></div>
+                                <input type="email" class="form-control <?= !empty(form_error("email")) ? "is-invalid" : ""; ?>" name="email" id="email" placeholder="Your Email" value = "<?= set_value("email") ?>"/>
+                                <div class="invalid-feedback"><?= form_error('email') ?></div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                                <div class="validation"></div>
+                                <input type="text" class="form-control <?= !empty(form_error("subject")) ? "is-invalid" : ""; ?>" name="subject" id="subject" placeholder="Subject" value = "<?= set_value("subject") ?>" />
+                                <div class="invalid-feedback"><?= form_error('subject') ?></div>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                                <div class="validation"></div>
+                                <textarea class="form-control <?= !empty(form_error("message")) ? "is-invalid" : ""; ?>" name="message" rows="5" placeholder="Message" value = "<?= set_value("message") ?>"></textarea>
+                                <div class="invalid-feedback"><?= form_error('message') ?></div>
                             </div>
                             <div class="text-center"><button type="submit">Send Message</button></div>
                         </form>

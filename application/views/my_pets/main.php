@@ -59,6 +59,7 @@ My Pets
                                         <div class="card-footer text-center">
                                             <div class = "btn-group" role="group" aria-label="Button Group">
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
+                                                <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
                                                 <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                                                 <a href = "<?= base_url() ?>MyPets/edit_details_exec/<?= $pet->pet_id ?>" class = "btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit Details"><i class = "fa fa-pencil fa-2x"></i></a>
                                             </div>
@@ -133,6 +134,54 @@ My Pets
                                                                 </tr>
                                                             </tbody>
                                                         </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php $medical = $this->MyPets_model->get_animal_medical_records(array("medical_record.pet_id" => $pet->pet_id))[0]; ?>
+
+
+                                <div class="modal fade <?= $pet->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><i class = "fa fa-stethoscope"></i> Medical Records</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class ="row">
+                                                    <div class = "col-lg-12">
+                                                        <?php if (empty($medical)): ?>
+                                                            <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
+                                                        <?php else: ?>
+                                                            <table class = "table table-striped">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>Date: </th>
+                                                                        <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Weight: </th>
+                                                                        <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Diagnosis: </th>
+                                                                        <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Treatment: </th>
+                                                                        <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </div>

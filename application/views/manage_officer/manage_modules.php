@@ -24,7 +24,7 @@ MANAGE OFFICER MODULES
             <li class="breadcrumb-item">
                 <a href="<?= base_url() ?>ManageOfficer">Manage Officers</a>
             </li>
-            <li class="breadcrumb-item active"><?= $officer->user_firstname . " " . $officer->user_lastname ?> Module Access</li>
+            <li class="breadcrumb-item active"><?= $officer->admin_firstname . " " . $officer->admin_lastname ?> Module Access</li>
         </ol>
         <?php include_once (APPPATH."views/show_error/show_error.php");?>
         <?php if(!empty($this->session->flashdata("module_update"))):?>
@@ -85,7 +85,7 @@ MANAGE OFFICER MODULES
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Removing this module will revoke <?= $officer_module->user_firstname." ".$officer_module->user_lastname;?>'s access to this module.
+                                                Removing this module will revoke <?= $officer_module->admin_firstname." ".$officer_module->admin_lastname;?>'s access to this module.
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -104,7 +104,7 @@ MANAGE OFFICER MODULES
         <div class="modal fade" id="add_module" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <form method = "POST" action = "<?= base_url()?>ManageOfficer/add_modules_exec/<?= $officer->user_id?>">
+                    <form method = "POST" action = "<?= base_url()?>ManageOfficer/add_modules_exec/<?= $officer->admin_id?>">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Module</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

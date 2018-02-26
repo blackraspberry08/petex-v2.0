@@ -30,22 +30,6 @@ class UserDashboard extends CI_Controller {
         }
     }
 
-    public function download($fileName = NULL) {
-        if ($fileName) {
-            $file = realpath("download") . "\\" . $fileName;
-// check file exists    
-            if (file_exists($file)) {
-// get file content
-                $data = file_get_contents($file);
-//force download
-                force_download($fileName, $data);
-            } else {
-// Redirect to base url
-                redirect(base_url());
-            }
-        }
-    }
-
     public function index() {
         $allPets = $this->UserDashboard_model->fetchPetDesc("pet");
         $allAdopted = $this->UserDashboard_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id");
@@ -68,6 +52,15 @@ class UserDashboard extends CI_Controller {
         $this->load->view("user_nav/navheader");
         $this->load->view("userdashboard/main");
         $this->load->view("userdashboard/includes/footer");
+    }
+
+    public function messageRead() {
+        $data = array(
+            'adoption_isRead' => 1,
+        );
+        if ($this->UserDashboard_model->update_adoption($data, array("user_id" => $this->session->userdata("userid")))) {
+            redirect(base_url() . "MyPets");
+        }
     }
 
 }

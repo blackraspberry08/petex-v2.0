@@ -58,6 +58,20 @@
         $(this).ekkoLightbox();
     });
 </script>
+<!-- Bootstrap Datepicker -->
+<script src="<?= base_url() ?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript">
+    var dt = new Date();
+    dt.setFullYear(new Date().getFullYear());
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: 'MM d, yyyy  H:ii P',
+            todayBtn: true,
+            autoclose: true,
+        });
+        $('.form_datetime').datetimepicker('setStartDate', dt);
+    });
+</script>
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -90,7 +104,6 @@
             e.preventDefault();
             var $target = $($(this).attr('href')),
                     $item = $(this);
-
             if (!$item.hasClass('')) {
                 navListItems.removeClass('btn-indigo').addClass('btn-default');
                 $item.addClass('btn-indigo');
@@ -101,8 +114,8 @@
         });
         $('div.setup-panel div a.active').trigger('click');
     });
-
 </script>
+
 </div>
 </body>
 </html>

@@ -30,4 +30,12 @@ class Reset_model extends CI_Model {
         }
     }
 
+    public function update($table, $data, $where = NULL) {
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->update($table, $data);
+        return $this->db->affected_rows();
+    }
+
 }
