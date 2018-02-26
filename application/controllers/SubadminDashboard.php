@@ -29,10 +29,52 @@ class SubadminDashboard extends CI_Controller {
     }
 
     public function index() {
-        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
-        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
-        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
-        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+        $adopted = $this->AdminDashboard_model->fetch("adoption");
+
+        $januaryCount = 0;
+        $februaryCount = 0;
+        $marchCount = 0;
+        $aprilCount = 0;
+        $mayCount = 0;
+        $juneCount = 0;
+        $julyCount = 0;
+        $augustCount = 0;
+        $septemberCount = 0;
+        $octoberCount = 0;
+        $novemberCount = 0;
+        $decemberCount = 0;
+        foreach ($adopted as $mo) {
+            $month = date("M", $mo->adoption_adopted_at);
+            if ($month == 'Jan') {
+                $januaryCount = $januaryCount + 1;
+            } else if ($month == 'Feb') {
+                $februaryCount = $februaryCount + 1;
+            } else if ($month == 'Mar') {
+                $marchCount = $marchCount + 1;
+            } else if ($month == 'Apr') {
+                $aprilCount = $aprilCount + 1;
+            } else if ($month == 'May') {
+                $mayCount = $mayCount + 1;
+            } else if ($month == 'Jun') {
+                $juneCount = $juneCount + 1;
+            } else if ($month == 'Jul') {
+                $julyCount = $julyCount + 1;
+            } else if ($month == 'Aug') {
+                $augustCount = $augustCount + 1;
+            } else if ($month == 'Sep') {
+                $septemberCount = $septemberCount + 1;
+            } else if ($month == 'Oct') {
+                $octoberCount = $octoberCount + 1;
+            } else if ($month == 'Nov') {
+                $novemberCount = $novemberCount + 1;
+            } else if ($month == 'Dec') {
+                $decemberCount = $decemberCount + 1;
+            }
+        }
+//        echo "<pre>";
+//        print_r($january);
+//        echo "</pre>";
+//        die;
 
         $found_animals = $this->AdminDashboard_model->count_found_animal();
         $missing_animals = $this->AdminDashboard_model->count_missing_animal();
@@ -57,11 +99,6 @@ class SubadminDashboard extends CI_Controller {
         $alltransactions = $this->AdminDashboard_model->fetch_all_transactions();
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
-            /* MODULE ACCESS */
-            'manageUserModule' => $manageUserModule,
-            'manageOfficerModule' => $manageOfficerModule,
-            'petManagementModule' => $petManagementModule,
-            'scheduleModule' => $scheduleModule,
             'title' => "Dashboard",
             'trails' => $this->AuditTrail_model->get_audit_trail("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "trail")),
             'logs' => $this->UserLogs_model->get_userlogs("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "log")),
@@ -72,8 +109,6 @@ class SubadminDashboard extends CI_Controller {
             'adopted_animals' => $adopted_animals,
             'pet_adopters' => $pet_adopters,
             'transactions' => $transactions,
-            'missing_animals' => $missing_animals,
-            'found_animals' => $found_animals,
             'users' => $users,
             'dogs' => $dogs,
             'cats' => $cats,
@@ -86,6 +121,20 @@ class SubadminDashboard extends CI_Controller {
             'alladopted' => $alladopted,
             'alldeceased' => $alldeceased,
             'alltransactions' => $alltransactions,
+            'missing_animals' => $missing_animals,
+            'found_animals' => $found_animals,
+            'januaryCount' => $januaryCount,
+            'februaryCount' => $februaryCount,
+            'marchCount' => $marchCount,
+            'aprilCount' => $aprilCount,
+            'mayCount' => $mayCount,
+            'juneCount' => $juneCount,
+            'julyCount' => $julyCount,
+            'augustCount' => $augustCount,
+            'septemberCount' => $septemberCount,
+            'octoberCount' => $octoberCount,
+            'novemberCount' => $novemberCount,
+            'decemberCount' => $decemberCount,
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,

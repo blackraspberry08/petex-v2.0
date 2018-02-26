@@ -7,7 +7,11 @@ Profile
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>UserDashboard">Dashboard</a>
+                <?php if ($user_access == "Administrator"): ?>
+                    <a href="<?= base_url() ?>AdminDashboard">Dashboard</a>
+                <?php else: ?>  
+                    <a href="<?= base_url() ?>SubAdminDashboard">Dashboard</a>
+                <?php endif; ?>
             </li>
             <li class="breadcrumb-item active">Profile</li>
         </ol>
