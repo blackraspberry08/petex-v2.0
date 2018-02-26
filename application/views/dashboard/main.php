@@ -202,6 +202,15 @@ Dashboard
                     </div>
                 </div>
             </div>
+            <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-area-chart"></i> Adopted Animals in 2018</div>
+                    <div class="card-body">
+                        <canvas id="myAreaChart" width="100%" height="30"></canvas>
+                    </div>
+                </div>
+            </div>
             <div class = "col-lg-12">
                 <?php include_once (APPPATH . "views/userlogs/userlogs.php"); ?>
             </div>
