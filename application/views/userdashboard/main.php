@@ -53,7 +53,7 @@ Dashboard
                                 <div class="col-md-3">
                                     <div class="card">
                                         <a href = "<?= $this->config->base_url() . $pet->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $pet->pet_name ?></b>">
-                                            <img class="card-img-top" src = "<?= $this->config->base_url() . $pet->pet_picture ?>" alt="picture">
+                                            <img class="card-img-top" src = "<?= $this->config->base_url() . $pet->pet_picture ?>"  style="height:180px;" alt="picture">
                                         </a>
                                         <div class="card-body">
                                             <h4 class="card-title"><?= $pet->pet_name ?></h4>
@@ -98,7 +98,7 @@ Dashboard
                                                         <img src = "<?= $this->config->base_url() . $pet->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
                                                     </div>
                                                     <div class ="col-md-7">
-                                                        <table class = "table table-responsive table-striped">
+                                                        <table class = "table table-striped">
                                                             <tbody>
                                                                 <tr>
                                                                     <th>Name: </th>
@@ -336,7 +336,7 @@ Dashboard
                                 </div>
                             <?php endif; ?>
                             <?php
-                            if ($counter == 4): {
+                            if ($counter == 5): {
                                     break;
                                 }
                                 ?>
@@ -368,7 +368,7 @@ Dashboard
                             <div class="col-md-3">
                                 <div class="card">
                                     <a href = "<?= $this->config->base_url() . $adopted->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $adopted->pet_name ?></b>">
-                                        <img class="card-img-top" src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" alt="picture">
+                                        <img class="card-img-top" src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" style="height:180px;" alt="picture">
                                     </a>
                                     <div class="card-body">
                                         <h4 class="card-title"><?= $adopted->pet_name ?></h4>
@@ -452,7 +452,7 @@ Dashboard
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class ="col-md-5">
-                                                    <img src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
+                                                    <img src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" class = "img-fluid"  style = "border-radius:50px;  margin-top:20px;"/>
                                                 </div>
                                                 <div class ="col-md-7">
                                                     <table class = "table table-responsive table-striped">
@@ -553,6 +553,13 @@ Dashboard
                                     window.open("<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id; ?>");
                                         }
                             </script>
+                            <?php
+                            if ($counter1 == 3): {
+                                    break;
+                                }
+                                ?>
+                            <?php endif; ?>
+                            <?php $counter1++; ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
