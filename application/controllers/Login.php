@@ -36,14 +36,14 @@ class Login extends CI_Controller {
 
         $dataAdmin = array(
             'admin_username' => $this->input->post('username'),
-            'admin_password' => $this->input->post('password'),
+            'admin_password' => sha1($this->input->post('password')),
         );
 
         $accountDetailsAdmin = $this->Login_model->getinfo("admin", $dataAdmin);
 
         $dataUser = array(
             'user_username' => $this->input->post('username'),
-            'user_password' => $this->input->post('password'),
+            'user_password' => sha1($this->input->post('password')),
         );
 
         $accountDetailsUser = $this->Login_model->getinfo("user", $dataUser);
@@ -91,7 +91,7 @@ class Login extends CI_Controller {
                         $this->session->set_userdata('current_user', $accountDetailsAdmin);
                         $this->session->set_userdata('user_access', "subadmin");
                         $this->SaveEventAdmin->login($accountDetailsAdmin->admin_id);
-						redirect(base_url() . 'SubadminDashboard/');
+                        redirect(base_url() . 'SubadminDashboard/');
                     }
                 }
             } else {

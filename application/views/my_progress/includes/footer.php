@@ -65,10 +65,9 @@
     dt.setFullYear(new Date().getFullYear());
     $(document).ready(function () {
         $(".form_datetime").datetimepicker({
-            format: 'MM d, yyyy',
+            format: 'MM d, yyyy  H:ii P',
             todayBtn: true,
             autoclose: true,
-            minView: 2,
         });
         $('.form_datetime').datetimepicker('setStartDate', dt);
     });

@@ -24,7 +24,6 @@ function wrap_iframe($src) {
             </li>
             <li class="breadcrumb-item active">Animal Registration</li>
         </ol>
-        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
         <div class = "row">
             <div class = "col-lg-2 col-md-12"></div>
             <div class ="col-lg-8 col-md-12 py-4" id = "animal_info">

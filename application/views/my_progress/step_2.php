@@ -33,7 +33,7 @@ $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress
             <br>
             <?php if ($progress_2->progress_isSuccessful == 0): ?>
                 <div class="card">
-                    <form action="step2_comment/<?= $progress_2->progress_id ?>" method="POST">
+                    <form action="<?= base_url() ?>MyProgress/step2_comment_exec/<?= $progress_2->progress_id ?>" method="POST">
                         <div class ="card-header">
                             <i class = "fa fa-comment" ></i> Remarks
                         </div>

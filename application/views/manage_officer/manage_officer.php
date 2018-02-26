@@ -19,16 +19,16 @@
         <i class="fa fa-lock"></i> Manage Officers
     </div>
     <div class="col-lg-12 py-3 ">
-        <a href = "<?= base_url()?>ManageOfficer/register_admin/" class = "btn btn-outline-dark pull-right"><i class = "fa fa-user"></i> Register an administrator</a>
+        <a href = "<?= base_url() ?>ManageOfficer/register_admin/" class = "btn btn-outline-dark pull-right"><i class = "fa fa-user"></i> Register an administrator</a>
     </div>
     <div class="card-body">
         <?php if (empty($admins)): ?>
-        <center>
-            <h4>No officers yet</h4>
-            <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
-        </center>
+            <center>
+                <h4>No officers yet</h4>
+                <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+            </center>
+        </div>
     </div>
-</div>
 <?php else: ?>
     <div class="table-responsive">
         <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
@@ -43,22 +43,26 @@
             </thead>
             <tbody>
                 <?php foreach ($admins as $admin): ?>
-                <tr>
-                    <td><?= $admin->admin_firstname . " " . $admin->admin_lastname ?></td>
-                    <td><?= $admin->admin_status == 1 ? "Active" : "Inactive"; ?></td>
-                    <td><?= $admin->admin_access == "Subadmin" ? "PAWS Officer" : "Administrator"; ?></td>
-                    <td><?= date('F d, Y \a\t h:m A', $admin->admin_added_at); ?></td>
-                    <td>
-                        <center>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href = "<?= base_url() ?>ManageOfficer/show_officer_info_exec/<?= $admin->admin_id ?>" class = "btn btn-outline-primary">Show Information</a>
-                                <a href = "<?= base_url() ?>ManageOfficer/manage_module_exec/<?= $admin->admin_id ?>" class = "btn btn-outline-primary">Modules</a>
-                                <a href = "#" class = "btn btn-outline-primary" style = "width:100px;" data-toggle="modal" data-target="#activate_officer_<?= $admin->admin_id ?>">
-                                    <?= $admin->admin_status == 0 ? "Activate" : "Deactivate"; ?>
-                                </a>
-                            </div>
-                        </center>
-                    </td>
+                    <tr>
+                        <td><?= $admin->admin_firstname . " " . $admin->admin_lastname ?></td>
+                        <td><?= $admin->admin_status == 1 ? "Active" : "Inactive"; ?></td>
+                        <td><?= $admin->admin_access == "Subadmin" ? "PAWS Officer" : "Administrator"; ?></td>
+                        <td><?= date('F d, Y \a\t h:m A', $admin->admin_added_at); ?></td>
+                        <td>
+                <center>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href = "<?= base_url() ?>ManageOfficer/show_officer_info_exec/<?= $admin->admin_id ?>" class = "btn btn-outline-primary">Show Information</a>
+                        <?php if ($current_user->admin_access == "Admin"): ?>
+                            <a href = "<?= base_url() ?>ManageOfficer/manage_module_exec/<?= $admin->admin_id ?>" class = "btn btn-outline-primary">Modules</a>
+                            <a href = "#" class = "btn btn-outline-primary" style = "width:100px;" data-toggle="modal" data-target="#activate_officer_<?= $admin->admin_id ?>">
+                                <?= $admin->admin_status == 0 ? "Activate" : "Deactivate"; ?>
+                            </a>
+                        <?php else: ?>
+                        <?php endif; ?>
+
+                    </div>
+                </center>
+                </td>
                 </tr>
                 <div class="modal fade" id="activate_officer_<?= $admin->admin_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

@@ -29,14 +29,13 @@
                         </div>
                         <div class="card-body text-center">
                             <div class = "mx-auto my-2 text-center mb-3">
-                                <h1 class = "display-4">Hello, <strong><?= $name ?></strong></h1>
-                                <span class = "lead">Thank you for registering to PetEx</span>
+                                <h1 class = "display-4">Hello, <strong>Codebusters Team</strong></h1>
+                                <h3 class = "lead">I am <?= $name ?></h3>
                             </div>
-                            <img class = "img-fluid" src = "https://cdn.pixabay.com/photo/2016/07/21/14/18/dog-1532627__340.png" width = "200"/>
                             <div class = "lead text-center mx-5 mt-3 mb-3" style = "font-size:15px;">
-                                You've received this message because you forgot your password in PetEx. Enter your new password by clicking the link below.
-                            </div><br>
-                            <a href = "<?= base_url() ?>reset/enter_newPass/<?= $name ?>" class="btn btn-outline-success">Enter New Password</a>
+                                <span style="font-weight:bold">Email: </span><?= $email; ?><br><br>
+                                <span style="font-weight:bold">Message: </span><?= $message; ?>
+                            </div>
                         </div>
                     </div>
                 </div>

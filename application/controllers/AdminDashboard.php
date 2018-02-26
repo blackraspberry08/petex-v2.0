@@ -29,6 +29,8 @@ class AdminDashboard extends CI_Controller {
     }
 
     public function index() {
+        $found_animals = $this->AdminDashboard_model->count_found_animal();
+        $missing_animals = $this->AdminDashboard_model->count_missing_animal();
         $adoptable_animals = $this->AdminDashboard_model->count_adoptable_animal();
         $non_adoptable_animals = $this->AdminDashboard_model->count_non_adoptable_animal();
         $deceased_animals = $this->AdminDashboard_model->count_deceased_animal();
@@ -72,6 +74,8 @@ class AdminDashboard extends CI_Controller {
             'alladopted' => $alladopted,
             'alldeceased' => $alldeceased,
             'alltransactions' => $alltransactions,
+            'missing_animals' => $missing_animals,
+            'found_animals' => $found_animals,
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'user_picture' => $current_user->admin_picture,

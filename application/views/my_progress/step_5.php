@@ -40,7 +40,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 <br>
                 <?php if ($progress_5->progress_isSuccessful == 0): ?>
                     <div class="card">
-                        <form action="step5_comment/<?= $progress_5->progress_id ?>" method="POST">
+                        <form action="<?= base_url() ?>MyProgress/step5_comment_exec/<?= $progress_5->progress_id ?>" method="POST">
                             <div class ="card-header">
                                 <i class = "fa fa-comment" ></i> Remarks
                             </div>
@@ -183,14 +183,14 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 <?php endif; ?>
 
                 <!-- Comment -->
-                <?php if (!empty($comments_step_3)): ?>
+                <?php if (!empty($comments_step_5)): ?>
                     <!-- There are recent comments -->
                     <div class="card mb-3">
                         <div class ="card-header">
                             <i class = "fa fa-comment" ></i> Remarks
                         </div>
 
-                        <?php foreach ($comments_step_3 as $comment): ?>
+                        <?php foreach ($comments_step_5 as $comment): ?>
                             <div class="card-body small bg-faded">    
                                 <div class="media">
                                     <div class = "image-fit">
@@ -232,12 +232,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                                 <i class = "fa fa-check" ></i> Closed. Approved by <strong><?= $comment->progress_comment_sender ?></strong>
                             </div>
                         <?php else: ?>
-                            <div class="card-footer small text-muted text-center">
-                                <div class="btn-group" role="group" aria-label="Approval">
-                                    <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_3_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                                    <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_3" data-toggle = "modal"  title = "Approve" data-target = "#step_3_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
-                                </div>
-                            </div>
+                          
                         <?php endif; ?>
                     </div><!-- /Comment-->
                 <?php endif; ?>
