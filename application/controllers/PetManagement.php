@@ -360,13 +360,9 @@ class PetManagement extends CI_Controller {
                 'pet_updated_at' => time()
             );
 
-            if ($this->PetManagement_model->update_animal_record($pet, array("pet_id" => $animal->pet_id))) {
-//SUCCESS
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated the record of " . $animal->pet_name);
-                $this->session->set_flashdata("uploading_success", "Successfully updated the record of " . $animal->pet_name);
-            } else {
-                $this->session->set_flashdata("uploading_fail2", $animal->pet_name . " seems to not exist in the database.");
-            }
+            $this->PetManagement_model->update_animal_record($pet, array("pet_id" => $animal->pet_id));
+			$this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated the record of " . $animal->pet_name);
+			$this->session->set_flashdata("uploading_success", "Successfully updated the record of " . $animal->pet_name);
             redirect(base_url() . "PetManagement/animal_info");
         }
     }

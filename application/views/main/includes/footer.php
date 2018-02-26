@@ -26,7 +26,7 @@
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="<?= base_url() ?>assets/wow/wow.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1VJrwMKjjvTi626jR6pdoaNdIHKEdp0c"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHl4ypQQAoLA_QWWjeLpM-Oj24aHAwyQQ"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
