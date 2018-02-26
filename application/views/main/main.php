@@ -29,7 +29,7 @@
                             <?php elseif ($this->session->userdata("user_access") == "subadmin" || $this->session->userdata("user_access") == "admin"): ?>
                                 <img src = "<?= base_url() . $current_user->admin_picture ?>" class="img-fluid img-thumbnail rounded mb-3" width = 75/><br>
                                 <strong><?= $current_user->admin_firstname . " " . $current_user->admin_lastname ?></strong><br>
-                                <span><?= $current_user->admin_access == "Subadmin"? "PAWS Officer" : "Administrator"; ?></span>
+                                <span><?= $current_user->admin_access == "Subadmin" ? "PAWS Officer" : "Administrator"; ?></span>
                             <?php endif; ?>
                         </div>
                         <div class="card-footer">
@@ -40,8 +40,11 @@
                             <?php elseif ($this->session->userdata("user_access") == "admin"): ?>
                                 <a class="btn btn-primary pull-left" href="<?= base_url() . "AdminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>  
                             <?php endif; ?>
-
-                            <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php if ($this->session->userdata("user_access") == "Admin"): ?>
+                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php else: ?>
+                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "UserLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                            <?php endif; ?>
                         </div>
                     <?php else: ?>
                         <div class="card-header">
@@ -509,22 +512,22 @@
                     <div class="form">
                         <div id="sendmessage">Your message has been sent. Thank you!</div>
                         <div id="errormessage"></div>
-                        <form action="" method="post" role="form" class="contactForm">
+                        <form action="<?= base_url() ?>main/contact" method="post" role="form">
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                                <div class="validation"></div>
+                                <input type="text" name="name" class="form-control <?= !empty(form_error("name")) ? "is-invalid" : ""; ?>" id="name" placeholder="Your Name" value = "<?= set_value("name") ?>"/>
+                                <div class="invalid-feedback"><?= form_error('name') ?></div>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                                <div class="validation"></div>
+                                <input type="email" class="form-control <?= !empty(form_error("email")) ? "is-invalid" : ""; ?>" name="email" id="email" placeholder="Your Email" value = "<?= set_value("email") ?>"/>
+                                <div class="invalid-feedback"><?= form_error('email') ?></div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                                <div class="validation"></div>
+                                <input type="text" class="form-control <?= !empty(form_error("subject")) ? "is-invalid" : ""; ?>" name="subject" id="subject" placeholder="Subject" value = "<?= set_value("subject") ?>" />
+                                <div class="invalid-feedback"><?= form_error('subject') ?></div>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                                <div class="validation"></div>
+                                <textarea class="form-control <?= !empty(form_error("message")) ? "is-invalid" : ""; ?>" name="message" rows="5" placeholder="Message" value = "<?= set_value("message") ?>"></textarea>
+                                <div class="invalid-feedback"><?= form_error('message') ?></div>
                             </div>
                             <div class="text-center"><button type="submit">Send Message</button></div>
                         </form>

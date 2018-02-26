@@ -15,7 +15,6 @@ EDIT PET INFO
 <div class="content-wrapper">
     <div class="container-fluid">
         <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
-        <?php include_once (APPPATH . "views/show_error/show_error_medical_record.php"); ?>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -55,7 +54,7 @@ EDIT PET INFO
                             </li>
                         </ul>
                     </div>
-                    <div class = "col-lg-8 col-sm-12" id = "animal_info">
+                    <div class = "col-lg-9 col-sm-12" id = "animal_info">
                         <form method = "POST" action = "<?= base_url() ?>MyPets/edit_details_submit/<?= $animal->pet_id ?>"  enctype="multipart/form-data">   
 
                             <div class="form-group <?php if (!empty(form_error("pet_name"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">

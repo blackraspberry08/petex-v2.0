@@ -59,30 +59,70 @@ class Reset extends CI_Controller {
     }
 
     public function resetPass_exec() {
-        /* $this->form_validation->set_rules('username', "Username ", "required|min_length[5]|strip_tags|callback__username_check");
-          $this->form_validation->set_rules('email', "Email Address ", "required|valid_email|strip_tags|callback__email_check");
-          if ($this->form_validation->run() == FALSE) {
-          $data = array(
-          'title' => 'Pet Ex | Reset Password'
-          );
-          $this->load->view("reset/includes/header", $data);
-          $this->load->view("reset/reset");
-          $this->load->view("reset/includes/footer");
-          } else { */
-        $username = $this->input->post('username');
-        $email = $this->input->post('email');
-        $userUsername = $this->reset_model->fetch("user", array("user_username" => $username, "user_email" => $email));
-        if (!$userUsername) {
-            echo "<script>alert('Username and Email Address mismatch');"
-            . "window.location='" . base_url() . "reset/'</script>";
+        $this->form_validation->set_rules('username', "Username ", "required|min_length[5]|strip_tags|callback__username_check");
+        $this->form_validation->set_rules('email', "Email Address ", "required|valid_email|strip_tags|callback__email_check");
+
+        if ($this->form_validation->run() == FALSE) {
+            $data = array(
+                'title' => 'Pet Ex | Reset Password'
+            );
+            $this->load->view("reset/includes/header", $data);
+            $this->load->view("reset/reset");
+            $this->load->view("reset/includes/footer");
+        } else {
+            $username = $this->input->post('username');
+            $email = $this->input->post('email');
+            $userUsername = $this->reset_model->fetch("user", array("user_username" => $username, "user_email" => $email));
+            if (!$userUsername) {
+                echo "<script>alert('Username and Email Address mismatch');"
+                . "window.location='" . base_url() . "reset/'</script>";
+            } else {
+                $data = array(
+                    'username' => $this->input->post('username'),
+                    'email' => $this->input->post('email'),
+                );
+                $this->sendEmailReset($data);
+                echo "<script>alert('Please verify your account to your email address');"
+                . "window.location='" . base_url() . "main/'</script>";
+                //}
+            }
+        }
+    }
+
+    public function enter_newPass() {
+        $username = $this->uri->segment(3);
+        $data = array(
+            'title' => 'Pet Ex | Enter New Password',
+            'wholeUrl' => base_url(uri_string()),
+            'username' => $username
+        );
+        $this->load->view("reset/includes/header", $data);
+        $this->load->view("reset/enter_newPass");
+        $this->load->view("reset/includes/footer");
+    }
+
+    public function enter_newPass_exec() {
+        $username = $this->uri->segment(3);
+        $this->form_validation->set_rules('password', "Password ", "required|matches[conpass]|alpha_numeric|min_length[8]|strip_tags");
+        $this->form_validation->set_rules('conpass', "Confirm Password ", "required|matches[password]|alpha_numeric|min_length[8]|strip_tags");
+        if ($this->form_validation->run() == FALSE) {
+            $username = $this->uri->segment(3);
+            $data = array(
+                'title' => 'Pet Ex | Enter New Password',
+                'wholeUrl' => base_url(uri_string()),
+                'username' => $username
+            );
+            $this->load->view("reset/includes/header", $data);
+            $this->load->view("reset/enter_newPass");
+            $this->load->view("reset/includes/footer");
         } else {
             $data = array(
-                'username' => $this->input->post('username'),
-                'email' => $this->input->post('email')
+                'user_password' => sha1($this->input->post("password"))
             );
-            $this->sendEmailReset($data);
-            echo "<script>alert('Please verify your account to your email address');";
-            //}
+            if ($this->Profile_model->update_user_record($data, array("user_username" => $username))) {
+                echo "<script>alert('Your password has been changed.');"
+                . "window.location='" . base_url() . "main/'</script>";
+            }
         }
     }
 

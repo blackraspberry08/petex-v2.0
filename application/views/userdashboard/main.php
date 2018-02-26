@@ -23,10 +23,19 @@ Dashboard
             </li>
             <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
+        <!-- Alert -->
+        <?php if ($adoptedPets == 0): ?>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Well done!</h4>
+                <p>You successfully done to all of your progress.</p>
+                <p class="mb-0">You can now check your pet by clicking the button.</p><br>
+                <a class="btn btn-outline-primary" href="<?= base_url() ?>UserDashboard/messageRead">Go to MyPets</a>
+            </div>
+        <?php endif; ?>
         <!-- Registered -->
         <div class="card">
             <div class="card-header">
-                <h3>Newly Registered Pet</h3>
+                <h5>Newly Registered Pet</h5>
             </div>
             <?php if (empty($pets)): ?>
                 <div class = "col-lg-12">
@@ -343,7 +352,7 @@ Dashboard
         </div><br>
         <!-- Adopted -->
         <div class="card">
-            <h3 class="card-header ">Newly Adopted Pet</h3>
+            <h5 class="card-header ">Newly Adopted Pet</h5>
             <?php if (empty($adoptedPets)): ?>
                 <div class = "col-lg-12">
                     <center>
@@ -538,6 +547,7 @@ Dashboard
                                     </div>
                                 </div>
                             </div>
+
                             <script>
                                 function downloadFunction() {
                                     window.open("<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id; ?>");

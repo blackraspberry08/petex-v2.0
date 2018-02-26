@@ -18,7 +18,7 @@
 </style>
 
 <?php 
-    $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];
+    $schedule_4 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_4->progress_id))[0];
 ?>
 
 <?php if(empty($schedule_4)):?>
