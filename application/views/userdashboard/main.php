@@ -25,7 +25,7 @@ Dashboard
         </ol>
         <!-- Alert -->
         <?php if ($checker != 1): ?>
-            <?php if ($adoptedPets->adoption_isRead == 0): ?>
+            <?php if ($myPets->adoption_isRead == 0): ?>
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">Well done!</h4>
                     <p>You successfully done to all of your progress.</p>
