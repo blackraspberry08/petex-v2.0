@@ -24,13 +24,15 @@ Dashboard
             <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
         <!-- Alert -->
-        <?php if ($adoptedPets == 0): ?>
-            <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Well done!</h4>
-                <p>You successfully done to all of your progress.</p>
-                <p class="mb-0">You can now check your pet by clicking the button.</p><br>
-                <a class="btn btn-outline-primary" href="<?= base_url() ?>UserDashboard/messageRead">Go to MyPets</a>
-            </div>
+        <?php if ($checker != 1): ?>
+            <?php if ($adoptedPets->adoption_isRead == 0): ?>
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Well done!</h4>
+                    <p>You successfully done to all of your progress.</p>
+                    <p class="mb-0">You can now check your pet by clicking the button.</p><br>
+                    <a class="btn btn-outline-primary" href="<?= base_url() ?>UserDashboard/messageRead">Go to MyPets</a>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
         <!-- Registered -->
         <div class="card">
@@ -299,7 +301,7 @@ Dashboard
                                                     <div class="col-md-3"></div>
                                                     <div class="col-md-3"> 
                                                         <a href="<?= base_url() ?>download/adoption_application_form.pdf" onclick="window.open('<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id ?>');
-                                                                            return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
+                                                                return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
                                                     </div>
                                                     <div class="col-md-3">
                                                         <a href="<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn btn-outline-primary">Fill up the Form Online</a>
