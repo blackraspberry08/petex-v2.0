@@ -33,7 +33,9 @@ class ManageProgress extends CI_Controller {
         $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
 
         $transaction_id = $this->session->userdata("manage_progress_transaction_id");
-        $current_transaction = $this->PetManagement_model->get_finished_transaction(array("transaction.transaction_id" => $transaction_id))[0];
+        //$current = $this->ManageProgress_model->get_progress(array("transaction.transaction_id" => $transaction_id))[0];
+        $current_transaction = $this->PetManagement_model->get_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+
 //        echo "<pre>";
 //        print_r($current_transaction);
 //        echo "</pre>";
@@ -41,6 +43,15 @@ class ManageProgress extends CI_Controller {
         if ($this->session->userdata("pet_status") != "Adopted" && $current_transaction->transaction_isActivated != 0) {
             $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
             $adoption = NULL;
+            $adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
+            $comments_step_1 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id));
+            $comments_step_2 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id));
+            $comments_step_3 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction_id));
+            $comments_step_4 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id));
+            $comments_step_5 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id));
+            $comments_step_6 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id));
+            $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+
             $progress = $this->ManageProgress_model->get_progress(array("progress.transaction_id" => $transaction_id));
             $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id))[0];
             $progress_2 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id))[0];
@@ -49,6 +60,13 @@ class ManageProgress extends CI_Controller {
             $progress_5 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
             $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
         } else {
+            $current_transaction = $this->PetManagement_model->get_inactive_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+//            echo $transaction_id;
+//            die
+//            echo "<pre>";
+//            print_r($current_transaction);
+//            echo "</pre>";
+//            die;
             $adoption = $this->ManageProgress_model->get_adoption(array("adoption.user_id" => $current_transaction->user_id, "adoption.pet_id" => $current_transaction->pet_id))[0];
             $progress = $this->ManageProgress_model->get_finished_progress(array("progress.transaction_id" => $transaction_id));
             $progress_1 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id))[0];
@@ -57,7 +75,6 @@ class ManageProgress extends CI_Controller {
             $progress_4 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id))[0];
             $progress_5 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
             $progress_6 = $this->ManageProgress_model->get_finished_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
-
             $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
             $adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
             $comments_step_1 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id));
@@ -1156,7 +1173,7 @@ class ManageProgress extends CI_Controller {
                     "adoption_adopted_at" => time()
                 );
 
-                if ($this->ManageProgress_model->edit_progress($progress, array("checklist_id" => 6, "transaction_id" => $transaction_id)) && $this->ManageProgress_model->update_progress($transaction_progress, array("transaction_id" => $transaction_id))) {
+                if ($this->ManageProgress_model->edit_progress($progress, array("checklist_id" => 6, "transaction_id" => $transaction_id)) && $this->ManageProgress_model->update_progress($transaction_progress, array("pet_id" => $current_transaction->pet_id))) {
                     if ($this->ManageProgress_model->add_adoption($adoption) && $this->ManageProgress_model->edit_pet_status($current_transaction->pet_id)) {
                         $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Transaction is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname . " in adopting " . $current_transaction->pet_name . ".");
                         $this->session->set_flashdata("approve_success", $current_transaction->pet_name . " now belongs to " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
