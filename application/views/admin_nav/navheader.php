@@ -149,7 +149,7 @@ Admin Nav Header
                         </div>
 
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="<?= base_url() ?>AdminProfile">Profiles</a>
+                        <a class="dropdown-item" href="<?= base_url() ?>AdminProfile">Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?= base_url() ?>AdminSettings">Settings</a>
                         <div class="dropdown-divider"></div>

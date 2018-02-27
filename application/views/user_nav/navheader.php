@@ -123,7 +123,7 @@ User Nav Header
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="<?= base_url() ?>Profile">Profiles</a>
+                        <a class="dropdown-item" href="<?= base_url() ?>Profile">Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?= base_url() ?>UserSettings">Settings</a>
                         <div class="dropdown-divider"></div>
