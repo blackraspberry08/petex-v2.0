@@ -97,8 +97,8 @@ class AdminProfile extends CI_Controller {
         $config['max_size'] = 5120;
         $config['encrypt_name'] = true;
         $this->load->library('upload', $config);
-        if (!empty($_FILES["admin_picture"]["name"])) {
-            if ($this->upload->do_upload('admin_picture')) {
+        if (!empty($_FILES["user_picture"]["name"])) {
+            if ($this->upload->do_upload('user_picture')) {
                 $imagePath = "images/user/" . $this->upload->data("file_name");
                 if ($userDetails->admin_picture == "images/user/male.png" || $userDetails->admin_picture == "images/user/female.png") {
                     
