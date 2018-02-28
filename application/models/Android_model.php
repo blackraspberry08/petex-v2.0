@@ -41,7 +41,53 @@ class Android_model extends CI_Model {
         return $this->db->affected_rows();
 	}
 	
-	public function get_discoveries($table, $column = NULL, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL){
+	public function get_discoveries($where = NULL){
+		$table = "discovery";
+		$join = "user";
+		$on = "discovery.user_id = user.user_id";
+		$join2 = "pet";
+		$on2 = "discovery.pet_id = pet.pet_id";
+		
+		$column = "
+				discovery_id,
+				discovery.pet_id,
+				discovery.user_id,
+				discovery_latitude,
+				discovery_longitude,
+				discovery_added_at,
+				user_firstname,
+				user_lastname,
+				user_username,
+				user_password,
+				user_bday,
+				user_sex,
+				user_status,
+				user_email,
+				user_verification_code,
+				user_isverified,
+				user_contact_no,
+				user_picture,
+				user_address,
+				user_added_at,
+				user_updated_at,
+				pet_nfc_tag,
+				pet_name,
+				pet_bday,
+				pet_specie,
+				pet_sex,
+				pet_breed,
+				pet_size,
+				pet_status,
+				pet_access,
+				pet_neutered_spayed,
+				pet_admission,
+				pet_description,
+				pet_history,
+				pet_picture,
+				pet_video,
+				pet_added_at,
+				pet_updated_at";
+		
 		if (!empty($where)) {
             $this->db->where($where);
         }
