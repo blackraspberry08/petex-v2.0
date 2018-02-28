@@ -78,7 +78,8 @@ class ManageOfficer extends CI_Controller {
     }
 
     public function activate_officer() {
-        $user = $this->ManageOfficer_model->get_admin(array("admin_id" => $this->session->userdata("activate_officer")))[0];
+        $user = $this->ManageOfficer_model->get_admin_deactivated(array("admin_id" => $this->session->userdata("activate_officer")))[0];
+      
         if ($this->ManageOfficer_model->activate_admin("admin", array("admin_id" => $this->session->userdata("activate_officer")))) {
             $this->session->set_flashdata("activation_success", "Successfully activated " . $user->admin_firstname . " " . $user->admin_lastname . "'s account.");
             $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Activated officer " . $user->admin_firstname . " " . $user->admin_lastname);
@@ -95,7 +96,7 @@ class ManageOfficer extends CI_Controller {
     }
 
     public function deactivate_officer() {
-        $user = $this->ManageOfficer_model->get_admin(array("admin_id" => $this->session->userdata("deactivate_officer")))[0];
+        $user = $this->ManageOfficer_model->get_admin_activated(array("admin_id" => $this->session->userdata("deactivate_officer")))[0];
         if ($this->ManageOfficer_model->deactivate_admin("admin", array("admin_id" => $this->session->userdata("deactivate_officer")))) {
             $this->session->set_flashdata("activation_success", "Successfully deactivated " . $user->admin_firstname . " " . $user->admin_lastname . "'s account.");
             $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Deactivated officer " . $user->admin_firstname . " " . $user->admin_lastname);

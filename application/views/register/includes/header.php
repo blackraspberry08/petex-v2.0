@@ -17,13 +17,15 @@
         <link href="<?= base_url() ?>assets/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
         <!-- SweetAlert -->
         <link rel = "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-   
+
         <!-- JQUERY -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-        
+
         <!-- Libraries CSS Files -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="<?= base_url() ?>assets/main/css/style.css" rel="stylesheet">
+
     </head>
 
     <style>
@@ -38,7 +40,7 @@
                 $('.preloader-wrapper').delay(800).fadeOut();
                 $('[data-toggle="tooltip"]').tooltip({
                     container: 'body'
-                 });
+                });
             });
         </script>
         <?php include 'preloader.php' ?>
