@@ -128,7 +128,7 @@ class AdminProfile extends CI_Controller {
 
         if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
             //SUCCESS
-            $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change profile picture.");
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change profile picture.");
             $this->session->set_flashdata("uploading_success", "Successfully update the image");
             redirect(base_url() . "AdminProfile/edit_profile");
         } else {
@@ -161,7 +161,7 @@ class AdminProfile extends CI_Controller {
 
             if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
                 //SUCCESS
-                $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change account information.");
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change account information.");
                 $this->session->set_flashdata("uploading_success", "You have successfully changed your account information");
                 redirect(base_url() . "AdminProfile/edit_profile");
             } else {

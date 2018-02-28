@@ -223,7 +223,7 @@
                                     <div class="col-md-3">
                                         <div class="card">
                                             <a href = "<?= $this->config->base_url() . $pet->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $pet->pet_name ?></b>">
-                                                <img class="card-img-top" src = "<?= $this->config->base_url() . $pet->pet_picture ?>" alt="picture">
+                                                <img class="card-img-top" style="height:150px;" src = "<?= $this->config->base_url() . $pet->pet_picture ?>" alt="picture">
                                             </a>
                                             <div class="card-body">
                                                 <h4 class="card-title"><?= $pet->pet_name ?></h4>
@@ -399,7 +399,7 @@
                                     </div>
                                 <?php endif; ?>
                                 <?php
-                                if ($counter == 4): {
+                                if ($counter == 3): {
                                         break;
                                     }
                                     ?>

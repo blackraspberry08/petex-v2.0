@@ -75,7 +75,7 @@ class AdminSettings extends CI_Controller {
 
             if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
                 //SUCCESS
-                $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " changed username.");
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " changed username.");
                 $this->session->set_flashdata("uploading_success", "You have successfully changed your username");
                 redirect(base_url() . "AdminSettings/");
             } else {
@@ -100,7 +100,7 @@ class AdminSettings extends CI_Controller {
 
             if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
                 //SUCCESS
-                $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " changed password.");
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " changed password.");
                 $this->session->set_flashdata("uploading_success", "You have successfully changed your password");
                 redirect(base_url() . "AdminSettings/");
             } else {

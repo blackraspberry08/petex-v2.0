@@ -33,6 +33,27 @@ class Reset extends CI_Controller {
         }
     }
 
+    public function _email_check_admin($email) {
+        $result = $this->reset_model->emailAvailability($email);
+
+        if (!$result) {
+            $this->form_validation->set_message('_email_check_admin', 'The %s is not existing');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    public function _username_check_admin($username) {
+        $result = $this->reset_model->usernameAvailability($username);
+        if (!$result) {
+            $this->form_validation->set_message('_username_check_admin', 'The %s is not existing');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
     public function sendEmailReset($user) {
 
         $this->email->from("codebusters.solutions@gmail.com", 'Reset Password');
