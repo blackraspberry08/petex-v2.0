@@ -388,7 +388,16 @@ class Android extends CI_Controller {
 		}
 	}
 	
-	public function get_discoveries(){
-		//FUNCTIO HERE
+	public function getJson_discoveries(){
+		$pet_id = $this->input->post("pet_id");
+		//$user_id = $this->input->post("user_id");
+		
+		//$query = $this->Android_model->get_discoveries(array("discovery.pet_id" => $pet_id, "discovery.user_id" => $user_id));
+		$query = $this->Android_model->get_discoveries(array("discovery.pet_id" => $pet_id));
+		$data = array(
+			"result" => $query
+		);
+		
+		$this->load->view("android/getJson_discoveries", $data);
 	}
 }
