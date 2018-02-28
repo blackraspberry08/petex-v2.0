@@ -362,7 +362,33 @@ class Android extends CI_Controller {
 	}
 	
 	public function add_to_discovery(){
-		//DO FUNCTION
+		
+		$data = array(
+			"user_id" => $this->input->post("user_id"),
+			"pet_id" => $this->input->post("pet_id"),
+			"discovery_latitude" => $this->input->post("latitude"),
+			"discovery_longitude" => $this->input->post("longitude"),
+			"discovery_added_at" => time()
+		);
+		
+		if ($this->Android_model->pet_discovery($data)) {
+			//SUCCESS
+			$response = array(
+				"success" => true,
+				"result" => "Successfully inserted in discovery"
+			);
+			echo json_encode($response);
+		} else {
+			//FAILED
+			$response = array(
+				"success" => false,
+				"result" => "Something went wrong while inserting to discovery table"
+			);
+			echo json_encode($response);
+		}
 	}
 	
+	public function get_discoveries(){
+		//FUNCTIO HERE
+	}
 }
