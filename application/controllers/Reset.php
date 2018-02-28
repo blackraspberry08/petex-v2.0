@@ -34,7 +34,7 @@ class Reset extends CI_Controller {
     }
 
     public function _email_check_admin($email) {
-        $result = $this->reset_model->emailAvailability($email);
+        $result = $this->reset_model->emailAvailabilityAdmin($email);
 
         if (!$result) {
             $this->form_validation->set_message('_email_check_admin', 'The %s is not existing');
@@ -45,7 +45,7 @@ class Reset extends CI_Controller {
     }
 
     public function _username_check_admin($username) {
-        $result = $this->reset_model->usernameAvailability($username);
+        $result = $this->reset_model->usernameAvailabilityAdmin($username);
         if (!$result) {
             $this->form_validation->set_message('_username_check_admin', 'The %s is not existing');
             return FALSE;
@@ -80,9 +80,19 @@ class Reset extends CI_Controller {
     }
 
     public function resetPass_exec() {
-        $this->form_validation->set_rules('username', "Username ", "required|min_length[5]|strip_tags|callback__username_check");
-        $this->form_validation->set_rules('email', "Email Address ", "required|valid_email|strip_tags|callback__email_check");
-
+        $user = $this->Reset_model->fetch("user", array("user_username" => $this->input->post("username")));
+//        echo "<pre>";
+//        print_r($user);
+//        echo "</pre>";
+//        die;
+        if (!empty($user)) {
+            die;
+            $this->form_validation->set_rules('username', "Username ", "required|min_length[5]|strip_tags|callback__username_check");
+            $this->form_validation->set_rules('email', "Email Address ", "required|valid_email|strip_tags|callback__email_check");
+        } else {
+            $this->form_validation->set_rules('username', "Username ", "required|min_length[5]|strip_tags|callback__username_check_admin");
+            $this->form_validation->set_rules('email', "Email Address ", "required|valid_email|strip_tags|callback__email_check_admin");
+        }
         if ($this->form_validation->run() == FALSE) {
             $data = array(
                 'title' => 'Pet Ex | Reset Password'
@@ -93,7 +103,11 @@ class Reset extends CI_Controller {
         } else {
             $username = $this->input->post('username');
             $email = $this->input->post('email');
-            $userUsername = $this->reset_model->fetch("user", array("user_username" => $username, "user_email" => $email));
+            if (!empty($user)) {
+                $userUsername = $this->reset_model->fetch("user", array("user_username" => $username, "user_email" => $email));
+            } else {
+                $userUsername = $this->reset_model->fetch("admin", array("admin_username" => $username, "admin_email" => $email));
+            }
             if (!$userUsername) {
                 echo "<script>alert('Username and Email Address mismatch');"
                 . "window.location='" . base_url() . "reset/'</script>";
@@ -124,6 +138,7 @@ class Reset extends CI_Controller {
 
     public function enter_newPass_exec() {
         $username = $this->uri->segment(3);
+        $user = $this->Reset_model->fetch("user", array("user_username" => $username));
         $this->form_validation->set_rules('password', "Password ", "required|matches[conpass]|alpha_numeric|min_length[8]|strip_tags");
         $this->form_validation->set_rules('conpass', "Confirm Password ", "required|matches[password]|alpha_numeric|min_length[8]|strip_tags");
         if ($this->form_validation->run() == FALSE) {
@@ -137,12 +152,22 @@ class Reset extends CI_Controller {
             $this->load->view("reset/enter_newPass");
             $this->load->view("reset/includes/footer");
         } else {
-            $data = array(
-                'user_password' => sha1($this->input->post("password"))
-            );
-            if ($this->Profile_model->update_user_record($data, array("user_username" => $username))) {
-                echo "<script>alert('Your password has been changed.');"
-                . "window.location='" . base_url() . "main/'</script>";
+            if (!empty($user)) {
+                $data = array(
+                    'user_password' => sha1($this->input->post("password"))
+                );
+                if ($this->Profile_model->update_user_record($data, array("user_username" => $username))) {
+                    echo "<script>alert('Your password has been changed.');"
+                    . "window.location='" . base_url() . "main/'</script>";
+                }
+            } else {
+                $data = array(
+                    'admin_password' => sha1($this->input->post("password"))
+                );
+                if ($this->Profile_model->update_admin_record($data, array("admin_username" => $username))) {
+                    echo "<script>alert('Your password has been changed.');"
+                    . "window.location='" . base_url() . "main/'</script>";
+                }
             }
         }
     }
