@@ -15,20 +15,21 @@ function getIcon($var) {
         echo "fa fa-check";
     }
 }
-function determine_access($access){
-    switch ($access){
-        case "Admin":{
-            return "Administrator";
-        }
-        case "Subadmin":{
-            return "PAWS Officer";
-        }
-        case "User":{
-            return "Pet Adopter";
-        }
-        default:{
-            return "";
-        }
+
+function determine_access($access) {
+    switch ($access) {
+        case "Admin": {
+                return "Administrator";
+            }
+        case "Subadmin": {
+                return "PAWS Officer";
+            }
+        case "User": {
+                return "Pet Adopter";
+            }
+        default: {
+                return "";
+            }
     }
 }
 ?>
@@ -55,81 +56,81 @@ function determine_access($access){
                     <div class="card-body text-center">
                         <div class = "image-fit">
                             <a href = "<?= base_url() . $transaction->user_picture ?>" data-toggle="lightbox">
-                                <img class="d-flex mx-auto" src="<?= base_url() . $transaction->user_picture ?>"  style = "height:75px; width:75px;" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                                <img class="d-flex mx-auto" src="<?= base_url() . $transaction->user_picture ?>"  style = "height:75px; width:75px;" alt = "<?= $transaction->user_firstname . " " . $transaction->user_lastname ?>">
                             </a>
                         </div>
-                        <h5 class="card-title"><?= $transaction->user_firstname." ".$transaction->user_lastname?></h5>
-                        <a href ="#" class = "btn btn-outline-success" data-toggle = "modal" data-target = "#user_detail_<?= $transaction->user_id;?>">Show Information</a>
+                        <h5 class="card-title"><?= $transaction->user_firstname . " " . $transaction->user_lastname ?></h5>
+                        <a href ="#" class = "btn btn-outline-success" data-toggle = "modal" data-target = "#user_detail_<?= $transaction->user_id; ?>">Show Information</a>
                     </div>
                 </div>
             </div>
             <div class ="col-md-2 align-self-center text-center" style = "font-size:1.3vw;">
-                <?php if($this->session->userdata("pet_status") == "Adopted"):?>
+                <?php if ($this->session->userdata("pet_status") != "Adopted"): ?>
                     <i class ="fa fa-long-arrow-right"></i> Adopting <i class ="fa fa-long-arrow-right"></i>
-                <?php else:?>
+                <?php else: ?>
                     <i class ="fa fa-long-arrow-right"></i> Adopted <i class ="fa fa-long-arrow-right"></i>
-                <?php endif;?>
+                <?php endif; ?>
             </div>
             <div class ="col-md-5">
                 <div class="card bg-light mb-3">
                     <div class="card-header text-center bg-success">Animal</div>
                     <div class="card-body text-center">
                         <div class = "image-fit">
-                            <a href = "<?= base_url().$transaction->pet_picture?>" data-toggle="lightbox">
-                                <img class="d-flex mx-auto" src="<?= base_url() . $transaction->pet_picture ?>" style = "height:75px; width:75px;" alt = "<?= $transaction->user_firstname." ".$transaction->user_lastname?>">
+                            <a href = "<?= base_url() . $transaction->pet_picture ?>" data-toggle="lightbox">
+                                <img class="d-flex mx-auto" src="<?= base_url() . $transaction->pet_picture ?>" style = "height:75px; width:75px;" alt = "<?= $transaction->user_firstname . " " . $transaction->user_lastname ?>">
                             </a>
                         </div>
-                        <h5 class="card-title"><?= $transaction->pet_name?></h5>
-                        <a href = "#" class = "btn btn-outline-success" data-toggle = "modal" data-target = "#pet_detail_<?= $transaction->pet_id;?>">Show Information</a>
+                        <h5 class="card-title"><?= $transaction->pet_name ?></h5>
+                        <a href = "#" class = "btn btn-outline-success" data-toggle = "modal" data-target = "#pet_detail_<?= $transaction->pet_id; ?>">Show Information</a>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="steps-form">
             <div class="steps-row setup-panel">
-            <?php foreach ($progresses as $progress): ?>
+                <?php foreach ($progresses as $progress): ?>
                     <div class="steps-step" data-toggle = "tooltip" data-placement = "bottom" title = "<?= $progress->checklist_title ?>">
                         <a id = "step_id_<?= $progress->checklist_id ?>"  href="#step_<?= $progress->checklist_id ?>" class="btn btn-default btn-circle" style="height:45px; width:45px; color:white;"><i class="<?= getIcon($progress->checklist_id) ?> fa-1x"></i><br><?= $progress->checklist_id ?></a>
                     </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <!-- Adoption Form  --> 
         <div class="row setup-content" id="step_1">
-            <?php include_once 'step_1.php';?>  
+            <?php include_once 'step_1.php'; ?>  
         </div>
 
         <!--  Meet And Greet -->  
         <div class="row setup-content" id="step_2">
-            <?php include_once 'step_2.php';?>
+            <?php include_once 'step_2.php'; ?>
         </div>
 
         <!--  Interview  --> 
         <div class="row setup-content" id="step_3">
-            <?php include_once 'step_3.php';?>
+            <?php include_once 'step_3.php'; ?>
         </div>
 
         <!--  Home Visit --> 
         <div class="row setup-content" id="step_4">
-            <?php include_once 'step_4.php';?>
+            <?php include_once 'step_4.php'; ?>
         </div>
 
         <!--  Visit chosen adoptee -->  
         <div class="row setup-content" id="step_5">
-            <?php include_once 'step_5.php';?>
+            <?php include_once 'step_5.php'; ?>
         </div>
 
         <!-- Release day -->
         <div class="row setup-content" id="step_6">
-            <?php include_once 'step_6.php';?>
+            <?php include_once 'step_6.php'; ?>
         </div>
     </div>
 </div>
 
 <!-- PET DETAIL MODAL -->
-<div class="modal fade" id = "pet_detail_<?= $transaction->pet_id;?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade" id = "pet_detail_<?= $transaction->pet_id; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -144,7 +145,7 @@ function determine_access($access){
                         <img src = "<?= $this->config->base_url() . $transaction->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
                     </div>
                     <div class ="col-md-7">
-                        <table class = "table table-responsive table-striped">
+                        <table class = "table  table-striped">
                             <tbody>
                                 <tr>
                                     <th>Name: </th>
@@ -207,7 +208,7 @@ function determine_access($access){
 </div>
 
 <!-- USER DETAIL MODAL -->
-<div class="modal fade" id = "user_detail_<?= $transaction->user_id;?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade" id = "user_detail_<?= $transaction->user_id; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -223,29 +224,29 @@ function determine_access($access){
                     </div>
                     <div class ="col-md-7">
                         <table class="table borderless table-responsive-sm">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Username</th>
-                                        <td><?= $transaction->user_username;?></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Birthday</th>
-                                        <td><?= date("F d, Y", $transaction->user_bday);?></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Email</th>
-                                        <td><?= $transaction->user_email;?></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Contact No.</th>
-                                        <td><?= $transaction->user_contact_no;?></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Address</th>
-                                        <td><?= $transaction->user_address.", ".$transaction->user_brgy.", ".$transaction->user_city;?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Username</th>
+                                    <td><?= $transaction->user_username; ?></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Birthday</th>
+                                    <td><?= date("F d, Y", $transaction->user_bday); ?></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email</th>
+                                    <td><?= $transaction->user_email; ?></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Contact No.</th>
+                                    <td><?= $transaction->user_contact_no; ?></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Address</th>
+                                    <td><?= $transaction->user_address . ", " . $transaction->user_brgy . ", " . $transaction->user_city; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -263,7 +264,7 @@ function determine_access($access){
 
 <!-- Textbox autoresize -->
 
-<script src = "<?= base_url()?>assets/autosize-master/js/autosize.js"></script>
+<script src = "<?= base_url() ?>assets/autosize-master/js/autosize.js"></script>
 <script>
     // from a jQuery collection
     autosize($('textarea'));

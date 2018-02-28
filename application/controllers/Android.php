@@ -263,10 +263,63 @@ class Android extends CI_Controller {
 		echo json_encode($jsonStr);
 	}
 	
+	public function getJson_adoption_by_id(){
+		$adoption_id = $this->input->post("adoption_id");
+		$query = $this->Android_model->fetchTwo("adoption", "adoption_id,
+				adoption.pet_id,
+				adoption.user_id,
+				adoption_proof_img,
+				adoption_isRead,
+				adoption_isMissing,
+				adoption_adopted_at,
+				user_firstname,
+				user_lastname,
+				user_username,
+				user_password,
+				user_bday,
+				user_sex,
+				user_status,
+				user_email,
+				user_verification_code,
+				user_isverified,
+				user_contact_no,
+				user_picture,
+				user_address,
+				user_added_at,
+				user_updated_at,
+				pet_nfc_tag,
+				pet_name,
+				pet_bday,
+				pet_specie,
+				pet_sex,
+				pet_breed,
+				pet_size,
+				pet_status,
+				pet_access,
+				pet_neutered_spayed,
+				pet_admission,
+				pet_description,
+				pet_history,
+				pet_picture,
+				pet_video,
+				pet_added_at,
+				pet_updated_at",
+                "user",
+                "adoption.user_id = user.user_id",
+                "pet",
+                "adoption.pet_id = pet.pet_id", 
+				array("adoption_id" => $adoption_id));
+		//echo $this->db->last_query();
+		$data = array(
+            'result' => $query
+        );
+        $this->load->view("android/getJson_adoption", $data);
+	}
+	
 	public function validate_user(){
 		$dataUser = array(
             'user_username' => $this->input->post('username'),
-            'user_password' => $this->input->post('password')
+            'user_password' => sha1($this->input->post('password'))
         );
 		
         $accountDetailsUser = $this->Login_model->getinfo("user", $dataUser)[0];
@@ -308,4 +361,43 @@ class Android extends CI_Controller {
 		}
 	}
 	
+	public function add_to_discovery(){
+		
+		$data = array(
+			"user_id" => $this->input->post("user_id"),
+			"pet_id" => $this->input->post("pet_id"),
+			"discovery_latitude" => $this->input->post("latitude"),
+			"discovery_longitude" => $this->input->post("longitude"),
+			"discovery_added_at" => time()
+		);
+		
+		if ($this->Android_model->pet_discovery($data)) {
+			//SUCCESS
+			$response = array(
+				"success" => true,
+				"result" => "Successfully inserted in discovery"
+			);
+			echo json_encode($response);
+		} else {
+			//FAILED
+			$response = array(
+				"success" => false,
+				"result" => "Something went wrong while inserting to discovery table"
+			);
+			echo json_encode($response);
+		}
+	}
+	
+	public function getJson_discoveries(){
+		$pet_id = $this->input->post("pet_id");
+		//$user_id = $this->input->post("user_id");
+		
+		//$query = $this->Android_model->get_discoveries(array("discovery.pet_id" => $pet_id, "discovery.user_id" => $user_id));
+		$query = $this->Android_model->get_discoveries(array("discovery.pet_id" => $pet_id));
+		$data = array(
+			"result" => $query
+		);
+		
+		$this->load->view("android/getJson_discoveries", $data);
+	}
 }

@@ -64,6 +64,18 @@
                 var nonadoptable = "<?php echo $non_adoptable_animals ?>";
                 var adopted = "<?php echo $adopted_animals ?>";
                 var deceased = "<?php echo $deceased_animals ?>";
+                var january = "<?php echo $januaryCount ?>";
+                var february = "<?php echo $februaryCount ?>";
+                var march = "<?php echo $marchCount ?>";
+                var april = "<?php echo $aprilCount ?>";
+                var may = "<?php echo $mayCount ?>";
+                var june = "<?php echo $juneCount ?>";
+                var july = "<?php echo $julyCount ?>";
+                var august = "<?php echo $augustCount ?>";
+                var september = "<?php echo $septemberCount ?>";
+                var october = "<?php echo $octoberCount ?>";
+                var november = "<?php echo $novemberCount ?>";
+                var december = "<?php echo $decemberCount ?>";
                 // Chart.js scripts
                 // -- Set new default font family and font color to mimic Bootstrap's default styling
                 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -91,6 +103,56 @@
                                 backgroundColor: ['#2196F3', '#e53935', '#28a745', '#212121']
                             }],
                     },
+                });
+                // -- Area Chart Example
+                var ctx = document.getElementById("myAreaChart");
+                var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        datasets: [{
+                                label: "Adopted",
+                                lineTension: 0.3,
+                                backgroundColor: "rgba(2,117,216,0.2)",
+                                borderColor: "rgba(2,97,116,1)",
+                                pointRadius: 5,
+                                pointBackgroundColor: "rgba(2,107,116,1)",
+                                pointBorderColor: "rgba(255,255,255,0.8)",
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                                pointHitRadius: 20,
+                                pointBorderWidth: 2,
+                                data: [january, february, march, april, may, june, july, august, september, october, november, december],
+                            }],
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                    time: {
+                                        unit: 'date'
+                                    },
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 7
+                                    }
+                                }],
+                            yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 50,
+                                        maxTicksLimit: 5
+                                    },
+                                    gridLines: {
+                                        color: "rgba(0, 0, 0, .125)",
+                                    }
+                                }],
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
                 });
             });
 

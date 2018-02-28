@@ -24,13 +24,15 @@ Dashboard
             <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
         <!-- Alert -->
-        <?php if ($adoptedPets == 0): ?>
-            <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Well done!</h4>
-                <p>You successfully done to all of your progress.</p>
-                <p class="mb-0">You can now check your pet by clicking the button.</p><br>
-                <a class="btn btn-outline-primary" href="<?= base_url() ?>UserDashboard/messageRead">Go to MyPets</a>
-            </div>
+        <?php if ($checker != 1): ?>
+            <?php if ($myPets->adoption_isRead == 0): ?>
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Well done!</h4>
+                    <p>You successfully done to all of your progress.</p>
+                    <p class="mb-0">You can now check your pet by clicking the button.</p><br>
+                    <a class="btn btn-outline-primary" href="<?= base_url() ?>UserDashboard/messageRead">Go to MyPets</a>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
         <!-- Registered -->
         <div class="card">
@@ -53,7 +55,7 @@ Dashboard
                                 <div class="col-md-3">
                                     <div class="card">
                                         <a href = "<?= $this->config->base_url() . $pet->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $pet->pet_name ?></b>">
-                                            <img class="card-img-top" src = "<?= $this->config->base_url() . $pet->pet_picture ?>" alt="picture">
+                                            <img class="card-img-top" src = "<?= $this->config->base_url() . $pet->pet_picture ?>"  style="height:180px;" alt="picture">
                                         </a>
                                         <div class="card-body">
                                             <h4 class="card-title"><?= $pet->pet_name ?></h4>
@@ -98,7 +100,7 @@ Dashboard
                                                         <img src = "<?= $this->config->base_url() . $pet->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
                                                     </div>
                                                     <div class ="col-md-7">
-                                                        <table class = "table table-responsive table-striped">
+                                                        <table class = "table table-striped">
                                                             <tbody>
                                                                 <tr>
                                                                     <th>Name: </th>
@@ -299,7 +301,7 @@ Dashboard
                                                     <div class="col-md-3"></div>
                                                     <div class="col-md-3"> 
                                                         <a href="<?= base_url() ?>download/adoption_application_form.pdf" onclick="window.open('<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id ?>');
-                                                                            return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
+                                                                return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
                                                     </div>
                                                     <div class="col-md-3">
                                                         <a href="<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn btn-outline-primary">Fill up the Form Online</a>
@@ -368,7 +370,7 @@ Dashboard
                             <div class="col-md-3">
                                 <div class="card">
                                     <a href = "<?= $this->config->base_url() . $adopted->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $adopted->pet_name ?></b>">
-                                        <img class="card-img-top" src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" alt="picture">
+                                        <img class="card-img-top" src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" style="height:180px;" alt="picture">
                                     </a>
                                     <div class="card-body">
                                         <h4 class="card-title"><?= $adopted->pet_name ?></h4>
@@ -452,7 +454,7 @@ Dashboard
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class ="col-md-5">
-                                                    <img src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
+                                                    <img src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" class = "img-fluid"  style = "border-radius:50px;  margin-top:20px;"/>
                                                 </div>
                                                 <div class ="col-md-7">
                                                     <table class = "table table-responsive table-striped">
@@ -553,6 +555,13 @@ Dashboard
                                     window.open("<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id; ?>");
                                         }
                             </script>
+                            <?php
+                            if ($counter1 == 3): {
+                                    break;
+                                }
+                                ?>
+                            <?php endif; ?>
+                            <?php $counter1++; ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
