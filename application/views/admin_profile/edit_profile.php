@@ -14,7 +14,7 @@ Edit Profile
                 <?php endif; ?>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>Profile">Profile</a>
+                <a href="<?= base_url() ?>AdminProfile">Profile</a>
             </li>
             <li class="breadcrumb-item active">Edit Profile</li>
         </ol>
@@ -108,3 +108,60 @@ Edit Profile
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Change Picture -->
+<div class="modal fade <?= $userDetails->admin_id; ?>changePic" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class = "fa fa-pencil"></i> Change Picture</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action = "<?= base_url() ?>AdminProfile/edit_picture_submit/" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class = "form-group">
+                        <label for ="user_picture">Picture</label>
+                        <div class="custom-file-container" data-upload-id="user_picture">
+                            <label class="custom-file-container__custom-file" >
+                                <input type="file" name = "user_picture" id = "user_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
+                                <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                <button class="custom-file-container__image-clear">x</button>
+                            </label>
+                            <small id="videoHelp" class="form-text text-muted">
+                                Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png
+                            </small>
+                            <div class="custom-file-container__image-preview" id = "user_picture_edit_preview"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap File Upload with preview -->
+<script src = "<?= base_url() ?>assets/bootstrap-fileupload/js/file-upload-with-preview.js"></script>
+<script>
+                                    var upload = new FileUploadWithPreview('user_picture')
+</script>
+<!-- Bootstrap File Upload with preview -->
+<script>
+    document.getElementById("user_picture_edit_preview").style.backgroundImage = "url('<?= base_url() . $userDetails->admin_picture ?>')";
+
+    document.getElementById("btnReset_edit").onclick = function () {
+        reset_upload()
+    };
+    function reset_upload() {
+        document.getElementById("user_picture_edit_preview").style.backgroundImage = "url('<?= base_url() . $userDetails->admin_picture ?>')";
+        document.getElementById("user_picture_edit").value = "";
+    }
+</script>

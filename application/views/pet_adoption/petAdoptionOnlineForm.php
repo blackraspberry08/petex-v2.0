@@ -63,14 +63,14 @@ Pet Adoption
                                 <label>&nbsp;Email</label>
                             </div>
                             <div class="form-group col-sm-12">
-                                <input type="text" class="form-control" name = "address" readonly="" value="<?= $userInfo->user_address ?>, <?= $userInfo->user_brgy ?>, <?= $userInfo->user_city ?>" >
+                                <input type="text" class="form-control" name = "address" readonly="" value="<?= $userInfo->user_address ?>" >
                                 <label>&nbsp;Address</label>
                             </div>
                             <div class="form-group col-sm-4 <?php if (!empty($form_error['numhome'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <input type="text" class="form-control <?php if (!empty($form_error['numhome'])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "numhome"  >
                                 <label>&nbsp;Tel Nos. (Home)</label>
                                 <div class="invalid-feedback"><?= $form_error['numhome'];?></div>
-                            </div>
+                            </div>  
                             <div class="form-group col-sm-4 <?php if (!empty($form_error['numwork'])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <input type="text" class="form-control <?php if (!empty($form_error['numwork'])): ?>is-invalid<?php else: ?><?php endif; ?>" name = "numwork" >
                                 <label>&nbsp;Tel Nos. (Work)</label>

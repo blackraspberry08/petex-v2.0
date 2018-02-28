@@ -30,6 +30,26 @@ class Reset_model extends CI_Model {
         }
     }
 
+    public function emailAvailabilityAdmin($email) {
+        $this->db->where('admin_email', $email);
+        $query = $this->db->get('admin');
+        if ($query->num_rows() > 0) {
+            Return true;
+        } else {
+            Return false;
+        }
+    }
+
+    public function usernameAvailabilityAdmin($username) {
+        $this->db->where('admin_username', $username);
+        $query = $this->db->get('admin');
+        if ($query->num_rows() > 0) {
+            Return true;
+        } else {
+            Return false;
+        }
+    }
+
     public function update($table, $data, $where = NULL) {
         if (!empty($where)) {
             $this->db->where($where);

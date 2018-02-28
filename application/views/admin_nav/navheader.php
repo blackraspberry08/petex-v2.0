@@ -62,7 +62,7 @@ Admin Nav Header
 
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html"><img src = "<?= base_url() ?>images/logo/logo.png" height="25"/></a>
+        <a class="navbar-brand" href="<?= base_url() ?>main"><img src = "<?= base_url() ?>images/logo/logo.png" height="25"/></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -135,9 +135,9 @@ Admin Nav Header
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class = "dropdown-header">
                             <div class ="row no-gutters">
-                                <div class = "col-lg-4 ">
+                                <div class = "col-lg-4">
                                     <div class="profile-header-img ">
-                                        <img class="img-circle" src="<?= base_url() . $user_picture ?>" />
+                                        <img class="img-circle img-fluid" src="<?= base_url() . $user_picture ?>" />
                                     </div>
                                 </div>
                                 <div class = "col-lg-8" style = "overflow:hidden;">
@@ -149,7 +149,7 @@ Admin Nav Header
                         </div>
 
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="<?= base_url() ?>AdminProfile">Profiles</a>
+                        <a class="dropdown-item" href="<?= base_url() ?>AdminProfile">Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?= base_url() ?>AdminSettings">Settings</a>
                         <div class="dropdown-divider"></div>

@@ -43,7 +43,7 @@
                             <tr>
                                 <td><?= $log->admin_firstname . " " . $log->admin_lastname ?></td>
                                 <td><?= $log->event_description ?></td>
-                                <td><?= $log->admin_access == "Subadmin"? "PAWS Officer" : "Adopters"; ?></td>
+                                <td><?= $log->admin_access == "Subadmin"? "PAWS Officer" : "Administrator"; ?></td>
                                 <td>
                                     <span style = "display:none;"><?= $log->event_added_at?></span>
                                     <?= date("F d, Y - h:m A", $log->event_added_at) ?>
