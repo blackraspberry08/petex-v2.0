@@ -43,32 +43,34 @@ class AdminDashboard extends CI_Controller {
         $octoberCount = 0;
         $novemberCount = 0;
         $decemberCount = 0;
-        foreach ($adopted as $mo) {
-            $month = date("M", $mo->adoption_adopted_at);
-            if ($month == 'Jan') {
-                $januaryCount = $januaryCount + 1;
-            } else if ($month == 'Feb') {
-                $februaryCount = $februaryCount + 1;
-            } else if ($month == 'Mar') {
-                $marchCount = $marchCount + 1;
-            } else if ($month == 'Apr') {
-                $aprilCount = $aprilCount + 1;
-            } else if ($month == 'May') {
-                $mayCount = $mayCount + 1;
-            } else if ($month == 'Jun') {
-                $juneCount = $juneCount + 1;
-            } else if ($month == 'Jul') {
-                $julyCount = $julyCount + 1;
-            } else if ($month == 'Aug') {
-                $augustCount = $augustCount + 1;
-            } else if ($month == 'Sep') {
-                $septemberCount = $septemberCount + 1;
-            } else if ($month == 'Oct') {
-                $octoberCount = $octoberCount + 1;
-            } else if ($month == 'Nov') {
-                $novemberCount = $novemberCount + 1;
-            } else if ($month == 'Dec') {
-                $decemberCount = $decemberCount + 1;
+        if(!empty($adopted)) {
+            foreach ($adopted as $mo) {
+                $month = date("M", $mo->adoption_adopted_at);
+                if ($month == 'Jan') {
+                    $januaryCount = $januaryCount + 1;
+                } else if ($month == 'Feb') {
+                    $februaryCount = $februaryCount + 1;
+                } else if ($month == 'Mar') {
+                    $marchCount = $marchCount + 1;
+                } else if ($month == 'Apr') {
+                    $aprilCount = $aprilCount + 1;
+                } else if ($month == 'May') {
+                    $mayCount = $mayCount + 1;
+                } else if ($month == 'Jun') {
+                    $juneCount = $juneCount + 1;
+                } else if ($month == 'Jul') {
+                    $julyCount = $julyCount + 1;
+                } else if ($month == 'Aug') {
+                    $augustCount = $augustCount + 1;
+                } else if ($month == 'Sep') {
+                    $septemberCount = $septemberCount + 1;
+                } else if ($month == 'Oct') {
+                    $octoberCount = $octoberCount + 1;
+                } else if ($month == 'Nov') {
+                    $novemberCount = $novemberCount + 1;
+                } else if ($month == 'Dec') {
+                    $decemberCount = $decemberCount + 1;
+                }
             }
         }
 //        echo "<pre>";
