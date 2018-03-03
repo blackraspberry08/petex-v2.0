@@ -338,7 +338,7 @@ Dashboard
                                 </div>
                             <?php endif; ?>
                             <?php
-                            if ($counter == 4): {
+                            if ($counter == 3): {
                                     break;
                                 }
                                 ?>
