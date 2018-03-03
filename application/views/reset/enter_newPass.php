@@ -4,7 +4,7 @@
         <div class="col-md-3">
         </div>
         <div class="col-md-6" style="margin-top:100px;">
-            <form method="POST" action="<?= base_url() ?>reset/enter_newPass_exec/<?= $username ?>">
+            <form method="POST" action="<?= base_url() ?>reset/enter_newPass_submit/<?= $username ?>">
                 <div class="card wow fadeInRight">
                     <div class="card-header">
                         <br>
