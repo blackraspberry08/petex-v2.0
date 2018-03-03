@@ -93,7 +93,7 @@ class MyPets extends CI_Controller {
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $this->uri->segment(3), "pet_access" => 1))[0];
         $this->form_validation->set_rules('pet_name', "Pet Name", "required|callback__alpha_dash_space|max_length[10]");
         $this->form_validation->set_rules('pet_description', "Pet Description", "required");
-        $this->form_validation->set_rules('pet_video', "Pet Video", "required|regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
+        $this->form_validation->set_rules('pet_video', "Pet Video", "regex_match[/embed\/([\w+\-+]+)[\"\?]/]");
 
         if ($this->form_validation->run() == FALSE) {
             //ERROR IN FORM

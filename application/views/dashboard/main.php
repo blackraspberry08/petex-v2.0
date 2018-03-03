@@ -134,7 +134,7 @@ Dashboard
                             <h1 class="mr-5"><?= $users ?></h1>
                         </div>
                         <div class = "card-footer">
-                            <span class="float-left">Missing Pets</span>
+                            <span class="float-left">Users</span>
                         </div>
                     </div>
                 </a>

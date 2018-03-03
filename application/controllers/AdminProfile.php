@@ -97,8 +97,8 @@ class AdminProfile extends CI_Controller {
         $config['max_size'] = 5120;
         $config['encrypt_name'] = true;
         $this->load->library('upload', $config);
-        if (!empty($_FILES["admin_picture"]["name"])) {
-            if ($this->upload->do_upload('admin_picture')) {
+        if (!empty($_FILES["user_picture"]["name"])) {
+            if ($this->upload->do_upload('user_picture')) {
                 $imagePath = "images/user/" . $this->upload->data("file_name");
                 if ($userDetails->admin_picture == "images/user/male.png" || $userDetails->admin_picture == "images/user/female.png") {
                     
@@ -128,7 +128,7 @@ class AdminProfile extends CI_Controller {
 
         if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
             //SUCCESS
-            $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change profile picture.");
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change profile picture.");
             $this->session->set_flashdata("uploading_success", "Successfully update the image");
             redirect(base_url() . "AdminProfile/edit_profile");
         } else {
@@ -161,7 +161,7 @@ class AdminProfile extends CI_Controller {
 
             if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
                 //SUCCESS
-                $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change account information.");
+                $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change account information.");
                 $this->session->set_flashdata("uploading_success", "You have successfully changed your account information");
                 redirect(base_url() . "AdminProfile/edit_profile");
             } else {

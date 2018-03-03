@@ -11,39 +11,39 @@
                     <div class="card-body" style = "background:#eee;">
                         <div class="form-row mb-3">
                             <div class="col">
-                                <input class="form-control <?= !empty(form_error("username")) ? "is-invalid":"";?>" type="text" name="username" placeholder="Username" autofocus value = "<?= set_value("username")?>">
+                                <input class="form-control <?= !empty(form_error("username")) ? "is-invalid" : ""; ?>" type="text" name="username" placeholder="Username" autofocus value = "<?= set_value("username") ?>">
                                 <div class="invalid-feedback"><?= form_error('username') ?></div>
                             </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class="col">
-                                <input class="form-control <?= !empty(form_error("password")) ? "is-invalid":"";?>" type="password" name="password" placeholder="Password" >
+                                <input class="form-control <?= !empty(form_error("password")) ? "is-invalid" : ""; ?>" type="password" name="password" placeholder="Password" >
                                 <div class="invalid-feedback"><?= form_error('password') ?></div>
                             </div>
                             <div class="col">
-                                <input class="form-control <?= !empty(form_error("conpassword")) ? "is-invalid":"";?>" type="password" name="conpassword" placeholder="Confirm Password" >
+                                <input class="form-control <?= !empty(form_error("conpassword")) ? "is-invalid" : ""; ?>" type="password" name="conpassword" placeholder="Confirm Password" >
                                 <div class="invalid-feedback"><?= form_error('conpassword') ?></div>
                             </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class="col">
-                                <input class="form-control <?= !empty(form_error("email")) ? "is-invalid":"";?>" type="email" name="email" placeholder="Email Address" value = "<?= set_value("email")?>">
+                                <input class="form-control <?= !empty(form_error("email")) ? "is-invalid" : ""; ?>" type="email" name="email" placeholder="Email Address" value = "<?= set_value("email") ?>">
                                 <div class="invalid-feedback"><?= form_error('email') ?></div>
                             </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class="col">
-                                <input class="form-control <?= !empty(form_error("phone")) ? "is-invalid":"";?>" type="text" name="phone" placeholder="Mobile Phone" value = "<?= set_value("phone")?>">
+                                <input class="form-control <?= !empty(form_error("phone")) ? "is-invalid" : ""; ?>" type="text" name="phone" placeholder="Mobile Phone" value = "<?= set_value("phone") ?>">
                                 <div class="invalid-feedback"><?= form_error('phone') ?></div>
                             </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class="col">
-                                <input class="form-control <?= !empty(form_error("lname")) ? "is-invalid":"";?>" type="text" name="lname" placeholder="Lastname" value = "<?= set_value("lname")?>">
+                                <input class="form-control <?= !empty(form_error("lname")) ? "is-invalid" : ""; ?>" type="text" name="lname" placeholder="Lastname" value = "<?= set_value("lname") ?>">
                                 <div class="invalid-feedback"><?= form_error('lname') ?></div>
                             </div>
                             <div class="col">
-                                <input class="form-control <?= !empty(form_error("fname")) ? "is-invalid":"";?>" type="text" name="fname" placeholder="Firstname" value = "<?= set_value("fname")?>">
+                                <input class="form-control <?= !empty(form_error("fname")) ? "is-invalid" : ""; ?>" type="text" name="fname" placeholder="Firstname" value = "<?= set_value("fname") ?>">
                                 <div class="invalid-feedback"><?= form_error('fname') ?></div>
                             </div>
                         </div>
@@ -66,13 +66,13 @@
                         </div><br>
                         <div class="form-row mb-3">
                             <div class="col">
-                                <input type="text" name="bday" class="form_datetime form-control <?= !empty(form_error("bday")) ? "is-invalid":"";?>" placeholder="Birthday" readonly="" value = "<?= set_value("bday")?>">
+                                <input type="text" name="bday" class="form_datetime form-control <?= !empty(form_error("bday")) ? "is-invalid" : ""; ?>" placeholder="Birthday" readonly="" value = "<?= set_value("bday") ?>">
                                 <div class="invalid-feedback"><?= form_error('bday') ?></div>
                             </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class = "col">
-                                <input type="text" id = "geocomplete" name = "address" class="form-control <?= !empty(form_error("address")) ? "is-invalid":"";?>" placeholder="Address" aria-label="Address" value = "<?= set_value("address")?>" >
+                                <input type="text" id = "geocomplete" name = "address" class="form-control <?= !empty(form_error("address")) ? "is-invalid" : ""; ?>" placeholder="Address" aria-label="Address" value = "<?= set_value("address") ?>" >
                                 <div class="invalid-feedback"><?= form_error('address') ?></div>
                             </div>
                         </div>
@@ -86,6 +86,12 @@
                                 <?= $widget ?>
                                 <?= $script ?>
                             </div>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input <?= !empty(form_error("accept")) ? "is-invalid" : ""; ?>" style="margin-top:3px;" type="checkbox" name="accept" value="1">
+                            <label class=" form-check-label">
+                                I agree to the <a href="<?= base_url() ?>register/terms" style="color:blue;">Terms and Conditions.</a>
+                            </label>
                         </div>
                     </div> 
 

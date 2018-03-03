@@ -25,7 +25,6 @@ class Main extends CI_Controller {
         $countTransactions = $this->Main_model->count('progress');
 
         $allPets = $this->Main_model->fetchPetDesc("pet");
-
         $data = array(
             'title' => 'Pet Ex | Pet Express Homepage',
             'wholeUrl' => base_url(uri_string()),

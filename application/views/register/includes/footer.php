@@ -1,3 +1,17 @@
+<footer id="footer">
+
+    <div class="container">
+        <center>
+            &copy; 2017 Codebusters. All rights reserved.
+            <p>JC VALENCIA | ANGELO MARKUS ZAGUIRRE | ALLEN TORRES | JOSHUA VITUG
+                <br><br>
+                Made with&nbsp;&nbsp;&nbsp; <a class=" btn btn-floating pulse-button "><i class="fa fa-heartbeat" style="color:white;"></i></a>
+            </p>
+            </p>
+        </center>
+    </div>
+</footer><!-- #footer -->
+
 <!-- GOOGLE MAPS-->
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD1VJrwMKjjvTi626jR6pdoaNdIHKEdp0c"></script>
 <script>
