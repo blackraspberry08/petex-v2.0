@@ -124,33 +124,29 @@ class Reset extends CI_Controller {
         }
     }
 
+    public function enter_newPass_exec() {
+        $this->session->set_userdata("username", $this->uri->segment(3));
+        redirect(base_url() . "Reset/enter_newPass");
+    }
+
     public function enter_newPass() {
-        $username = $this->uri->segment(3);
+
         $data = array(
             'title' => 'Pet Ex | Enter New Password',
             'wholeUrl' => base_url(uri_string()),
-            'username' => $username
         );
         $this->load->view("reset/includes/header", $data);
         $this->load->view("reset/enter_newPass");
         $this->load->view("reset/includes/footer");
     }
 
-    public function enter_newPass_exec() {
-        $username = $this->uri->segment(3);
+    public function enter_newPass_submit() {
+        $username = $this->session->userdata("username");
         $user = $this->Reset_model->fetch("user", array("user_username" => $username));
         $this->form_validation->set_rules('password', "Password ", "required|matches[conpass]|alpha_numeric|min_length[8]|strip_tags");
         $this->form_validation->set_rules('conpass', "Confirm Password ", "required|matches[password]|alpha_numeric|min_length[8]|strip_tags");
         if ($this->form_validation->run() == FALSE) {
-            $username = $this->uri->segment(3);
-            $data = array(
-                'title' => 'Pet Ex | Enter New Password',
-                'wholeUrl' => base_url(uri_string()),
-                'username' => $username
-            );
-            $this->load->view("reset/includes/header", $data);
-            $this->load->view("reset/enter_newPass");
-            $this->load->view("reset/includes/footer");
+            $this->enter_newPass();
         } else {
             if (!empty($user)) {
                 $data = array(

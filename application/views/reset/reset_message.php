@@ -36,7 +36,7 @@
                             <div class = "lead text-center mx-5 mt-3 mb-3" style = "font-size:15px;">
                                 You've received this message because you forgot your password in PetEx. Enter your new password by clicking the link below.
                             </div><br>
-                            <a href = "<?= base_url() ?>reset/enter_newPass/<?= $name ?>" class="btn btn-outline-success">Enter New Password</a>
+                            <a href = "<?= base_url() ?>reset/enter_newPass_exec/<?= $name ?>" class="btn btn-outline-success">Enter New Password</a>
                         </div>
                     </div>
                 </div>
