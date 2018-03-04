@@ -30,7 +30,6 @@ class AdminDashboard extends CI_Controller {
 
     public function index() {
         $adopted = $this->AdminDashboard_model->fetch("adoption");
-
         $januaryCount = 0;
         $februaryCount = 0;
         $marchCount = 0;
@@ -43,7 +42,7 @@ class AdminDashboard extends CI_Controller {
         $octoberCount = 0;
         $novemberCount = 0;
         $decemberCount = 0;
-        if(!empty($adopted)) {
+        if (!empty($adopted)) {
             foreach ($adopted as $mo) {
                 $month = date("M", $mo->adoption_adopted_at);
                 if ($month == 'Jan') {
@@ -99,6 +98,8 @@ class AdminDashboard extends CI_Controller {
         $alladopters = $this->AdminDashboard_model->fetch_all_adopters();
         $alldeceased = $this->AdminDashboard_model->fetch("pet", array("pet_status" => "Deceased", "pet_access" => 1));
         $alltransactions = $this->AdminDashboard_model->fetch_all_transactions();
+        $allMissing = $this->AdminDashboard_model->fetch_all_missing();
+        $allFound = $this->AdminDashboard_model->fetch_all_found();
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
             'title' => "Dashboard",
@@ -123,6 +124,8 @@ class AdminDashboard extends CI_Controller {
             'alladopted' => $alladopted,
             'alldeceased' => $alldeceased,
             'alltransactions' => $alltransactions,
+            'allMissing' => $allMissing,
+            'allFound' => $allFound,
             'missing_animals' => $missing_animals,
             'found_animals' => $found_animals,
             'januaryCount' => $januaryCount,
