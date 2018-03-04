@@ -1285,10 +1285,11 @@ class PetAdoption extends CI_Controller {
                 $pdf->writeHTML($html, true, false, true, false, '');
             }
 //[Document_Root] sa pag Up
-            $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'petexphil/download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf', 'F');
+            $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'petexphil/download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf', 'F');
             $data = array(
-                "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf',
+                "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf',
             );
+           
             if ($this->PetAdoption_model->update_adoption_form($data, array("transaction_id" => $transactionId->transaction_id))) {
 
                 $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "fill up an adoption form");
