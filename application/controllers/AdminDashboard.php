@@ -78,7 +78,9 @@ class AdminDashboard extends CI_Controller {
 //        die;
 
         $found_animals = $this->AdminDashboard_model->count_found_animal();
+
         $missing_animals = $this->AdminDashboard_model->count_missing_animal();
+     
         $adoptable_animals = $this->AdminDashboard_model->count_adoptable_animal();
         $non_adoptable_animals = $this->AdminDashboard_model->count_non_adoptable_animal();
         $deceased_animals = $this->AdminDashboard_model->count_deceased_animal();

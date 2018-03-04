@@ -137,7 +137,7 @@ class AdminProfile extends CI_Controller {
             $this->session->set_flashdata("uploading_success", "Successfully update the image");
             $this->session->set_userdata('userid', $accountDetailsAdmin->admin_id);
             $this->session->set_userdata('current_user', $accountDetailsAdmin);
-            if ($accountDetailsAdmin->user_access == 'Admin') {
+            if ($accountDetailsAdmin->admin_access == 'Admin') {
                 $this->session->set_userdata('user_access', "admin");
             } else {
                 $this->session->set_userdata('user_access', "subadmin");
@@ -180,7 +180,7 @@ class AdminProfile extends CI_Controller {
                 $this->session->set_flashdata("uploading_success", "You have successfully changed your account information");
                 $this->session->set_userdata('user_id', $accountDetailsAdmin->admin_id);
                 $this->session->set_userdata('current_user', $accountDetailsAdmin);
-                if ($accountDetailsAdmin->user_access == 'Admin') {
+                if ($accountDetailsAdmin->admin_access == 'Admin') {
                     $this->session->set_userdata('user_access', "admin");
                 } else {
                     $this->session->set_userdata('user_access', "subadmin");
