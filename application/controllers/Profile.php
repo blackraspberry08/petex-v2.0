@@ -121,9 +121,14 @@ class Profile extends CI_Controller {
         );
 
         if ($this->Profile_model->update_user_record($data, array("user_id" => $userDetails->user_id))) {
+            $accountDetailsUser = $this->Login_model->getinfo("user", array("user_id" => $userDetails->user_id))[0];
+
             //SUCCESS
             $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . " change profile picture.");
             $this->session->set_flashdata("uploading_success", "Successfully update the image");
+            $this->session->set_userdata('userid', $accountDetailsUser->user_id);
+            $this->session->set_userdata('current_user', $accountDetailsUser);
+            $this->session->set_userdata('user_access', "user");
             redirect(base_url() . "Profile/edit_profile");
         } else {
             
@@ -154,9 +159,14 @@ class Profile extends CI_Controller {
             );
 
             if ($this->Profile_model->update_user_record($data, array("user_id" => $userDetails->user_id))) {
+                $accountDetailsUser = $this->Login_model->getinfo("user", array("user_id" => $userDetails->user_id))[0];
+
                 //SUCCESS
                 $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . " change account information.");
                 $this->session->set_flashdata("uploading_success", "You have successfully changed your account information");
+                $this->session->set_userdata('userid', $accountDetailsUser->user_id);
+                $this->session->set_userdata('current_user', $accountDetailsUser);
+                $this->session->set_userdata('user_access', "user");
                 redirect(base_url() . "Profile/edit_profile");
             } else {
                 $this->session->set_flashdata("uploading_fail", $userDetails->user_lastname . " seems to not exist in the database.");
