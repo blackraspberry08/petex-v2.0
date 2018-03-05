@@ -32,7 +32,7 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
             <br>
             <center>
                 <?php if ($progress_1->progress_isSuccessful == 0): ?>
-                    <a href = "<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $progress_1->pet_id; ?>" class = "btn btn-outline-primary">Repeat Adoption Form</a>
+                    <a href = "<?= base_url() ?>PetAdoption/petAdoptionOnlineFormRepeat_exec/<?= $progress_1->pet_id; ?>" class = "btn btn-outline-primary">Repeat Adoption Form</a>
                 <?php else: ?>
                     <button  class = "btn btn-outline-primary" disabled="disabled">Repeat Adoption Form</button>
                 <?php endif; ?>

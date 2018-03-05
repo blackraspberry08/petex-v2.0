@@ -143,7 +143,7 @@ Dashboard
 
             </div>
             <div class="col-xl-3 col-sm-6 mb-3">
-                <a href ="#" data-toggle="modal" data-target=".users"  data-placement="bottom" title="View All Users">
+                <a href ="#" data-toggle="modal" data-target=".missing"  data-placement="bottom" title="View All Missing Pets">
                     <div class="card text-success border-success  o-hidden h-100">
                         <div class="card-body">
                             <div class="card-body-icon pr-3 pt-2">
@@ -158,7 +158,7 @@ Dashboard
                 </a>
             </div>
             <div class="col-xl-3 col-sm-6 mb-3">
-                <a href ="#" data-toggle="modal" data-target=".users"  data-placement="bottom" title="View All Users">
+                <a href ="#" data-toggle="modal" data-target=".found"  data-placement="bottom" title="View All Found Pets">
                     <div class="card text-success border-success  o-hidden h-100">
                         <div class="card-body">
                             <div class="card-body-icon pr-3 pt-2">
@@ -614,6 +614,114 @@ Dashboard
                                     <center>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href = "<?= base_url() ?>ManageUser/show_user_info_exec/<?= $user->user_id ?>" class = "btn btn-outline-primary">Show Information</a>
+                                        </div>
+                                    </center>
+                                    </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Missing -->
+    <div class="modal fade missing" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-fw fa-question"></i>Missing Pets</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php if (empty($allMissing)): ?>
+                        <center>
+                            <h4>No Missing Pet/s yet</h4>
+                            <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                        </center>
+
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Added at</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($allMissing as $missing): ?>
+                                        <tr>
+                                            <td><?= $missing->pet_name ?></td>
+                                            <td><?= $missing->pet_status ?></td>
+                                            <td><?= date('F d, Y \a\t h:m A', $missing->pet_added_at); ?></td>
+                                            <td>
+                                    <center>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href = "<?= base_url() ?>PetManagement/animal_info_exec/<?= $missing->pet_id; ?>" class = "btn btn-outline-primary">Show Information</a>
+                                        </div>
+                                    </center>
+                                    </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Found -->
+    <div class="modal fade found" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-fw fa-eye"></i>All Found Pets</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php if (empty($allFound)): ?>
+                        <center>
+                            <h4>No Found Pet/s yet</h4>
+                            <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                        </center>
+
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-bordered datatable-class" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Added at</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($allFound as $found): ?>
+                                        <tr>
+                                            <td><?= $found->pet_name ?></td>
+                                            <td><?= $found->pet_status ?></td>
+                                            <td><?= date('F d, Y \a\t h:m A', $found->pet_added_at); ?></td>
+                                            <td>
+                                    <center>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href = "<?= base_url() ?>PetManagement/animal_info_exec/<?= $found->pet_id; ?>" class = "btn btn-outline-primary">Show Information</a>
                                         </div>
                                     </center>
                                     </td>
