@@ -35,6 +35,12 @@ class Android_model extends CI_Model {
         return $this->db->affected_rows();
     }
 	
+	public function pet_found($data, $pet_id){
+		$this->db->where(array("pet_id" => $pet_id));
+        $this->db->update("adoption", $data);
+        return $this->db->affected_rows();
+    }
+	
 	public function pet_discovery($data){
 		$table = "discovery";
         $this->db->insert($table, $data);
