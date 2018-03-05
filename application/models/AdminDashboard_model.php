@@ -82,11 +82,12 @@ class AdminDashboard_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
-    public function count_missing_animal() {
+    public function count_missing_animal($where = NULL) {
         $table = "adoption";
-        $this->db->where(array("adoption_isMissing" => 1));
+
         $this->db->count_all_results($table);
         $this->db->group_by('pet_id');
+        $this->db->where(array("adoption_isMissing" => 1));
         $this->db->from($table);
         return $this->db->count_all_results();
     }
