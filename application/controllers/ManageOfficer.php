@@ -79,7 +79,7 @@ class ManageOfficer extends CI_Controller {
 
     public function activate_officer() {
         $user = $this->ManageOfficer_model->get_admin_deactivated(array("admin_id" => $this->session->userdata("activate_officer")))[0];
-      
+
         if ($this->ManageOfficer_model->activate_admin("admin", array("admin_id" => $this->session->userdata("activate_officer")))) {
             $this->session->set_flashdata("activation_success", "Successfully activated " . $user->admin_firstname . " " . $user->admin_lastname . "'s account.");
             $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Activated officer " . $user->admin_firstname . " " . $user->admin_lastname);
@@ -151,19 +151,25 @@ class ManageOfficer extends CI_Controller {
     }
 
     public function manage_module_exec() {
+
         $this->session->set_userdata("manage_module", $this->uri->segment(3));
         redirect(base_url() . "ManageOfficer/manage_module");
     }
 
     public function manage_module() {
+
         $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
         $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
         $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
         $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
-
-        $selected_officer = $this->ManageOfficer_model->get_admin(array("admin_id" => $this->session->userdata("manage_module")))[0];
+        $selected_officer = $this->ManageOfficer_model->get_subadmin($this->session->userdata("manage_module"))[0];
 
         $officer_modules = $this->ManageOfficer_model->get_officer_modules(array("module_access.admin_id" => $this->session->userdata("manage_module")));
+//
+//        echo "<pre>";
+//        print_r($selected_officer);
+//        echo "</pre>";
+//        die;
         $modules = $this->ManageOfficer_model->get_modules();
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
 
@@ -195,8 +201,11 @@ class ManageOfficer extends CI_Controller {
     }
 
     public function add_modules_exec() {
-        $officer = $this->ManageOfficer_model->get_admin(array("admin_id" => $this->uri->segment(3), "admin_access" => "Subadmin"))[0];
+        $officer = $this->ManageOfficer_model->get_subadmin($this->uri->segment(3))[0];
+
         $officer_module_access = $this->ManageOfficer_model->get_officer_modules(array("module_access.admin_id" => $this->uri->segment(3)));
+
+
         $officer_module_id = array();
         for ($i = 0; $i < sizeof($officer_module_access); $i++) {
             if ($officer_module_access[0] == NULL) {
@@ -205,13 +214,20 @@ class ManageOfficer extends CI_Controller {
                 array_push($officer_module_id, $officer_module_access[$i]->module_id);
             }
         }
+
+//        echo "<pre>";
+//        print_r($officer);
+//        echo "</pre>";
+//        die;
+
         if (empty($this->input->post("modules"))) {
-// NO SELECTED MODULE. REMOVE ALL MODULES RELATED TO THIS OFFICER
+            // NO SELECTED MODULE. REMOVE ALL MODULES RELATED TO THIS OFFICER
             $this->ManageOfficer_model->remove_all_modules(array("module_access.admin_id" => $this->uri->segment(3)));
         } else {
             $this->ManageOfficer_model->remove_all_modules(array("module_access.admin_id" => $this->uri->segment(3)));
             $selected_modules = $this->input->post("modules");
             foreach ($selected_modules as $selected_module) {
+
                 $data = array(
                     'admin_id' => $this->uri->segment(3),
                     'module_id' => $selected_module
@@ -219,6 +235,7 @@ class ManageOfficer extends CI_Controller {
                 $this->ManageOfficer_model->add_module($data);
             }
         }
+
         $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated module access for " . $officer->admin_firstname . " " . $officer->admin_lastname);
         $this->session->set_flashdata("module_update", "Successfully updated " . $officer->admin_firstname . " " . $officer->admin_lastname . "'s modules.");
         redirect(base_url() . "ManageOfficer/manage_module");
