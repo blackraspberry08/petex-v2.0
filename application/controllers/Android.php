@@ -163,7 +163,6 @@ class Android extends CI_Controller {
 				pet_video,
 				pet_added_at,
 				pet_updated_at", "user", "adoption.user_id = user.user_id", "pet", "adoption.pet_id = pet.pet_id");
-        //echo $this->db->last_query();
         $data = array(
             'result' => $query
         );
@@ -219,14 +218,13 @@ class Android extends CI_Controller {
         $jsonStr = array("success" => true, "message" => "Changes are saved");
         $this->SaveEventUser->trail($user_id, "Updated the record of " . $animal->pet_name);
         echo json_encode($jsonStr);
-        
     }
 
     public function assign_nfc_to_pet() {
         $pet_id = $this->input->post("pet_id");
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $pet_id))[0];
         $user_id = $this->input->post("user_id");
-        
+
         $data = array(
             "pet_nfc_tag" => $this->input->post("pet_nfc_tag"),
         );
@@ -237,28 +235,121 @@ class Android extends CI_Controller {
         echo json_encode($jsonStr);
     }
 
-    
-    // ================= (NOT DONE) PUTTING TO EVENTS ==========================
     public function report_pet_missing() {
         $adoption_id = $this->input->post("adoption_id");
-        
+        $user_id = $this->input->post("user_id");
         $data = array(
             "adoption_isMissing" => 1,
         );
-
+        $adoption = $this->Android_model->fetchTwo("adoption", "adoption_id,
+				adoption.pet_id,
+				adoption.user_id,
+				adoption_proof_img,
+				adoption_isRead,
+				adoption_isMissing,
+				adoption_adopted_at,
+				user_firstname,
+				user_lastname,
+				user_username,
+				user_password,
+				user_bday,
+				user_sex,
+				user_status,
+				user_email,
+				user_verification_code,
+				user_isverified,
+				user_contact_no,
+				user_picture,
+				user_address,
+				user_added_at,
+				user_updated_at,
+				pet_nfc_tag,
+				pet_name,
+				pet_bday,
+				pet_specie,
+				pet_sex,
+				pet_breed,
+				pet_size,
+				pet_status,
+				pet_access,
+				pet_neutered_spayed,
+				pet_admission,
+				pet_description,
+				pet_history,
+				pet_picture,
+				pet_video,
+				pet_added_at,
+                                
+				pet_updated_at", 
+                                "user", 
+                                "adoption.user_id = user.user_id", 
+                                "pet", 
+                                "adoption.pet_id = pet.pet_id",
+                                array("adoption_id" => $adoption_id))[0];
+        
         $this->Android_model->report_missing($data, $adoption_id);
         $jsonStr = array("success" => true, "message" => "Successfully reported this pet as missing.");
+        $this->SaveEventUser->trail($user_id, "Reported ".$adoption->pet_name." as missing.");
         echo json_encode($jsonStr);
     }
 
     public function pet_found() {
         $pet_id = $this->input->post("pet_id");
+        $user_id = $this->input->post("user_id");
+        
         $data = array(
             "adoption_isMissing" => 0,
         );
-
+        
+        $adoption = $this->Android_model->fetchTwo("adoption", "adoption_id,
+				adoption.pet_id,
+				adoption.user_id,
+				adoption_proof_img,
+				adoption_isRead,
+				adoption_isMissing,
+				adoption_adopted_at,
+				user_firstname,
+				user_lastname,
+				user_username,
+				user_password,
+				user_bday,
+				user_sex,
+				user_status,
+				user_email,
+				user_verification_code,
+				user_isverified,
+				user_contact_no,
+				user_picture,
+				user_address,
+				user_added_at,
+				user_updated_at,
+				pet_nfc_tag,
+				pet_name,
+				pet_bday,
+				pet_specie,
+				pet_sex,
+				pet_breed,
+				pet_size,
+				pet_status,
+				pet_access,
+				pet_neutered_spayed,
+				pet_admission,
+				pet_description,
+				pet_history,
+				pet_picture,
+				pet_video,
+				pet_added_at,
+                                
+				pet_updated_at", 
+                                "user", 
+                                "adoption.user_id = user.user_id", 
+                                "pet", 
+                                "adoption.pet_id = pet.pet_id",
+                                array("adoption.pet_id" => $pet_id))[0];
+        
         $this->Android_model->pet_found($data, $pet_id);
         $jsonStr = array("success" => true, "message" => "Successfully found the pet.");
+        $this->SaveEventUser->trail($user_id, $adoption->pet_name." has been found.");
         echo json_encode($jsonStr);
     }
 
@@ -349,14 +440,18 @@ class Android extends CI_Controller {
                         "result" => "Successfully found the user",
                         "user_id" => $accountDetailsUser->user_id
                     );
+                    $this->SaveEventUser->login($accountDetailsUser->user_id);
                     echo json_encode($user);
                 }
             }
         }
     }
-
+    
+    public function logout(){
+        $this->SaveEventUser->logout($this->input->post("user_id"));
+    }
+    
     public function add_to_discovery() {
-
         $data = array(
             "user_id" => $this->input->post("user_id"),
             "pet_id" => $this->input->post("pet_id"),
@@ -364,13 +459,15 @@ class Android extends CI_Controller {
             "discovery_longitude" => $this->input->post("longitude"),
             "discovery_added_at" => time()
         );
-
         if ($this->Android_model->pet_discovery($data)) {
             //SUCCESS
             $response = array(
                 "success" => true,
                 "result" => "Successfully inserted in discovery"
             );
+            $pet = $this->Android_model->fetch("pet", array("pet_id" => $this->input->post("pet_id")), NULL)[0];
+            $user = $this->Android_model->fetch("user", array("user_id" => $this->input->post("user_id")), NULL)[0];
+            $this->SaveEventUser->trail($this->input->post("user_id"), $user->user_firstname." ".$user->user_lastname." found ".$pet->pet_name);
             echo json_encode($response);
         } else {
             //FAILED
@@ -384,8 +481,6 @@ class Android extends CI_Controller {
 
     public function getJson_discoveries() {
         $pet_id = $this->input->post("pet_id");
-        //$user_id = $this->input->post("user_id");
-        //$query = $this->Android_model->get_discoveries(array("discovery.pet_id" => $pet_id, "discovery.user_id" => $user_id));
         $query = $this->Android_model->get_discoveries(array("discovery.pet_id" => $pet_id));
         $data = array(
             "result" => $query
