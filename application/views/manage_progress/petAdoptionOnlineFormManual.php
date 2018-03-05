@@ -3,17 +3,24 @@ Pet Adoption
 ============================-->
 <div class="content-wrapper">
     <div class="container-fluid">
-        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>UserDashboard">Dashboard</a>
+                <a href="<?= base_url() ?>AdminDashboard">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url() ?>PetAdoption">Pet Adoption</a>
+                <a href="<?= base_url() ?>PetManagement">Pet Management</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="<?= base_url() ?>PetManagement/interested_adopters_exec/<?= $pet->pet_id ?>">Interested Adopters</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="<?= base_url() ?>ManageProgress">Manage Progress</a>
             </li>
             <li class="breadcrumb-item active">Online Adoption Application Form</li>
         </ol>
+        <?php include_once (APPPATH . "views/show_error/show_error.php"); ?>
+
         <!-- Registered -->
         <div class="card">
             <div class="card-header">
@@ -21,7 +28,7 @@ Pet Adoption
             </div>
             <div class="card-body container-fluid">
                 <div class="row">
-                    <form method="POST" enctype="multipart/form-data" action ="petAdoptionOnlineFormRepeat_send/<?= $pet->pet_id ?>">
+                    <form method="POST" enctype="multipart/form-data" action ="petAdoptionOnlineFormManual_send/<?= $userInfo->user_id ?>/<?= $pet->pet_id ?>">
                         <div class="row">
                             <div class ="col-sm-3 center"><br><br>
                                 <img src ="<?= base_url(); ?>images/logo/paws.png" class ="img-fluid">
@@ -38,6 +45,7 @@ Pet Adoption
                                 <img src ="<?= base_url(); ?>images/logo/parc.png" class ="img-fluid">
                             </div>
                         </div>
+
                         <div class ="row container">
                             <div class = "col-sm-12">
                                 <center>
@@ -592,12 +600,12 @@ Pet Adoption
                         <div class = "row container  mb-2">
                             <div class="form-group col-sm-6 <?php if (!empty($form_error["num13"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>13.) What will happen to this animal if you have to move unexpectedly?</span>
-                                <textarea id="num13" name="num13" class="form-control <?php if (!empty($form_error["num13"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <textarea id="num13" name="num13" class="form-control <?php if (!empty($form_error["num13"])): ?>is-invalid<?php else: ?><?php endif; ?>"><?= $set_value["num13"] ?></textarea>
                                 <div class="invalid-feedback"><?= $form_error['num13'] ?></div>
                             </div>
                             <div class="form-group col-sm-6 <?php if (!empty($form_error["num14"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>14.) What kind of behavior(s) do you feel unable to accept?</span>
-                                <textarea id="num14" name="num14" rows="3" class="form-control <?php if (!empty($form_error["num13"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <textarea id="num14" name="num14" rows="3" class="form-control <?php if (!empty($form_error["num14"])): ?>is-invalid<?php else: ?><?php endif; ?>"><?= $set_value["num14"] ?></textarea>
                                 <div class="invalid-feedback"><?= $form_error['num14'] ?></div>
                             </div>
                         </div>
@@ -609,7 +617,7 @@ Pet Adoption
                             </div>
                             <div class="form-group col-sm-6 <?php if (!empty($form_error["num16"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>16.) What will happen to your companion animal, when you go on a vacation or in case of emergency?</span>
-                                <textarea id="num16" name="num16" class="form-control <?php if (!empty($form_error["num16"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <textarea id="num16" name="num16" class="form-control <?php if (!empty($form_error["num16"])): ?>is-invalid<?php else: ?><?php endif; ?>"><?= $set_value["num16"] ?></textarea>
                                 <div class="invalid-feedback"><?= $form_error['num16'] ?></div>
                             </div>
                         </div>
@@ -696,7 +704,7 @@ Pet Adoption
                             </div>
                             <div class="form-group col-sm-6 <?php if (!empty($form_error["num20"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>" >
                                 <span>20.) Where will this animal be kept during the Day? Night?</span>
-                                <textarea id="num20" name="num20" class="form-control <?php if (!empty($form_error["num20"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <textarea id="num20" name="num20" class="form-control <?php if (!empty($form_error["num20"])): ?>is-invalid<?php else: ?><?php endif; ?>"><?= $set_value["num20"] ?></textarea>
                                 <div class="invalid-feedback"><?= $form_error['num20'] ?></div>
                             </div>
                         </div>
@@ -806,7 +814,7 @@ Pet Adoption
                             <div class="form-group col-sm-6 <?php if (!empty($form_error["num24"])): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
                                 <span>24.) As a matter of policy, PARC will neuter all animals prior to releasing
                                     for adoption. What is your opinion about spaying and neutering (kapon) of companion animals?</span>
-                                <textarea id="num24" name="num24" class="form-control <?php if (!empty($form_error["num24"])): ?>is-invalid<?php else: ?><?php endif; ?>"></textarea>
+                                <textarea id="num24" name="num24" class="form-control <?php if (!empty($form_error["num24"])): ?>is-invalid<?php else: ?><?php endif; ?>"><?= $set_value["num24"] ?></textarea>
                                 <div class="invalid-feedback"><?= $form_error['num24'] ?></div>
                             </div>
                         </div>

@@ -10,6 +10,7 @@ class MyProgress_model extends CI_Model {
         $on2 = "progress.transaction_id = transaction.transaction_id";
         $join3 = "pet";
         $on3 = "transaction.pet_id = pet.pet_id";
+        $this->db->where(array("pet.pet_access" => 1));
         $this->db->where(array("transaction_isFinished" => 0));
         $this->db->where(array("transaction_isActivated" => 1));
         $this->db->join($join, $on, "left outer");
