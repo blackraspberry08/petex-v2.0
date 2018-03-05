@@ -29,6 +29,11 @@ class SubadminDashboard extends CI_Controller {
     }
 
     public function index() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
         $adopted = $this->AdminDashboard_model->fetch("adoption");
 
         $januaryCount = 0;
@@ -101,6 +106,12 @@ class SubadminDashboard extends CI_Controller {
         $alltransactions = $this->AdminDashboard_model->fetch_all_transactions();
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => "Dashboard",
             'trails' => $this->AuditTrail_model->get_audit_trail("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "trail")),
             'logs' => $this->UserLogs_model->get_userlogs("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "log")),
