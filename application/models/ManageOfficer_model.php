@@ -53,6 +53,17 @@ class ManageOfficer_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
+    public function get_subadmin($subadmin_id = NULL) {
+        $table = "admin";
+        $where = array("admin_isverified" => 1);
+        if (!empty($subadmin_id)) {
+            $this->db->where(array("admin_id" => $subadmin_id, "admin_access" => "Subadmin"));
+        }
+        $this->db->where($where);
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+
     public function get_officer_modules($where = NULL) {
         $table = "module_access";
         $join = "admin";

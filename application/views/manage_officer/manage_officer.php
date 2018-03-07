@@ -43,6 +43,7 @@
             </thead>
             <tbody>
                 <?php foreach ($admins as $admin): ?>
+               
                     <tr>
                         <td><?= $admin->admin_firstname . " " . $admin->admin_lastname ?></td>
                         <td><?= $admin->admin_status == 1 ? "Active" : "Inactive"; ?></td>

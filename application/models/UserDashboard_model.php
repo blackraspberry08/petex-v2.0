@@ -40,6 +40,21 @@ class UserDashboard_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
+    public function get_adopted($where = NULL) {
+        $table = "adoption";
+        $join = "pet";
+        $on = "adoption.pet_id = pet.pet_id";
+        $join2 = "user";
+        $on2 = "adoption.user_id = user.user_id";
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+
     public function fetchJoinThreeProgressDesc($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL) {
         //$on must be array('pet.user_id = user.user_id');
         if (!empty($where)) {
