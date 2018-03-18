@@ -72,13 +72,8 @@ class AdminDashboard extends CI_Controller {
                 }
             }
         }
-//        echo "<pre>";
-//        print_r($january);
-//        echo "</pre>";
-//        die;
 
         $found_animals = $this->AdminDashboard_model->count_found_animal();
-
         $missing_animals = $this->AdminDashboard_model->count_missing_animal();
         $adoptable_animals = $this->AdminDashboard_model->count_adoptable_animal();
         $non_adoptable_animals = $this->AdminDashboard_model->count_non_adoptable_animal();
@@ -91,6 +86,7 @@ class AdminDashboard extends CI_Controller {
         $dogs = $this->AdminDashboard_model->count_dogs();
         $cats = $this->AdminDashboard_model->count_cats();
         $pets = $this->AdminDashboard_model->count_all_animals();
+        
         $allusers = $this->AdminDashboard_model->fetch("user", array("user_status" => 1));
         $alladoptable = $this->AdminDashboard_model->fetch("pet", array("pet_status" => "Adoptable", "pet_access" => 1));
         $allnonadoptable = $this->AdminDashboard_model->fetch("pet", array("pet_status" => "NonAdoptable", "pet_access" => 1));
@@ -100,11 +96,6 @@ class AdminDashboard extends CI_Controller {
         $alldeceased = $this->AdminDashboard_model->fetch("pet", array("pet_status" => "Deceased", "pet_access" => 1));
         $alltransactions = $this->AdminDashboard_model->fetch_all_transactions();
         $allMissing = $this->AdminDashboard_model->fetch_all_missing();
-
-//        echo "<pre>";
-//        print_r($allMissing);
-//        echo "<pre>";
-//        die;
         $allFound = $this->AdminDashboard_model->fetch_all_found();
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(

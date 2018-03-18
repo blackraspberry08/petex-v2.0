@@ -421,7 +421,7 @@ class PetAdoption extends CI_Controller {
                         $pdf->SetAuthor('Author');
                         $pdf->SetDisplayMode('real', 'default');
                         $pdf->AddPage();
-                        $html = '<img src ="images/logo/header.png" style="height:100px" class ="img-fluid">';
+                        $html = '<img src ="https://preview.ibb.co/nKQfcn/header.png" style="height:100px" class ="img-fluid">';
                         $pdf->writeHTML($html, true, false, true, false, '');
 
                         $html = '<div style="text-align:right"><label style="font-weight:bold">Date of Application : </label>' . $date . '</div>';
@@ -483,8 +483,7 @@ class PetAdoption extends CI_Controller {
                         $pdf->writeHTML($html, true, false, true, false, '');
 
                         $pdf->AddPage(); //ADD PAGE
-
-                        $html = '<img src ="images/logo/questionaire.png" style="height:100px;" class ="img-fluid">';
+                        $html = '<img src ="https://preview.ibb.co/jCDnQ7/questionaire.png" style="height:100px;" class ="img-fluid">';
                         $pdf->writeHTML($html, true, false, true, false, '');
 
                         $html = '<br><div style="text-align:left"><label style="font-weight:bold">1.) Why did you decide to adopt an animal from PAWS?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><label style="color:red">- ' . $num1 . '</label></div>';
@@ -735,7 +734,7 @@ class PetAdoption extends CI_Controller {
                             $pdf->writeHTML($html, true, false, true, false, '');
                         }
 //[Docuement_Root] sa pag Up
-                        $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'petexphil/download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf', 'F');
+                        $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf', 'F');
                         $data = array(
                             "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf',
                         );
@@ -971,7 +970,7 @@ class PetAdoption extends CI_Controller {
             $pdf->SetAuthor('Author');
             $pdf->SetDisplayMode('real', 'default');
             $pdf->AddPage();
-            $html = '<img src ="images/logo/header.png" style="height:100px" class ="img-fluid">';
+            $html = '<img src ="https://preview.ibb.co/nKQfcn/header.png" style="height:100px" class ="img-fluid">';
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $html = '<div style="text-align:right"><label style="font-weight:bold">Date of Application : </label>' . $date . '</div>';
@@ -1034,7 +1033,7 @@ class PetAdoption extends CI_Controller {
 
             $pdf->AddPage(); //ADD PAGE
 
-            $html = '<img src ="images/logo/questionaire.png" style="height:100px;" class ="img-fluid">';
+            $html = '<img src ="https://preview.ibb.co/jCDnQ7/questionaire.png" style="height:100px;" class ="img-fluid">';
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $html = '<br><div style="text-align:left"><label style="font-weight:bold">1.) Why did you decide to adopt an animal from PAWS?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><label style="color:red">- ' . $num1 . '</label></div>';
@@ -1285,7 +1284,7 @@ class PetAdoption extends CI_Controller {
                 $pdf->writeHTML($html, true, false, true, false, '');
             }
 //[Document_Root] sa pag Up
-            $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'petexphil/download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf', 'F');
+            $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf', 'F');
             $data = array(
                 "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf',
             );
