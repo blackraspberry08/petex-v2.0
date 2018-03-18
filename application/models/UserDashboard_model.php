@@ -57,20 +57,21 @@ class UserDashboard_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
-    public function fetchJoinThreeProgressDesc($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL) {
+    public function fetchJoinThreeProgressDesc($where = NULL) {
         //$on must be array('pet.user_id = user.user_id');
+        $table = "transaction";
+        $join = "pet";
+        $on = "transaction.pet_id = pet.pet_id";
+        $join2 = "user";
+        $on2 = "transaction.user_id = user.user_id";
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->count_all_results($table);
         if (!empty($where)) {
             $this->db->where($where);
         }
-        if (!(empty($join) || empty($on))) {
-            $this->db->join($join, $on, "left outer");
-        }
-        if (!(empty($join2) || empty($on2))) {
-            $this->db->join($join2, $on2, "left outer");
-        }
-        $this->db->order_by('transaction_started_at', 'asc');
-        $query = $this->db->get($table);
-        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+        $this->db->from($table);
+        return $this->db->count_all_results();
     }
 
     public function fetchJoinProgress($where = NULL) {

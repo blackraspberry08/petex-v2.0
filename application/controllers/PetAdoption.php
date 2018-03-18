@@ -38,28 +38,6 @@ class PetAdoption extends CI_Controller {
         }
     }
 
-    public function download_exec() {
-        $this->session->set_userdata("animal_id", $this->uri->segment(3));
-        redirect(base_url() . "PetAdoption/download");
-    }
-
-    public function download() {
-        $animal_id = $this->session->userdata("animal_id");
-        $data = array(
-            'pet_id' => $animal_id,
-            'user_id' => $this->session->userdata("userid"),
-            'transaction_progress' => 0,
-            'transaction_isActivated' => 1,
-            'transaction_started_at' => time(),
-            'transaction_finished_at' => 0
-        );
-
-        if ($this->PetAdoption_model->singleinsert("transaction", $data)) {
-            $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "download an adoption form");
-            redirect(base_url() . "PetAdoption/progress");
-        }
-    }
-
     public function progress() {
         $transactionId = $this->PetAdoption_model->fetch("transaction", array("user_id" => $this->session->userdata("userid")))[0];
 
@@ -1289,7 +1267,7 @@ class PetAdoption extends CI_Controller {
             $data = array(
                 "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf',
             );
-           
+
             if ($this->PetAdoption_model->update_adoption_form($data, array("transaction_id" => $transactionId->transaction_id))) {
 
                 $this->SaveEventUser->trail($this->session->userdata("userid"), $userDetails->user_firstname . "fill up an adoption form");
