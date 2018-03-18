@@ -35,13 +35,13 @@ class UserDashboard extends CI_Controller {
         $allAdopted = $this->UserDashboard_model->get_adopted();
 
         $myAdopted = $this->UserDashboard_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", array("user.user_id" => $this->session->userdata("userid")));
-      
+
         $myPets = $this->UserDashboard_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id", array("user.user_id" => $this->session->userdata("userid")))[0];
         $petAdopters = $this->UserDashboard_model->fetchJoinThreeProgressDesc("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id");
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
         $userInfo = $this->UserDashboard_model->fetchJoinProgress(array('transaction.user_id' => $this->session->userid));
 //        echo "<pre>";
-//        print_r($allAdopted);
+//        print_r($allPets);
 //        echo "</pre>";
 //        die;
 

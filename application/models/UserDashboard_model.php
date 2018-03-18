@@ -7,6 +7,7 @@ class UserDashboard_model extends CI_Model {
         if (!empty($where)) {
             $this->db->where($where);
         }
+        $this->db->limit(4);
         $this->db->order_by('pet_added_at', 'desc');
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
@@ -51,6 +52,7 @@ class UserDashboard_model extends CI_Model {
         if (!empty($where)) {
             $this->db->where($where);
         }
+        $this->db->limit(4);
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
