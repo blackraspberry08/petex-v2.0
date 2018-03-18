@@ -112,4 +112,3 @@ class Android_model extends CI_Model {
 	}
 		
 }
-

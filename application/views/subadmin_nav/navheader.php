@@ -145,7 +145,7 @@ Admin Nav Header
                             <div class ="row no-gutters">
                                 <div class = "col-lg-4 ">
                                     <div class="profile-header-img ">
-                                        <img class="img-circle" src="<?= base_url() . $user_picture ?>" />
+                                        <img class="img-circle" src="<?= base_url() . $user_picture ?>" width="75" />
                                     </div>
                                 </div>
                                 <div class = "col-lg-8" style = "overflow:hidden;">

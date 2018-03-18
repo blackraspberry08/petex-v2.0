@@ -41,7 +41,7 @@ Pet Adoption
                         <div class ="row container">
                             <div class = "col-sm-12">
                                 <center>
-                                    <p style = "font-weight: bold;">You will still need to have an interview with an adoption counselor, prior to approval of your application.<br>
+                                    <p style = "font-weight: bold;">You will still need to have an interview with an adoption counsellor, prior to approval of your application.<br>
                                         Filling out this form will save time at the shelter, but not substitute for an in-person interview.<br><Br></p>
                                 </center>
                             </div>
