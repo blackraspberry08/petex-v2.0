@@ -121,6 +121,9 @@ class PetAdoption extends CI_Controller {
     public function petAdoptionOnlineForm() {
         $errors = $this->session->userdata("validationErrors");
         $values = $this->session->userdata("validationValues");
+//        echo "<pre>";
+//        print_r($values);
+//        echo "</pre>";
         $selectedPetId = $this->session->userdata("petadopterid");
         $userInfo = $this->PetAdoption_model->getinfo('user', array('user_id' => $this->session->userid))[0];
         $pet = $this->PetAdoption_model->fetch('pet', array('pet_id' => $selectedPetId))[0];
@@ -164,7 +167,7 @@ class PetAdoption extends CI_Controller {
         $this->form_validation->set_rules('yearslived', "Years Lived", "required|is_natural_no_zero");
         $this->form_validation->set_rules('num15', "No. 15", "required|is_natural");
         if ($this->form_validation->run() == FALSE) {
-//ERROR IN FORM
+            //ERROR IN FORM
             $errors = array(
                 "numhome" => form_error('numhome'),
                 "numwork" => form_error('numwork'),
@@ -882,10 +885,7 @@ class PetAdoption extends CI_Controller {
             $num2ifyes = $this->input->post('num2ifyes');
             $num2ifYesSpecie = $this->input->post('num2ifYesSpecie');
             $transactionId = $this->PetAdoption_model->fetch("transaction", array("user_id" => $this->session->userdata("userid")))[0];
-//            echo "<pre>";
-//            print_r($transactionId);
-//            echo "</pre>";
-//            die;
+
             if ($num4 == 'Yes') {
                 $file_name = $transactionId->transaction_id . "_adopter-" . $transactionId->user_id . "_pet-" . $transactionId->pet_id . ".pdf";
                 $config['upload_path'] = './download/permit/';
