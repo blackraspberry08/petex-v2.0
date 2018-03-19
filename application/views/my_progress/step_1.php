@@ -1,6 +1,7 @@
 
 <?php
 $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $progress->transaction_id))[0];
+$petAdopters = $this->UserDashboard_model->fetchJoinThreeProgressDesc(array('transaction.pet_id' => $progress_1->pet_id));
 ?>
 <div class="col-md-12">
     <div class="row">
@@ -17,15 +18,13 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
                     <?php else: ?>
                         <i class="fa fa-venus" style="color:red"></i> <?= $progress_1->pet_sex ?><br>
                     <?php endif; ?>
-                    <i class="fa fa-paw"></i> <?= $progress_1->pet_breed ?><br>
-                    <i class="fa fa-check-square" style="color:green"></i> <?= $progress_1->pet_status ?>
+                    <i class="fa fa-paw"></i> <?= $progress_1->pet_breed ?><br>   
+                    <i class="fa fa-users"></i> <?= $petAdopters ?><br>
                 </div>
 
                 <div class="card-footer text-center">
                     <div class = "btn-group" role="group" aria-label="Button Group">
                         <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_1->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
-                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_1->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
-                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $progress_1->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
                     </div>
                 </div>
             </div>
@@ -124,8 +123,13 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
 
         </div>
     </div>
+    <div class="row">
+        <div class="embed-responsive embed-responsive-16by9 my-5 rounded">
+            <iframe class="embed-responsive-item" src="<?= base_url() . $adoption_form->adoption_form_location ?>" allowfullscreen type="application/pdf"></iframe>
+        </div>
+    </div>
 </div>
-<!-- Modal Details -->
+<!-- Modal Detail -->
 <div class="modal fade <?= $progress_1->pet_id; ?>detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -141,15 +145,15 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
                         <img src = "<?= $this->config->base_url() . $progress_1->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
                     </div>
                     <div class ="col-md-7">
-                        <table class = "table table-responsive table-striped">
+                        <table class = "table table-striped">
                             <tbody>
                                 <tr>
                                     <th>Name: </th>
                                     <td><?= $progress_1->pet_name; ?></td>
                                 </tr>
                                 <tr>
-                                    <th>Status: </th>
-                                    <td><?= $progress_1->pet_status; ?></td>
+                                    <th>Interested Adopters: </th>
+                                    <td><?= $petAdopters ?></td>
                                 </tr>
                                 <tr>
                                     <th>Size: </th>
@@ -193,81 +197,58 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Medical -->
-<?php $medical = $this->MyProgress_model->get_animal_medical_records(array("medical_record.pet_id" => $progress_1->pet_id))[0]; ?>
-<div class="modal fade <?= $progress_1->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><i class = "fa fa-stethoscope"></i> Medical Records</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class ="row">
-                    <div class = "col-lg-12">
-                        <?php if (empty($medical)): ?>
-                            <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
-                        <?php else: ?>
-                            <table class = "table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <th>Date: </th>
-                                        <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Weight: </th>
-                                        <td><?= $medical->medicalRecord_weight; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Diagnosis: </th>
-                                        <td><?= $medical->medicalRecord_diagnosis; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Treatment: </th>
-                                        <td><?= $medical->medicalRecord_treatment; ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Video -->
-<div class="modal fade <?= $progress_1->pet_id; ?>video" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><i class = "fa fa-video-camera"></i> Pet Video</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row container">
-                    <?php if ($progress_1->pet_video == NULL): ?>
-                        <h2>This pet has no Video</h2>
-                    <?php else: ?>
-                        <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
-                            <?= wrap_iframe($progress_1->pet_video); ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fa fa-stethoscope"></i> Medical Record</h5>
+                            </div>
+                            <div class="card-body">
+                                <?php if (empty($medical)): ?>
+                                    <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
+                                <?php else: ?>
+                                    <table class = "table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Date: </th>
+                                                <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Weight: </th>
+                                                <td><?= $medical->medicalRecord_weight; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Diagnosis: </th>
+                                                <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Treatment: </th>
+                                                <td><?= $medical->medicalRecord_treatment; ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    <?php endif; ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <br>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fa fa-video-camera"></i> Video</h5>
+                            </div>
+                            <div class="card-body">
+                                <?php if ($progress_1->pet_video == NULL): ?>
+                                    <h2>This pet has no Video</h2>
+                                <?php else: ?>
+                                    <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                        <?= wrap_iframe($progress_1->pet_video); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -275,4 +256,4 @@ $progress_1 = $this->ManageProgress_model->get_progress(array("progress.checklis
             </div>
         </div>
     </div>
-</div>
+</div>    
