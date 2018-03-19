@@ -201,6 +201,7 @@ class PetAdoption extends CI_Controller {
                 "num24" => set_value('num24'),
                 "yearslived" => set_value('yearslived'),
                 "num15" => set_value('num15'),
+                "num25" => set_value('num25'),
             );
             $this->session->set_flashdata("validationErrors", $errors);
             $this->session->set_flashdata("validationValues", $values);
@@ -714,8 +715,8 @@ class PetAdoption extends CI_Controller {
                             $html = '<br><div style="text-align:left"><label style="font-weight:bold">25.) Do you have questions and comments?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><label style="color:red">- ' . $num25 . '</label></div>';
                             $pdf->writeHTML($html, true, false, true, false, '');
                         }
-//[Docuement_Root] sa pag Up
-                        $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf', 'F');
+                        //[Docuement_Root] sa pag Up
+                        $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'petexphil/download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf', 'F');
                         $data = array(
                             "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionForm.pdf',
                         );
@@ -812,6 +813,7 @@ class PetAdoption extends CI_Controller {
                 "num24" => set_value('num24'),
                 "yearslived" => set_value('yearslived'),
                 "num15" => set_value('num15'),
+                "num25" => set_value('num25'),
             );
             $this->session->set_flashdata("validationErrors", $errors);
             $this->session->set_flashdata("validationValues", $values);
@@ -1262,7 +1264,7 @@ class PetAdoption extends CI_Controller {
                 $pdf->writeHTML($html, true, false, true, false, '');
             }
 //[Document_Root] sa pag Up
-            $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf', 'F');
+            $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'petexphil/download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf', 'F');
             $data = array(
                 "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormRepeat.pdf',
             );
