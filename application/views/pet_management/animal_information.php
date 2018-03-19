@@ -114,125 +114,85 @@ function wrap_iframe($src) {
                         </ul>
                     </div>
                     <div class ="col-lg-9 col-md-12 py-4" id = "animal_info">
-                        <form enctype="multipart/form-data" action = "<?= base_url() ?>PetManagement/edit_animal_info_exec/<?= $animal->pet_id ?>" method = "POST">
-                            <div class="form-row">
-                                <div class="form-group col-md-6 <?php if (!empty(form_error("pet_name"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
-                                    <label for="pet_name"  class=form-control-label">Name</label>
-                                    <input type="text" class="form-control <?php if (!empty(form_error("pet_name"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_name" name = "pet_name" value = "<?= set_value("pet_name", $animal->pet_name); ?>">
-                                    <div class="invalid-feedback"><?= form_error('pet_name') ?></div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="pet_bday">Birthday</label>
-                                    <input readonly type="text" class="form-control form_datetime" id="pet_bday" name = "pet_bday" value = "<?= set_value("pet_bday", date("F d, Y", $animal->pet_bday)); ?>">
-                                </div>
+                        <a class="btn btn-outline-info pull-right" href="<?= base_url() ?>PetManagement/animal_edit_exec/<?= $animal->pet_id; ?>"><i class="fa fa-pencil"></i> Edit Information</a>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Name</h6>
+                                <label><?= $animal->pet_name; ?></label>
                             </div>
-                            <div class="form-group <?php if (!empty(form_error("pet_breed"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
-                                <label for="pet_breed" class=form-control-label">Breed</label>
-                                <input type="text" class="form-control <?php if (!empty(form_error("pet_breed"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_breed" name = "pet_breed" value = "<?= set_value("pet_breed", $animal->pet_breed); ?>">
-                                <div class="invalid-feedback"><?= form_error('pet_breed') ?></div>
+                            <div class="col-md-6">
+                                <h6 for="pet_bday">Birthday</h6>
+                                <label> <?= date("F d, Y", $animal->pet_bday); ?></label>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for = "pet_status">Status</label>
-                                    <?php if ($animal->pet_status == "Adopted"): ?>
-                                        <input class="form-control" name = "pet_status" id="pet_status" value = "Adopted" readonly>
-                                    <?php else: ?>
-                                        <select class="form-control" name = "pet_status" id="pet_status">
-                                            <option value = "Adoptable" <?= $animal->pet_status == "Adoptable" ? "selected" : ""; ?>>Adoptable</option>
-                                            <option value = "NonAdoptable" <?= $animal->pet_status == "NonAdoptable" ? "selected" : ""; ?>>Not Adoptable</option>
-                                        </select>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="pet_sex">Gender</label>
-                                    <select class="form-control" name = "pet_sex" id="pet_sex">
-                                        <option value = "Male" <?= $animal->pet_sex == "Male" ? "selected" : ""; ?>>Male</option>
-                                        <option value = "Female" <?= $animal->pet_sex == "Female" ? "selected" : ""; ?>>Female</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="pet_size">Size</label>
-                                    <select class="form-control" name = "pet_size" id="pet_size">
-                                        <option value = "S" <?= $animal->pet_size == "S" ? "selected" : ""; ?>>Small</option>
-                                        <option value = "M" <?= $animal->pet_size == "M" ? "selected" : ""; ?>>Medium</option>
-                                        <option value = "L" <?= $animal->pet_size == "L" ? "selected" : ""; ?>>Large</option>
-                                        <option value = "XL" <?= $animal->pet_size == "XL" ? "selected" : ""; ?>>X Large</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <br>
+                        <h6 for="pet_breed" class=form-control-label">Breed</h6>
+                        <label> <?= $animal->pet_breed; ?></label><br><br>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6>Status</h6>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for = "pet_specie">Specie</label>
-                                    <select class="form-control" name = "pet_specie" id="pet_specie">
-                                        <option value = "Canine" <?= $animal->pet_specie == "Canine" ? "selected" : ""; ?>>Canine</option>
-                                        <option value = "Feline" <?= $animal->pet_specie == "Feline" ? "selected" : ""; ?>>Feline</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="pet_admission">Admission</label>
-                                    <select class="form-control" name = "pet_admission" id="pet_admission">
-                                        <option value = "Foster" <?= $animal->pet_admission == "Foster" ? "selected" : ""; ?>>Foster</option>
-                                        <option value = "PARC" <?= $animal->pet_admission == "PARC" ? "selected" : ""; ?>>PARC</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="pet_neutered_spayed"><?= $animal->pet_sex == "Male" ? "Neutered" : "Spayed"; ?></label>
-                                    <select class="form-control" name = "pet_neutered_spayed" id="pet_neutered_spayed">
-                                        <option value = "1" <?= $animal->pet_neutered_spayed == 1 ? "selected" : ""; ?>>Yes</option>
-                                        <option value = "0" <?= $animal->pet_neutered_spayed == 0 ? "selected" : ""; ?>>No</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-4">
+                                <h6>Gender</h6>
                             </div>
-                            <div class="form-group <?php if (!empty(form_error("pet_description"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
-                                <label for="pet_description" class=form-control-label">Description</label>
-                                <textarea class="form-control <?php if (!empty(form_error("pet_description"))): ?>is-invalid<?php else: ?><?php endif; ?>" name = "pet_description" rows = "3"><?= set_value("pet_description", $animal->pet_description); ?></textarea>
-                                <div class="invalid-feedback"><?= form_error('pet_description') ?></div>
+                            <div class="col-md-4">
+                                <h6>Size</h6>
                             </div>
-                            <div class="form-group <?php if (!empty(form_error("pet_history"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
-                                <label for="pet_history" class=form-control-label">History</label>
-                                <textarea class="form-control <?php if (!empty(form_error("pet_history"))): ?>is-invalid<?php else: ?><?php endif; ?>" name = "pet_history" rows = "3"><?= set_value("pet_history", $animal->pet_history); ?></textarea>
-                                <div class="invalid-feedback"><?= form_error('pet_history') ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label> <?= $animal->pet_status; ?> </label>
+
                             </div>
-                            <div class = "form-group">
-                                <label for ="pet_picture">Picture</label>
-                                <div class="custom-file-container" data-upload-id="pet_picture">
-                                    <label class="custom-file-container__custom-file" >
-                                        <input type="file" name = "pet_picture" id = "pet_picture_edit" class="custom-file-container__custom-file__custom-file-input" accept="image/*" onClick="this.form.reset()">
-                                        <input type="hidden" name="MAX_FILE_SIZE" value = "10485760"/>
-                                        <span class="custom-file-container__custom-file__custom-file-control"></span>
-                                        <button class="custom-file-container__image-clear">x</button>
-                                    </label>
-                                    <small id="videoHelp" class="form-text text-muted">
-                                        Max size is 5MB. Allowed types is .jpg, .jpeg, .gif, .png<br>
-                                        <small><i>Leave this blank if you don't want to change the current image.</i></small>
-                                    </small>
-                                    <div class="custom-file-container__image-preview" id = "pet_picture_edit_preview"></div>
-                                </div>
+                            <div class="col-md-4">
+                                <label><?= $animal->pet_sex ?> </label>
                             </div>
-                            <div class="form-group <?php if (!empty(form_error("pet_video"))): ?>has-danger<?php else: ?>has-success<?php endif; ?>">
-                                <label for="pet_video" class="form-control-label">Video</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class = "fa fa-link"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control <?php if (!empty(form_error("pet_video"))): ?>is-invalid<?php else: ?><?php endif; ?>" id="pet_video" placeholder="Paste Link Here" name = "pet_video" value = '<?= set_value("pet_video", wrap_iframe($animal->pet_video)); ?>'>
-                                </div>
-                                <div class="invalid-feedback"><?= form_error('pet_video') ?></div>
-                                <small id="videoHelp" class="form-text text-muted">
-                                    Right click on a youtube video, and select "Copy embed code". Paste it here.<br>
-                                    <small><i>Leave this blank if you don't want to change the current video.</i></small>
-                                </small>
+                            <div class="col-md-4">
+                                <label><?= $animal->pet_size ?> </label>
                             </div>
-                            <?php if (!empty($animal->pet_video)): ?>
-                                <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
-                                    <?= wrap_iframe($animal->pet_video); ?>
-                                </div>
-                            <?php endif; ?>
-                            <div class ="text-center">
-                                <button type="reset" class="btn btn-outline-secondary" id = "btnReset_edit">Reset</button>
-                                <button type="submit" class="btn btn-outline-primary">Save Changes</button>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6 for = "pet_specie">Specie</h6>
                             </div>
-                        </form>
+                            <div class="col-md-4">
+                                <h6 for="pet_admission">Admission</h6>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 for="pet_neutered_spayed"><?= $animal->pet_sex == "Male" ? "Neutered" : "Spayed"; ?></h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label> <?= $animal->pet_specie; ?> </label>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label><?= $animal->pet_admission ?> </label>
+                            </div>
+                            <div class="col-md-4">
+                                <?php if ($animal->pet_neutered_spayed == 1): ?>
+                                    <label>Yes</label>
+                                <?php else: ?>
+                                    <label>No</label>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <br>
+                        <h6 for="pet_description" class=form-control-label">Description</h6>
+                        <label><?= $animal->pet_description ?></label><br><br>
+                        <h6 for="pet_history" class=form-control-label">History:</h6>
+                        <label><?= $animal->pet_history ?></label><br><br>
+                        <h6 for="pet_video" class="form-control-label">Video:</h6>
+
+                        <?php if (!empty($animal->pet_video)): ?>
+                            <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                <?= wrap_iframe($animal->pet_video); ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -243,7 +203,7 @@ function wrap_iframe($src) {
     <!-- Bootstrap File Upload with preview -->
     <script src = "https://unpkg.com/file-upload-with-preview"></script>
     <script>
-                                            var upload = new FileUploadWithPreview('pet_picture')
+        var upload = new FileUploadWithPreview('pet_picture')
     </script>
     <!-- Bootstrap File Upload with preview -->
     <script>
