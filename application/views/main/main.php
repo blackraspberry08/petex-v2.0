@@ -198,9 +198,11 @@
     <!--==========================
       Portfolio Section
     ============================-->
+     <br>
     <section id="adoptables">
         <div class="container wow fadeInUp">
             <div class="section-header">
+               
                 <h3 class="section-title">Adoptables</h3>
                 <p class="section-description">These are the current adoptables in PAWS.</p>
             </div>

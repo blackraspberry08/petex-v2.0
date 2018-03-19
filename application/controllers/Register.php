@@ -44,8 +44,8 @@ class Register extends CI_Controller {
 
     public function register_exec() {
         $this->form_validation->set_rules("username", "Username", "required|min_length[5]|is_unique[user.user_username]");
-        $this->form_validation->set_rules("password", "Password", "required|matches[conpassword]|alpha_numeric|min_length[8]");
-        $this->form_validation->set_rules("conpassword", "Confirm Password", "required|matches[password]|alpha_numeric|min_length[8]");
+        $this->form_validation->set_rules("password", "Password", "required|matches[conpassword]|min_length[8]");
+        $this->form_validation->set_rules("conpassword", "Confirm Password", "required|matches[password]|min_length[8]");
         $this->form_validation->set_rules("email", "Email", "required|valid_email");
         $this->form_validation->set_rules("phone", "Mobile Phone No.", "required|numeric|regex_match[^(09|\+639)\d{9}$^]");
         $this->form_validation->set_rules("lname", "Lastname", "required|min_length[2]|callback__alpha_dash_space");

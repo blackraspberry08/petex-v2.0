@@ -1452,7 +1452,7 @@ class ManageProgress extends CI_Controller {
                 $pdf->SetAuthor('Author');
                 $pdf->SetDisplayMode('real', 'default');
                 $pdf->AddPage();
-                $html = '<img src ="images/logo/header.png" style="height:100px" class ="img-fluid">';
+                $html = '<img src ="https://preview.ibb.co/dFVuoS/header.png" style="height:100px" class ="img-fluid">';
                 $pdf->writeHTML($html, true, false, true, false, '');
 
                 $html = '<div style="text-align:right"><label style="font-weight:bold">Date of Application : </label>' . $date . '</div>';
@@ -1514,8 +1514,7 @@ class ManageProgress extends CI_Controller {
                 $pdf->writeHTML($html, true, false, true, false, '');
 
                 $pdf->AddPage(); //ADD PAGE
-
-                $html = '<img src ="images/logo/questionaire.png" style="height:100px;" class ="img-fluid">';
+                $html = '<img src ="https://preview.ibb.co/j6tVTS/questionaire.png" style="height:100px;" class ="img-fluid">';
                 $pdf->writeHTML($html, true, false, true, false, '');
 
                 $html = '<br><div style="text-align:left"><label style="font-weight:bold">1.) Why did you decide to adopt an animal from PAWS?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><label style="color:red">- ' . $num1 . '</label></div>';
@@ -1766,7 +1765,7 @@ class ManageProgress extends CI_Controller {
                     $pdf->writeHTML($html, true, false, true, false, '');
                 }
 //[Document_Root] sa pag Up
-                $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'petexphil/download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormManual.pdf', 'F');
+                $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormManual.pdf', 'F');
                 $data = array(
                     "adoption_form_location" => 'download/pending/' . $transactionId->transaction_id . '_adopter-' . $transactionId->user_id . '_pet-' . $transactionId->pet_id . '_OnlineAdoptionFormManual.pdf',
                 );

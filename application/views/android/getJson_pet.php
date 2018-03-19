@@ -4,7 +4,7 @@ foreach($result as $res){
     array_push($array['pet'], 
             array(
             'pet_id' =>$res->pet_id, 
-			'pet_nfc_tag' => $res->pet_nfc_tag
+            'pet_nfc_tag' => $res->pet_nfc_tag,
             'pet_name' =>$res->pet_name,
             'pet_bday' =>$res->pet_bday,
             'pet_specie' =>$res->pet_specie,

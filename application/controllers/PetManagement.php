@@ -81,16 +81,12 @@ class PetManagement extends CI_Controller {
             $this->load->view("admin_nav/navheader");
         }
         $this->load->view("pet_management/main");
-        $this->load->view("dashboard/includes/footer")
-
-        ;
+        $this->load->view("dashboard/includes/footer");
     }
 
     public function medical_records_exec() {
         $this->session->set_userdata("medical_records", $this->uri->segment(3));
-        redirect(base_url() . "PetManagement/medical_records")
-
-        ;
+        redirect(base_url() . "PetManagement/medical_records");
     }
 
     public function medical_records() {
@@ -125,9 +121,7 @@ class PetManagement extends CI_Controller {
             $this->load->view("admin_nav/navheader");
         }
         $this->load->view("medical_records/medical_records");
-        $this->load->view("dashboard/includes/footer")
-
-        ;
+        $this->load->view("dashboard/includes/footer");
     }
 
     public function add_medical_record_exec() {
@@ -361,8 +355,8 @@ class PetManagement extends CI_Controller {
             );
 
             $this->PetManagement_model->update_animal_record($pet, array("pet_id" => $animal->pet_id));
-			$this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated the record of " . $animal->pet_name);
-			$this->session->set_flashdata("uploading_success", "Successfully updated the record of " . $animal->pet_name);
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated the record of " . $animal->pet_name);
+            $this->session->set_flashdata("uploading_success", "Successfully updated the record of " . $animal->pet_name);
             redirect(base_url() . "PetManagement/animal_info");
         }
     }
@@ -607,4 +601,33 @@ class PetManagement extends CI_Controller {
         redirect(base_url() . "ManageProgress");
     }
 
+    public function search_pet(){
+        $word = $this->input->post("search_word");
+        $matched_pet = $this->PetManagement_model->search_animal($word);
+        if($word == ""){
+            $all_animals = $this->PetManagement_model->get_all_animals();
+            $data = array(
+                "success"   => 1,
+                "result"     => "",
+                "pets"      => $all_animals
+            );
+        }else{
+            if(empty($matched_pet)){
+                $data = array(
+                    "success"   => 2,
+                    "result"     => "No Matches Found",
+                    "pets"      => $matched_pet
+                );
+            }else{
+                $data = array(
+                    "success"   => 3,
+                    "result"     => count($matched_pet)." results found",
+                    "pets"      => $matched_pet
+                );
+            }
+            
+        }
+        
+        echo json_encode($data);
+    }
 }
