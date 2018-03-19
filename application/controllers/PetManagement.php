@@ -287,6 +287,48 @@ class PetManagement extends CI_Controller {
         ;
     }
 
+    public function animal_edit_exec() {
+        $this->session->set_userdata("animal_info", $this->uri->segment(3));
+        redirect(base_url() . "PetManagement/animal_edit_info")
+
+        ;
+    }
+
+    public function animal_edit_info() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
+        $animal_id = $this->session->userdata("animal_info");
+        $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
+            'title' => $animal->pet_name . " | Pet Information",
+            'animal' => $animal,
+            //  NAV INFO
+            'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
+        $this->load->view("pet_management/animal_edit_information");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
+    }
+
     public function edit_animal_info_exec() {
         header('X-XSS-Protection:0');
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $this->uri->segment(3)))[0];
@@ -601,7 +643,7 @@ class PetManagement extends CI_Controller {
         redirect(base_url() . "ManageProgress");
     }
 
-    public function search_pet(){
+    public function search_pet() {
         $word = $this->input->post("search_word");
         $filter = $this->input->post("filter");
         if($filter == "nofilter"){
@@ -612,27 +654,27 @@ class PetManagement extends CI_Controller {
         if($word == "" && $filter == "nofilter"){
             $all_animals = $this->PetManagement_model->get_all_animals();
             $data = array(
-                "success"   => 1,
-                "result"     => "",
-                "pets"      => $all_animals
+                "success" => 1,
+                "result" => "",
+                "pets" => $all_animals
             );
-        }else{
-            if(empty($matched_pet)){
+        } else {
+            if (empty($matched_pet)) {
                 $data = array(
-                    "success"   => 2,
-                    "result"     => "No Matches Found",
-                    "pets"      => $matched_pet
+                    "success" => 2,
+                    "result" => "No Matches Found",
+                    "pets" => $matched_pet
                 );
-            }else{
+            } else {
                 $data = array(
-                    "success"   => 3,
-                    "result"     => count($matched_pet)." results found",
-                    "pets"      => $matched_pet
+                    "success" => 3,
+                    "result" => count($matched_pet) . " results found",
+                    "pets" => $matched_pet
                 );
             }
-            
         }
-        
+
         echo json_encode($data);
     }
+
 }
