@@ -1,15 +1,80 @@
 <script>
     $(document).ready(function(){
+        $("#filter_select").on("change", function() {
+            var search_word = $("#search_text").val();
+            var filter = $(this).val();
+            console.log("FILTER = " + filter);
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url() ?>' + "PetManagement/search_pet",
+                "dataType": "JSON",
+                "data": {
+                    'search_word': search_word,
+                    'filter' : filter
+                },
+                success: function (res) {
+                    /*
+                     * NOTE: 9 FUCKING HOURS
+                     * ========= res.success CODES =========*
+                     * 1 - NO STRINGS.......SHOW ALL PETS
+                     * 2 - NO MATCH FOUND...SHOW NONE
+                     * 3 - MATCH FOUND......SHOW RESULTS
+                     * ====================================*
+                     */
+
+                    switch(res.success){
+                        case 1:{
+                                console.log(":: CASE 1 ::");
+                                $("#search_result").html(res.result);
+                                $(".pet-card").show();
+                                break;
+                        }
+                        case 2:{
+                                console.log(":: CASE 2 ::");
+                                $("#search_result").html(res.result);
+                                $(".pet-card").hide();
+                                break;
+                        }
+                        case 3:{
+                                console.log(":: CASE 3 ::");
+                                var pet_ids = [];
+                                $.each(res.pets, function( index, value ) {
+                                     pet_ids.push(value.pet_id);
+                                });
+                                $("#search_result").html(res.result);
+                                $(".pet-card").hide();
+                                $(".pet-card").filter(
+                                        function(){
+                                            return pet_ids.includes($(".pet_id", this).attr("value"));
+                                        }).show();
+                                break;
+                        }
+                        default:{
+                                console.log(":: DEFAULT ::");
+                                $(".pet-card").show();
+                                break;
+                        }
+                    }
+                    console.log(res);
+                },
+                error: function(res){
+                    swal("Reload", "Something Went Wrong", "error");
+                }
+            });
+        });
         $("#search_text").bind("keyup", function(e) {
             //on letter number
             if (e.which <= 90 && e.which >= 48 || e.which === 8){
                 var search_word = $(this).val();
+                var filter = $('#filter_select').val();
+                console.log("FILTER = " + filter);
                 $.ajax({
                     "method": "POST",
                     "url": '<?= base_url() ?>' + "PetManagement/search_pet",
                     "dataType": "JSON",
                     "data": {
                         'search_word': search_word,
+                        'filter' : filter
                     },
                     success: function (res) {
                         /*
@@ -95,6 +160,15 @@
                         <span class="input-group-text" id="basic-addon1"><i class = "fa fa-search"></i></span>
                     </div>
                     <input id = "search_text" type="text" class="form-control" placeholder="Search the name of pet" aria-label="Pet's Name" aria-describedby="basic-addon2">    
+                    <div class="input-group-append">
+                        <select class="custom-select" id="filter_select">
+                            <option selected value = "nofilter">No Filters</option>
+                            <option value="Adoptable">Adoptable</option>
+                            <option value="Adopted">Adopted</option>
+                            <option value="Deceased">Deceased</option>
+                            <option value="Non Adoptable">Non Adoptable </option>
+                        </select>
+                    </div>
                 </div>
             </form>
         </div>
