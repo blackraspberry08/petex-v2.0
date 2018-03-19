@@ -603,8 +603,13 @@ class PetManagement extends CI_Controller {
 
     public function search_pet(){
         $word = $this->input->post("search_word");
-        $matched_pet = $this->PetManagement_model->search_animal($word);
-        if($word == ""){
+        $filter = $this->input->post("filter");
+        if($filter == "nofilter"){
+            $matched_pet = $this->PetManagement_model->search_animal($word);
+        }else{
+            $matched_pet = $this->PetManagement_model->search_animal($word, $filter);
+        }
+        if($word == "" && $filter == "nofilter"){
             $all_animals = $this->PetManagement_model->get_all_animals();
             $data = array(
                 "success"   => 1,
