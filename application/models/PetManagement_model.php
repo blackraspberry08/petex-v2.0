@@ -212,5 +212,15 @@ class PetManagement_model extends CI_Model {
         $this->db->update("transaction", array("transaction_isActivated" => 0));
         return $this->db->affected_rows();
     }
+    
+    public function search_animal($like = NULL){
+        $table = "pet";
+        if (!empty($like)) {
+            $this->db->like('pet_name', $like);
+        }
+        $where = array("pet_access" => 1);
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
 
 }
