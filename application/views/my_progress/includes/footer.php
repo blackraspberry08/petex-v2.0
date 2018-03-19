@@ -61,15 +61,16 @@
 <!-- Bootstrap Datepicker -->
 <script src="<?= base_url() ?>assets/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript">
-    var dt = new Date();
-    dt.setFullYear(new Date().getFullYear());
     $(document).ready(function () {
+        var dt = new Date();
+        dt.setFullYear(new Date().getFullYear());
         $(".form_datetime").datetimepicker({
             format: 'MM d, yyyy  H:ii P',
             todayBtn: true,
             autoclose: true,
+            startDate: dt,
+            hoursDisabled: '0,1,2,3,4,5,6,7,17,18,19,20,21,22,23',
         });
-        $('.form_datetime').datetimepicker('setStartDate', dt);
     });
 </script>
 <script>
