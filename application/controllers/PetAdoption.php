@@ -1281,5 +1281,39 @@ class PetAdoption extends CI_Controller {
         $this->session->set_flashdata("warning", "You already have progress.");
         redirect(base_url() . "MyProgress/");
     }
+    
+    public function search_pet_adoptable() {
+        $word = $this->input->post("search_word");
+        $filter = $this->input->post("filter");
+        if($filter == "nofilter"){
+            $matched_pet = $this->PetAdoption_model->search_animal_adoptable($word);
+        }else{
+            $matched_pet = $this->PetAdoption_model->search_animal_adoptable($word, $filter);
+        }
+        if($word == "" && $filter == "nofilter"){
+            $all_animals = $this->PetAdoption_model->fetchPetDesc("pet", array("pet_status"=>"Adoptable"));
+            $data = array(
+                "success" => 1,
+                "result" => "",
+                "pets" => $all_animals
+            );
+        } else {
+            if (empty($matched_pet)) {
+                $data = array(
+                    "success" => 2,
+                    "result" => "No Matches Found",
+                    "pets" => $matched_pet
+                );
+            } else {
+                $data = array(
+                    "success" => 3,
+                    "result" => count($matched_pet) . " results found",
+                    "pets" => $matched_pet
+                );
+            }
+        }
 
+        echo json_encode($data);
+    }
+    
 }
