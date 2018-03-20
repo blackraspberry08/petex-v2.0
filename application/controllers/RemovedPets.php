@@ -75,4 +75,38 @@ class RemovedPets extends CI_Controller {
         redirect(base_url() . "RemovedPets");
     }
 
+    public function search_pet_removed(){
+        $word = $this->input->post("search_word");
+        $filter = $this->input->post("filter");
+        if($filter == "nofilter"){
+            $matched_pet = $this->PetManagement_model->search_animal_removed($word);
+        }else{
+            $matched_pet = $this->PetManagement_model->search_animal_removed($word, $filter);
+        }
+        if($word == "" && $filter == "nofilter"){
+            $removed_animals = $this->PetManagement_model->get_removed_animals();
+            $data = array(
+                "success"   => 1,
+                "result"     => "",
+                "pets"      => $removed_animals
+            );
+        }else{
+            if(empty($matched_pet)){
+                $data = array(
+                    "success"   => 2,
+                    "result"     => "No Matches Found",
+                    "pets"      => $matched_pet
+                );
+            }else{
+                $data = array(
+                    "success"   => 3,
+                    "result"     => count($matched_pet)." results found",
+                    "pets"      => $matched_pet
+                );
+            }
+            
+        }
+        
+        echo json_encode($data);
+    }
 }

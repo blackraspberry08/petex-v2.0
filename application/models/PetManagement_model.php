@@ -213,14 +213,29 @@ class PetManagement_model extends CI_Model {
         return $this->db->affected_rows();
     }
     
-    public function search_animal($like = NULL){
+    public function search_animal($like = NULL, $filter = NULL){
         $table = "pet";
         if (!empty($like)) {
             $this->db->like('pet_name', $like);
         }
-        $where = array("pet_access" => 1);
+        if (!empty($filter)) {
+            $this->db->where(array("pet_status" => $filter));
+        }
+        $this->db->where(array("pet_access" => 1));
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
-
+    
+    public function search_animal_removed($like = NULL, $filter = NULL){
+        $table = "pet";
+        if (!empty($like)) {
+            $this->db->like('pet_name', $like);
+        }
+        if (!empty($filter)) {
+            $this->db->where(array("pet_status" => $filter));
+        }
+        $this->db->where(array("pet_access" => 0));
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
 }
