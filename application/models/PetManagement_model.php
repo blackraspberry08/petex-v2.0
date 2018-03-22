@@ -4,8 +4,8 @@ class PetManagement_model extends CI_Model {
 
     public function get_all_animals() {
         $table = "pet";
-        $where = array("pet_access" => 1);
-        $this->db->where($where);
+        $this->db->where(array("pet_access" => 1));
+        $this->db->where('pet_status !=', "Removed");
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
@@ -97,8 +97,8 @@ class PetManagement_model extends CI_Model {
 
     public function get_removed_animals() {
         $table = "pet";
-        $where = array("pet_access" => 0);
-        $this->db->where($where);
+        $this->db->where(array("pet_access" => 1));
+        $this->db->where(array("pet_status" => "Removed"));
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
