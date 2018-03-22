@@ -21,7 +21,7 @@
 </style>
 
 <?php 
-    $schedule_3 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_3->progress_id));
+    $schedule_3 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_3->progress_id, "schedule.transaction_id" => $transaction->transaction_id));
     
 ?>
 
@@ -35,8 +35,10 @@
 
 <script>
     $(document).ready(function(){
+        
         $('.approve_3').attr("disabled", "disabled");
         $('.approve_3').addClass("disabled");
+        
         <?php if($progress_3->progress_percentage == 0):?>
             $('#done_sched_<?= $sched_1->schedule_id?>').removeClass("disabled");
             $('#done_sched_<?= $sched_1->schedule_id?>').prop("disabled", false);
@@ -48,6 +50,9 @@
             $('#done_sched_<?= $sched_1->schedule_id?>').html("<i class = 'fa fa-check'></i> Schedule is done");
             $('#done_sched_<?= $sched_2->schedule_id?>').removeClass("disabled");
             $('#done_sched_<?= $sched_2->schedule_id?>').prop("disabled", false);
+            $('#return_sched_<?= $sched_1->schedule_id?>').removeClass("d-none");
+            $('.return_3').attr("disabled", "disabled");
+            $('.return_3').addClass("disabled");
         <?php elseif($progress_3->progress_percentage == 66):?>
             //INTERVIEW #2 is DONE!
             $('#done_sched_<?= $sched_1->schedule_id?>').removeClass("btn-outline-dark");
@@ -60,6 +65,9 @@
             $('#done_sched_<?= $sched_2->schedule_id?>').html("<i class = 'fa fa-check'></i> Schedule is done");
             $('#done_sched_<?= $sched_3->schedule_id?>').removeClass("disabled");
             $('#done_sched_<?= $sched_3->schedule_id?>').prop("disabled", false);
+            $('#return_sched_<?= $sched_2->schedule_id?>').removeClass("d-none");
+            $('.return_3').attr("disabled", "disabled");
+            $('.return_3').addClass("disabled");
         <?php elseif($progress_3->progress_percentage == 100):?>
             //INTERVIEW #3 is DONE!
             $('#done_sched_<?= $sched_1->schedule_id?>').removeClass("btn-outline-dark");
@@ -74,9 +82,12 @@
             $('#done_sched_<?= $sched_3->schedule_id?>').addClass("disabled btn-outline-success");
             $('#done_sched_<?= $sched_3->schedule_id?>').attr("disabled", "disabled");
             $('#done_sched_<?= $sched_3->schedule_id?>').html("<i class = 'fa fa-check'></i> Schedule is done");
+            $('#return_sched_<?= $sched_3->schedule_id?>').removeClass("d-none");
             $(".approve_3").prop("disabled", false);
             $(".approve_3").removeClass("disabled");
             $(".approve_3").css("cursor", "pointer");
+            $('.return_3').attr("disabled", "disabled");
+            $('.return_3').addClass("disabled");
         <?php endif;?>
             
         //Functions here
@@ -166,6 +177,117 @@
             });
         });
         
+        //RETURN FUNCTIONS
+        $('#return_sched_<?= $sched_1->schedule_id?>').click(function(){
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url() ?>' + "ManageProgress/step_3_return_exec/<?= $transaction->transaction_id?>",
+                "dataType": "JSON",
+                "data": {
+                    'event_type':"return_sched_1",
+                    'progress_id' : <?= $progress_3->progress_id?>
+                },
+                success: function (res) {
+                    if (res.success) {
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
+                    } else {
+                        swal("Error", res.result, "error");
+                        
+                    }
+                },
+                error: function(res){
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
+                }
+            });
+        });
+        $('#return_sched_<?= $sched_2->schedule_id?>').click(function(){
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url() ?>' + "ManageProgress/step_3_return_exec/<?= $transaction->transaction_id?>",
+                "dataType": "JSON",
+                "data": {
+                    'event_type':"return_sched_2",
+                    'progress_id' : <?= $progress_3->progress_id?>
+                },
+                success: function (res) {
+                    if (res.success) {
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
+                    } else {
+                        swal("Error", res.result, "error");
+                        
+                    }
+                },
+                error: function(res){
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
+                }
+            });
+        });
+        
+        $('#return_sched_<?= $sched_3->schedule_id?>').click(function(){
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url() ?>' + "ManageProgress/step_3_return_exec/<?= $transaction->transaction_id?>",
+                "dataType": "JSON",
+                "data": {
+                    'event_type':"return_sched_3",
+                    'progress_id' : <?= $progress_3->progress_id?>
+                },
+                success: function (res) {
+                    if (res.success) {
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
+                    } else {
+                        swal("Error", res.result, "error");
+                        
+                    }
+                },
+                error: function(res){
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
+                }
+            });
+        });
+
+        $('#step_3_return').click(function(){
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url() ?>' + "ManageProgress/step_3_return_exec/",
+                "dataType": "JSON",
+                "data": {
+                    'event_type':"step_3_return",
+                    'progress_id' : '<?= $progress_2->progress_id?>',
+                    'transaction_id':'<?= $transaction->transaction_id?>'
+                },
+                success: function (res) {
+                    if (res.success) {
+                        swal({title: "Success", text: res.result, type: "success"},
+                            function(){ 
+                                location.reload();
+                            }
+                        );
+                    } else {
+                        swal("Error", res.result, "error");
+                        
+                    }
+                },
+                error: function(res){
+                    swal("Reload", "Something went wrong. Reload your browser.", "error");
+                }
+            });
+        });
+
+
+        //approve
         $('#step_3_approve').click(function(){
             $.ajax({
                 "method": "POST",
@@ -173,7 +295,7 @@
                 "dataType": "JSON",
                 "data": {
                     'schedule_title': "Home Visit : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
-                    'schedule_desc': "All Interviews are done (49%)! Home Visit will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                    'schedule_desc': "All Interviews are done! Home Visit will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
                     'schedule_color': "#1e7e34",
                     'schedule_startdate': $("#event_startdate_step_3").val(),
                     'schedule_starttime': $("#event_starttime_step_3").val(),
@@ -241,6 +363,7 @@
                         <p class="card-text"><?= $sched_1->schedule_desc?></p>
                     </div>
                     <div class = "card-footer">
+                        <button id = "return_sched_<?= $sched_1->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
                         <button id = "done_sched_<?= $sched_1->schedule_id?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                     </div>
                 </div>
@@ -271,6 +394,7 @@
                         <p class="card-text"><?= $sched_2->schedule_desc?></p>
                     </div>
                     <div class = "card-footer">
+                        <button id = "return_sched_<?= $sched_2->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
                         <button id = "done_sched_<?= $sched_2->schedule_id?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                     </div>
                 </div>
@@ -301,6 +425,7 @@
                         <p class="card-text"><?= $sched_3->schedule_desc?></p>
                     </div>
                     <div class = "card-footer">
+                        <button id = "return_sched_<?= $sched_3->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
                         <button id = "done_sched_<?= $sched_3->schedule_id?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                     </div>
                 </div>
@@ -339,8 +464,9 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_3_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_3" data-toggle = "modal"  title = "Approve" data-target = "#step_3_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_3" data-toggle = "modal"  title = "Return to Step 3" data-target = "#step_3_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 2</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_3_sched_disapprove"><i class = "fa fa-comment "></i> Leave a remark</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_3" data-toggle = "modal"  title = "Proceed to Step 4" data-target = "#step_3_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 4</button>
                     </div>
                 </div>
             <?php endif;?>
@@ -366,13 +492,38 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_3_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_3" data-toggle = "modal"  title = "Approve" data-target = "#step_3_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_3" data-toggle = "modal"  title = "Return to Step 3" data-target = "#step_3_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 2</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_3_sched_disapprove"><i class = "fa fa-comment "></i> Leave a remark</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_3" data-toggle = "modal"  title = "Proceed to Step 4" data-target = "#step_3_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 4</button>
                     </div>
                 </div>
             <?php endif;?>
         </div><!-- /Comment-->
     <?php endif; ?>
+</div>
+
+<!-- MODAL FOR RETURNING FROM STEP 2 -->
+<div class="modal fade" id="step_3_sched_return" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id = "step_2_form_d" method = "POST" role = "form">
+        <!-- Displayed Fields -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventHeader">Return to Step 2</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to return to Step 2? All progress on this step will be lost.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type = "button" id ="step_3_return" class="btn btn-danger">Yes</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 <!-- MODAL FOR APPROVING STEP 3 -->
@@ -382,10 +533,13 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader_prog3"><i class = "fa fa-thumbs-o-up"></i> Approve Interviews</h5>
+                    <h5 class="modal-title" id="eventHeader_prog3"> Set schedule for Home Visit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Home Visit</p>
+                    <p class="text-muted"><i class="fa fa-check"></i> Before approving Step 3 (Interview), set schedule for the next step (Home Visit).</p>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
                             <label for="event_startdate_step_3">Start Date</label>
@@ -407,12 +561,12 @@
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment_step_3">Comment</label>
-                        <textarea class = "form-control" id = "comment_step_3" name = "comment_step_3" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_3">Remark</label>
+                        <textarea class = "form-control" id = "comment_step_3" name = "comment_step_3" placeholder = "Leave a remark here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id = "step_3_approve" class="btn btn-primary">Approve</button>
+                    <button type="button" id = "step_3_approve" class="btn btn-primary">Set Schedule</button>
                 </div>
             </div>
         </div>
@@ -426,7 +580,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Meet and Greet</h5>
+                    <h5 class="modal-title" id="eventHeader"> Leave a remark on Meet and Greet</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -434,12 +588,12 @@
                 <div class="modal-body">
                     <div class = "form-row">
                         <label for="comment_d_3">Remarks</label>
-                        <textarea class = "form-control" id = "comment_d_3" name = "comment_d_3" placeholder = "Leave a comment here." required=""></textarea>
+                        <textarea class = "form-control" id = "comment_d_3" name = "comment_d_3" placeholder = "Leave a remark here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_3_disapprove" class="btn btn-danger">Disapprove</button>
+                    <button type="button" id = "step_3_disapprove" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>

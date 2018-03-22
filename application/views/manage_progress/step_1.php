@@ -7,7 +7,7 @@
             "dataType": "JSON",
             "data": {
                 'schedule_title': "Meet and Greet : " + "<?= $transaction->user_firstname . " " . $transaction->user_lastname ?>",
-                'schedule_desc': "Adoption Form is approved (16%)! Meet and Greet will be the next step for " + "<?= $transaction->user_firstname . " " . $transaction->user_lastname ?>" + " to adopt " + "<?= $transaction->pet_name ?>" + ".",
+                'schedule_desc': "Adoption Form is approved! Meet and Greet will be the next step for " + "<?= $transaction->user_firstname . " " . $transaction->user_lastname ?>" + " to adopt " + "<?= $transaction->pet_name ?>" + ".",
                 'schedule_color': "#1e7e34",
                 'schedule_startdate': $("#event_startdate_step_1").val(),
                 'schedule_starttime': $("#event_starttime_step_1").val(),
@@ -168,8 +168,8 @@
                     <?php endforeach; ?>
                     <div class="card-footer small text-muted text-center">
                         <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_1_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_1_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_1_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 2" data-target = "#step_1_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 2</button>
                         </div>
                     </div>
                 </div><!-- /Comment-->
@@ -188,8 +188,8 @@
                     </div>
                     <div class="card-footer small text-muted text-center">
                         <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_1_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_1_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_1_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 2" data-target = "#step_1_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 2</button>
                         </div>
                     </div>
                 </div><!-- /Comment-->
@@ -256,13 +256,13 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader_step_1"><i class = "fa fa-thumbs-o-up"></i> Approve Adoption Form</h5>
+                    <h5 class="modal-title" id="eventHeader_step_1">Set schedule for Meet and Greet</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Meet and Greet</p>
+                    <p class="text-muted"><i class="fa fa-check"></i> Before approving Step 1 (Adoption Form), set schedule for the next step (Meet and Greet).</p>
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
                             <label for="event_startdate_step_1">Start Date</label>
@@ -284,13 +284,13 @@
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment_step_1">Comment</label>
-                        <textarea class = "form-control" id = "comment_step_1" name = "comment_step_1" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_1">Leave a remark</label>
+                        <textarea class = "form-control" id = "comment_step_1" name = "comment_step_1" placeholder = "Leave a remark here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_1_approve" class="btn btn-primary">Approve</button>
+                    <button type="button" id = "step_1_approve" class="btn btn-primary">Set Schedule</button>
                 </div>
             </div>
         </div>
@@ -305,7 +305,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Adoption Form</h5>
+                    <h5 class="modal-title" id="eventHeader">Leave a remark</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -318,7 +318,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_1_disapprove" class="btn btn-danger ">Disapprove</button>
+                    <button type="button" id = "step_1_disapprove" class="btn btn-primary ">Submit</button>
                 </div>
             </div>
         </div>
