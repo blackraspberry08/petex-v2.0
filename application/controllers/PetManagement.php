@@ -624,7 +624,20 @@ class PetManagement extends CI_Controller {
         $transaction_id = $this->uri->segment(3);
         $transaction_user_id = $this->uri->segment(4);
         $transaction_user = $this->ManageUsers_model->get_users("user", array("user_id" => $transaction_user_id))[0];
-        if ($this->PetManagement_model->drop_transaction(array("transaction_id" => $transaction_id))) {
+        $remarks = $this->input->post('remarks');
+        $specify = $this->input->post('specify');
+        if ($remarks != Other) {
+            $data = array(
+                'transaction_isActivated' => 0,
+                'transaction_reasonDropped' => $remarks,
+            );
+        } else {
+            $data = array(
+                'transaction_isActivated' => 0,
+                'transaction_reasonDropped' => $specify,
+            );
+        }
+        if ($this->PetManagement_model->drop_transaction($data, array("transaction_id" => $transaction_id))) {
             $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Dropped the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
             $this->session->set_flashdata("drop_success", "Dropped the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
         } else {
@@ -646,12 +659,12 @@ class PetManagement extends CI_Controller {
     public function search_pet() {
         $word = $this->input->post("search_word");
         $filter = $this->input->post("filter");
-        if($filter == "nofilter"){
+        if ($filter == "nofilter") {
             $matched_pet = $this->PetManagement_model->search_animal($word);
-        }else{
+        } else {
             $matched_pet = $this->PetManagement_model->search_animal($word, $filter);
         }
-        if($word == "" && $filter == "nofilter"){
+        if ($word == "" && $filter == "nofilter") {
             $all_animals = $this->PetManagement_model->get_all_animals();
             $data = array(
                 "success" => 1,

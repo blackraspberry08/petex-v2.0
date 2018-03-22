@@ -68,8 +68,6 @@ class ManageProgress extends CI_Controller {
             $progress_4 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id))[0];
             $progress_5 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
             $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
-        
-            
         } else {
             $current_transaction = $this->PetManagement_model->get_inactive_transactions(array("transaction.transaction_id" => $transaction_id))[0];
 //            echo $transaction_id;
@@ -96,8 +94,8 @@ class ManageProgress extends CI_Controller {
             $comments_step_6 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id));
         }
 
-        
-        
+
+
         $data = array(
             /* MODULE ACCESS */
             'manageUserModule' => $manageUserModule,
@@ -308,18 +306,18 @@ class ManageProgress extends CI_Controller {
     }
 
     //RETURN CONTROLLER
-    public function step_2_return_exec(){
+    public function step_2_return_exec() {
         $progress_id = $this->input->post("progress_id");
-        $transaction_id =  $this->input->post("transaction_id");
-        $schedule_id =  $this->input->post("schedule_id");
-        
-        if($this->ReturnProgress->step_1($progress_id, $transaction_id, $schedule_id)){
+        $transaction_id = $this->input->post("transaction_id");
+        $schedule_id = $this->input->post("schedule_id");
+
+        if ($this->ReturnProgress->step_1($progress_id, $transaction_id, $schedule_id)) {
             //SUCCESS
             echo json_encode(array(
                 "success" => true,
                 "result" => "Succefully returned to step 1"
             ));
-        }else{
+        } else {
             //SUCCESS
             echo json_encode(array(
                 "success" => false,
@@ -327,7 +325,7 @@ class ManageProgress extends CI_Controller {
             ));
         }
     }
-    
+
     public function step_2() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -582,64 +580,64 @@ class ManageProgress extends CI_Controller {
             echo json_encode(array('success' => false, 'result' => "Something Went wrong. Try again later."));
         }
     }
-    
+
     //RETURN CONTROLLER
-    public function step_3_return_exec(){
-        if ($this->input->post('event_type') == "return_sched_1"){
+    public function step_3_return_exec() {
+        if ($this->input->post('event_type') == "return_sched_1") {
             $progress_id = $this->input->post("progress_id");
-            if($this->ReturnProgress->step_3_perSched($progress_id, "1")){
+            if ($this->ReturnProgress->step_3_perSched($progress_id, "1")) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to previous step"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
                     "result" => "Did not returned to previous step"
                 ));
             }
-        }else if($this->input->post('event_type') == "return_sched_2"){
+        } else if ($this->input->post('event_type') == "return_sched_2") {
             $progress_id = $this->input->post("progress_id");
-            if($this->ReturnProgress->step_3_perSched($progress_id, "2")){
+            if ($this->ReturnProgress->step_3_perSched($progress_id, "2")) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to previous step"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
                     "result" => "Did not returned to previous step"
                 ));
             }
-        }else if($this->input->post('event_type') == "return_sched_3"){
+        } else if ($this->input->post('event_type') == "return_sched_3") {
             $progress_id = $this->input->post("progress_id");
-            if($this->ReturnProgress->step_3_perSched($progress_id, "3")){
+            if ($this->ReturnProgress->step_3_perSched($progress_id, "3")) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to previous step"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
                     "result" => "Did not returned to previous step"
                 ));
             }
-        }else if($this->input->post('event_type') == "step_3_return"){
+        } else if ($this->input->post('event_type') == "step_3_return") {
             $progress_id = $this->input->post("progress_id");
             $transaction_id = $this->input->post("transaction_id");
-            if($this->ReturnProgress->step_2($progress_id, $transaction_id)){
+            if ($this->ReturnProgress->step_2($progress_id, $transaction_id)) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to step 2"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
@@ -647,9 +645,8 @@ class ManageProgress extends CI_Controller {
                 ));
             }
         }
-        
     }
-    
+
     public function step_3() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -807,24 +804,24 @@ class ManageProgress extends CI_Controller {
         }
     }
 
-    public function step_4_return_exec(){
+    public function step_4_return_exec() {
         $progress_id = $this->input->post("progress_id");
         $transaction_id = $this->input->post("transaction_id");
         $schedule_id = $this->input->post("schedule_id");
-        
-        if($this->ReturnProgress->step_3($progress_id, $transaction_id, $schedule_id)){
+
+        if ($this->ReturnProgress->step_3($progress_id, $transaction_id, $schedule_id)) {
             echo json_encode(array(
                 "success" => true,
                 "result" => "Successfully returned to step 3"
             ));
-        }else{
+        } else {
             echo json_encode(array(
                 "success" => false,
                 "result" => "Did not returned to step 3"
             ));
         }
     }
-    
+
     public function step_4() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -1080,63 +1077,62 @@ class ManageProgress extends CI_Controller {
         }
     }
 
-    
-    public function step_5_return_exec(){
-        if ($this->input->post('event_type') == "return_sched_1"){
+    public function step_5_return_exec() {
+        if ($this->input->post('event_type') == "return_sched_1") {
             $progress_id = $this->input->post("progress_id");
-            if($this->ReturnProgress->step_5_perSched($progress_id, "1")){
+            if ($this->ReturnProgress->step_5_perSched($progress_id, "1")) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to previous step"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
                     "result" => "Did not returned to previous step"
                 ));
             }
-        }else if($this->input->post('event_type') == "return_sched_2"){
+        } else if ($this->input->post('event_type') == "return_sched_2") {
             $progress_id = $this->input->post("progress_id");
-            if($this->ReturnProgress->step_5_perSched($progress_id, "2")){
+            if ($this->ReturnProgress->step_5_perSched($progress_id, "2")) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to previous step"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
                     "result" => "Did not returned to previous step"
                 ));
             }
-        }else if($this->input->post('event_type') == "return_sched_3"){
+        } else if ($this->input->post('event_type') == "return_sched_3") {
             $progress_id = $this->input->post("progress_id");
-            if($this->ReturnProgress->step_5_perSched($progress_id, "3")){
+            if ($this->ReturnProgress->step_5_perSched($progress_id, "3")) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to previous step"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
                     "result" => "Did not returned to previous step"
                 ));
             }
-        }else if($this->input->post('event_type') == "step_5_return"){
+        } else if ($this->input->post('event_type') == "step_5_return") {
             $progress_id = $this->input->post("progress_id");
             $transaction_id = $this->input->post("transaction_id");
-            if($this->ReturnProgress->step_4($progress_id, $transaction_id)){
+            if ($this->ReturnProgress->step_4($progress_id, $transaction_id)) {
                 //SUCCESS
                 echo json_encode(array(
                     "success" => true,
                     "result" => "Succefully returned to step 2"
                 ));
-            }else{
+            } else {
                 //FAIL
                 echo json_encode(array(
                     "success" => false,
@@ -1145,6 +1141,7 @@ class ManageProgress extends CI_Controller {
             }
         }
     }
+
     public function step_5() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -1302,22 +1299,22 @@ class ManageProgress extends CI_Controller {
         }
     }
 
-    public function step_6_return_exec(){
+    public function step_6_return_exec() {
         $progress_id = $this->input->post("progress_id");
         $transaction_id = $this->input->post("transaction_id");
-        if($this->ReturnProgress->step_5($progress_id, $transaction_id)){
+        if ($this->ReturnProgress->step_5($progress_id, $transaction_id)) {
             echo json_encode(array(
                 "success" => true,
                 "result" => "Successfully returned to Step 5"
             ));
-        }else{
+        } else {
             echo json_encode(array(
                 "success" => false,
                 "result" => "Did not returned to Step 5"
             ));
         }
     }
-    
+
     public function step_6() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -1383,7 +1380,7 @@ class ManageProgress extends CI_Controller {
                     "adoption_adopted_at" => time()
                 );
 
-                if ($this->ManageProgress_model->edit_progress($progress, array("checklist_id" => 6, "transaction_id" => $transaction_id)) && $this->ManageProgress_model->update_progress($transaction_progress, array("pet_id" => $current_transaction->pet_id))) {
+                if ($this->ManageProgress_model->edit_progress($progress, array("checklist_id" => 6, "transaction_id" => $transaction_id)) && $this->ManageProgress_model->update_progress($transaction_progress, array("pet_id" => $current_transaction->pet_id, "transaction_id" => $transaction_id))) {
                     if ($this->ManageProgress_model->add_adoption($adoption) && $this->ManageProgress_model->edit_pet_status($current_transaction->pet_id)) {
                         $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Transaction is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname . " in adopting " . $current_transaction->pet_name . ".");
                         $this->session->set_flashdata("approve_success", $current_transaction->pet_name . " now belongs to " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
