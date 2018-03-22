@@ -21,7 +21,7 @@
 </style>
 
 <?php
-$schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_5->progress_id));
+$schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_5->progress_id, "schedule.transaction_id" => $transaction->transaction_id));
 ?>
 
 <?php if (!empty($schedule_5)): ?>
@@ -47,6 +47,9 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 $('#done_sched_<?= $sched_1->schedule_id ?>').html("<i class = 'fa fa-check'></i> Schedule is done");
                 $('#done_sched_<?= $sched_2->schedule_id ?>').removeClass("disabled");
                 $('#done_sched_<?= $sched_2->schedule_id ?>').prop("disabled", false);
+                $('#return_sched_<?= $sched_1->schedule_id?>').removeClass("d-none");
+                $('.return_5').attr("disabled", "disabled");
+                $('.return_5').addClass("disabled");
     <?php elseif ($progress_5->progress_percentage == 66): ?>
                 //INTERVIEW #2 is DONE!
                 $('#done_sched_<?= $sched_1->schedule_id ?>').removeClass("btn-outline-dark");
@@ -59,6 +62,9 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 $('#done_sched_<?= $sched_2->schedule_id ?>').html("<i class = 'fa fa-check'></i> Schedule is done");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').removeClass("disabled");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').prop("disabled", false);
+                $('#return_sched_<?= $sched_2->schedule_id?>').removeClass("d-none");
+                $('.return_5').attr("disabled", "disabled");
+                $('.return_5').addClass("disabled");
     <?php elseif ($progress_5->progress_percentage == 100): ?>
                 //INTERVIEW #3 is DONE!
                 $('#done_sched_<?= $sched_1->schedule_id ?>').removeClass("btn-outline-dark");
@@ -73,9 +79,12 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 $('#done_sched_<?= $sched_3->schedule_id ?>').addClass("disabled btn-outline-success");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').attr("disabled", "disabled");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').html("<i class = 'fa fa-check'></i> Schedule is done");
+                $('#return_sched_<?= $sched_3->schedule_id?>').removeClass("d-none");
                 $(".approve_5").prop("disabled", false);
                 $(".approve_5").removeClass("disabled");
                 $(".approve_5").css("cursor", "pointer");
+                $('.return_5').attr("disabled", "disabled");
+                $('.return_5').addClass("disabled");
     <?php endif; ?>
 
             //Functions here
@@ -164,7 +173,118 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     }
                 });
             });
+            
+            //RETURN FUNCTIONS
+            $('#return_sched_<?= $sched_1->schedule_id?>').click(function(){
+                $.ajax({
+                    "method": "POST",
+                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id?>",
+                    "dataType": "JSON",
+                    "data": {
+                        'event_type':"return_sched_1",
+                        'progress_id' : <?= $progress_5->progress_id?>
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            swal({title: "Success", text: res.result, type: "success"},
+                                function(){ 
+                                    location.reload();
+                                }
+                            );
+                        } else {
+                            swal("Error", res.result, "error");
 
+                        }
+                    },
+                    error: function(res){
+                        swal("Reload", "Something went wrong. Reload your browser.", "error");
+                    }
+                });
+            });
+            $('#return_sched_<?= $sched_2->schedule_id?>').click(function(){
+                $.ajax({
+                    "method": "POST",
+                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id?>",
+                    "dataType": "JSON",
+                    "data": {
+                        'event_type':"return_sched_2",
+                        'progress_id' : <?= $progress_5->progress_id?>
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            swal({title: "Success", text: res.result, type: "success"},
+                                function(){ 
+                                    location.reload();
+                                }
+                            );
+                        } else {
+                            swal("Error", res.result, "error");
+
+                        }
+                    },
+                    error: function(res){
+                        swal("Reload", "Something went wrong. Reload your browser.", "error");
+                    }
+                });
+            });
+
+            $('#return_sched_<?= $sched_3->schedule_id?>').click(function(){
+                $.ajax({
+                    "method": "POST",
+                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id?>",
+                    "dataType": "JSON",
+                    "data": {
+                        'event_type':"return_sched_3",
+                        'progress_id' : <?= $progress_5->progress_id?>
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            swal({title: "Success", text: res.result, type: "success"},
+                                function(){ 
+                                    location.reload();
+                                }
+                            );
+                        } else {
+                            swal("Error", res.result, "error");
+
+                        }
+                    },
+                    error: function(res){
+                        swal("Reload", "Something went wrong. Reload your browser.", "error");
+                    }
+                });
+            });
+
+            $('#step_5_return').click(function(){
+                $.ajax({
+                    "method": "POST",
+                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/",
+                    "dataType": "JSON",
+                    "data": {
+                        'event_type':"step_5_return",
+                        'progress_id' : '<?= $progress_4->progress_id?>',
+                        'transaction_id':'<?= $transaction->transaction_id?>'
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            swal({title: "Success", text: res.result, type: "success"},
+                                function(){ 
+                                    location.reload();
+                                }
+                            );
+                        } else {
+                            swal("Error", res.result, "error");
+
+                        }
+                    },
+                    error: function(res){
+                        swal("Reload", "Something went wrong. Reload your browser.", "error");
+                    }
+                });
+            });
+
+
+            //approve
             $('#step_5_approve').click(function () {
                 $.ajax({
                     "method": "POST",
@@ -172,7 +292,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     "dataType": "JSON",
                     "data": {
                         'schedule_title': "Release Day : <?= $transaction->user_firstname . " " . $transaction->user_lastname ?>",
-                        'schedule_desc': "Visiting Chosen Adoptee is done (83%)! Release Day will be the next step for <?= $transaction->user_firstname . " " . $transaction->user_lastname ?> to adopt <?= $transaction->pet_name ?>. <?= $transaction->user_firstname . " " . $transaction->user_lastname ?> can now get your chosen adoptee to PAWS",
+                        'schedule_desc': "Visiting Chosen Adoptee is done! Release Day will be the next step for <?= $transaction->user_firstname . " " . $transaction->user_lastname ?> to adopt <?= $transaction->pet_name ?>. <?= $transaction->user_firstname . " " . $transaction->user_lastname ?> can now get your chosen adoptee to PAWS",
                         'schedule_color': "#1e7e34",
                         'schedule_startdate': $("#event_startdate_step_5").val(),
                         'schedule_starttime': $("#event_starttime_step_5").val(),
@@ -240,6 +360,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             <p class="card-text"><?= $sched_1->schedule_desc ?></p>
                         </div>
                         <div class = "card-footer">
+                            <button id = "return_sched_<?= $sched_1->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
                             <button id = "done_sched_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                         </div>
                     </div>
@@ -270,6 +391,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             <p class="card-text"><?= $sched_2->schedule_desc ?></p>
                         </div>
                         <div class = "card-footer">
+                            <button id = "return_sched_<?= $sched_2->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
                             <button id = "done_sched_<?= $sched_2->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                         </div>
                     </div>
@@ -300,6 +422,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             <p class="card-text"><?= $sched_3->schedule_desc ?></p>
                         </div>
                         <div class = "card-footer">
+                            <button id = "return_sched_<?= $sched_3->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
                             <button id = "done_sched_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                         </div>
                     </div>
@@ -338,8 +461,9 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 <?php else: ?>
                     <div class="card-footer small text-muted text-center">
                         <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_5_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Approve" data-target = "#step_5_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_5" data-toggle = "modal"  title = "Return to Step 4" data-target = "#step_5_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 4</button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_5_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Proceed to Step 6" data-target = "#step_5_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 6</button>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -365,8 +489,9 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 <?php else: ?>
                     <div class="card-footer small text-muted text-center">
                         <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_5_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Approve" data-target = "#step_5_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_5" data-toggle = "modal"  title = "Return to Step 4" data-target = "#step_5_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 4</button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_5_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Proceed to Step 6" data-target = "#step_5_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 6</button>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -374,6 +499,31 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
         <?php endif; ?>
     </div>
 
+    
+    <!-- MODAL FOR RETURNING FROM STEP 5 -->
+    <div class="modal fade" id="step_5_sched_return" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form id = "step_5_form_d" method = "POST" role = "form">
+            <!-- Displayed Fields -->
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventHeader">Return to Step 4</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to return to Step 4? All progress on this step will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type = "button" id ="step_5_return" class="btn btn-danger">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
     <!-- MODAL FOR APPROVING STEP 3 -->
     <div class="modal fade" id="step_5_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form id = "step_5_form_a" method = "POST" role = "form">
@@ -381,10 +531,13 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="eventHeader_prog3"><i class = "fa fa-thumbs-o-up"></i> Approve Visiting Chosen Adoptee</h5>
+                        <h5 class="modal-title" id="eventHeader_prog3"> Set schedule for Release Day</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Release Day</p>
+                        <p class="text-muted"><i class="fa fa-check"></i> Before approving Step 5 (Visiting Chosen Adoptee), set schedule for the next step (Release Day).</p>
                         <div class = "form-row">
                             <div class = "col-md-6 form-group">
                                 <label for="event_startdate_step_6">Start Date</label>
@@ -406,12 +559,12 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             </div>
                         </div>
                         <div class = "form-row">
-                            <label for="comment_step_5">Comment</label>
-                            <textarea class = "form-control" id = "comment_step_5" name = "comment_step_5" placeholder = "Leave a comment here." required=""></textarea>
+                            <label for="comment_step_5">Remarks</label>
+                            <textarea class = "form-control" id = "comment_step_5" name = "comment_step_5" placeholder = "Leave a remarks here." required=""></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id = "step_5_approve" class="btn btn-primary">Approve</button>
+                        <button type="button" id = "step_5_approve" class="btn btn-primary">Set Schedule</button>
                     </div>
                 </div>
             </div>
@@ -425,7 +578,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Meet and Greet</h5>
+                        <h5 class="modal-title" id="eventHeader"> Leave remark on Meet and Greet</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -433,12 +586,12 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     <div class="modal-body">
                         <div class = "form-row">
                             <label for="comment_d_5">Remarks</label>
-                            <textarea class = "form-control" id = "comment_d_5" name = "comment_d_5" placeholder = "Leave a comment here." required=""></textarea>
+                            <textarea class = "form-control" id = "comment_d_5" name = "comment_d_5" placeholder = "Leave a remark here." required=""></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" id = "step_5_disapprove" class="btn btn-danger">Disapprove</button>
+                        <button type="button" id = "step_5_disapprove" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </div>

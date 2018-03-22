@@ -26,13 +26,43 @@
 
 
 <?php 
-    $schedule_6 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_6->progress_id))[0];
+    $schedule_6 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_6->progress_id, "schedule.transaction_id" => $transaction->transaction_id))[0];
 ?>
 
 <?php if(empty($schedule_6)):?>
     <!-- NOTHING TO DO HERE -->
 <?php else:?>
+<script>
+$(document).on('click', '#step_6_return', function () {
+    $.ajax({
+        "method": "POST",
+        
+        "url": '<?= base_url() ?>' + "/ManageProgress/step_6_return_exec",
+        "dataType": "JSON",
+        "data": {
+            'transaction_id':'<?= $transaction->transaction_id?>',
+            'progress_id':'<?= $progress_5->progress_id?>',
+            'schedule_id':'<?= $schedule_6->schedule_id?>'
+        },
+        success: function (res) {
+            if (res.success) {
+                swal({title: "Success", text: res.result, type: "success"},
+                        function () {
+                            location.reload();
+                        }
+                );
+            } else {
+                swal("Oops", res.result, "error");
+            }
 
+        },
+        error: function (res) {
+            swal("Reload", "Something went wrong. Please reload your browser.", "error");
+        }
+    });
+
+});
+</script>
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Release Day</h3>
     <p class = "text-muted">&emsp;<?= $progress_6->checklist_desc?></p>
@@ -108,8 +138,9 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_6_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_6_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Return to Step 5" data-target = "#step_6_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 5</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_6_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Finish Transaction" data-target = "#step_6_sched_approve"><i class = "fa fa-chevron-right"></i> Finish Transaction</button>
                     </div>
                 </div>
             <?php endif;?>
@@ -135,8 +166,9 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_6_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_6_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Return to Step 5" data-target = "#step_6_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 5</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_6_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Finish Transaction" data-target = "#step_6_sched_approve"><i class = "fa fa-chevron-right"></i> Finish Transaction</button>
                     </div>
                 </div>
             <?php endif;?>
@@ -144,6 +176,30 @@
     <?php endif; ?>
 </div>
 
+<!-- MODAL FOR RETURNING FROM STEP 6 -->
+<div class="modal fade" id="step_6_sched_return" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id = "step_6_form_d" method = "POST" role = "form">
+        <!-- Displayed Fields -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventHeader">Return to Step 5</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to return to Step 5? All progress on this step will be lost.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type = "button" id ="step_6_return" class="btn btn-danger">Yes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    
 <!-- MODAL FOR APPROVING STEP 6 -->
 <div class="modal fade" id="step_6_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <!-- Displayed Fields -->
@@ -151,7 +207,7 @@
         <form method="POST" id = "adoption_picture_form" action = "<?= base_url()?>ManageProgress/step_6_adoption_proof/<?= $transaction->transaction_id?>" role = "form" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader_prog6"><i class = "fa fa-thumbs-o-up"></i> Finishing Transaction</h5>
+                    <h5 class="modal-title" id="eventHeader_prog6">Finishing Transaction</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -176,7 +232,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="reset" class="btn btn-danger" id = "btnReset_edit">Reset</button>
-                    <button type="button" id = "step_6_approve" class="btn btn-primary">Approve</button>
+                    <button type="button" id = "step_6_approve" class="btn btn-primary">Finish Transaction</button>
                 </div>
             </div>
         </form>
@@ -191,20 +247,20 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Visiting Chosen Adoptee</h5>
+                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Leave a remark on Release Day</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class = "form-row">
-                        <label for="comment">Comment</label>
-                        <textarea class = "form-control" id = "comment_step_6_d" name = "comment" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment">Remark</label>
+                        <textarea class = "form-control" id = "comment_step_6_d" name = "comment" placeholder = "Leave a remark here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_6_disapprove" class="btn btn-danger">Disapprove</button>
+                    <button type="button" id = "step_6_disapprove" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>
@@ -240,7 +296,7 @@ $(document).ready(function(){
     });
     
     $(document).on('click', '#step_6_approve', function () {
-        swal({title: "Success", text: "Proof of Adoption Image", type: "success"},
+        swal({title: "Success", text: "Submitting Proof of Adoption Image", type: "info"},
             function(){ 
                 $('#adoption_picture_form').submit();
             }

@@ -68,6 +68,8 @@ class ManageProgress extends CI_Controller {
             $progress_4 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id))[0];
             $progress_5 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
             $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
+        
+            
         } else {
             $current_transaction = $this->PetManagement_model->get_inactive_transactions(array("transaction.transaction_id" => $transaction_id))[0];
 //            echo $transaction_id;
@@ -94,6 +96,8 @@ class ManageProgress extends CI_Controller {
             $comments_step_6 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id));
         }
 
+        
+        
         $data = array(
             /* MODULE ACCESS */
             'manageUserModule' => $manageUserModule,
@@ -255,6 +259,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -290,11 +295,11 @@ class ManageProgress extends CI_Controller {
                     "progress_comment_added_at" => time()
                 );
                 if ($this->ManageProgress_model->add_progress_comment($progress_comment)) {
-                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved adoption form (step 1) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                    $this->session->set_flashdata("approve_adoption_form_success", "Disapproved adoption form.");
-                    echo json_encode(array('success' => true, 'result' => 'Successfully disapproved adoption form.'));
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Left a Remark on Adoption Form (step 1) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_adoption_form_success", "Left a Remark on Adoption Form");
+                    echo json_encode(array('success' => true, 'result' => 'Successfully Left a Remark on Adoption Form'));
                 } else {
-                    echo json_encode(array('success' => false, 'result' => 'Something went wrong while disapproving adoption form'));
+                    echo json_encode(array('success' => false, 'result' => 'Something went wrong while leaving a remark on adoption form'));
                 }
             }
         } else {
@@ -302,6 +307,27 @@ class ManageProgress extends CI_Controller {
         }
     }
 
+    //RETURN CONTROLLER
+    public function step_2_return_exec(){
+        $progress_id = $this->input->post("progress_id");
+        $transaction_id =  $this->input->post("transaction_id");
+        $schedule_id =  $this->input->post("schedule_id");
+        
+        if($this->ReturnProgress->step_1($progress_id, $transaction_id, $schedule_id)){
+            //SUCCESS
+            echo json_encode(array(
+                "success" => true,
+                "result" => "Succefully returned to step 1"
+            ));
+        }else{
+            //SUCCESS
+            echo json_encode(array(
+                "success" => false,
+                "result" => "Did not returned to step 1"
+            ));
+        }
+    }
+    
     public function step_2() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -374,6 +400,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -410,12 +437,12 @@ class ManageProgress extends CI_Controller {
                 if (
                         $this->ManageProgress_model->add_progress_comment($progress_comment)
                 ) {
-                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved Meet And Greet (step 2) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                    $this->session->set_flashdata("disapprove_step_2_success", "Disapproved Meet And Greet.");
-                    echo json_encode(array('success' => true, 'result' => "Disapproved Meet And Greet."));
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Left a remark on Meet And Greet (step 2) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("disapprove_step_2_success", "Left a remark on Meet And Greet.");
+                    echo json_encode(array('success' => true, 'result' => "Left a remark on Meet And Greet."));
                 } else {
-                    echo json_encode(array('success' => false, 'result' => "Something went wrong while disapproving Meet and Greet"));
-                    $this->session->set_flashdata("disapprove_step_2_fail", "Something went wrong while disapproving Meet and Greet");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while leaving a remark on Meet and Greet"));
+                    $this->session->set_flashdata("disapprove_step_2_fail", "Something went wrong while leaving a remark on Meet and Greet");
                 }
             }
         } else if ($this->input->post('event_type') == "setSched_1") {
@@ -467,6 +494,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -532,6 +560,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -553,7 +582,74 @@ class ManageProgress extends CI_Controller {
             echo json_encode(array('success' => false, 'result' => "Something Went wrong. Try again later."));
         }
     }
-
+    
+    //RETURN CONTROLLER
+    public function step_3_return_exec(){
+        if ($this->input->post('event_type') == "return_sched_1"){
+            $progress_id = $this->input->post("progress_id");
+            if($this->ReturnProgress->step_3_perSched($progress_id, "1")){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to previous step"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to previous step"
+                ));
+            }
+        }else if($this->input->post('event_type') == "return_sched_2"){
+            $progress_id = $this->input->post("progress_id");
+            if($this->ReturnProgress->step_3_perSched($progress_id, "2")){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to previous step"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to previous step"
+                ));
+            }
+        }else if($this->input->post('event_type') == "return_sched_3"){
+            $progress_id = $this->input->post("progress_id");
+            if($this->ReturnProgress->step_3_perSched($progress_id, "3")){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to previous step"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to previous step"
+                ));
+            }
+        }else if($this->input->post('event_type') == "step_3_return"){
+            $progress_id = $this->input->post("progress_id");
+            $transaction_id = $this->input->post("transaction_id");
+            if($this->ReturnProgress->step_2($progress_id, $transaction_id)){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to step 2"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to step 2"
+                ));
+            }
+        }
+        
+    }
+    
     public function step_3() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -625,6 +721,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -661,12 +758,12 @@ class ManageProgress extends CI_Controller {
                 if (
                         $this->ManageProgress_model->add_progress_comment($progress_comment)
                 ) {
-                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved Interview of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                    $this->session->set_flashdata("approve_step_2_success", "Disapproved Interview");
-                    echo json_encode(array('success' => true, 'result' => "Disapproved Interview"));
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Left a remark on Interview of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_step_2_success", "Left a remark on Interview");
+                    echo json_encode(array('success' => true, 'result' => "Left a remark on Interview"));
                 } else {
-                    echo json_encode(array('success' => false, 'result' => "Something went wrong while disapproving Interview"));
-                    $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while disapproving Interview");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while Leaving a remark on Interview"));
+                    $this->session->set_flashdata("approve_step_2_fail", "Something went wrong while leaving a remark on Interview");
                 }
             }
         } else if ($this->input->post('event_type') == "done_sched_1") {
@@ -710,6 +807,24 @@ class ManageProgress extends CI_Controller {
         }
     }
 
+    public function step_4_return_exec(){
+        $progress_id = $this->input->post("progress_id");
+        $transaction_id = $this->input->post("transaction_id");
+        $schedule_id = $this->input->post("schedule_id");
+        
+        if($this->ReturnProgress->step_3($progress_id, $transaction_id, $schedule_id)){
+            echo json_encode(array(
+                "success" => true,
+                "result" => "Successfully returned to step 3"
+            ));
+        }else{
+            echo json_encode(array(
+                "success" => false,
+                "result" => "Did not returned to step 3"
+            ));
+        }
+    }
+    
     public function step_4() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -782,6 +897,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -818,12 +934,12 @@ class ManageProgress extends CI_Controller {
                 if (
                         $this->ManageProgress_model->add_progress_comment($progress_comment)
                 ) {
-                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved Meet And Greet (step 2) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                    $this->session->set_flashdata("approve_success", "Disapproved Meet And Greet.");
-                    echo json_encode(array('success' => true, 'result' => "Disapproved Meet And Greet."));
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Left a remark on Meet And Greet (step 2) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Left a remark on Meet And Greet.");
+                    echo json_encode(array('success' => true, 'result' => "Left a remark on Meet And Greet."));
                 } else {
-                    echo json_encode(array('success' => false, 'result' => "Something went wrong while disapproving Meet and Greet"));
-                    $this->session->set_flashdata("approve_failed", "Something went wrong while disapproving Meet and Greet");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while Leaving a remark on Meet and Greet"));
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while Leaving a remark on Meet and Greet");
                 }
             }
         } else if ($this->input->post('event_type') == "setSched_1") {
@@ -875,6 +991,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -940,6 +1057,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -962,6 +1080,71 @@ class ManageProgress extends CI_Controller {
         }
     }
 
+    
+    public function step_5_return_exec(){
+        if ($this->input->post('event_type') == "return_sched_1"){
+            $progress_id = $this->input->post("progress_id");
+            if($this->ReturnProgress->step_5_perSched($progress_id, "1")){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to previous step"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to previous step"
+                ));
+            }
+        }else if($this->input->post('event_type') == "return_sched_2"){
+            $progress_id = $this->input->post("progress_id");
+            if($this->ReturnProgress->step_5_perSched($progress_id, "2")){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to previous step"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to previous step"
+                ));
+            }
+        }else if($this->input->post('event_type') == "return_sched_3"){
+            $progress_id = $this->input->post("progress_id");
+            if($this->ReturnProgress->step_5_perSched($progress_id, "3")){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to previous step"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to previous step"
+                ));
+            }
+        }else if($this->input->post('event_type') == "step_5_return"){
+            $progress_id = $this->input->post("progress_id");
+            $transaction_id = $this->input->post("transaction_id");
+            if($this->ReturnProgress->step_4($progress_id, $transaction_id)){
+                //SUCCESS
+                echo json_encode(array(
+                    "success" => true,
+                    "result" => "Succefully returned to step 2"
+                ));
+            }else{
+                //FAIL
+                echo json_encode(array(
+                    "success" => false,
+                    "result" => "Did not returned to step 2"
+                ));
+            }
+        }
+    }
     public function step_5() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -1033,6 +1216,7 @@ class ManageProgress extends CI_Controller {
                         $sched = array(
                             "progress_id" => $next_progress->progress_id,
                             "admin_id" => $this->session->userdata("current_user")->admin_id,
+                            "transaction_id" => $transaction_id,
                             "schedule_title" => $this->input->post('schedule_title'),
                             "schedule_desc" => $this->input->post('schedule_desc'),
                             "schedule_color" => $this->input->post('schedule_color'),
@@ -1069,12 +1253,12 @@ class ManageProgress extends CI_Controller {
                 if (
                         $this->ManageProgress_model->add_progress_comment($progress_comment)
                 ) {
-                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved Visited Chosen Adoptee of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                    $this->session->set_flashdata("approve_success", "Disapproved Visited Chosen Adoptee");
-                    echo json_encode(array('success' => true, 'result' => "Disapproved Visited Chosen Adoptee"));
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Left a remark on Visited Chosen Adoptee of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Left a remark on Visited Chosen Adoptee");
+                    echo json_encode(array('success' => true, 'result' => "Left a remark on Visited Chosen Adoptee"));
                 } else {
-                    echo json_encode(array('success' => false, 'result' => "Something went wrong while disapproving Visited Chosen Adoptee"));
-                    $this->session->set_flashdata("approve_failed", "Something went wrong while disapproving Interview");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while Leaving a remark on Visited Chosen Adoptee"));
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while Leaving a remark on Interview");
                 }
             }
         } else if ($this->input->post('event_type') == "done_sched_1") {
@@ -1118,6 +1302,22 @@ class ManageProgress extends CI_Controller {
         }
     }
 
+    public function step_6_return_exec(){
+        $progress_id = $this->input->post("progress_id");
+        $transaction_id = $this->input->post("transaction_id");
+        if($this->ReturnProgress->step_5($progress_id, $transaction_id)){
+            echo json_encode(array(
+                "success" => true,
+                "result" => "Successfully returned to Step 5"
+            ));
+        }else{
+            echo json_encode(array(
+                "success" => false,
+                "result" => "Did not returned to Step 5"
+            ));
+        }
+    }
+    
     public function step_6() {
         $transaction_id = $this->uri->segment(3);
         $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -1139,12 +1339,12 @@ class ManageProgress extends CI_Controller {
                     "progress_comment_added_at" => time()
                 );
                 if ($this->ManageProgress_model->add_progress_comment($progress_comment)) {
-                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Disapproved Released Day (step 6) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                    $this->session->set_flashdata("approve_success", "Disapproved Released Day.");
-                    echo json_encode(array('success' => true, 'result' => 'Successfully disapproved Released Day.'));
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Left a remark on Released Day (step 6) of " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Left a remark on Released Day.");
+                    echo json_encode(array('success' => true, 'result' => 'Successfully Left a remark on Released Day.'));
                 } else {
-                    $this->session->set_flashdata("approve_success", "Something went wrong while disapproving Released Day.");
-                    echo json_encode(array('success' => false, 'result' => 'Something went wrong while disapproving Released Day.'));
+                    $this->session->set_flashdata("approve_success", "Something went wrong while Leaving a remark on Released Day.");
+                    echo json_encode(array('success' => false, 'result' => 'Something went wrong while Leaving a remark on Released Day.'));
                 }
             }
         } else {
@@ -1193,7 +1393,6 @@ class ManageProgress extends CI_Controller {
                     //echo json_encode(array('success' => false, 'result' => 'Something went wrong while approving the Release Day'));
                 }
             } else {
-                $this->upload->display_errors();
                 $this->session->set_flashdata("uploading_error", "Please make sure that the max size is 5MB the types may only be .jpg, .jpeg, .gif, .png");
             }
         } else {
