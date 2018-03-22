@@ -101,6 +101,8 @@ function wrap_iframe($src) {
                                     <small class = "text-secondary">Not Adoptable</small>
                                 <?php elseif ($animal->pet_status == "Deceased"): ?>
                                     <small class = "text-secondary">Deceased</small>
+                                    <?php elseif ($animal->pet_status == "Removed"): ?>
+                                    <small class = "text-danger">Removed</small>
                                 <?php else: ?>
                                     <small class = "text-danger">Adopted</small>
                                 <?php endif; ?>
@@ -140,6 +142,8 @@ function wrap_iframe($src) {
                                         <select class="form-control" name = "pet_status" id="pet_status">
                                             <option value = "Adoptable" <?= $animal->pet_status == "Adoptable" ? "selected" : ""; ?>>Adoptable</option>
                                             <option value = "NonAdoptable" <?= $animal->pet_status == "NonAdoptable" ? "selected" : ""; ?>>Not Adoptable</option>
+                                            <option value = "Deceased" <?= $animal->pet_status == "Deceased" ? "selected" : ""; ?>>Deceased</option>
+                                            <option value = "Removed" <?= $animal->pet_status == "Removed" ? "selected" : ""; ?>>Removed</option>
                                         </select>
                                     <?php endif; ?>
                                 </div>

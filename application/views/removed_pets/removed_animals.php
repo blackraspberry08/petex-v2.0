@@ -154,15 +154,6 @@
                         <span class="input-group-text" id="basic-addon1"><i class = "fa fa-search"></i></span>
                     </div>
                     <input id = "search_text" type="text" class="form-control" placeholder="Search the name of pet" aria-label="Pet's Name" aria-describedby="basic-addon2">    
-                    <div class="input-group-append">
-                        <select class="custom-select" id="filter_select">
-                            <option selected value = "nofilter">No Filters</option>
-                            <option value="Adoptable">Adoptable</option>
-                            <option value="Adopted">Adopted</option>
-                            <option value="Deceased">Deceased</option>
-                            <option value="Non Adoptable">Non Adoptable </option>
-                        </select>
-                    </div>
                 </div>
             </form>
         </div>
@@ -202,31 +193,12 @@
                                     <div class = "btn-group" role="group" aria-label="Button Group">
                                         <a href = "<?= base_url()?>PetManagement/medical_records_exec/<?= $animal->pet_id;?>" class = "btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
                                         <a href = "<?= base_url()?>PetManagement/animal_info_exec/<?= $animal->pet_id;?>" class = "btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Animal Information"><i class = "fa fa-paw fa-2x"></i></a>
-                                        <a href = "#" class = "btn btn-outline-primary" data-toggle="modal" data-target = "#restore_animal_<?= $animal->pet_id?>" title="Restore Animal"><i class = "fa fa-undo fa-2x"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="restore_animal_<?= $animal->pet_id?>" tabindex="-1" role="dialog" aria-labelledby="VerificationModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="VerificationModal">Restore Animal</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <strong><?= $animal->pet_name?></strong> will be added again to the animal database. Select "Restore" to proceed
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href ="<?= base_url()?>RemovedPets/restore_animal_exec/<?= $animal->pet_id?>" class="btn btn-primary">Restore</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    
                 <?php endforeach; ?>
             </div>
         </div>

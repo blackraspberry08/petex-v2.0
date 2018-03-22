@@ -215,27 +215,7 @@
                                         <?php else: ?>
                                             <a href = "<?= base_url() ?>PetManagement/interested_adopters_exec/<?= $animal->pet_id; ?>" class = "btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-heart"></i> <span class="badge badge-pill badge-secondary"><?= $petAdopters?></span></a>
                                         <?php endif; ?>
-                                        <a href = "#" class = "btn btn-outline-danger" data-toggle="modal" data-target = "#remove_animal_<?= $animal->pet_id ?>" title="Remove Animal"><i class = "fa fa-times"></i></a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="remove_animal_<?= $animal->pet_id ?>" tabindex="-1" role="dialog" aria-labelledby="VerificationModal" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="VerificationModal">Remove Animal</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <strong><?= $animal->pet_name ?></strong> will be removed from the animal database. Don't worry, <?= $animal->pet_sex == "Male" ? "he" : "she"; ?> can be restored back at "Removed Pets" link.
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a href ="<?= base_url() ?>PetManagement/remove_animal_exec/<?= $animal->pet_id ?>" class="btn btn-danger">Remove Pet</a>
                                 </div>
                             </div>
                         </div>
