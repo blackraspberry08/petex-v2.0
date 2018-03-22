@@ -216,17 +216,7 @@ Pet Adoption
                                                 <?php else: ?>
                                                     <small><i class="fa fa-venus"></i> Female</small>
                                                 <?php endif; ?>
-                                                | 
-                                                <!-- Adoption Status -->
-                                                <?php if ($animal->pet_status == "Adoptable"): ?>
-                                                    <small class = "text-success">Adoptable</small>
-                                                <?php elseif ($animal->pet_status == "NonAdoptable"): ?>
-                                                    <small class = "text-secondary">Not Adoptable</small>
-                                                <?php elseif ($animal->pet_status == "Deceased"): ?>
-                                                    <small class = "text-warning">Deceased</small>
-                                                <?php else: ?>
-                                                    <small class = "text-danger">Adopted</small>
-                                                <?php endif; ?>
+                                               
                                                 <p class="card-text"><?= $animal->pet_description ?></p>
                                             </div>
                                             <div class="card-footer text-center">

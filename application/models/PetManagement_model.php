@@ -205,15 +205,15 @@ class PetManagement_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    public function drop_transaction($where = NULL) {
+    public function drop_transaction($transaction_record, $where = NULL) {
         if (!empty($where)) {
             $this->db->where($where);
         }
-        $this->db->update("transaction", array("transaction_isActivated" => 0));
+        $this->db->update("transaction", $transaction_record);
         return $this->db->affected_rows();
     }
-    
-    public function search_animal($like = NULL, $filter = NULL){
+
+    public function search_animal($like = NULL, $filter = NULL) {
         $table = "pet";
         if (!empty($like)) {
             $this->db->like('pet_name', $like);
@@ -225,8 +225,8 @@ class PetManagement_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
-    
-    public function search_animal_removed($like = NULL, $filter = NULL){
+
+    public function search_animal_removed($like = NULL, $filter = NULL) {
         $table = "pet";
         if (!empty($like)) {
             $this->db->like('pet_name', $like);
@@ -238,4 +238,5 @@ class PetManagement_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
+
 }
