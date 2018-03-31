@@ -81,16 +81,12 @@ class PetManagement extends CI_Controller {
             $this->load->view("admin_nav/navheader");
         }
         $this->load->view("pet_management/main");
-        $this->load->view("dashboard/includes/footer")
-
-        ;
+        $this->load->view("dashboard/includes/footer");
     }
 
     public function medical_records_exec() {
         $this->session->set_userdata("medical_records", $this->uri->segment(3));
-        redirect(base_url() . "PetManagement/medical_records")
-
-        ;
+        redirect(base_url() . "PetManagement/medical_records");
     }
 
     public function medical_records() {
@@ -125,9 +121,7 @@ class PetManagement extends CI_Controller {
             $this->load->view("admin_nav/navheader");
         }
         $this->load->view("medical_records/medical_records");
-        $this->load->view("dashboard/includes/footer")
-
-        ;
+        $this->load->view("dashboard/includes/footer");
     }
 
     public function add_medical_record_exec() {
@@ -293,6 +287,48 @@ class PetManagement extends CI_Controller {
         ;
     }
 
+    public function animal_edit_exec() {
+        $this->session->set_userdata("animal_info", $this->uri->segment(3));
+        redirect(base_url() . "PetManagement/animal_edit_info")
+
+        ;
+    }
+
+    public function animal_edit_info() {
+        $manageUserModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 1));
+        $manageOfficerModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 2));
+        $petManagementModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 3));
+        $scheduleModule = $this->AdminDashboard_model->fetch("module_access", array("admin_id" => $this->session->userdata("userid"), "module_id" => 4));
+
+        $animal_id = $this->session->userdata("animal_info");
+        $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $animal_id))[0];
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
+            'title' => $animal->pet_name . " | Pet Information",
+            'animal' => $animal,
+            //  NAV INFO
+            'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        if ($current_user->admin_access == "Subadmin") {
+            $this->load->view("subadmin_nav/navheader");
+        } else {
+            $this->load->view("admin_nav/navheader");
+        }
+        $this->load->view("pet_management/animal_edit_information");
+        $this->load->view("dashboard/includes/footer")
+
+        ;
+    }
+
     public function edit_animal_info_exec() {
         header('X-XSS-Protection:0');
         $animal = $this->PetManagement_model->get_animal_info(array("pet_id" => $this->uri->segment(3)))[0];
@@ -361,8 +397,8 @@ class PetManagement extends CI_Controller {
             );
 
             $this->PetManagement_model->update_animal_record($pet, array("pet_id" => $animal->pet_id));
-			$this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated the record of " . $animal->pet_name);
-			$this->session->set_flashdata("uploading_success", "Successfully updated the record of " . $animal->pet_name);
+            $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Updated the record of " . $animal->pet_name);
+            $this->session->set_flashdata("uploading_success", "Successfully updated the record of " . $animal->pet_name);
             redirect(base_url() . "PetManagement/animal_info");
         }
     }
@@ -588,7 +624,20 @@ class PetManagement extends CI_Controller {
         $transaction_id = $this->uri->segment(3);
         $transaction_user_id = $this->uri->segment(4);
         $transaction_user = $this->ManageUsers_model->get_users("user", array("user_id" => $transaction_user_id))[0];
-        if ($this->PetManagement_model->drop_transaction(array("transaction_id" => $transaction_id))) {
+        $remarks = $this->input->post('remarks');
+        $specify = $this->input->post('specify');
+        if ($remarks != Other) {
+            $data = array(
+                'transaction_isActivated' => 0,
+                'transaction_reasonDropped' => $remarks,
+            );
+        } else {
+            $data = array(
+                'transaction_isActivated' => 0,
+                'transaction_reasonDropped' => $specify,
+            );
+        }
+        if ($this->PetManagement_model->drop_transaction($data, array("transaction_id" => $transaction_id))) {
             $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Dropped the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
             $this->session->set_flashdata("drop_success", "Dropped the transaction of " . $transaction_user->user_firstname . " " . $transaction_user->user_lastname);
         } else {
@@ -605,6 +654,40 @@ class PetManagement extends CI_Controller {
         $this->session->set_userdata("manage_progress_transaction_id", $transaction_id);
         $this->session->set_userdata("pet_status", $current_transaction->pet_status);
         redirect(base_url() . "ManageProgress");
+    }
+
+    public function search_pet() {
+        $word = $this->input->post("search_word");
+        $filter = $this->input->post("filter");
+        if ($filter == "nofilter") {
+            $matched_pet = $this->PetManagement_model->search_animal($word);
+        } else {
+            $matched_pet = $this->PetManagement_model->search_animal($word, $filter);
+        }
+        if ($word == "" && $filter == "nofilter") {
+            $all_animals = $this->PetManagement_model->get_all_animals();
+            $data = array(
+                "success" => 1,
+                "result" => "",
+                "pets" => $all_animals
+            );
+        } else {
+            if (empty($matched_pet)) {
+                $data = array(
+                    "success" => 2,
+                    "result" => "No Matches Found",
+                    "pets" => $matched_pet
+                );
+            } else {
+                $data = array(
+                    "success" => 3,
+                    "result" => count($matched_pet) . " results found",
+                    "pets" => $matched_pet
+                );
+            }
+        }
+
+        echo json_encode($data);
     }
 
 }

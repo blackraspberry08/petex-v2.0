@@ -34,16 +34,16 @@
                         </div>
                         <div class="card-footer">
                             <?php if ($this->session->userdata("user_access") == "user"): ?>
-                                <a class="btn btn-primary pull-left" href="<?= base_url() . "UserDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>
+                                <a class="btn btn-primary" href="<?= base_url() . "UserDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>
                             <?php elseif ($this->session->userdata("user_access") == "subadmin"): ?>
-                                <a class="btn btn-primary pull-left" href="<?= base_url() . "SubadminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>
+                                <a class="btn btn-primary" href="<?= base_url() . "SubadminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>
                             <?php elseif ($this->session->userdata("user_access") == "admin"): ?>
-                                <a class="btn btn-primary pull-left" href="<?= base_url() . "AdminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>  
+                                <a class="btn btn-primary" href="<?= base_url() . "AdminDashboard" ?>"><i class="fa fa-sign-in fa-lg"></i> Proceed to account</a>  
                             <?php endif; ?>
                             <?php if ($this->session->userdata("user_access") == "Admin"): ?>
-                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                                <a class="btn btn-secondary" href="<?= base_url() . "AdminLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
                             <?php else: ?>
-                                <a class="btn btn-secondary pull-right" href="<?= base_url() . "UserLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                                <a class="btn btn-secondary " href="<?= base_url() . "UserLogout" ?>"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
                             <?php endif; ?>
                         </div>
                     <?php else: ?>
@@ -68,11 +68,11 @@
                                     </div>
                                 </div>
                                 <p>New to PetEx? <a href="<?= $this->config->base_url() ?>register">Create an Account</a></p>
-                                <div class="card-footer" style=" margin-top:-20px;">
-                                    <a class="btn btn-primary pull-left" href="<?= $this->config->base_url() ?>reset">
-                                        <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
-                                    <button type="submit" class="btn btn-success pull-right">Login</button>
-                                </div><br>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-primary" href="<?= $this->config->base_url() ?>reset">
+                                    <i class="fa fa-refresh fa-lg"></i> Reset Password</a>
+                                <button type="submit" class="btn btn-success">Login</button>
                             </div>
                         </form>
                     <?php endif; ?>
@@ -198,9 +198,11 @@
     <!--==========================
       Portfolio Section
     ============================-->
+     <br>
     <section id="adoptables">
         <div class="container wow fadeInUp">
             <div class="section-header">
+               
                 <h3 class="section-title">Adoptables</h3>
                 <p class="section-description">These are the current adoptables in PAWS.</p>
             </div>
@@ -409,7 +411,7 @@
                                                             <div class="col-md-3"></div>
                                                             <div class="col-md-3"> 
                                                                 <a href="<?= base_url() ?>download/adoption_application_form.pdf" onclick="window.open('<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id ?>');
-                                                                        return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
+                                                                                    return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <a href="<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn btn-outline-primary">Fill up the Form Online</a>

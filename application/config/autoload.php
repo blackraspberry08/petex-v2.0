@@ -151,5 +151,6 @@ $autoload['model'] = array(
     "PetAdoption_model",
     "MyPets_model",
     "MyProgress_model",
-    "Register_model"
+    "Register_model",
+    "ReturnProgress"
 );

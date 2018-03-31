@@ -44,6 +44,12 @@ class AdminSettings extends CI_Controller {
         $userDetails = $this->Profile_model->fetch("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => "Settings | " . $current_user->admin_firstname . " " . $current_user->admin_lastname,
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,

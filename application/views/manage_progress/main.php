@@ -248,15 +248,17 @@ Manage Progress
         $(document).ready(function () {
             var dt = new Date();
             dt.setFullYear(new Date().getFullYear());
+            var startTime = new Date(new Date().setHours(8,0,0,0));
+            var endTime = new Date(new Date().setHours(17,0,0,0));
             //DATE PICKER FOR SCHEDULE
             $(".schedule_datepicker").datetimepicker({
                 format: 'MM d, yyyy',
                 todayBtn: true,
                 autoclose: true,
-                minView: 2,      
+                minView: 2,
             });
             $('.schedule_datepicker').datetimepicker('setStartDate', dt);
-            
+
             //TIME PICKER FOR SCHEDULE
             $(".limited-timepicker").datetimepicker({
                 format: 'H:ii P',
@@ -265,7 +267,8 @@ Manage Progress
                 maxView: 1,
                 startView: 1,
                 showMeridian: true,
-                startDate:new Date(),
+                startDate: startTime,
+                endDate:endTime,
             });
             //$('.limited-timepicker').datetimepicker('setStartDate', dt);
             $(".no-limit-timepicker").datetimepicker({
@@ -275,6 +278,8 @@ Manage Progress
                 maxView: 1,
                 startView: 1,
                 showMeridian: true,
+                startDate: startTime,
+                endDate:endTime,
             });
         });
     </script>

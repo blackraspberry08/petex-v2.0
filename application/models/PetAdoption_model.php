@@ -109,5 +109,19 @@ class PetAdoption_model extends CI_Model {
         $this->db->update("adoption_form", $adoption_form_record);
         return $this->db->affected_rows();
     }
+    
+    public function search_animal_adoptable($like = NULL, $filter = NULL){
+        $table = "pet";
+        if (!empty($like)) {
+            $this->db->like('pet_name', $like);
+        }
+        if (!empty($filter)) {
+            $this->db->where(array("pet_sex" => $filter));
+        }
+        $this->db->where(array("pet_status" => "Adoptable"));
+        $this->db->where(array("pet_access" => 1));
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
 
 }

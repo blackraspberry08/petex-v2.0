@@ -38,6 +38,20 @@ class AdminDashboard_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
+    public function fetch_all_missing() {
+        $table = "adoption";
+        $join = "user";
+        $on = "adoption.user_id = user.user_id";
+        $join2 = "pet";
+        $on2 = "adoption.pet_id = pet.pet_id";
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->where(array("adoption_isMissing" => 1));
+        $this->db->group_by('adoption.pet_id');
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+
     public function fetch_all_transactions($where = NULL) {
         $table = "transaction";
         $join = "user";
@@ -55,10 +69,25 @@ class AdminDashboard_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
+    public function fetch_all_found() {
+        $table = "discovery";
+        $join = "user";
+        $on = "discovery.user_id = user.user_id";
+        $join2 = "pet";
+        $on2 = "discovery.pet_id = pet.pet_id";
+        $this->db->join($join, $on, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->group_by('discovery.pet_id');
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+
     public function count_missing_animal() {
         $table = "adoption";
+       
         $this->db->count_all_results($table);
-        $this->db->where(array("adoption_isMissing" => 1));
+        $this->db->group_by('pet_id');
+         $this->db->where(array("adoption_isMissing" => 1));
         $this->db->from($table);
         return $this->db->count_all_results();
     }
@@ -66,6 +95,7 @@ class AdminDashboard_model extends CI_Model {
     public function count_found_animal() {
         $table = "discovery";
         $this->db->count_all_results($table);
+        $this->db->group_by('pet_id');
         $this->db->from($table);
         return $this->db->count_all_results();
     }
@@ -162,7 +192,9 @@ class AdminDashboard_model extends CI_Model {
 
     public function count_all_animals() {
         $table = "pet";
+       
         $this->db->count_all_results($table);
+        $this->db->where_not_in(array("pet_status" => "Adopted"));
         $this->db->from($table);
         return $this->db->count_all_results();
     }

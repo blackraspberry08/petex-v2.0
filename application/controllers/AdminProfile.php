@@ -44,6 +44,12 @@ class AdminProfile extends CI_Controller {
         $userDetails = $this->Profile_model->fetch("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => "Profile | " . $current_user->admin_firstname . " " . $current_user->admin_lastname,
             'trails' => $this->AuditTrail_model->get_audit_trail("event", "admin", "event.admin_id = admin.admin_id", "user", "event.user_id = user.user_id", array("event_classification" => "trail", 'admin.admin_id' => $this->session->userid)),
             //NAV INFO
@@ -71,6 +77,12 @@ class AdminProfile extends CI_Controller {
         $userDetails = $this->Profile_model->fetch("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
         $data = array(
+            /* MODULE ACCESS */
+            'manageUserModule' => $manageUserModule,
+            'manageOfficerModule' => $manageOfficerModule,
+            'petManagementModule' => $petManagementModule,
+            'scheduleModule' => $scheduleModule,
+            //////////////////////////////
             'title' => "Edit Profile | " . $current_user->admin_firstname . " " . $current_user->admin_lastname,
             //NAV INFO
             'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
@@ -127,9 +139,21 @@ class AdminProfile extends CI_Controller {
         );
 
         if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
+            $accountDetailsAdmin = $this->Login_model->getinfo("admin", array("admin_id" => $userDetails->admin_id))[0];
+//            echo "<pre>";
+//            print_r($accountDetailsAdmin);
+//            echo "</pre>";
+//            die;
             //SUCCESS
             $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change profile picture.");
             $this->session->set_flashdata("uploading_success", "Successfully update the image");
+            $this->session->set_userdata('userid', $accountDetailsAdmin->admin_id);
+            $this->session->set_userdata('current_user', $accountDetailsAdmin);
+            if ($accountDetailsAdmin->admin_access == 'Admin') {
+                $this->session->set_userdata('user_access', "admin");
+            } else {
+                $this->session->set_userdata('user_access', "subadmin");
+            }
             redirect(base_url() . "AdminProfile/edit_profile");
         } else {
             
@@ -160,9 +184,19 @@ class AdminProfile extends CI_Controller {
             );
 
             if ($this->Profile_model->update_admin_record($data, array("admin_id" => $userDetails->admin_id))) {
+
+                $accountDetailsAdmin = $this->Login_model->getinfo("admin", array("admin_id" => $userDetails->admin_id))[0];
+
                 //SUCCESS
                 $this->SaveEventAdmin->trail($this->session->userdata("userid"), $userDetails->admin_firstname . " change account information.");
                 $this->session->set_flashdata("uploading_success", "You have successfully changed your account information");
+                $this->session->set_userdata('user_id', $accountDetailsAdmin->admin_id);
+                $this->session->set_userdata('current_user', $accountDetailsAdmin);
+                if ($accountDetailsAdmin->admin_access == 'Admin') {
+                    $this->session->set_userdata('user_access', "admin");
+                } else {
+                    $this->session->set_userdata('user_access', "subadmin");
+                }
                 redirect(base_url() . "AdminProfile/edit_profile");
             } else {
                 $this->session->set_flashdata("uploading_fail", $userDetails->admin_lastname . " seems to not exist in the database.");

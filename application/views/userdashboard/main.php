@@ -37,7 +37,7 @@ Dashboard
         <!-- Registered -->
         <div class="card">
             <div class="card-header">
-                <h5>Newly Registered Pet</h5>
+                <h5>Recently Added Pet</h5>
             </div>
             <?php if (empty($pets)): ?>
                 <div class = "col-lg-12">
@@ -51,310 +51,205 @@ Dashboard
                     <div class="row">
                         <?php $counter = 0; ?>
                         <?php foreach ($pets as $pet): ?>
-                            <?php if ($pet->pet_status == 'Adoptable' && $pet->pet_access == 1): ?>
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <a href = "<?= $this->config->base_url() . $pet->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $pet->pet_name ?></b>">
-                                            <img class="card-img-top" src = "<?= $this->config->base_url() . $pet->pet_picture ?>"  style="height:180px;" alt="picture">
-                                        </a>
-                                        <div class="card-body">
-                                            <h4 class="card-title"><?= $pet->pet_name ?></h4>
-                                            <i class="fa fa-calendar"></i> <?= date('M. j, Y', $pet->pet_bday) ?><br>
-                                            <?php if ($pet->pet_sex == "Male" || $pet->pet_sex == "male"): ?>
-                                                <i class="fa fa-mars" style="color:blue"></i> <?= $pet->pet_sex ?><br>
-                                            <?php else: ?>
-                                                <i class="fa fa-venus" style="color:red"></i> <?= $pet->pet_sex ?><br>
-                                            <?php endif; ?>
-                                            <i class="fa fa-paw"></i> <?= $pet->pet_breed ?><br>
-                                            <i class="fa fa-check-square" style="color:green"></i> <?= $pet->pet_status ?>
-                                        </div>
+                            <?php if (date('M. j, Y', strtotime("+2 month", $pet->pet_added_at)) <= date('M. j, Y')): ?>
+                            <?php else: ?>
+                                <?php if ($pet->pet_status == 'Adoptable' && $pet->pet_access == 1): ?>
+                                    <?php $petAdopters = $this->UserDashboard_model->fetchJoinThreeProgressDesc(array('transaction.pet_id' => $pet->pet_id)); ?>
+                                    <?php $medical = $this->UserDashboard_model->get_animal_medical_records(array("medical_record.pet_id" => $pet->pet_id))[0]; ?>
 
-                                        <div class="card-footer text-center">
-                                            <div class = "btn-group" role="group" aria-label="Button Group">
-                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye"></i></a>
-                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope"></i></a>
-                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera"></i></a>
-                                                <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopters" data-placement="bottom" title="Interested Adopters"><i class = "fa fa-users"></i></a>
-                                                <?php if (empty($userInfo)): ?>
-                                                    <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>adopt" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star"></i></a>
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <a href = "<?= $this->config->base_url() . $pet->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $pet->pet_name ?></b>">
+                                                <img class="card-img-top" src = "<?= $this->config->base_url() . $pet->pet_picture ?>"  style="height:180px;" alt="picture">
+                                            </a>
+                                            <div class="card-body">
+                                                <h4 class="card-title"><?= $pet->pet_name ?></h4>
+                                                <i class="fa fa-calendar"></i> <?= date('M. j, Y', $pet->pet_bday) ?><br>
+                                                <?php if ($pet->pet_sex == "Male" || $pet->pet_sex == "male"): ?>
+                                                    <i class="fa fa-mars" style="color:blue"></i> <?= $pet->pet_sex ?><br>
                                                 <?php else: ?>
-                                                    <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>warning" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star"></i></a>
+                                                    <i class="fa fa-venus" style="color:red"></i> <?= $pet->pet_sex ?><br>
                                                 <?php endif; ?>
+                                                <i class="fa fa-paw"></i> <?= $pet->pet_breed ?><br>
+                                                <i class="fa fa-users"></i> <?= $petAdopters ?><br>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Modal Detail -->
-                                <div class="modal fade <?= $pet->pet_id; ?>detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><i class = "fa fa-info"></i> Pet Info</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class ="col-md-5">
-                                                        <img src = "<?= $this->config->base_url() . $pet->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
-                                                    </div>
-                                                    <div class ="col-md-7">
-                                                        <table class = "table table-striped">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th>Name: </th>
-                                                                    <td><?= $pet->pet_name; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Status: </th>
-                                                                    <td><?= $pet->pet_status; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Size: </th>
-                                                                    <td><?= $pet->pet_size; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Birthday: </th>
-                                                                    <td><?= date("F d, Y", $pet->pet_bday); ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Age:</th>
-                                                                    <td><?= get_age($pet->pet_bday); ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Specie: </th>
-                                                                    <td><?= $pet->pet_specie; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Sex: </th>
-                                                                    <td><?= $pet->pet_sex; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Breed: </th>
-                                                                    <td><?= $pet->pet_breed; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Sterilized: </th>
-                                                                    <td><?= $pet->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Admission: </th>
-                                                                    <td><?= $pet->pet_admission; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Description: </th>
-                                                                    <td><?= $pet->pet_description; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Findings: </th>
-                                                                    <td><?= $pet->pet_history; ?></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+
+                                            <div class="card-footer text-center">
+                                                <div class = "btn-group" role="group" aria-label="Button Group">
+                                                    <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye"></i></a>
+                                                    <?php if (empty($userInfo)): ?>
+                                                        <a href = "<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class = "btn btn-outline-secondary btn-md"  title="Adopt a Pet"><i class = "fa fa-star"></i></a>
+                                                    <?php else: ?>
+                                                        <a href = "#" class = "btn btn-outline-secondary btn-md" data-toggle="modal" data-target=".<?= $pet->pet_id; ?>warning" data-placement="bottom" title="Adopt a Pet"><i class = "fa fa-star"></i></a>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Modal Medical -->
-                                <?php $medical = $this->UserDashboard_model->get_animal_medical_records(array("medical_record.pet_id" => $pet->pet_id))[0]; ?>
+                                    <!-- Modal Detail -->
+                                    <div class="modal fade <?= $pet->pet_id; ?>detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title"><i class = "fa fa-info"></i> Pet Info</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class ="col-md-5">
+                                                            <img src = "<?= $this->config->base_url() . $pet->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
 
-
-                                <div class="modal fade <?= $pet->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><i class = "fa fa-stethoscope"></i> Medical Records</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class ="row">
-                                                    <div class = "col-lg-12">
-                                                        <?php if (empty($medical)): ?>
-                                                            <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
-                                                        <?php else: ?>
+                                                        </div>
+                                                        <div class ="col-md-7">
                                                             <table class = "table table-striped">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th>Date: </th>
-                                                                        <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                        <th>Name: </th>
+                                                                        <td><?= $pet->pet_name; ?></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th>Weight: </th>
-                                                                        <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                        <th>Interested Adopters: </th>
+                                                                        <td><?= $petAdopters ?></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th>Diagnosis: </th>
-                                                                        <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                        <th>Size: </th>
+                                                                        <td><?= $pet->pet_size; ?></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th>Treatment: </th>
-                                                                        <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                        <th>Birthday: </th>
+                                                                        <td><?= date("F d, Y", $pet->pet_bday); ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Age:</th>
+                                                                        <td><?= get_age($pet->pet_bday); ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Specie: </th>
+                                                                        <td><?= $pet->pet_specie; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Sex: </th>
+                                                                        <td><?= $pet->pet_sex; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Breed: </th>
+                                                                        <td><?= $pet->pet_breed; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Sterilized: </th>
+                                                                        <td><?= $pet->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Admission: </th>
+                                                                        <td><?= $pet->pet_admission; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Description: </th>
+                                                                        <td><?= $pet->pet_description; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Findings: </th>
+                                                                        <td><?= $pet->pet_history; ?></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Modal Video -->
-                                <div class="modal fade <?= $pet->pet_id; ?>video" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><i class = "fa fa-video-camera"></i> Pet Video</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row container">
-                                                    <div class="row container">
-                                                        <?php if ($pet->pet_video == NULL): ?>
-                                                            <h2>This pet has no Video</h2>
-                                                        <?php else: ?>
-                                                            <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
-                                                                <?= wrap_iframe($pet->pet_video); ?>
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5><i class = "fa fa-stethoscope"></i> Medical Record</h5>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <?php if (empty($medical)): ?>
+                                                                        <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
+                                                                    <?php else: ?>
+                                                                        <table class = "table table-striped">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <th>Date: </th>
+                                                                                    <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>Weight: </th>
+                                                                                    <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>Diagnosis: </th>
+                                                                                    <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>Treatment: </th>
+                                                                                    <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    <?php endif; ?>
+                                                                </div>
                                                             </div>
-                                                        <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <br>
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5><i class="fa fa-video-camera"></i> Video</h5>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <?php if ($pet->pet_video == NULL): ?>
+                                                                        <h2>This pet has no Video</h2>
+                                                                    <?php else: ?>
+                                                                        <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                                                            <?= wrap_iframe($pet->pet_video); ?>
+                                                                        </div>
+                                                                    <?php endif; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Modal Interested Adopters -->
-                                <div class="modal fade <?= $pet->pet_id; ?>adopters" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><i class = "fa fa-users"></i> Interested Adopters</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row container">
-                                                    <?php if (!$adopters): ?>
-                                                        <h2><i class="fa fa-warning"></i> This pet has no Adopters</h2>
-                                                    <?php else: ?>
-                                                        <?php foreach ($adopters as $adopter): ?>
-                                                            <?php if ($adopter->pet_id == $pet->pet_id && $adopter->transaction_isFinished == 0): ?>
-                                                                <br>
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-6 pull-left">
-                                                                        <h6><strong>Name: </strong><?= $adopter->user_firstname ?></h6>
-                                                                    </div>
-                                                                    <div class="col-md-6 pull-right">
-                                                                        <h6><strong>Pet Name: </strong><?= $adopter->pet_name ?></h6>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="progress" style="width:100%; ">
-                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="<?= $adopter->transaction_progress ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $adopter->transaction_progress . '%' ?>;"><?= $adopter->transaction_progress ?></div>
-                                                                    </div>
-                                                                </div>
-                                                            <?php elseif ($adopter->pet_id != $pet->pet_id): ?>
-                                                                <h2><i class="fa fa-warning"></i> This pet has no Adopter/s</h2>
-                                                                <?php break; ?>
-                                                            <?php endif; ?>
-                                                        <?php endforeach; ?>
-                                                    <?php endif; ?>
 
+                                    <!-- Modal Warning -->
+                                    <div class="modal fade <?= $pet->pet_id; ?>warning" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title"><i class = "fa fa-warning"></i> Warning!</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Modal Adopt -->
-                                <div class="modal fade <?= $pet->pet_id; ?>adopt" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><i class = "fa fa-star"></i> Adopt a Pet</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row container">
-                                                    <p><strong>There are two options for you to decide, its either download the form or fill up the form and send to our email online.</strong></p>
-                                                    <div class="col-md-3"></div>
-                                                    <div class="col-md-3"> 
-                                                        <a href="<?= base_url() ?>download/adoption_application_form.pdf" onclick="window.open('<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id ?>');
-                                                                return true;" class = 'btn btn-outline-primary' download> Download <i class = "fa fa-download"></i></a >
+                                                <div class="modal-body">
+                                                    <div class="row container">
+                                                        <h3>Oops! Sorry, you cannot adopt this pet because you already have in progress...</h3>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <a href="<?= base_url() ?>PetAdoption/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn btn-outline-primary">Fill up the Form Online</a>
-                                                    </div>
-                                                    <div class="col-md-3"></div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Modal Warning -->
-                                <div class="modal fade <?= $pet->pet_id; ?>warning" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><i class = "fa fa-warning"></i> Warning!</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row container">
-                                                    <h3>Oops! Sorry, you cannot adopt this pet because you already have in progress...</h3>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php endif; ?>
                             <?php endif; ?>
-                            <?php
-                            if ($counter == 4): {
-                                    break;
-                                }
-                                ?>
-                            <?php endif; ?>
-                            <?php $counter++; ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
                 <div class="card-footer">
                     <a href="<?= base_url() ?>PetAdoption" class="pull-right">See more</a>
                 </div>
+
             <?php endif; ?>
         </div><br>
         <!-- Adopted -->
         <div class="card">
-            <h5 class="card-header ">Newly Adopted Pet</h5>
+            <h5 class="card-header ">Recently Adopted Pet</h5>
             <?php if (empty($adoptedPets)): ?>
                 <div class = "col-lg-12">
                     <center>
@@ -367,201 +262,165 @@ Dashboard
                     <div class="row">
                         <?php $counter1 = 0; ?>
                         <?php foreach ($adoptedPets as $adopted): ?>
-                            <div class="col-md-3">
-                                <div class="card">
-                                    <a href = "<?= $this->config->base_url() . $adopted->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $adopted->pet_name ?></b>">
-                                        <img class="card-img-top" src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" style="height:180px;" alt="picture">
-                                    </a>
-                                    <div class="card-body">
-                                        <h4 class="card-title"><?= $adopted->pet_name ?></h4>
-                                        <i class="fa fa-calendar"></i> <?= date('M. j, Y', $adopted->pet_bday) ?><br>
-                                        <?php if ($adopted->pet_sex == "Male" || $adopted->pet_sex == "male"): ?>
-                                            <i class="fa fa-mars" style="color:blue"></i> <?= $adopted->pet_sex ?><br>
-                                        <?php else: ?>
-                                            <i class="fa fa-venus" style="color:red"></i> <?= $adopted->pet_sex ?><br>
-                                        <?php endif; ?>
-                                        <i class="fa fa-paw"></i> <?= $adopted->pet_breed ?><br>
-                                        <i class="fa fa-check-square" style="color:green"></i> <?= $adopted->pet_status ?>
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <div class = "btn-group" role="group" aria-label="Button Group">
-                                            <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $adopted->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
-                                            <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $adopted->pet_id; ?>medical"  data-placement="bottom" title="View Medical Records"><i class = "fa fa-stethoscope fa-2x"></i></a>
-                                            <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $adopted->pet_id; ?>video" data-placement="bottom" title="Play Video"><i class = "fa fa-video-camera fa-2x"></i></a>
+                            <?php if (date('M. j, Y', strtotime("+2 month", $adopted->adoption_adopted_at)) >= date('M. j, Y')): ?>
+                                <div class="col-md-3">
+                                    <div class="card">
+                                        <a href = "<?= $this->config->base_url() . $adopted->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $adopted->pet_name ?></b>">
+                                            <img class="card-img-top" src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" style="height:180px;" alt="picture">
+                                        </a>
+                                        <div class="card-body">
+                                            <h4 class="card-title"><?= $adopted->pet_name ?></h4>
+                                            <i class="fa fa-calendar"></i> <?= date('M. j, Y', $adopted->pet_bday) ?><br>
+                                            <?php if ($adopted->pet_sex == "Male" || $adopted->pet_sex == "male"): ?>
+                                                <i class="fa fa-mars" style="color:blue"></i> <?= $adopted->pet_sex ?><br>
+                                            <?php else: ?>
+                                                <i class="fa fa-venus" style="color:red"></i> <?= $adopted->pet_sex ?><br>
+                                            <?php endif; ?>
+                                            <i class="fa fa-paw"></i> <?= $adopted->pet_breed ?><br>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <div class = "btn-group" role="group" aria-label="Button Group">
+                                                <a href = "#" class = "btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".<?= $adopted->pet_id; ?>detail"  data-placement="bottom" title="View Full Details"><i class = "fa fa-eye fa-2x"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Modal Medical -->
-                            <?php $medical = $this->UserDashboard_model->get_animal_medical_records(array("medical_record.pet_id" => $adopted->pet_id))[0]; ?>
+                                <?php $medical = $this->UserDashboard_model->get_animal_medical_records(array("medical_record.pet_id" => $adopted->pet_id))[0]; ?>
 
-
-                            <div class="modal fade <?= $adopted->pet_id; ?>medical" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title"><i class = "fa fa-stethoscope"></i> Medical Records</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class ="row">
-                                                <div class = "col-lg-12">
-                                                    <?php if (empty($medical)): ?>
-                                                        <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
-                                                    <?php else: ?>
-                                                        <table class = "table table-striped">
+                                <!-- Modal Detail Adopted-->
+                                <div class="modal fade <?= $adopted->pet_id; ?>detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><i class = "fa fa-info"></i> Pet Info</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class ="col-md-5">
+                                                        <img src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" class = "img-fluid"  style = "border-radius:50px;  margin-top:20px;"/>
+                                                    </div>
+                                                    <div class ="col-md-7">
+                                                        <table class = "table table-responsive table-striped">
                                                             <tbody>
                                                                 <tr>
-                                                                    <th>Date: </th>
-                                                                    <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                    <th>Name: </th>
+                                                                    <td><?= $adopted->pet_name; ?></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th>Weight: </th>
-                                                                    <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                    <th>Owner: </th>
+                                                                    <td><?= $adopted->user_firstname; ?> <?= $adopted->user_lastname; ?></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th>Diagnosis: </th>
-                                                                    <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                    <th>Size: </th>
+                                                                    <td><?= $adopted->pet_size; ?></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th>Treatment: </th>
-                                                                    <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                    <th>Birthday: </th>
+                                                                    <td><?= date("F d, Y", $adopted->pet_bday); ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Age:</th>
+                                                                    <td><?= get_age($adopted->pet_bday); ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Specie: </th>
+                                                                    <td><?= $adopted->pet_specie; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Sex: </th>
+                                                                    <td><?= $adopted->pet_sex; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Breed: </th>
+                                                                    <td><?= $adopted->pet_breed; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Sterilized: </th>
+                                                                    <td><?= $adopted->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Admission: </th>
+                                                                    <td><?= $adopted->pet_admission; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Description: </th>
+                                                                    <td><?= $adopted->pet_description; ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Findings: </th>
+                                                                    <td><?= $adopted->pet_history; ?></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Modal Detail Adopted-->
-                            <div class="modal fade <?= $adopted->pet_id; ?>detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title"><i class = "fa fa-info"></i> Pet Info</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class ="col-md-5">
-                                                    <img src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" class = "img-fluid"  style = "border-radius:50px;  margin-top:20px;"/>
-                                                </div>
-                                                <div class ="col-md-7">
-                                                    <table class = "table table-responsive table-striped">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th>Name: </th>
-                                                                <td><?= $adopted->pet_name; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Status: </th>
-                                                                <td><?= $adopted->pet_status; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Owner: </th>
-                                                                <td><?= $adopted->user_firstname; ?> <?= $adopted->user_lastname; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Size: </th>
-                                                                <td><?= $adopted->pet_size; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Birthday: </th>
-                                                                <td><?= date("F d, Y", $adopted->pet_bday); ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Age:</th>
-                                                                <td><?= get_age($adopted->pet_bday); ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Specie: </th>
-                                                                <td><?= $adopted->pet_specie; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Sex: </th>
-                                                                <td><?= $adopted->pet_sex; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Breed: </th>
-                                                                <td><?= $adopted->pet_breed; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Sterilized: </th>
-                                                                <td><?= $adopted->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Admission: </th>
-                                                                <td><?= $adopted->pet_admission; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Description: </th>
-                                                                <td><?= $adopted->pet_description; ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Findings: </th>
-                                                                <td><?= $adopted->pet_history; ?></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Modal Video Adopted -->
-                            <div class="modal fade <?= $adopted->pet_id; ?>video" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title"><i class = "fa fa-video-camera"></i> Pet Video</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row container">
-                                                <?php if ($pet->pet_video == NULL): ?>
-                                                    <h2>This pet has no Video</h2>
-                                                <?php else: ?>
-                                                    <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
-                                                        <?= wrap_iframe($pet->pet_video); ?>
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h5><i class="fa fa-stethoscope"></i> Medical Record</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <?php if (empty($medical)): ?>
+                                                                    <h2><i class="fa fa-warning"></i> This pet has no Medical Records</h2>
+                                                                <?php else: ?>
+                                                                    <table class = "table table-striped">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th>Date: </th>
+                                                                                <td><?= date("F d, Y", $medical->medicalRecord_date); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Weight: </th>
+                                                                                <td><?= $medical->medicalRecord_weight; ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Diagnosis: </th>
+                                                                                <td><?= $medical->medicalRecord_diagnosis; ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Treatment: </th>
+                                                                                <td><?= $medical->medicalRecord_treatment; ?></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                <?php endif; ?>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <br>
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h5><i class="fa fa-video-camera"></i> Video</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <?php if ($pet->pet_video == NULL): ?>
+                                                                    <h2>This pet has no Video</h2>
+                                                                <?php else: ?>
+                                                                    <div class="embed-responsive embed-responsive-16by9 rounded mb-4">
+                                                                        <?= wrap_iframe($pet->pet_video); ?>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <script>
-                                function downloadFunction() {
-                                    window.open("<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id; ?>");
-                                        }
-                            </script>
-                            <?php
-                            if ($counter1 == 3): {
-                                    break;
-                                }
-                                ?>
+                                <script>
+                                    function downloadFunction() {
+                                        window.open("<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id; ?>");
+                                            }
+                                </script>
                             <?php endif; ?>
-                            <?php $counter1++; ?>
                         <?php endforeach; ?>
                     </div>
                 </div>

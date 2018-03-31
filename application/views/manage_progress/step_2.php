@@ -17,11 +17,43 @@
     }
 </style>
 
-<?php $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id))[0];?>
+<?php $schedule_2 = $this->ManageProgress_model->get_schedule(array("schedule.progress_id" => $progress_2->progress_id, "schedule.transaction_id" => $transaction->transaction_id))[0];?>
 
 <?php if(empty($schedule_2)):?>
     <!-- NOTHING TO DO HERE -->
 <?php else:?>
+<script>
+$(document).on('click', '#step_2_return', function () {
+    $.ajax({
+        "method": "POST",
+        
+        "url": '<?= base_url() ?>' + "/ManageProgress/step_2_return_exec",
+        "dataType": "JSON",
+        "data": {
+            'transaction_id':'<?= $transaction->transaction_id?>',
+            'progress_id':'<?= $progress_1->progress_id?>',
+            'schedule_id':'<?= $schedule_2->schedule_id?>'
+        },
+        success: function (res) {
+            if (res.success) {
+                swal({title: "Success", text: res.result, type: "success"},
+                        function () {
+                            location.reload();
+                        }
+                );
+            } else {
+                swal("Oops", res.result, "error");
+            }
+
+        },
+        error: function (res) {
+            swal("Reload", "Something went wrong. Please reload your browser.", "error");
+        }
+    });
+
+});
+</script>
+    
 <div class = "col-lg-12">
     <h3 class = "mt-3 text-center">Meet and Greet</h3>
     <p class = "text-muted">&emsp;<?= $progress_2->checklist_desc?></p>
@@ -83,8 +115,9 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_2_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_2_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Return to Step 1" data-target = "#step_2_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 1</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_2_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 3" data-target = "#step_2_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 3</button>
                     </div>
                 </div>
             <?php endif;?>
@@ -110,8 +143,9 @@
             <?php else:?>
                 <div class="card-footer small text-muted text-center">
                     <div class="btn-group" role="group" aria-label="Approval">
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Disapprove" data-target = "#step_2_sched_disapprove"><i class = "fa fa-thumbs-o-down"></i></button>     
-                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Approve" data-target = "#step_2_sched_approve"><i class = "fa fa-thumbs-o-up"></i></button>
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger" data-toggle = "modal"  title = "Return to Step 1" data-target = "#step_2_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 1</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_2_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                        <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 3" data-target = "#step_2_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 3</button>
                     </div>
                 </div>
             <?php endif;?>
@@ -119,21 +153,45 @@
     <?php endif; ?>
 </div>
 
+<!-- MODAL FOR RETURNING FROM STEP 2 -->
+<div class="modal fade" id="step_2_sched_return" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form id = "step_2_form_d" method = "POST" role = "form">
+        <!-- Displayed Fields -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventHeader">Return to Step 1</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to return to Step 1? All progress on this step will be lost.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type = "button" id ="step_2_return" class="btn btn-danger">Yes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    
 <!-- MODAL FOR APPROVING STEP 2 -->
 <div class="modal fade multi-step" id="step_2_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <!-- Displayed Fields -->
     <div class="modal-dialog modal-lg"role="document">
         <div class="modal-content" >
             <div class="modal-header">
-                <h5 class="modal-title step-1" data-step="1"><i class = "fa fa-thumbs-o-up"></i> Approve Meet and Greet</h5>
-                <h5 class="modal-title step-2" data-step="2"><i class = "fa fa-thumbs-o-up"></i> Approve Meet and Greet</h5>
-                <h5 class="modal-title step-3" data-step="3"><i class = "fa fa-thumbs-o-up"></i> Approve Meet and Greet</h5>
+                <h5 class="modal-title step-1" data-step="1"> Set schedule for Interview #1</h5>
+                <h5 class="modal-title step-2" data-step="2"> Set schedule for Interview #2</h5>
+                <h5 class="modal-title step-3" data-step="3"> Set schedule for Interview #3</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body step step-1">
-                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #1</p>
+                <p class="text-muted"><i class="fa fa-check"></i> Before approving Step 2 (Meet and Greet), set schedule for Interview #1 for the next step.</p>
                 <form role ="form" method="POST">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
@@ -158,7 +216,7 @@
                 </form>
             </div>
             <div class="modal-body step step-2">
-                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #2</p>
+                <p class="text-muted"><i class="fa fa-check"></i> Before approving Step 2 (Meet and Greet), set schedule for Interview #2 for the next step.</p>
                 <form role ="form" method="POST">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
@@ -183,7 +241,7 @@
                 </form>
             </div>
             <div class="modal-body step step-3">
-                <p class="text-muted"><i class="fa fa-check"></i> Set schedule for Interview #3</p>
+                <p class="text-muted"><i class="fa fa-check"></i> Before approving Step 2 (Meet and Greet), set schedule for Interview #3 for the next step.</p>
                 <form role ="form" method="POST">
                     <div class = "form-row">
                         <div class = "col-md-6 form-group">
@@ -206,8 +264,8 @@
                         </div>
                     </div>
                     <div class = "form-row">
-                        <label for="comment_step_2">Comment</label>
-                        <textarea class = "form-control" id = "comment_step_2" name = "comment_step_2" placeholder = "Leave a comment here." required=""></textarea>
+                        <label for="comment_step_2">Leave a remark</label>
+                        <textarea class = "form-control" id = "comment_step_2" name = "comment_step_2" placeholder = "Leave a remark here." required=""></textarea>
                     </div>
                 </form>
             </div>
@@ -216,7 +274,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" id = "setSched_1_step_2" class="btn btn-primary step step-1" data-step="1" onclick="nextStep_step_2(1)">Set Schedule #1</button>
                 <button type="button" id = "setSched_2_step_2" class="btn btn-primary step step-2" data-step="2" onclick="nextStep_step_2(2)">Set Schedule #2</button>
-                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep_step_2(3)">Approve</button>
+                <button type="button" id = "step_2_approve" class="btn btn-primary step step-3" data-step="3" onclick="nextStep_step_2(3)">Set Schedule #3</button>
             </div>
         </div>
     </div>
@@ -229,7 +287,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventHeader"><i class = "fa fa-thumbs-o-down"></i> Disapprove Meet and Greet</h5>
+                    <h5 class="modal-title" id="eventHeader"> Leave a remark</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -237,12 +295,12 @@
                 <div class="modal-body">
                     <div class = "form-row">
                         <label for="comment_step_2_d">Remarks</label>
-                        <textarea class = "form-control" id = "comment_step_2_d" name = "comment_step_2_d" placeholder = "Leave a comment here." required=""></textarea>
+                        <textarea class = "form-control" id = "comment_step_2_d" name = "comment_step_2_d" placeholder = "Leave a remark here." required=""></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id = "step_2_disapprove" class="btn btn-danger">Disapprove</button>
+                    <button type="button" id = "step_2_disapprove" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>
@@ -291,7 +349,7 @@
                         "dataType": "JSON",
                         "data": {
                             'schedule_title': "Interview #1 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
-                            'schedule_desc': "Meet and Greet is completed (32%)! Interview #1 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_desc': "Meet and Greet is completed! Interview #1 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
                             'schedule_color': "#1e7e34",
                             'schedule_startdate': $("#event_startdate_step_2_prog1").val(),
                             'schedule_starttime': $("#event_starttime_step_2_prog1").val(),
@@ -329,7 +387,7 @@
                         "dataType": "JSON",
                         "data": {
                             'schedule_title': "Interview #2 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
-                            'schedule_desc': "Meet and Greet is completed (32%)! Interview #2 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_desc': "Interview #2 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
                             'schedule_color': "#1e7e34",
                             'schedule_startdate': $("#event_startdate_step_2_prog2").val(),
                             'schedule_starttime': $("#event_starttime_step_2_prog2").val(),
@@ -366,7 +424,7 @@
                         "dataType": "JSON",
                         "data": {
                             'schedule_title':"Interview #3 : <?= $transaction->user_firstname." ".$transaction->user_lastname?>",
-                            'schedule_desc': "Meet and Greet is completed (32%)! Interview #3 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
+                            'schedule_desc': "Interview #3 will be the next step for <?= $transaction->user_firstname." ".$transaction->user_lastname?> to adopt <?= $transaction->pet_name?>.",
                             'schedule_color': "#1e7e34",
                             'schedule_startdate': $("#event_startdate_step_2").val(),
                             'schedule_starttime': $("#event_starttime_step_2").val(),
