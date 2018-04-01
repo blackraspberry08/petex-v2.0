@@ -427,10 +427,14 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <div class = "card-footer">
-                            <button id = "return_sched_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
-                            <button id = "done_sched_<?= $sched_1->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
-                        </div>
+                        <?php if ($transaction->transaction_dropped_at != 0): ?>
+
+                        <?php else: ?>
+                            <div class = "card-footer">
+                                <button id = "return_sched_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
+                                <button id = "done_sched_<?= $sched_1->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!-- MODAL FOR DONE SCHED 1 -->
@@ -541,10 +545,14 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <div class = "card-footer">
-                            <button id = "return_sched_<?= $sched_2->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
-                            <button id = "done_sched_<?= $sched_2->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_2->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
-                        </div>
+                        <?php if ($transaction->transaction_dropped_at != 0): ?>
+
+                        <?php else: ?>
+                            <div class = "card-footer">
+                                <button id = "return_sched_<?= $sched_2->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
+                                <button id = "done_sched_<?= $sched_2->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_2->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!-- MODAL FOR DONE SCHED 2 -->
@@ -655,10 +663,14 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <div class = "card-footer">
-                            <button id = "return_sched_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
-                            <button id = "done_sched_<?= $sched_3->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
-                        </div>
+                        <?php if ($transaction->transaction_dropped_at != 0): ?>
+
+                        <?php else: ?>
+                            <div class = "card-footer">
+                                <button id = "return_sched_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
+                                <button id = "done_sched_<?= $sched_3->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!-- MODAL FOR DONE SCHED 3 -->
@@ -719,13 +731,17 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                         <i class = "fa fa-check" ></i> Closed. Approved by <strong><?= $comment->progress_comment_sender ?></strong>
                     </div>
                 <?php else: ?>
-                    <div class="card-footer small text-muted text-center">
-                        <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_5" data-toggle = "modal"  title = "Return to Step 4" data-target = "#step_5_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 4</button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_5_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Proceed to Step 6" data-target = "#step_5_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 6</button>
+                    <?php if ($transaction->transaction_dropped_at != 0): ?>
+
+                    <?php else: ?>
+                        <div class="card-footer small text-muted text-center">
+                            <div class="btn-group" role="group" aria-label="Approval">
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_5" data-toggle = "modal"  title = "Return to Step 4" data-target = "#step_5_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 4</button>     
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_5_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Proceed to Step 6" data-target = "#step_5_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 6</button>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 <?php endif; ?>
 
             </div><!-- /Comment-->
@@ -747,13 +763,17 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                         <i class = "fa fa-check" ></i> Closed. Approved by <strong><?= $comment->progress_comment_sender ?></strong>
                     </div>
                 <?php else: ?>
-                    <div class="card-footer small text-muted text-center">
-                        <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_5" data-toggle = "modal"  title = "Return to Step 4" data-target = "#step_5_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 4</button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_5_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Proceed to Step 6" data-target = "#step_5_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 6</button>
+                    <?php if ($transaction->transaction_dropped_at != 0): ?>
+
+                    <?php else: ?>
+                        <div class="card-footer small text-muted text-center">
+                            <div class="btn-group" role="group" aria-label="Approval">
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-danger return_5" data-toggle = "modal"  title = "Return to Step 4" data-target = "#step_5_sched_return"><i class = "fa fa-chevron-left"></i> Return to Step 4</button>     
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_5_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary approve_5" data-toggle = "modal"  title = "Proceed to Step 6" data-target = "#step_5_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 6</button>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div><!-- /Comment-->
         <?php endif; ?>

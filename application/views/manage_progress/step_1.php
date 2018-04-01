@@ -166,12 +166,16 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
-                    <div class="card-footer small text-muted text-center">
-                        <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_1_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 2" data-target = "#step_1_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 2</button>
+                    <?php if ($transaction->transaction_dropped_at != 0): ?>
+
+                    <?php else: ?>
+                        <div class="card-footer small text-muted text-center">
+                            <div class="btn-group" role="group" aria-label="Approval">
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_1_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 2" data-target = "#step_1_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 2</button>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </div><!-- /Comment-->
             <?php else: ?>
                 <!-- There are no comments -->
@@ -186,12 +190,16 @@
                             <br><br>
                         </center>
                     </div>
-                    <div class="card-footer small text-muted text-center">
-                        <div class="btn-group" role="group" aria-label="Approval">
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_1_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
-                            <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 2" data-target = "#step_1_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 2</button>
+                    <?php if ($transaction->transaction_dropped_at != 0): ?>
+
+                    <?php else: ?>
+                        <div class="card-footer small text-muted text-center">
+                            <div class="btn-group" role="group" aria-label="Approval">
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-secondary" data-toggle = "modal"  title = "Leave a remark" data-target = "#step_1_sched_disapprove"><i class = "fa fa-comment"></i> Leave a remark</button>     
+                                <button type ="button" class = "px-5 py-2 input-group-addon btn btn-outline-primary" data-toggle = "modal"  title = "Proceed to Step 2" data-target = "#step_1_sched_approve"><i class = "fa fa-chevron-right"></i> Proceed to Step 2</button>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </div><!-- /Comment-->
             <?php endif; ?>
         <?php else: ?>
