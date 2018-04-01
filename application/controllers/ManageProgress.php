@@ -48,6 +48,7 @@ class ManageProgress extends CI_Controller {
 //        echo "<pre>";
 //        print_r($current_transaction);
 //        echo "</pre>";
+//        echo $transaction_id;
 //        die;
         if ($this->session->userdata("pet_status") != "Adopted" && $current_transaction->transaction_isActivated != 0) {
             $current_transaction = $this->PetManagement_model->get_active_transactions(array("transaction.transaction_id" => $transaction_id))[0];
@@ -68,6 +69,25 @@ class ManageProgress extends CI_Controller {
             $progress_4 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id))[0];
             $progress_5 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
             $progress_6 = $this->ManageProgress_model->get_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
+        } else if ($current_transaction->transaction_dropped_at != 0) {
+            $current_transaction = $this->PetManagement_model->get_inactive_transactions(array("transaction.transaction_id" => $transaction_id))[0];
+            $adoption = NULL;
+            $adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction_id))[0];
+            $comments_step_1 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id));
+            $comments_step_2 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id));
+            $comments_step_3 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction_id));
+            $comments_step_4 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id));
+            $comments_step_5 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id));
+            $comments_step_6 = $this->ManageProgress_model->get_comments(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id));
+            $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+
+            $progress = $this->ManageProgress_model->get_dropped_progress(array("progress.transaction_id" => $transaction_id));
+            $progress_1 = $this->ManageProgress_model->get_dropped_progress(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction_id))[0];
+            $progress_2 = $this->ManageProgress_model->get_dropped_progress(array("progress.checklist_id" => 2, "progress.transaction_id" => $transaction_id))[0];
+            $progress_3 = $this->ManageProgress_model->get_dropped_progress(array("progress.checklist_id" => 3, "progress.transaction_id" => $transaction_id))[0];
+            $progress_4 = $this->ManageProgress_model->get_dropped_progress(array("progress.checklist_id" => 4, "progress.transaction_id" => $transaction_id))[0];
+            $progress_5 = $this->ManageProgress_model->get_dropped_progress(array("progress.checklist_id" => 5, "progress.transaction_id" => $transaction_id))[0];
+            $progress_6 = $this->ManageProgress_model->get_dropped_progress(array("progress.checklist_id" => 6, "progress.transaction_id" => $transaction_id))[0];
         } else {
             $current_transaction = $this->PetManagement_model->get_inactive_transactions(array("transaction.transaction_id" => $transaction_id))[0];
 //            echo $transaction_id;
@@ -771,27 +791,25 @@ class ManageProgress extends CI_Controller {
             } else {
                 $interview_1 = $this->input->post("interview_1");
                 $interview_1_data = array(
-                    "progress_id"                   => $current_progress->progress_id,
-                    "admin_id"                      => $current_user->admin_id,
-                    "interview_remarks_percentage"  => 33,
-                    "interview_remarks_content"     => $interview_1,
-                    "interview_remarks_added_at"    => time()
-                    
+                    "progress_id" => $current_progress->progress_id,
+                    "admin_id" => $current_user->admin_id,
+                    "interview_remarks_percentage" => 33,
+                    "interview_remarks_content" => $interview_1,
+                    "interview_remarks_added_at" => time()
                 );
-                
+
                 $data = array(
                     "progress_percentage" => 33
                 );
-                
-                if( $this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
-                    && $this->ManageProgress_model->step_3_add_remarks($interview_1_data)) {
+
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id)) && $this->ManageProgress_model->step_3_add_remarks($interview_1_data)) {
                     $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #1 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
                     $this->session->set_flashdata("approve_success", "Interview #1 is done");
                     echo json_encode(array('success' => true, 'result' => "Interview #1 is done"));
                 } else {
                     $this->session->set_flashdata("approve_failed", "Something went wrong while approving Interview #1");
                     echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Interview #1"));
-                }   
+                }
             }
         } else if ($this->input->post('event_type') == "done_sched_2") {
             $this->form_validation->set_rules('interview_2', "Remark on Interview", "required");
@@ -801,18 +819,16 @@ class ManageProgress extends CI_Controller {
             } else {
                 $interview_2 = $this->input->post("interview_2");
                 $interview_2_data = array(
-                    "progress_id"                   => $current_progress->progress_id,
-                    "admin_id"                      => $current_user->admin_id,
-                    "interview_remarks_percentage"  => 66,
-                    "interview_remarks_content"     => $interview_2,
-                    "interview_remarks_added_at"    => time()
-                    
+                    "progress_id" => $current_progress->progress_id,
+                    "admin_id" => $current_user->admin_id,
+                    "interview_remarks_percentage" => 66,
+                    "interview_remarks_content" => $interview_2,
+                    "interview_remarks_added_at" => time()
                 );
                 $data = array(
                     "progress_percentage" => 66
                 );
-                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
-                    && $this->ManageProgress_model->step_3_add_remarks($interview_2_data)) {
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id)) && $this->ManageProgress_model->step_3_add_remarks($interview_2_data)) {
                     $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #2 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
                     $this->session->set_flashdata("approve_success", "Interview #2 is done");
                     echo json_encode(array('success' => true, 'result' => "Interview #2 is done"));
@@ -829,18 +845,16 @@ class ManageProgress extends CI_Controller {
             } else {
                 $interview_3 = $this->input->post("interview_3");
                 $interview_3_data = array(
-                    "progress_id"                   => $current_progress->progress_id,
-                    "admin_id"                      => $current_user->admin_id,
-                    "interview_remarks_percentage"  => 100,
-                    "interview_remarks_content"     => $interview_3,
-                    "interview_remarks_added_at"    => time()
-                    
+                    "progress_id" => $current_progress->progress_id,
+                    "admin_id" => $current_user->admin_id,
+                    "interview_remarks_percentage" => 100,
+                    "interview_remarks_content" => $interview_3,
+                    "interview_remarks_added_at" => time()
                 );
                 $data = array(
                     "progress_percentage" => 100
                 );
-                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
-                    && $this->ManageProgress_model->step_3_add_remarks($interview_3_data)) {
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id)) && $this->ManageProgress_model->step_3_add_remarks($interview_3_data)) {
                     $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #3 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
                     $this->session->set_flashdata("approve_success", "Interview #3 is done");
                     echo json_encode(array('success' => true, 'result' => "Interview #3 is done"));
@@ -1311,23 +1325,21 @@ class ManageProgress extends CI_Controller {
         } else if ($this->input->post('event_type') == "done_sched_1") {
             $this->form_validation->set_rules('visit_adoptee_1', "Remark on Visiting Chosen Adoptee", "required");
             if ($this->form_validation->run() == FALSE) {
-		//IF THERE ARE ERRORS IN FORMS
-		echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_1' => form_error("visit_adoptee_1")));
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_1' => form_error("visit_adoptee_1")));
             } else {
-		$visit_adoptee_1 = $this->input->post("visit_adoptee_1");
-		$visit_adoptee_1_data = array(
-			"progress_id"                       => $current_progress->progress_id,
-			"admin_id"                          => $current_user->admin_id,
-			"visit_adoptee_remarks_percentage"  => 33,
-			"visit_adoptee_remarks_content"     => $visit_adoptee_1,
-			"visit_adoptee_remarks_added_at"    => time()
-			
-		);
+                $visit_adoptee_1 = $this->input->post("visit_adoptee_1");
+                $visit_adoptee_1_data = array(
+                    "progress_id" => $current_progress->progress_id,
+                    "admin_id" => $current_user->admin_id,
+                    "visit_adoptee_remarks_percentage" => 33,
+                    "visit_adoptee_remarks_content" => $visit_adoptee_1,
+                    "visit_adoptee_remarks_added_at" => time()
+                );
                 $data = array(
                     "progress_percentage" => 33
                 );
-                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
-                    && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_1_data)) {
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id)) && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_1_data)) {
                     $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #1 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
                     $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #1 is done");
                     echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #1 is done"));
@@ -1339,23 +1351,21 @@ class ManageProgress extends CI_Controller {
         } else if ($this->input->post('event_type') == "done_sched_2") {
             $this->form_validation->set_rules('visit_adoptee_2', "Remark on Visiting Chosen Adoptee", "required");
             if ($this->form_validation->run() == FALSE) {
-		//IF THERE ARE ERRORS IN FORMS
-		echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_2' => form_error("visit_adoptee_2")));
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_2' => form_error("visit_adoptee_2")));
             } else {
-		$visit_adoptee_2 = $this->input->post("visit_adoptee_2");
-		$visit_adoptee_2_data = array(
-			"progress_id"                       => $current_progress->progress_id,
-			"admin_id"                          => $current_user->admin_id,
-			"visit_adoptee_remarks_percentage"  => 66,
-			"visit_adoptee_remarks_content"     => $visit_adoptee_2,
-			"visit_adoptee_remarks_added_at"    => time()
-			
-		);
+                $visit_adoptee_2 = $this->input->post("visit_adoptee_2");
+                $visit_adoptee_2_data = array(
+                    "progress_id" => $current_progress->progress_id,
+                    "admin_id" => $current_user->admin_id,
+                    "visit_adoptee_remarks_percentage" => 66,
+                    "visit_adoptee_remarks_content" => $visit_adoptee_2,
+                    "visit_adoptee_remarks_added_at" => time()
+                );
                 $data = array(
                     "progress_percentage" => 66
                 );
-                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
-                    && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_2_data)) {
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id)) && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_2_data)) {
                     $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #2 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
                     $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #2 is done");
                     echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #2 is done"));
@@ -1367,23 +1377,21 @@ class ManageProgress extends CI_Controller {
         } else if ($this->input->post('event_type') == "done_sched_3") {
             $this->form_validation->set_rules('visit_adoptee_3', "Remark on Visiting Chosen Adoptee", "required");
             if ($this->form_validation->run() == FALSE) {
-		//IF THERE ARE ERRORS IN FORMS
-		echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_3' => form_error("visit_adoptee_3")));
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_3' => form_error("visit_adoptee_3")));
             } else {
-		$visit_adoptee_3 = $this->input->post("visit_adoptee_3");
-		$visit_adoptee_3_data = array(
-			"progress_id"                       => $current_progress->progress_id,
-			"admin_id"                          => $current_user->admin_id,
-			"visit_adoptee_remarks_percentage"  => 100,
-			"visit_adoptee_remarks_content"     => $visit_adoptee_3,
-			"visit_adoptee_remarks_added_at"    => time()
-			
-		);
+                $visit_adoptee_3 = $this->input->post("visit_adoptee_3");
+                $visit_adoptee_3_data = array(
+                    "progress_id" => $current_progress->progress_id,
+                    "admin_id" => $current_user->admin_id,
+                    "visit_adoptee_remarks_percentage" => 100,
+                    "visit_adoptee_remarks_content" => $visit_adoptee_3,
+                    "visit_adoptee_remarks_added_at" => time()
+                );
                 $data = array(
                     "progress_percentage" => 100
                 );
-                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
-                    && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_3_data)) {
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id)) && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_3_data)) {
                     $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #3 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
                     $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #3 is done");
                     echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #3 is done"));

@@ -142,6 +142,7 @@ INTERESTED ADOPTERS
                                     <th>Adopters</th>
                                     <th>Progress</th>
                                     <th>Remarks</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -154,10 +155,14 @@ INTERESTED ADOPTERS
                                                 <div class="progress-bar progress-bar-striped bg-secondary progress-bar-animated" role="progressbar" style="width: <?= $not_active_transaction->transaction_progress ?>%" aria-valuenow="<?= $not_active_transaction->transaction_progress ?>" aria-valuemin="0" aria-valuemax="100"><?= $not_active_transaction->transaction_progress ?>%</div>
                                             </div>
                                         </td>
-                                        <td style = "width:170px"><?= $not_active_transaction->transaction_reasonDropped?></td>
+                                        <td style = "width:200px"><?= $not_active_transaction->transaction_reasonDropped ?></td>
                                         <td>
+                                            <?= date("F d, Y", $not_active_transaction->transaction_dropped_at); ?>
+                                        </td>
+                                        <td style = "width:150px">
                                 <center>
                                     <div class = "btn-group" role = "group" aria-label="buttonGroup">
+                                        <a href = "<?= base_url() ?>PetManagement/manage_progress_exec/<?= $not_active_transaction->transaction_id ?>" class = "btn btn-outline-success">Show Progress</a>
                                         <a href = "#" data-toggle = "modal" data-target = "#restore_transaction_<?= $not_active_transaction->transaction_id ?>" class = "btn btn-outline-primary">Restore</a>
                                     </div>
                                 </center>
