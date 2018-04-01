@@ -1309,41 +1309,88 @@ class ManageProgress extends CI_Controller {
                 }
             }
         } else if ($this->input->post('event_type') == "done_sched_1") {
-            
-            $data = array(
-                "progress_percentage" => 33
-            );
-            if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))) {
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #1 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #1 is done");
-                echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #1 is done"));
+            $this->form_validation->set_rules('visit_adoptee_1', "Remark on Visiting Chosen Adoptee", "required");
+            if ($this->form_validation->run() == FALSE) {
+		//IF THERE ARE ERRORS IN FORMS
+		echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_1' => form_error("visit_adoptee_1")));
             } else {
-                $this->session->set_flashdata("approve_failed", "Something went wrong while approving Visited Chosen Adoptee #1");
-                echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Visited Chosen Adoptee #1"));
+		$visit_adoptee_1 = $this->input->post("visit_adoptee_1");
+		$visit_adoptee_1_data = array(
+			"progress_id"                       => $current_progress->progress_id,
+			"admin_id"                          => $current_user->admin_id,
+			"visit_adoptee_remarks_percentage"  => 33,
+			"visit_adoptee_remarks_content"     => $visit_adoptee_1,
+			"visit_adoptee_remarks_added_at"    => time()
+			
+		);
+                $data = array(
+                    "progress_percentage" => 33
+                );
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                    && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_1_data)) {
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #1 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #1 is done");
+                    echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #1 is done"));
+                } else {
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while approving Visited Chosen Adoptee #1");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Visited Chosen Adoptee #1"));
+                }
             }
         } else if ($this->input->post('event_type') == "done_sched_2") {
-            $data = array(
-                "progress_percentage" => 66
-            );
-            if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))) {
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #2 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #2 is done");
-                echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #2 is done"));
+            $this->form_validation->set_rules('visit_adoptee_2', "Remark on Visiting Chosen Adoptee", "required");
+            if ($this->form_validation->run() == FALSE) {
+		//IF THERE ARE ERRORS IN FORMS
+		echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_2' => form_error("visit_adoptee_2")));
             } else {
-                $this->session->set_flashdata("approve_failed", "Something went wrong while approving Visited Chosen Adoptee #2");
-                echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Visited Chosen Adoptee #2"));
+		$visit_adoptee_2 = $this->input->post("visit_adoptee_2");
+		$visit_adoptee_2_data = array(
+			"progress_id"                       => $current_progress->progress_id,
+			"admin_id"                          => $current_user->admin_id,
+			"visit_adoptee_remarks_percentage"  => 66,
+			"visit_adoptee_remarks_content"     => $visit_adoptee_2,
+			"visit_adoptee_remarks_added_at"    => time()
+			
+		);
+                $data = array(
+                    "progress_percentage" => 66
+                );
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                    && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_2_data)) {
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #2 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #2 is done");
+                    echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #2 is done"));
+                } else {
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while approving Visited Chosen Adoptee #2");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Visited Chosen Adoptee #2"));
+                }
             }
         } else if ($this->input->post('event_type') == "done_sched_3") {
-            $data = array(
-                "progress_percentage" => 100
-            );
-            if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))) {
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #3 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #3 is done");
-                echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #3 is done"));
+            $this->form_validation->set_rules('visit_adoptee_3', "Remark on Visiting Chosen Adoptee", "required");
+            if ($this->form_validation->run() == FALSE) {
+		//IF THERE ARE ERRORS IN FORMS
+		echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'visit_adoptee_3' => form_error("visit_adoptee_3")));
             } else {
-                $this->session->set_flashdata("approve_failed", "Something went wrong while approving Visited Chosen Adoptee #3");
-                echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Visited Chosen Adoptee #3"));
+		$visit_adoptee_3 = $this->input->post("visit_adoptee_3");
+		$visit_adoptee_3_data = array(
+			"progress_id"                       => $current_progress->progress_id,
+			"admin_id"                          => $current_user->admin_id,
+			"visit_adoptee_remarks_percentage"  => 100,
+			"visit_adoptee_remarks_content"     => $visit_adoptee_3,
+			"visit_adoptee_remarks_added_at"    => time()
+			
+		);
+                $data = array(
+                    "progress_percentage" => 100
+                );
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                    && $this->ManageProgress_model->step_5_add_remarks($visit_adoptee_3_data)) {
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Visited Chosen Adoptee #3 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Visited Chosen Adoptee #3 is done");
+                    echo json_encode(array('success' => true, 'result' => "Visited Chosen Adoptee #3 is done"));
+                } else {
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while approving Visited Chosen Adoptee #3");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Visited Chosen Adoptee #3"));
+                }
             }
         } else {
             echo json_encode(array('success' => false, 'result' => "Something Went wrong. Try again later."));
