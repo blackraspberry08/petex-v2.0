@@ -120,7 +120,11 @@ Manage Progress
                 <a href="<?= base_url()?>PetManagement">Pet Management</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url()?>PetManagement/interested_adopters_exec/<?= $transaction->pet_id?>">Interested Adopters</a>
+                <?php if ($transaction->pet_status == "Adopted"): ?>
+                    <a href="<?= base_url()?>PetManagement/adoption_information_exec/<?= $transaction->pet_id?>">Adoption Information</a>
+                <?php else:?>
+                    <a href="<?= base_url()?>PetManagement/interested_adopters_exec/<?= $transaction->pet_id?>">Interested Adopters</a>
+                <?php endif;?>
             </li>
             <li class="breadcrumb-item active">Adoption Information of <?= $transaction->user_firstname." ".$transaction->user_lastname?></li>
         </ol>
