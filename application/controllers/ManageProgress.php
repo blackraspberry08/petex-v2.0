@@ -764,40 +764,90 @@ class ManageProgress extends CI_Controller {
                 }
             }
         } else if ($this->input->post('event_type') == "done_sched_1") {
-            $data = array(
-                "progress_percentage" => 33
-            );
-            if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))) {
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #1 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                $this->session->set_flashdata("approve_success", "Interview #1 is done");
-                echo json_encode(array('success' => true, 'result' => "Interview #1 is done"));
+            $this->form_validation->set_rules('interview_1', "Remark on Interview", "required");
+            if ($this->form_validation->run() == FALSE) {
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'interview_1' => form_error("interview_1")));
             } else {
-                $this->session->set_flashdata("approve_failed", "Something went wrong while approving Interview #1");
-                echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Interview #1"));
+                $interview_1 = $this->input->post("interview_1");
+                $interview_1_data = array(
+                    "progress_id"                   => $current_progress->progress_id,
+                    "admin_id"                      => $current_user->admin_id,
+                    "interview_remarks_percentage"  => 33,
+                    "interview_remarks_content"     => $interview_1,
+                    "interview_remarks_added_at"    => time()
+                    
+                );
+                
+                $data = array(
+                    "progress_percentage" => 33
+                );
+                
+                if( $this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                    && $this->ManageProgress_model->step_3_add_remarks($interview_1_data)) {
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #1 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Interview #1 is done");
+                    echo json_encode(array('success' => true, 'result' => "Interview #1 is done"));
+                } else {
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while approving Interview #1");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Interview #1"));
+                }   
             }
         } else if ($this->input->post('event_type') == "done_sched_2") {
-            $data = array(
-                "progress_percentage" => 66
-            );
-            if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))) {
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #2 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                $this->session->set_flashdata("approve_success", "Interview #2 is done");
-                echo json_encode(array('success' => true, 'result' => "Interview #2 is done"));
+            $this->form_validation->set_rules('interview_2', "Remark on Interview", "required");
+            if ($this->form_validation->run() == FALSE) {
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'interview_2' => form_error("interview_2")));
             } else {
-                $this->session->set_flashdata("approve_failed", "Something went wrong while approving Interview #2");
-                echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Interview #2"));
+                $interview_2 = $this->input->post("interview_2");
+                $interview_2_data = array(
+                    "progress_id"                   => $current_progress->progress_id,
+                    "admin_id"                      => $current_user->admin_id,
+                    "interview_remarks_percentage"  => 66,
+                    "interview_remarks_content"     => $interview_2,
+                    "interview_remarks_added_at"    => time()
+                    
+                );
+                $data = array(
+                    "progress_percentage" => 66
+                );
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                    && $this->ManageProgress_model->step_3_add_remarks($interview_2_data)) {
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #2 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Interview #2 is done");
+                    echo json_encode(array('success' => true, 'result' => "Interview #2 is done"));
+                } else {
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while approving Interview #2");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Interview #2"));
+                }
             }
         } else if ($this->input->post('event_type') == "done_sched_3") {
-            $data = array(
-                "progress_percentage" => 100
-            );
-            if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))) {
-                $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #3 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
-                $this->session->set_flashdata("approve_success", "Interview #3 is done");
-                echo json_encode(array('success' => true, 'result' => "Interview #3 is done"));
+            $this->form_validation->set_rules('interview_3', "Remark on Interview", "required");
+            if ($this->form_validation->run() == FALSE) {
+                //IF THERE ARE ERRORS IN FORMS
+                echo json_encode(array('success' => false, 'result' => "Please provide a remark.", 'interview_3' => form_error("interview_3")));
             } else {
-                $this->session->set_flashdata("approve_failed", "Something went wrong while approving Interview #3");
-                echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Interview #3"));
+                $interview_3 = $this->input->post("interview_3");
+                $interview_3_data = array(
+                    "progress_id"                   => $current_progress->progress_id,
+                    "admin_id"                      => $current_user->admin_id,
+                    "interview_remarks_percentage"  => 100,
+                    "interview_remarks_content"     => $interview_3,
+                    "interview_remarks_added_at"    => time()
+                    
+                );
+                $data = array(
+                    "progress_percentage" => 100
+                );
+                if ($this->ManageProgress_model->edit_progress($data, array("progress_id" => $current_progress->progress_id))
+                    && $this->ManageProgress_model->step_3_add_remarks($interview_3_data)) {
+                    $this->SaveEventAdmin->trail($this->session->userdata("userid"), "Interview #3 is done for " . $current_transaction->user_firstname . " " . $current_transaction->user_lastname);
+                    $this->session->set_flashdata("approve_success", "Interview #3 is done");
+                    echo json_encode(array('success' => true, 'result' => "Interview #3 is done"));
+                } else {
+                    $this->session->set_flashdata("approve_failed", "Something went wrong while approving Interview #3");
+                    echo json_encode(array('success' => false, 'result' => "Something went wrong while approving Interview #3"));
+                }
             }
         } else {
             echo json_encode(array('success' => false, 'result' => "Something Went wrong. Try again later."));
@@ -1259,6 +1309,7 @@ class ManageProgress extends CI_Controller {
                 }
             }
         } else if ($this->input->post('event_type') == "done_sched_1") {
+            
             $data = array(
                 "progress_percentage" => 33
             );

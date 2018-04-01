@@ -143,4 +143,61 @@ class ManageProgress_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
+    
+    public function step_3_add_remarks($data){
+        $table = "interview_remarks";
+        $this->db->insert($table, $data);
+        return $this->db->affected_rows();
+    }
+    
+    public function get_interview($progress_id, $percentage){
+        $table = "interview_remarks";
+        $join = "admin";
+        $on = "interview_remarks.admin_id = admin.admin_id";
+        $join2 = "transaction";
+        $on2 = "progress.transaction_id = transaction.transaction_id";
+        $join3 = "user";
+        $on3 = "transaction.user_id = user.user_id";
+        $join4 = "progress";
+        $on4 = "interview_remarks.progress_id = progress.progress_id";
+        
+        $this->db->join($join, $on, "left outer");
+        
+        $this->db->join($join4, $on4, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->join($join3, $on3, "left outer");
+        $this->db->where(array("interview_remarks.progress_id" => $progress_id));
+        $this->db->where(array("interview_remarks_percentage" => $percentage));
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+ 
+    public function step_5_add_remarks($data){
+        $table = "visit_adoptee_remarks";
+        $this->db->insert($table, $data);
+        return $this->db->affected_rows();
+    }
+    
+    public function get_visit_adoptee($progress_id, $percentage){
+        $table = "visit_adoptee_remarks";
+        $join = "admin";
+        $on = "visit_adoptee_remarks.admin_id = admin.admin_id";
+        $join2 = "transaction";
+        $on2 = "progress.transaction_id = transaction.transaction_id";
+        $join3 = "user";
+        $on3 = "transaction.user_id = user.user_id";
+        $join4 = "progress";
+        $on4 = "visit_adoptee_remarks.progress_id = progress.progress_id";
+        
+        $this->db->join($join, $on, "left outer");
+        
+        $this->db->join($join4, $on4, "left outer");
+        $this->db->join($join2, $on2, "left outer");
+        $this->db->join($join3, $on3, "left outer");
+        $this->db->where(array("visit_adoptee_remarks.progress_id" => $progress_id));
+        $this->db->where(array("visit_adoptee_remarks" => $percentage));
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
 }
