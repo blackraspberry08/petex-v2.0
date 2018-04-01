@@ -195,7 +195,7 @@ class ManageProgress_model extends CI_Model {
         $this->db->join($join2, $on2, "left outer");
         $this->db->join($join3, $on3, "left outer");
         $this->db->where(array("visit_adoptee_remarks.progress_id" => $progress_id));
-        $this->db->where(array("visit_adoptee_remarks" => $percentage));
+        $this->db->where(array("visit_adoptee_remarks_percentage" => $percentage));
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }

@@ -162,19 +162,37 @@ class ReturnProgress extends CI_Model {
     public function step_5_perSched($progress_id, $sched_no = NULL){
         switch($sched_no){
             case "1":{
+                //REMOVE VISIT CHOSEN ADOPTEE REMARKS
+                $this->db->delete("visit_adoptee_remarks", array("progress_id" => $progress_id, "visit_adoptee_remarks_percentage" => 33));
+                $boolean2 = $this->db->affected_rows() > 0;
+                
+                //EDIT PROGRESS
                 $this->db->where(array("progress_id" => $progress_id));
                 $this->db->update("progress", array("progress_percentage" => 0));
-                return $this->db->affected_rows() > 0;
+                $boolean1 = $this->db->affected_rows() > 0;
+                
+                return ($boolean1 && $boolean2);
             }
             case "2":{
+                //REMOVE VISIT CHOSEN ADOPTEE REMARKS
+                $this->db->delete("visit_adoptee_remarks", array("progress_id" => $progress_id, "visit_adoptee_remarks_percentage" => 66));
+                $boolean2 = $this->db->affected_rows() > 0;
+                
+                //EDIT PROGRESS
                 $this->db->where(array("progress_id" => $progress_id));
                 $this->db->update("progress", array("progress_percentage" => 33));
-                return $this->db->affected_rows() > 0;
+                $boolean1 = $this->db->affected_rows() > 0;
+                return ($boolean1 && $boolean2);
             }
             case "3":{
+                //REMOVE VISIT CHOSEN ADOPTEE REMARKS
+                $this->db->delete("visit_adoptee_remarks", array("progress_id" => $progress_id, "visit_adoptee_remarks_percentage" => 100));
+                $boolean2 = $this->db->affected_rows() > 0;
+                
                 $this->db->where(array("progress_id" => $progress_id));
                 $this->db->update("progress", array("progress_percentage" =>66));
-                return $this->db->affected_rows() > 0;
+                $boolean1 = $this->db->affected_rows() > 0;
+                return ($boolean1 && $boolean2);
             }
         }
     }
