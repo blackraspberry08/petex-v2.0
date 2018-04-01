@@ -585,7 +585,7 @@ class PetManagement extends CI_Controller {
             'petManagementModule' => $petManagementModule,
             'scheduleModule' => $scheduleModule,
             //////////////////////////////
-            'title' => $animal->pet_name . " | Interested Adopters",
+            'title' => $animal->pet_name . " | Adoption Information",
             'animal' => $animal,
             'finished_transaction' => $finished_transaction,
             //        NAV INFO

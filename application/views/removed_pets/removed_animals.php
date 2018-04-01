@@ -184,6 +184,8 @@
                                         <small class = "text-secondary">Not Adoptable</small>
                                     <?php elseif ($animal->pet_status == "Deceased"): ?>
                                         <small class = "text-warning">Deceased</small>
+                                    <?php elseif ($animal->pet_status == "Removed"): ?>
+                                        <small class = "text-danger">Removed</small>
                                     <?php else: ?>
                                         <small class = "text-danger">Adopted</small>
                                     <?php endif; ?>
