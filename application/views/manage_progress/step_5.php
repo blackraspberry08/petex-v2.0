@@ -47,7 +47,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 $('#done_sched_<?= $sched_1->schedule_id ?>').html("<i class = 'fa fa-check'></i> Schedule is done");
                 $('#done_sched_<?= $sched_2->schedule_id ?>').removeClass("disabled");
                 $('#done_sched_<?= $sched_2->schedule_id ?>').prop("disabled", false);
-                $('#return_sched_<?= $sched_1->schedule_id?>').removeClass("d-none");
+                $('#return_sched_<?= $sched_1->schedule_id ?>').removeClass("d-none");
                 $('.return_5').attr("disabled", "disabled");
                 $('.return_5').addClass("disabled");
     <?php elseif ($progress_5->progress_percentage == 66): ?>
@@ -62,10 +62,10 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 $('#done_sched_<?= $sched_2->schedule_id ?>').html("<i class = 'fa fa-check'></i> Schedule is done");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').removeClass("disabled");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').prop("disabled", false);
-                $('#return_sched_<?= $sched_2->schedule_id?>').removeClass("d-none");
+                $('#return_sched_<?= $sched_2->schedule_id ?>').removeClass("d-none");
                 $('.return_5').attr("disabled", "disabled");
                 $('.return_5').addClass("disabled");
-            <?php elseif ($progress_5->progress_percentage == 100): ?>
+    <?php elseif ($progress_5->progress_percentage == 100): ?>
                 //INTERVIEW #3 is DONE!
                 $('#done_sched_<?= $sched_1->schedule_id ?>').removeClass("btn-outline-dark");
                 $('#done_sched_<?= $sched_1->schedule_id ?>').addClass("disabled btn-outline-success");
@@ -79,21 +79,21 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                 $('#done_sched_<?= $sched_3->schedule_id ?>').addClass("disabled btn-outline-success");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').attr("disabled", "disabled");
                 $('#done_sched_<?= $sched_3->schedule_id ?>').html("<i class = 'fa fa-check'></i> Schedule is done");
-                $('#return_sched_<?= $sched_3->schedule_id?>').removeClass("d-none");
+                $('#return_sched_<?= $sched_3->schedule_id ?>').removeClass("d-none");
                 $(".approve_5").prop("disabled", false);
                 $(".approve_5").removeClass("disabled");
                 $(".approve_5").css("cursor", "pointer");
                 $('.return_5').attr("disabled", "disabled");
                 $('.return_5').addClass("disabled");
-            <?php endif; ?>
-                
+    <?php endif; ?>
+
             //IF ANIMAL IS ADOPTED, NO RETURN BUTTON
-            <?php if($transaction->pet_status == "Adopted"):?>
-                $('#return_sched_<?= $sched_1->schedule_id?>').addClass("d-none");
-                $('#return_sched_<?= $sched_2->schedule_id?>').addClass("d-none");
-                $('#return_sched_<?= $sched_3->schedule_id?>').addClass("d-none");
-            <?php endif;?>    
-                
+    <?php if ($transaction->pet_status == "Adopted"): ?>
+                $('#return_sched_<?= $sched_1->schedule_id ?>').addClass("d-none");
+                $('#return_sched_<?= $sched_2->schedule_id ?>').addClass("d-none");
+                $('#return_sched_<?= $sched_3->schedule_id ?>').addClass("d-none");
+    <?php endif; ?>
+
             //Functions here
             $('#modal_done_sched_<?= $sched_1->schedule_id ?>').click(function () {
                 $('#done_sched_<?= $sched_1->schedule_id ?>').removeClass("btn-outline-dark");
@@ -106,7 +106,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     "dataType": "JSON",
                     "data": {
                         'event_type': "done_sched_1",
-                        'visit_adoptee_1':$('#visit_adoptee_1').val()
+                        'visit_adoptee_1': $('#visit_adoptee_1').val()
                     },
                     success: function (res) {
                         if (res.success) {
@@ -136,7 +136,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     "dataType": "JSON",
                     "data": {
                         'event_type': "done_sched_2",
-                        'visit_adoptee_2':$('#visit_adoptee_2').val()
+                        'visit_adoptee_2': $('#visit_adoptee_2').val()
                     },
                     success: function (res) {
                         if (res.success) {
@@ -165,7 +165,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     "dataType": "JSON",
                     "data": {
                         'event_type': "done_sched_3",
-                        'visit_adoptee_3':$('#visit_adoptee_3').val()
+                        'visit_adoptee_3': $('#visit_adoptee_3').val()
                     },
                     success: function (res) {
                         if (res.success) {
@@ -183,111 +183,111 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                     }
                 });
             });
-            
+
             //RETURN FUNCTIONS
-            $('#return_sched_<?= $sched_1->schedule_id?>').click(function(){
+            $('#return_sched_<?= $sched_1->schedule_id ?>').click(function () {
                 $.ajax({
                     "method": "POST",
-                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id?>",
+                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id ?>",
                     "dataType": "JSON",
                     "data": {
-                        'event_type':"return_sched_1",
-                        'progress_id' : <?= $progress_5->progress_id?>
+                        'event_type': "return_sched_1",
+                        'progress_id': <?= $progress_5->progress_id ?>
                     },
                     success: function (res) {
                         if (res.success) {
                             swal({title: "Success", text: res.result, type: "success"},
-                                function(){ 
-                                    location.reload();
-                                }
+                                    function () {
+                                        location.reload();
+                                    }
                             );
                         } else {
                             swal("Error", res.result, "error");
 
                         }
                     },
-                    error: function(res){
+                    error: function (res) {
                         swal("Reload", "Something went wrong. Reload your browser.", "error");
                     }
                 });
             });
-            $('#return_sched_<?= $sched_2->schedule_id?>').click(function(){
+            $('#return_sched_<?= $sched_2->schedule_id ?>').click(function () {
                 $.ajax({
                     "method": "POST",
-                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id?>",
+                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id ?>",
                     "dataType": "JSON",
                     "data": {
-                        'event_type':"return_sched_2",
-                        'progress_id' : <?= $progress_5->progress_id?>
+                        'event_type': "return_sched_2",
+                        'progress_id': <?= $progress_5->progress_id ?>
                     },
                     success: function (res) {
                         if (res.success) {
                             swal({title: "Success", text: res.result, type: "success"},
-                                function(){ 
-                                    location.reload();
-                                }
+                                    function () {
+                                        location.reload();
+                                    }
                             );
                         } else {
                             swal("Error", res.result, "error");
 
                         }
                     },
-                    error: function(res){
+                    error: function (res) {
                         swal("Reload", "Something went wrong. Reload your browser.", "error");
                     }
                 });
             });
 
-            $('#return_sched_<?= $sched_3->schedule_id?>').click(function(){
+            $('#return_sched_<?= $sched_3->schedule_id ?>').click(function () {
                 $.ajax({
                     "method": "POST",
-                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id?>",
+                    "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/<?= $transaction->transaction_id ?>",
                     "dataType": "JSON",
                     "data": {
-                        'event_type':"return_sched_3",
-                        'progress_id' : <?= $progress_5->progress_id?>
+                        'event_type': "return_sched_3",
+                        'progress_id': <?= $progress_5->progress_id ?>
                     },
                     success: function (res) {
                         if (res.success) {
                             swal({title: "Success", text: res.result, type: "success"},
-                                function(){ 
-                                    location.reload();
-                                }
+                                    function () {
+                                        location.reload();
+                                    }
                             );
                         } else {
                             swal("Error", res.result, "error");
 
                         }
                     },
-                    error: function(res){
+                    error: function (res) {
                         swal("Reload", "Something went wrong. Reload your browser.", "error");
                     }
                 });
             });
 
-            $('#step_5_return').click(function(){
+            $('#step_5_return').click(function () {
                 $.ajax({
                     "method": "POST",
                     "url": '<?= base_url() ?>' + "ManageProgress/step_5_return_exec/",
                     "dataType": "JSON",
                     "data": {
-                        'event_type':"step_5_return",
-                        'progress_id' : '<?= $progress_4->progress_id?>',
-                        'transaction_id':'<?= $transaction->transaction_id?>'
+                        'event_type': "step_5_return",
+                        'progress_id': '<?= $progress_4->progress_id ?>',
+                        'transaction_id': '<?= $transaction->transaction_id ?>'
                     },
                     success: function (res) {
                         if (res.success) {
                             swal({title: "Success", text: res.result, type: "success"},
-                                function(){ 
-                                    location.reload();
-                                }
+                                    function () {
+                                        location.reload();
+                                    }
                             );
                         } else {
                             swal("Error", res.result, "error");
 
                         }
                     },
-                    error: function(res){
+                    error: function (res) {
                         swal("Reload", "Something went wrong. Reload your browser.", "error");
                     }
                 });
@@ -369,72 +369,72 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             <h6 class="card-title"><?= $sched_1->schedule_title ?></h6>
                             <p class="card-text"><?= $sched_1->schedule_desc ?></p>
                         </div>
-                         <?php $visit_adoptee_1_remarks = $this->ManageProgress_model->get_visit_adoptee($progress_5->progress_id, 33)[0];?>
-                    
-                        <?php if(!empty($visit_adoptee_1_remarks)):?>
-                        <div class ="card-body text-dark">
-                            <button class = "btn btn-outline-primary" data-toggle = "modal" data-target = "#visit_adoptee_1" >See Remarks</button>
-                        </div>
-                        <div class="modal fade" id="visit_adoptee_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="eventHeader"> Visiting Chosen Adoptee #1</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body text-left">
-                                        <h6>Remarks: </h6>
-                                        <p><?= $visit_adoptee_1_remarks->interview_remarks_content?></p>
+                        <?php $visit_adoptee_1_remarks = $this->ManageProgress_model->get_visit_adoptee($progress_5->progress_id, 33)[0]; ?>
 
-                                        <div class ="row">
-                                            <div class = "col-sm-6">
-                                                <div class="media">
-                                                    <div class = "image-fit">
-                                                        <a href = "<?= base_url() . $visit_adoptee_1_remarks->user_picture ?>" data-toggle="lightbox">
-                                                            <img class="d-flex mr-1" src="<?= base_url() . $visit_adoptee_1_remarks->user_picture ?>" alt = "<?= $visit_adoptee_1_remarks->user_firstname . " " . $visit_adoptee_1_remarks->user_lastname ?>">
-                                                        </a>
-                                                    </div>
-                                                    <div class="media-body text-left">
-                                                        <h6>Interviewee:</h6>
-                                                        <small class="font-weight-bold text-muted"><?= $visit_adoptee_1_remarks->user_firstname." ".$visit_adoptee_1_remarks->user_lastname ?></small><br>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class = "col-sm-6">
-                                                <div class="media">
-                                                    <div class="media-body text-right">
-                                                        <h6>Interviewer:</h6>
-                                                        <small class="font-weight-bold text-muted"><?= $visit_adoptee_1_remarks->admin_firstname." ".$visit_adoptee_1_remarks->admin_lastname ?></small><br>
-                                                        <small class = "text-muted"><?= date('F d, Y', $visit_adoptee_1_remarks->interview_remarks_added_at) ?></small><br>
-                                                        <small class = "text-muted"><?= date('h:m A', $visit_adoptee_1_remarks->interview_remarks_added_at) ?></small>
-                                                    </div>
-                                                    <div class = "image-fit">
-                                                        <a href = "<?= base_url() . $visit_adoptee_1_remarks->admin_picture ?>" data-toggle="lightbox">
-                                                            <img class="d-flex ml-1" src="<?= base_url() . $visit_adoptee_1_remarks->admin_picture ?>" alt = "<?= $visit_adoptee_1_remarks->admin_firstname . " " . $visit_adoptee_1_remarks->admin_lastname ?>">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                        <?php if (!empty($visit_adoptee_1_remarks)): ?>
+                            <div class ="card-body text-dark">
+                                <button class = "btn btn-outline-primary" data-toggle = "modal" data-target = "#visit_adoptee_1" >See Remarks</button>
+                            </div>
+                            <div class="modal fade" id="visit_adoptee_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="eventHeader"> Visiting Chosen Adoptee #1</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
+                                        <div class="modal-body text-left">
+                                            <h6>Remarks: </h6>
+                                            <p><?= $visit_adoptee_1_remarks->visit_adoptee_remarks_content ?></p>
 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <div class ="row">
+                                                <div class = "col-sm-6">
+                                                    <div class="media">
+                                                        <div class = "image-fit">
+                                                            <a href = "<?= base_url() . $visit_adoptee_1_remarks->user_picture ?>" data-toggle="lightbox">
+                                                                <img class="d-flex mr-1" src="<?= base_url() . $visit_adoptee_1_remarks->user_picture ?>" alt = "<?= $visit_adoptee_1_remarks->user_firstname . " " . $visit_adoptee_1_remarks->user_lastname ?>">
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-body text-left">
+                                                            <h6>Interviewee:</h6>
+                                                            <small class="font-weight-bold text-muted"><?= $visit_adoptee_1_remarks->user_firstname . " " . $visit_adoptee_1_remarks->user_lastname ?></small><br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "col-sm-6">
+                                                    <div class="media">
+                                                        <div class="media-body text-right">
+                                                            <h6>Interviewer:</h6>
+                                                            <small class="font-weight-bold text-muted"><?= $visit_adoptee_1_remarks->admin_firstname . " " . $visit_adoptee_1_remarks->admin_lastname ?></small><br>
+                                                            <small class = "text-muted"><?= date('F d, Y', $visit_adoptee_1_remarks->visit_adoptee_remarks_added_at) ?></small><br>
+                                                            <small class = "text-muted"><?= date('h:m A', $visit_adoptee_1_remarks->visit_adoptee_remarks_added_at) ?></small>
+                                                        </div>
+                                                        <div class = "image-fit">
+                                                            <a href = "<?= base_url() . $visit_adoptee_1_remarks->admin_picture ?>" data-toggle="lightbox">
+                                                                <img class="d-flex ml-1" src="<?= base_url() . $visit_adoptee_1_remarks->admin_picture ?>" alt = "<?= $visit_adoptee_1_remarks->admin_firstname . " " . $visit_adoptee_1_remarks->admin_lastname ?>">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php endif;?>
+                        <?php endif; ?>
                         <div class = "card-footer">
-                            <button id = "return_sched_<?= $sched_1->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
-                            <button id = "done_sched_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
+                            <button id = "return_sched_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
+                            <button id = "done_sched_<?= $sched_1->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_1->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                         </div>
                     </div>
                 </div>
                 <!-- MODAL FOR DONE SCHED 1 -->
-                <div class="modal fade" id="modal_<?= $sched_1->schedule_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modal_<?= $sched_1->schedule_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <form id = "visit_adoptee_1_remarks_form" method = "POST" role = "form">
                         <!-- Displayed Fields -->
                         <div class="modal-dialog" role="document">
@@ -453,7 +453,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" id = "modal_done_sched_<?= $sched_1->schedule_id?>" class="btn btn-primary">Submit</button>
+                                    <button type="button" id = "modal_done_sched_<?= $sched_1->schedule_id ?>" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -484,11 +484,94 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             <h6 class="card-title"><?= $sched_2->schedule_title ?></h6>
                             <p class="card-text"><?= $sched_2->schedule_desc ?></p>
                         </div>
+                        <?php $visit_adoptee_2_remarks = $this->ManageProgress_model->get_visit_adoptee($progress_5->progress_id, 66)[0]; ?>
+                        <?php if (!empty($visit_adoptee_2_remarks)): ?>
+                            <div class ="card-body text-dark">
+                                <button class = "btn btn-outline-primary" data-toggle = "modal" data-target = "#visit_adoptee_2" >See Remarks</button>
+                            </div>
+                            <div class="modal fade" id="visit_adoptee_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="eventHeader"> Visiting Chosen Adoptee #2</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                            <h6>Remarks: </h6>
+                                            <p><?= $visit_adoptee_2_remarks->visit_adoptee_remarks_content ?></p>
+
+                                            <div class ="row">
+                                                <div class = "col-sm-6">
+                                                    <div class="media">
+                                                        <div class = "image-fit">
+                                                            <a href = "<?= base_url() . $visit_adoptee_2_remarks->user_picture ?>" data-toggle="lightbox">
+                                                                <img class="d-flex mr-1" src="<?= base_url() . $visit_adoptee_2_remarks->user_picture ?>" alt = "<?= $visit_adoptee_2_remarks->user_firstname . " " . $visit_adoptee_2_remarks->user_lastname ?>">
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-body text-left">
+                                                            <h6>Interviewee:</h6>
+                                                            <small class="font-weight-bold text-muted"><?= $visit_adoptee_2_remarks->user_firstname . " " . $visit_adoptee_2_remarks->user_lastname ?></small><br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "col-sm-6">
+                                                    <div class="media">
+                                                        <div class="media-body text-right">
+                                                            <h6>Interviewer:</h6>
+                                                            <small class="font-weight-bold text-muted"><?= $visit_adoptee_2_remarks->admin_firstname . " " . $visit_adoptee_2_remarks->admin_lastname ?></small><br>
+                                                            <small class = "text-muted"><?= date('F d, Y', $visit_adoptee_2_remarks->visit_adoptee_remarks_added_at) ?></small><br>
+                                                            <small class = "text-muted"><?= date('h:m A', $visit_adoptee_2_remarks->visit_adoptee_remarks_added_at) ?></small>
+                                                        </div>
+                                                        <div class = "image-fit">
+                                                            <a href = "<?= base_url() . $visit_adoptee_2_remarks->admin_picture ?>" data-toggle="lightbox">
+                                                                <img class="d-flex ml-1" src="<?= base_url() . $visit_adoptee_2_remarks->admin_picture ?>" alt = "<?= $visit_adoptee_2_remarks->admin_firstname . " " . $visit_adoptee_2_remarks->admin_lastname ?>">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                         <div class = "card-footer">
-                            <button id = "return_sched_<?= $sched_2->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
-                            <button id = "done_sched_<?= $sched_2->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_1->schedule_id?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
+                            <button id = "return_sched_<?= $sched_2->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
+                            <button id = "done_sched_<?= $sched_2->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_2->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                         </div>
                     </div>
+                </div>
+                <!-- MODAL FOR DONE SCHED 2 -->
+                <div class="modal fade" id="modal_<?= $sched_2->schedule_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form id = "visit_adoptee_2_remarks_form" method = "POST" role = "form">
+                        <!-- Displayed Fields -->
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="eventHeader"> Leave a remark on Visiting Chosen Adoptee #2</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class = "form-row">
+                                        <label for="visit_adoptee_2">Remarks</label>
+                                        <textarea class = "form-control" id = "visit_adoptee_2" name = "visit_adoptee_2" placeholder = "What happenned on the visit?" required=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" id = "modal_done_sched_<?= $sched_2->schedule_id ?>" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class = "col-md-4">
                     <div class="card border-dark mb-3 mx-auto text-center">
@@ -515,11 +598,94 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
                             <h6 class="card-title"><?= $sched_3->schedule_title ?></h6>
                             <p class="card-text"><?= $sched_3->schedule_desc ?></p>
                         </div>
+                        <?php $visit_adoptee_3_remarks = $this->ManageProgress_model->get_visit_adoptee($progress_5->progress_id, 100)[0]; ?>
+                        <?php if (!empty($visit_adoptee_3_remarks)): ?>
+                            <div class ="card-body text-dark">
+                                <button class = "btn btn-outline-primary" data-toggle = "modal" data-target = "#visit_adoptee_3" >See Remarks</button>
+                            </div>
+                            <div class="modal fade" id="visit_adoptee_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="eventHeader"> Visiting Chosen Adoptee #3</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                            <h6>Remarks: </h6>
+                                            <p><?= $visit_adoptee_3_remarks->visit_adoptee_remarks_content ?></p>
+
+                                            <div class ="row">
+                                                <div class = "col-sm-6">
+                                                    <div class="media">
+                                                        <div class = "image-fit">
+                                                            <a href = "<?= base_url() . $visit_adoptee_3_remarks->user_picture ?>" data-toggle="lightbox">
+                                                                <img class="d-flex mr-1" src="<?= base_url() . $visit_adoptee_3_remarks->user_picture ?>" alt = "<?= $visit_adoptee_3_remarks->user_firstname . " " . $visit_adoptee_3_remarks->user_lastname ?>">
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-body text-left">
+                                                            <h6>Interviewee:</h6>
+                                                            <small class="font-weight-bold text-muted"><?= $visit_adoptee_3_remarks->user_firstname . " " . $visit_adoptee_3_remarks->user_lastname ?></small><br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "col-sm-6">
+                                                    <div class="media">
+                                                        <div class="media-body text-right">
+                                                            <h6>Interviewer:</h6>
+                                                            <small class="font-weight-bold text-muted"><?= $visit_adoptee_3_remarks->admin_firstname . " " . $visit_adoptee_3_remarks->admin_lastname ?></small><br>
+                                                            <small class = "text-muted"><?= date('F d, Y', $visit_adoptee_3_remarks->visit_adoptee_remarks_added_at) ?></small><br>
+                                                            <small class = "text-muted"><?= date('h:m A', $visit_adoptee_3_remarks->visit_adoptee_remarks_added_at) ?></small>
+                                                        </div>
+                                                        <div class = "image-fit">
+                                                            <a href = "<?= base_url() . $visit_adoptee_3_remarks->admin_picture ?>" data-toggle="lightbox">
+                                                                <img class="d-flex ml-1" src="<?= base_url() . $visit_adoptee_3_remarks->admin_picture ?>" alt = "<?= $visit_adoptee_3_remarks->admin_firstname . " " . $visit_adoptee_3_remarks->admin_lastname ?>">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                         <div class = "card-footer">
-                            <button id = "return_sched_<?= $sched_3->schedule_id?>" class = "btn btn-outline-danger d-none" >Return</button>
-                            <button id = "done_sched_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
+                            <button id = "return_sched_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-danger d-none" >Return</button>
+                            <button id = "done_sched_<?= $sched_3->schedule_id ?>" data-toggle = "modal" data-target = "#modal_<?= $sched_3->schedule_id ?>" class = "btn btn-outline-dark disabled" disabled>Done</button>
                         </div>
                     </div>
+                </div>
+                <!-- MODAL FOR DONE SCHED 3 -->
+                <div class="modal fade" id="modal_<?= $sched_3->schedule_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form id = "visit_adoptee_3_remarks_form" method = "POST" role = "form">
+                        <!-- Displayed Fields -->
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="eventHeader"> Leave a remark on Visiting Chosen Adoptee #3</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class = "form-row">
+                                        <label for="visit_adoptee_3">Remarks</label>
+                                        <textarea class = "form-control" id = "visit_adoptee_3" name = "visit_adoptee_3" placeholder = "What happenned on the visit?" required=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" id = "modal_done_sched_<?= $sched_3->schedule_id ?>" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         <?php endif; ?>
@@ -593,7 +759,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
         <?php endif; ?>
     </div>
 
-    
+
     <!-- MODAL FOR RETURNING FROM STEP 5 -->
     <div class="modal fade" id="step_5_sched_return" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form id = "step_5_form_d" method = "POST" role = "form">
@@ -617,7 +783,7 @@ $schedule_5 = $this->ManageProgress_model->get_schedule(array("schedule.progress
             </div>
         </form>
     </div>
-    
+
     <!-- MODAL FOR APPROVING STEP 3 -->
     <div class="modal fade" id="step_5_sched_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form id = "step_5_form_a" method = "POST" role = "form">
