@@ -243,7 +243,7 @@ function determine_access($access) {
                                 </tr>
                                 <tr>
                                     <th scope="row">Address</th>
-                                    <td><?= $transaction->user_address . ", " . $transaction->user_brgy . ", " . $transaction->user_city; ?></td>
+                                    <td><?= $transaction->user_address; ?></td>
                                 </tr>
                             </tbody>
                         </table>

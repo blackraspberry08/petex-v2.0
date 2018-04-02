@@ -630,11 +630,13 @@ class PetManagement extends CI_Controller {
             $data = array(
                 'transaction_isActivated' => 0,
                 'transaction_reasonDropped' => $remarks,
+                'transaction_dropped_at' => time(),
             );
         } else {
             $data = array(
                 'transaction_isActivated' => 0,
                 'transaction_reasonDropped' => $specify,
+                'transaction_dropped_at' => time(),
             );
         }
         if ($this->PetManagement_model->drop_transaction($data, array("transaction_id" => $transaction_id))) {

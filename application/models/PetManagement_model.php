@@ -202,6 +202,8 @@ class PetManagement_model extends CI_Model {
             $this->db->where($where);
         }
         $this->db->update("transaction", array("transaction_isActivated" => 1));
+        $this->db->update("transaction", array("transaction_reasonDropped" => ''));
+        $this->db->update("transaction", array("transaction_dropped_at" => 0));
         return $this->db->affected_rows();
     }
 
