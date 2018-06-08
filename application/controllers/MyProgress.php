@@ -31,9 +31,9 @@ class MyProgress extends CI_Controller {
     public function index() {
         $current_user = $this->ManageUsers_model->get_users("user", array("user_id" => $this->session->userdata("userid")))[0];
         $transaction = $this->MyProgress_model->fetchJoinProgress(array('transaction.user_id' => $this->session->userdata("userid")))[0];
-        $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction->transaction_id))[0];
+      
 //        echo "<pre>";
-//        print_r($current_adoption_form);
+//        print_r($transaction);
 //        echo "</pre>";
 //        die;
         if (empty($transaction)) {
@@ -48,6 +48,7 @@ class MyProgress extends CI_Controller {
             $this->load->view("my_progress/main");
             $this->load->view("my_progress/includes/footer");
         } else {
+              $current_adoption_form = $this->ManageProgress_model->get_adoption_form(array("adoption_form.transaction_id" => $transaction->transaction_id))[0];
             $progress = $this->MyProgress_model->fetchJoinProgress(array('progress.transaction_id' => $transaction->transaction_id));
 
             $comments_step_1 = $this->MyProgress_model->get_comments(array("progress.checklist_id" => 1, "progress.transaction_id" => $transaction->transaction_id));
