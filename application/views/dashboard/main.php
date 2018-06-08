@@ -1,4 +1,8 @@
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
+
+
 <!--===========================
 Dashboard
 ============================-->
@@ -208,6 +212,14 @@ Dashboard
                         <i class="fa fa-area-chart"></i> Adopted Animals in 2018</div>
                     <div class="card-body">
                         <canvas id="myAreaChart" width="100%" height="30"></canvas>
+
+                    </div>
+                    <div class="card-footer">
+                        <center>
+                            <a href ="#" data-toggle="modal" data-target=".reports" class="btn btn-primary" data-placement="bottom" title="Pet Adopted Reports">
+                                Pet Adopted Reports
+                            </a>
+                        </center>
                     </div>
                 </div>
             </div>
@@ -216,6 +228,33 @@ Dashboard
             </div>
             <div class = "col-lg-12">
                 <?php include_once (APPPATH . "views/audit_trail/audit_trail.php"); ?>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Reports -->
+    <div class="modal fade reports" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class = "fa fa-paw"></i> Pet Adopted Reports</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">You can see all the pet adopted reports by choosing a year.</p>
+                    <div class="form-group col-md-12">
+                        <form action = "<?= base_url() ?>AdminDashboard/adopted_reports" method="POST">
+                            <label for="year_adopted">Choose a year.</label>
+                            <input readonly type="text" class="form-control" id="datepicker" name = "year_adopted">
+                            <br>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -740,3 +779,14 @@ Dashboard
     </div>
 </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $("#datepicker").datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            autoclose: true,
+
+        });
+    });
+</script>  

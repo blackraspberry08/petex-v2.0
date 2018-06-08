@@ -51,8 +51,12 @@ Dashboard
                     <div class="row">
                         <?php $counter = 0; ?>
                         <?php foreach ($pets as $pet): ?>
-                            <?php if (date('M. j, Y', strtotime("+2 month", $pet->pet_added_at)) <= date('M. j, Y')): ?>
-                            <?php else: ?>
+                            <?php $datePlusTwoAdoption = date('M. j, Y', strtotime("+2 month", $pet->pet_added_at)); ?>
+                            <?php $curDateAdoption = date('M. j, Y'); ?>
+                            <?php $datePlusTwoAdoptionUnix = new DateTime($datePlusTwoAdoption); ?>
+                            <?php $curDateAdoptionUnix = new DateTime($curDateAdoption); ?>
+
+                            <?php if ($datePlusTwoAdoptionUnix >= $curDateAdoptionUnix): ?>
                                 <?php if ($pet->pet_status == 'Adoptable' && $pet->pet_access == 1): ?>
                                     <?php $petAdopters = $this->UserDashboard_model->fetchJoinThreeProgressDesc(array('transaction.pet_id' => $pet->pet_id)); ?>
                                     <?php $medical = $this->UserDashboard_model->get_animal_medical_records(array("medical_record.pet_id" => $pet->pet_id))[0]; ?>
@@ -237,6 +241,14 @@ Dashboard
                                         </div>
                                     </div>
                                 <?php endif; ?>
+                            <?php else: ?>
+                                <div class = "col-lg-12">
+                                    <center>
+                                        <h4>No recent added yet</h4>
+                                        <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                                    </center>
+                                </div>
+                                <?php break; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
@@ -261,8 +273,14 @@ Dashboard
                 <div class="card-body container-fluid">
                     <div class="row">
                         <?php $counter1 = 0; ?>
-                        <?php foreach ($adoptedPets as $adopted): ?>
-                            <?php if (date('M. j, Y', strtotime("+2 month", $adopted->adoption_adopted_at)) >= date('M. j, Y')): ?>
+                        <?php foreach ($adoptedPets as $adopted): ?>                          
+                            <?php $datePlusTwo = date('M. j, Y', strtotime("+2 month", $adopted->adoption_adopted_at)); ?>
+                            <?php $curDate = date('M. j, Y'); ?>
+                            <?php $datePlusTwoUnix = new DateTime($datePlusTwo); ?>
+
+                            <?php $curDateUnix = new DateTime($curDate); ?>
+
+                            <?php if ($datePlusTwoUnix >= $curDateUnix): ?>
                                 <div class="col-md-3">
                                     <div class="card">
                                         <a href = "<?= $this->config->base_url() . $adopted->pet_picture ?>" data-toggle="lightbox" data-gallery="hidden-images" data-footer ="<b><?= $adopted->pet_name ?></b>">
@@ -420,6 +438,13 @@ Dashboard
                                         window.open("<?= base_url() ?>PetAdoption/download_exec/<?= $pet->pet_id; ?>");
                                             }
                                 </script>
+                            <?php else: ?>
+                                <div class = "col-lg-12">
+                                    <center>
+                                        <h4>No recent adopted yet</h4>
+                                        <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
+                                    </center>
+                                </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>

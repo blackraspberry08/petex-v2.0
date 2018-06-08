@@ -1,11 +1,16 @@
 <?php
 
+require "../vendor/autoload.php";
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class AdminDashboard extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        //---> MODELS HERE!
-        //---> LIBRARIES HERE!
+        //---> HELPERS HERE!
+        $this->load->helper('download');
         //---> SESSIONS HERE!
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             //user is not yet logged in
@@ -86,7 +91,7 @@ class AdminDashboard extends CI_Controller {
         $dogs = $this->AdminDashboard_model->count_dogs();
         $cats = $this->AdminDashboard_model->count_cats();
         $pets = $this->AdminDashboard_model->count_all_animals();
-        
+
         $allusers = $this->AdminDashboard_model->fetch("user", array("user_status" => 1));
         $alladoptable = $this->AdminDashboard_model->fetch("pet", array("pet_status" => "Adoptable", "pet_access" => 1));
         $allnonadoptable = $this->AdminDashboard_model->fetch("pet", array("pet_status" => "NonAdoptable", "pet_access" => 1));
@@ -146,6 +151,85 @@ class AdminDashboard extends CI_Controller {
         $this->load->view("admin_nav/navheader");
         $this->load->view("dashboard/main");
         $this->load->view("dashboard/includes/footer");
+    }
+
+    public function adopted_reports() {
+        $year_adopted = $this->input->post("year_adopted");
+
+        $current_user = $this->ManageUsers_model->get_users("admin", array("admin_id" => $this->session->userdata("userid")))[0];
+        $adopted_by_year = $this->AdminDashboard_model->fetchJoinAdopted(array('Year(from_unixtime(adoption_adopted_at))' => $year_adopted));
+//        echo $this->db->last_query();
+//        die;
+//        echo "<pre>";
+//        print_r($adopted_by_year);
+//        echo "</pre>";
+//        die;
+
+        $data = array(
+            'year_adopted' => $year_adopted,
+            'adopted_by_year' => $adopted_by_year,
+            'title' => "Pet Adopted Reports",
+            //NAV INFO
+            'user_name' => $current_user->admin_firstname . " " . $current_user->admin_lastname,
+            'user_picture' => $current_user->admin_picture,
+            'user_access' => "Administrator"
+        );
+        $this->load->view("dashboard/includes/header", $data);
+        $this->load->view("admin_nav/navheader");
+        $this->load->view("dashboard/adopted_reports");
+        $this->load->view("dashboard/includes/footer");
+    }
+
+    public function generate_excel() {
+        $year_adopted = $this->uri->segment(3);
+        $adopted_by_year = $this->AdminDashboard_model->fetchJoinAdopted(array('Year(from_unixtime(adoption_adopted_at))' => $year_adopted));
+
+        $spreadsheet = new Spreadsheet();
+        //Set Width per Column
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getStyle("A1:H1")->getFont()->setBold(true);
+        for ($height = 2; $height <= 20; $height++) {
+            $spreadsheet->getActiveSheet()->getRowDimension($height)->setRowHeight(60);
+        }
+        $sheet = $spreadsheet->getActiveSheet();
+        $table_columns = array('Pet Name', 'Pet Gender', 'Pet Specie', 'Pet Breed', 'Pet Size', 'Pet Owner', 'Adoption Proof', 'Adopted At');
+        $sheet->setCellValue('A1', 'Pet Name')->setCellValue('B1', 'Pet Gender')->setCellValue('C1', 'Pet Specie')->setCellValue('D1', 'Pet Breed')
+                ->setCellValue('E1', 'Pet Size')->setCellValue('F1', 'Pet Owner')->setCellValue('G1', 'Adoption Proof')->setCellValue('H1', 'Adopted At');
+        $row = 2;
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        foreach ($adopted_by_year as $adopted) {
+            $sheet->setCellValue('A' . $row, $adopted->pet_name)
+                    ->setCellValue('B' . $row, $adopted->pet_sex)
+                    ->setCellValue('C' . $row, $adopted->pet_specie)
+                    ->setCellValue('D' . $row, $adopted->pet_breed)
+                    ->setCellValue('E' . $row, $adopted->pet_size)
+                    ->setCellValue('F' . $row, $adopted->user_firstname . '' . $adopted->user_lastname)
+                    ->setCellValue('H' . $row, date('M j, Y', $adopted->adoption_adopted_at));
+            $drawing->setName('Adoption Proof');
+            $drawing->setDescription('Adoption Proof');
+            $drawing->setPath($_SERVER["DOCUMENT_ROOT"] . 'petexphil/' . $adopted->adoption_proof_img);
+            $drawing->setCoordinates('G' . $row);
+//setOffsetX works properly
+            $drawing->setOffsetX(25);
+            $drawing->setOffsetY(6);
+//set width, height
+            $drawing->setWidth(400);
+            $drawing->setHeight(70);
+            $drawing->setWorksheet($spreadsheet->getActiveSheet());
+            $row++;
+            
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('Adoption_Reports' . $year_adopted . '.xlsx');
+        force_download('Adoption_Reports' . $year_adopted . '.xlsx', NULL);
     }
 
 }
