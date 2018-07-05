@@ -66,8 +66,8 @@
                         $('#sendReq').css({"display": "inline-block"});
                         $('#updateReq').css({"display": "none"});
                         $('#deleteReq').css({"display": "none"});
-                        
-                        
+
+
                     } else {
                         //Day clicked is past
                         //alert("You cannot set a schedule before the current date!");
@@ -83,7 +83,7 @@
                     $('#sendReq').css({"display": "inline-block"});
                     $('#updateReq').css({"display": "none"});
                     $('#deleteReq').css({"display": "none"});
-                    
+
                 }
             },
             eventClick: function (calEvent, jsEvent, view) {
@@ -102,7 +102,7 @@
                         $('#event_starttime').val(res[0].starttime);
                         $('#event_startdate').val(res[0].startdate);
                         $('#event_startdate').addClass("schedule_datepicker");
-                        
+
                         var dt = new Date();
                         dt.setFullYear(new Date().getFullYear());
                         //DATE PICKER FOR SCHEDULE
@@ -110,91 +110,104 @@
                             format: 'MM d, yyyy',
                             todayBtn: true,
                             autoclose: true,
-                            minView: 2,      
+                            minView: 2,
                         });
                         $('.schedule_datepicker').datetimepicker('setStartDate', dt);
-                        
+
                         $('#event_enddate').val(res[0].enddate);
                         $('#event_endtime').val(res[0].endtime);
                         $('#event_id').val(res[0].id);
                         $('#event_title').val(res[0].title);
                         $('#event_description').val(res[0].description);
                         $('#event_color').val(res[0].color);
-                        
+
                         $('.colors .radio').parent().find('.radio').removeClass("selected");
-                        switch(res[0].color){
-                            case '#3a87ad' :{
-                                    $("#_3a87ad").addClass("selected");
-                                    break;
+                        switch (res[0].color) {
+                            case '#3a87ad' :
+                            {
+                                $("#_3a87ad").addClass("selected");
+                                break;
                             }
-                            case '#1b5e20' :{
-                                    $("#_1b5e20").addClass("selected");
-                                    break;
+                            case '#1b5e20' :
+                            {
+                                $("#_1b5e20").addClass("selected");
+                                break;
                             }
-                            case '#fbc02d' :{
-                                    $("#_fbc02d").addClass("selected");
-                                    break;
-                                }
-                            case '#d81b60' :{
-                                    $("#_d81b60").addClass("selected");
-                                    break;
-                                }
-                            case '#7b1fa2' :{
-                                    $("#_7b1fa2").addClass("selected");
-                                    break;
-                                }
-                            case '#1976d2' :{
-                                    $("#_1976d2").addClass("selected");
-                                    break;
-                                }
-                            case '#e53935' :{
-                                    $("#_e53935").addClass("selected");
-                                    break;
-                                }
-                            case '#00897b' :{
-                                    $("#_00897b").addClass("selected");
-                                    break;
-                                }
-                            case '#e65100' :{
-                                    $("#_e65100").addClass("selected");
-                                    break;
-                                }
-                            case '#6d4c41' :{
-                                    $("#_6d4c41").addClass("selected");
-                                    break;
-                                }
-                            case '#3949ab' :{
-                                    $("#_3949ab").addClass("selected");
-                                    break;
-                                }
-                            case '#ffb300' :{
-                                    $("#_ffb300").addClass("selected");
-                                    break;
-                                }
-                            default:{
-                                    break;
+                            case '#fbc02d' :
+                            {
+                                $("#_fbc02d").addClass("selected");
+                                break;
+                            }
+                            case '#d81b60' :
+                            {
+                                $("#_d81b60").addClass("selected");
+                                break;
+                            }
+                            case '#7b1fa2' :
+                            {
+                                $("#_7b1fa2").addClass("selected");
+                                break;
+                            }
+                            case '#1976d2' :
+                            {
+                                $("#_1976d2").addClass("selected");
+                                break;
+                            }
+                            case '#e53935' :
+                            {
+                                $("#_e53935").addClass("selected");
+                                break;
+                            }
+                            case '#00897b' :
+                            {
+                                $("#_00897b").addClass("selected");
+                                break;
+                            }
+                            case '#e65100' :
+                            {
+                                $("#_e65100").addClass("selected");
+                                break;
+                            }
+                            case '#6d4c41' :
+                            {
+                                $("#_6d4c41").addClass("selected");
+                                break;
+                            }
+                            case '#3949ab' :
+                            {
+                                $("#_3949ab").addClass("selected");
+                                break;
+                            }
+                            case '#ffb300' :
+                            {
+                                $("#_ffb300").addClass("selected");
+                                break;
+                            }
+                            default:
+                            {
+                                break;
                             }
                         }
-                        
+
                         $('#eventHeader').html("<i class = 'fa fa-calendar'></i> Event Information");
                         $('#sendReq').css({"display": "none"});
                         $('#updateReq').css({"display": "inline-block"});
                         $('#deleteReq').css({"display": "inline-block"});
                     },
-                    error: function(res){
+                    error: function (res) {
                         //alert("something went wrong");
                         swal("Reload", "Something Went Wrong", "error");
                     }
-                    
+
                 });
             },
-            
+
             events: {
                 method: "POST",
                 url: '<?= base_url() ?>' + 'Schedules/getscheds/',
                 dataType: 'JSON',
             },
-            eventRender: function(event, element) {
+            eventRender: function (event, element) {
                 //TOOLTIP
             }
         });
@@ -218,13 +231,14 @@
                 success: function (res) {
                     if (res.success) {
                         swal({title: "Success", text: "Successfully added a schedule", type: "success"},
-                            function(){ 
-                                location.reload();
-                            }
+                                function () {
+                                    location.reload();
+                                }
                         );
                     } else {
                         //Errors in form
                         //alert(res.result);
+                        console.log("asd");
                         swal("Oops", res.result, "error");
                         show_error(res.title, $("#event_title"));
                         show_error(res.startdate, $("#event_startdate"));
@@ -233,8 +247,9 @@
                         show_error(res.endtime, $("#event_endtime"));
                     }
                 },
-                error: function(res){
+                error: function (res) {
                     swal("Reload", "Something Went Wrong", "error");
+
                 }
             });
 
@@ -258,9 +273,9 @@
                 success: function (res) {
                     if (res.success) {
                         swal({title: "Success", text: "Successfully edited a schedule", type: "success"},
-                            function(){ 
-                                location.reload();
-                            }
+                                function () {
+                                    location.reload();
+                                }
                         );
                     } else {
                         swal("Oops", res.result, "error");
@@ -271,7 +286,7 @@
                         show_error(res.endtime, $("#event_endtime"));
                     }
                 },
-                error:function(res){
+                error: function (res) {
                     swal("Reload", "Something went wrong!", "error");
                 }
             });
@@ -288,9 +303,9 @@
                 success: function (res) {
                     if (res.success) {
                         swal({title: "Success", text: "Successfully cancelled a schedule", type: "info"},
-                            function(){ 
-                                location.reload();
-                            }
+                                function () {
+                                    location.reload();
+                                }
                         );
                     } else {
                         swal("Error", res.result, "error");
@@ -410,8 +425,8 @@
 
 <!-- RESET FORM ON MODAL CLOSE -->
 <script>
-     $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         $(this).find('input').siblings(".invalid-feedback").remove();
         $(this).find('input').removeClass("is-invalid");
-     });
+    });
 </script>

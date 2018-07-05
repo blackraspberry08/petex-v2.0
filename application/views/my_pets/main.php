@@ -82,7 +82,7 @@ My Pets
                                                         <img src = "<?= $this->config->base_url() . $pet->pet_picture ?>" class = "img-fluid" style = "border-radius:50px;  margin-top:20px;"/>
                                                     </div>
                                                     <div class ="col-md-7">
-                                                        <table class = "table table-responsive table-striped">
+                                                        <table class = "table table-striped">
                                                             <tbody>
                                                                 <tr>
                                                                     <th>Name: </th>
