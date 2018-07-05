@@ -33,6 +33,15 @@ class AdminDashboard extends CI_Controller {
         }
     }
 
+    function addImage($path, $coordinates, $sheet, $width, $height) {
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing->setPath($path);
+        $drawing->setCoordinates($coordinates);
+        $drawing->setWorksheet($sheet);
+        $drawing->setWidth($width);
+        $drawing->setHeight($height);
+    }
+
     public function index() {
         $adopted = $this->AdminDashboard_model->fetch("adoption");
         $januaryCount = 0;
@@ -203,28 +212,28 @@ class AdminDashboard extends CI_Controller {
         $sheet->setCellValue('A1', 'Pet Name')->setCellValue('B1', 'Pet Gender')->setCellValue('C1', 'Pet Specie')->setCellValue('D1', 'Pet Breed')
                 ->setCellValue('E1', 'Pet Size')->setCellValue('F1', 'Pet Owner')->setCellValue('G1', 'Adoption Proof')->setCellValue('H1', 'Adopted At');
         $row = 2;
-        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing = new PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         foreach ($adopted_by_year as $adopted) {
             $sheet->setCellValue('A' . $row, $adopted->pet_name)
                     ->setCellValue('B' . $row, $adopted->pet_sex)
                     ->setCellValue('C' . $row, $adopted->pet_specie)
                     ->setCellValue('D' . $row, $adopted->pet_breed)
                     ->setCellValue('E' . $row, $adopted->pet_size)
-                    ->setCellValue('F' . $row, $adopted->user_firstname . '' . $adopted->user_lastname)
+                    ->setCellValue('F' . $row, $adopted->user_firstname . ' ' . $adopted->user_lastname)
                     ->setCellValue('H' . $row, date('M j, Y', $adopted->adoption_adopted_at));
             $drawing->setName('Adoption Proof');
             $drawing->setDescription('Adoption Proof');
-            $drawing->setPath($_SERVER["DOCUMENT_ROOT"] . 'petexphil/' . $adopted->adoption_proof_img);
-            $drawing->setCoordinates('G' . $row);
-//setOffsetX works properly
-            $drawing->setOffsetX(25);
-            $drawing->setOffsetY(6);
-//set width, height
-            $drawing->setWidth(400);
-            $drawing->setHeight(70);
-            $drawing->setWorksheet($spreadsheet->getActiveSheet());
+            $this->addImage($_SERVER["DOCUMENT_ROOT"] . "petexphil/" . $adopted->adoption_proof_img, "G" . $row, $spreadsheet->getActiveSheet(), 300, 65);
+            //$drawing->setPath($_SERVER["DOCUMENT_ROOT"] . 'petexphil/' . $adopted->adoption_proof_img);
+//            $drawing->setCoordinates('G' . $row);
+////setOffsetX works properly
+//            $drawing->setOffsetX(25);
+//            $drawing->setOffsetY(6);
+////set width, height
+//            $drawing->setWidth(400);
+//            $drawing->setHeight(70);
+//            $drawing->setWorksheet($spreadsheet->getActiveSheet());
             $row++;
-            
         }
 
         $writer = new Xlsx($spreadsheet);
