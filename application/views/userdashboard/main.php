@@ -248,8 +248,8 @@ Dashboard
                                         <i class = "fa fa-exclamation-circle fa-5x" style = "color:#bbb;"></i>
                                     </center>
                                 </div>
-                                <?php break; ?>
                             <?php endif; ?>
+                            <?php break; ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
